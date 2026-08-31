@@ -1,0 +1,12 @@
+{
+  "model_version": "xgb_panamax_freight_v7",
+  "features": [
+    {"name": "origin_port_id", "type": "categorical", "required": true},
+    {"name": "destination_port_id", "type": "categorical", "required": true},
+    {"name": "cargo_quantity_mt", "type": "number", "required": true},
+    {"name": "vessel_class", "type": "categorical", "required": true},
+    {"name": "bunker_price_usd_t", "type": "number", "required": false},
+    {"name": "port_congestion_index", "type": "number", "required": false}
+  ],
+  "notes": "Replace with the exact feature order and preprocessing contract used during training."
+}

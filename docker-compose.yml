@@ -1,0 +1,48 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: freight-intelligence-postgres
+    environment:
+      POSTGRES_DB: freight_intelligence
+      POSTGRES_USER: freight_user
+      POSTGRES_PASSWORD: freight_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - freight_postgres_data:/var/lib/postgresql/data
+      - ./database/schema:/docker-entrypoint-initdb.d:ro
+
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    container_name: freight-intelligence-backend
+    env_file:
+      - .env.example
+    environment:
+      DATABASE_URL: postgresql+psycopg://freight_user:freight_password@postgres:5432/freight_intelligence
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./ml:/app/ml:ro
+      - ./data:/app/data:ro
+    depends_on:
+      - postgres
+
+  frontend:
+    image: node:22-alpine
+    container_name: freight-intelligence-frontend
+    working_dir: /app/frontend
+    command: sh -c "npm install && npm run dev -- --host 0.0.0.0"
+    environment:
+      VITE_API_BASE_URL: http://localhost:8000
+      VITE_API_MODE: live
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app/frontend
+    depends_on:
+      - backend
+
+volumes:
+  freight_postgres_data:

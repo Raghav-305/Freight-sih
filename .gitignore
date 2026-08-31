@@ -1,0 +1,153 @@
+# ----------------------------
+# Secrets and local configuration
+# ----------------------------
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.crt
+*.p12
+
+# ----------------------------
+# Python runtime and tooling
+# ----------------------------
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.pyre/
+.coverage
+.coverage.*
+htmlcov/
+.ipynb_checkpoints/
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# ----------------------------
+# Node / frontend build output
+# ----------------------------
+node_modules/
+frontend/node_modules/
+frontend/dist/
+.vite/
+coverage/
+
+# ----------------------------
+# Databases and local state
+# ----------------------------
+*.db
+*.sqlite
+*.sqlite3
+*.log
+*.pid
+
+# ----------------------------
+# Project data folders
+# ----------------------------
+# Ignore generated/raw large data by default
+/data/raw/**
+/data/clean/**
+/data/processed/**
+/data/features/**
+/data/fixtures/**
+
+# Keep minimal repo-readable files
+!data/README.md
+!data/raw/.gitkeep
+!data/clean/.gitkeep
+!data/processed/.gitkeep
+!data/features/.gitkeep
+!data/fixtures/.gitkeep
+
+# ----------------------------
+# ML artifacts and trained models
+# ----------------------------
+ml/models/**
+!ml/models/**/.gitkeep
+!ml/models/**/README.md
+!ml/models/**/metadata.json
+!ml/models/**/feature_schema.json
+!ml/models/**/model_registry.json
+
+ml/artifacts/**
+ml/evaluation/**
+ml/explainability/**
+ml/preprocessing/**
+ml/features/**
+ml/results/**
+ml/mlruns/
+
+# Keep the model registry and minimal scaffolding docs
+!ml/registry/
+!ml/registry/model_registry.json
+!ml/registry/.gitkeep
+
+# Ignore large binaries commonly produced by ML work
+*.pkl
+*.joblib
+*.model
+*.bin
+*.onnx
+*.pt
+*.h5
+*.hdf5
+*.ckpt
+
+# ----------------------------
+# Jupyter / notebooks
+# ----------------------------
+*.ipynb
+!AI-FREIGHT/notebooks/*.ipynb
+
+# ----------------------------
+# Legacy / scratch / generated project files
+# ----------------------------
+AI-FREIGHT/venv/
+AI-FREIGHT/.ipynb_checkpoints/
+AI-FREIGHT/data/**
+AI-FREIGHT/models/**
+AI-FREIGHT/results/**
+AI-FREIGHT/notebooks/**
+AI-FREIGHT/*.py
+AI-FREIGHT/*.ipynb
+
+# ----------------------------
+# OS / editor folders
+# ----------------------------
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# ----------------------------
+# Docker / local runtime output
+# ----------------------------
+.docker/
+volume_data/
+volumes/
+
+# ----------------------------
+# Temporary files and build leftovers
+# ----------------------------
+tmp/
+temp/
+*.tmp
+*.bak
+*.orig
+*.rej
+
+# Keep useful repo docs visible
+!README.md
+!README_TO_FILL.md
+!docs/**
+!public/docs/**

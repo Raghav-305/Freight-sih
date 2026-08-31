@@ -1,0 +1,11 @@
+{
+  "model_name": "xgb_panamax_freight",
+  "model_version": "xgb_panamax_freight_v7",
+  "model_type": "XGBoost",
+  "training_date": "replace-with-training-date",
+  "dataset_version": "replace-with-dataset-version",
+  "feature_version": "replace-with-feature-version",
+  "target": "route_freight_usd_per_mt",
+  "horizon": "7d_30d_60d_90d",
+  "status": "placeholder"
+}

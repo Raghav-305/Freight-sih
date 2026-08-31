@@ -1,0 +1,5 @@
+# Hatchable project manifest. This file marks the folder as a
+# Hatchable project and declares the services it uses.
+# Reference: https://hatchable.com/docs/developers/config
+name = "Freight Chartering Intelligence Platform"
+description = "Government-grade AI-assisted maritime freight chartering decision-support application with auditable forecasts, vessel intelligence, port conditions, charter strategy, risk, data quality and model performance."

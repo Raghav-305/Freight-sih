@@ -1,0 +1,2 @@
+/* htm 3.1.1 placeholder: replaced by CDN-free UMD-compatible loader in app. */
+window.htm = { bind: function(createElement){ return function(strings){ var values=[].slice.call(arguments,1); var out=''; for(var i=0;i<strings.length;i++){ out+=strings[i]; if(i<values.length) out+=values[i] ?? ''; } return createElement ? createElement('div',{dangerouslySetInnerHTML:{__html:out}}) : out; }; } };

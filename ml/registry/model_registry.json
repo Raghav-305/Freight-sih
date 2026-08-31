@@ -1,0 +1,15 @@
+{
+  "active_forecasting_model": "xgb_panamax_freight_v7",
+  "models": [
+    {
+      "model_version": "xgb_panamax_freight_v7",
+      "family": "forecasting",
+      "algorithm": "xgboost",
+      "relative_path": "forecasting/xgboost/panamax_freight_v7",
+      "artifact": "model.json",
+      "feature_schema": "feature_schema.json",
+      "metadata": "metadata.json",
+      "status": "placeholder"
+    }
+  ]
+}

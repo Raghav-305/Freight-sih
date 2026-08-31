@@ -1,0 +1,3 @@
+export const access = 'public';
+export const methods = ['GET'];
+export default async function(req,res){res.json({mode:'demo',models:[{name:'Naive',status:'Baseline'},{name:'Moving Average',mae_30d:20.9,status:'Active'},{name:'Seasonal Naive',mae_30d:20.2,status:'Active'},{name:'SARIMA',mae_30d:17.8,status:'Candidate'},{name:'XGBoost',mae_30d:15.9,status:'Candidate'},{name:'Ensemble',mae_30d:14.8,status:'Recommended'}]});}
