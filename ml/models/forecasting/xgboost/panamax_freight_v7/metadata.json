@@ -2,7 +2,7 @@
   "model_name": "xgb_panamax_freight",
   "model_version": "xgb_panamax_freight_v7",
   "model_type": "XGBoost",
-  "training_date": "replace-with-training-date",
+  "training_date": "2025-12-01",
   "dataset_version": "ai_freight_synthetic_ml_development",
   "feature_version": "lags_rolling_calendar_v1",
   "target": "route_freight_usd_per_mt",
