@@ -1,10 +1,10 @@
-# Panamax Freight XGBoost Model Placeholder
+# Panamax Freight XGBoost Model
 
-Place the trained Panamax freight forecasting model files in this folder.
+Imported Panamax freight forecasting model from `AI-FREIGHT`.
 
-Expected files:
+Model files:
 
-- `model.json` or `model.pkl`
+- `model.pkl`
 - `feature_schema.json`
 - `metadata.json`
 

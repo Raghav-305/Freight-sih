@@ -3,9 +3,23 @@
   "model_version": "xgb_panamax_freight_v7",
   "model_type": "XGBoost",
   "training_date": "replace-with-training-date",
-  "dataset_version": "replace-with-dataset-version",
-  "feature_version": "replace-with-feature-version",
+  "dataset_version": "ai_freight_synthetic_ml_development",
+  "feature_version": "lags_rolling_calendar_v1",
   "target": "route_freight_usd_per_mt",
   "horizon": "7d_30d_60d_90d",
-  "status": "placeholder"
+  "artifact": "model.pkl",
+  "artifact_format": "pickle",
+  "source_data": [
+    "data/raw/freight/freight_rates_daily.csv",
+    "data/raw/bunker/bunker_prices.csv",
+    "data/raw/ports/new_port_constraints.csv",
+    "data/raw/ports/new_vessels.csv",
+    "data/processed/model_data.csv"
+  ],
+  "evaluation_files": [
+    "ml/evaluation/metrics_train_val_test.csv",
+    "ml/evaluation/feature_importance.csv",
+    "ml/evaluation/forecast_latest.csv"
+  ],
+  "status": "imported"
 }

@@ -68,15 +68,8 @@ coverage/
 !data/fixtures/.gitkeep
 
 # ----------------------------
-# ML artifacts and trained models
+# ML artifacts
 # ----------------------------
-ml/models/**
-!ml/models/**/.gitkeep
-!ml/models/**/README.md
-!ml/models/**/metadata.json
-!ml/models/**/feature_schema.json
-!ml/models/**/model_registry.json
-
 ml/artifacts/**
 ml/evaluation/**
 ml/explainability/**
@@ -84,6 +77,13 @@ ml/preprocessing/**
 ml/features/**
 ml/results/**
 ml/mlruns/
+
+!ml/evaluation/
+!ml/evaluation/README.md
+!ml/evaluation/**/*.py
+!ml/explainability/
+!ml/explainability/README.md
+!ml/explainability/**/*.py
 
 # Keep the model registry and minimal scaffolding docs
 !ml/registry/
@@ -101,11 +101,17 @@ ml/mlruns/
 *.hdf5
 *.ckpt
 
+# Trained project models are committed for team handoff.
+!ml/models/
+!ml/models/**
+
 # ----------------------------
 # Jupyter / notebooks
 # ----------------------------
 *.ipynb
 !AI-FREIGHT/notebooks/*.ipynb
+!ml/notebooks/
+!ml/notebooks/**/*.ipynb
 
 # ----------------------------
 # Legacy / scratch / generated project files

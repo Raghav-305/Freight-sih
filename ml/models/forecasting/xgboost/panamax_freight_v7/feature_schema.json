@@ -1,12 +1,38 @@
 {
   "model_version": "xgb_panamax_freight_v7",
-  "features": [
-    {"name": "origin_port_id", "type": "categorical", "required": true},
-    {"name": "destination_port_id", "type": "categorical", "required": true},
-    {"name": "cargo_quantity_mt", "type": "number", "required": true},
-    {"name": "vessel_class", "type": "categorical", "required": true},
-    {"name": "bunker_price_usd_t", "type": "number", "required": false},
-    {"name": "port_congestion_index", "type": "number", "required": false}
+  "categorical_features": [
+    "route_id",
+    "origin",
+    "destination_port",
+    "vessel_class",
+    "cargo_type"
   ],
-  "notes": "Replace with the exact feature order and preprocessing contract used during training."
+  "numerical_features": [
+    "distance_nm",
+    "synthetic_bunker_price_usd_mt",
+    "freight_usd_mt",
+    "freight_lag_1d",
+    "freight_lag_7d",
+    "freight_lag_30d",
+    "freight_lag_60d",
+    "freight_lag_90d",
+    "freight_rolling_mean_7d",
+    "freight_rolling_mean_30d",
+    "year",
+    "month",
+    "day_of_week",
+    "day_of_year"
+  ],
+  "targets": [
+    "target_7d",
+    "target_30d",
+    "target_60d",
+    "target_90d"
+  ],
+  "preprocessing": {
+    "categorical": "OneHotEncoder stored inside model.pkl under artifact['encoder']",
+    "numerical": "Passed as numeric matrix in the listed order",
+    "missing_values": "Rows with missing lag or rolling-history features are dropped before evaluation"
+  },
+  "notes": "Schema reconstructed from the imported AI-FREIGHT scripts and processed model_data.csv header."
 }

@@ -6,10 +6,11 @@
       "family": "forecasting",
       "algorithm": "xgboost",
       "relative_path": "forecasting/xgboost/panamax_freight_v7",
-      "artifact": "model.json",
+      "artifact": "model.pkl",
       "feature_schema": "feature_schema.json",
       "metadata": "metadata.json",
-      "status": "placeholder"
+      "artifact_format": "pickle",
+      "status": "imported"
     }
   ]
 }
