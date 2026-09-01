@@ -67,6 +67,28 @@ def build_matrix(df, artifact, numerical_features):
     return np.hstack([cat, num])
 
 
+def compute_residual_quantiles(model, X_validation: np.ndarray, validation: pd.DataFrame, horizon: int) -> dict[str, float] | None:
+    target_column = f"target_{horizon}d"
+    if target_column not in validation.columns:
+        return None
+
+    mask = validation[target_column].notna().to_numpy()
+    if mask.sum() == 0:
+        return None
+
+    actual = validation[target_column][mask].to_numpy()
+    predicted = model.predict(X_validation[mask])
+    residuals = actual - predicted
+    quantiles = np.quantile(residuals, [0.10, 0.25, 0.50, 0.75, 0.90])
+    return {
+        "p10": float(quantiles[0]),
+        "p25": float(quantiles[1]),
+        "p50": float(quantiles[2]),
+        "p75": float(quantiles[3]),
+        "p90": float(quantiles[4]),
+    }
+
+
 def main():
     root = project_root()
 
@@ -131,27 +153,21 @@ def main():
             continue
 
         model = artifact["models"][h]
-
-        val_pred = model.predict(X_val[mask])
-        actual = target[mask].to_numpy()
-
-        residuals = actual - val_pred
-
-        qs = {
-            f"P{int(q * 100)}": float(np.quantile(residuals, q))
-            for q in [0.10, 0.25, 0.50, 0.75, 0.90]
-        }
+        residuals = compute_residual_quantiles(model, X_val, validation, h)
+        if residuals is None:
+            print(f"{h}-day: no valid validation targets; skipped.")
+            continue
 
         latest_point = model.predict(X_latest)
 
-        for name, offset in qs.items():
+        for name, offset in residuals.items():
             final[f"{name}_{h}d_freight_usd_mt"] = latest_point + offset
 
         residual_rows.append(
             {
                 "horizon": f"{h}-day",
                 "validation_rows": int(mask.sum()),
-                **{f"{k}_residual": v for k, v in qs.items()},
+                **{f"{k}_residual": v for k, v in residuals.items()},
             }
         )
 

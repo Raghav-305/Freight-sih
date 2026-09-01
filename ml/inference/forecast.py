@@ -9,6 +9,7 @@ from typing import Any
 import numpy as np
 import pandas as pd
 
+from ml.evaluation.uncertainty import compute_residual_quantiles
 from ml.inference.loader import load_model_registry
 
 
@@ -18,6 +19,9 @@ MODEL_PATH = MODEL_DIR / "model.pkl"
 METADATA_PATH = MODEL_DIR / "metadata.json"
 FEATURE_SCHEMA_PATH = MODEL_DIR / "feature_schema.json"
 DATASET_PATH = PROJECT_ROOT / "data" / "processed" / "model_data.csv"
+HORIZONS = [7, 30, 60, 90]
+LAGS = [1, 7, 30, 60, 90]
+ROLLING_WINDOWS = [7, 30]
 
 
 @lru_cache(maxsize=1)
@@ -38,15 +42,45 @@ def _load_feature_schema() -> dict[str, Any]:
         return json.load(schema_file)
 
 
+@lru_cache(maxsize=1)
+def _load_reference_dataset() -> pd.DataFrame:
+    if not DATASET_PATH.exists():
+        raise FileNotFoundError(f"Dataset not found: {DATASET_PATH}")
+
+    data = pd.read_csv(DATASET_PATH, parse_dates=["date"]).sort_values(["route_id", "date"]).reset_index(drop=True)
+
+    for horizon in HORIZONS:
+        column_name = f"target_{horizon}d"
+        if column_name not in data.columns:
+            data[column_name] = data.groupby("route_id")["freight_usd_mt"].shift(-horizon)
+
+    for lag in LAGS:
+        column_name = f"freight_lag_{lag}d"
+        if column_name not in data.columns:
+            data[column_name] = data.groupby("route_id")["freight_usd_mt"].shift(lag)
+
+    for window in ROLLING_WINDOWS:
+        column_name = f"freight_rolling_mean_{window}d"
+        if column_name not in data.columns:
+            data[column_name] = data.groupby("route_id")["freight_usd_mt"].transform(
+                lambda x: x.shift(1).rolling(window).mean()
+            )
+
+    if "year" not in data.columns:
+        data["year"] = data["date"].dt.year
+        data["month"] = data["date"].dt.month
+        data["day_of_week"] = data["date"].dt.dayofweek
+        data["day_of_year"] = data["date"].dt.dayofyear
+
+    return data
+
+
 def _normalize_text(value: Any) -> str:
     return str(value or "").strip().lower().replace("-", " ").replace("_", " ")
 
 
 def _lookup_route_row(payload: dict[str, Any]) -> pd.Series | None:
-    if not DATASET_PATH.exists():
-        return None
-
-    data = pd.read_csv(DATASET_PATH, parse_dates=["date"])
+    data = _load_reference_dataset()
     destination = _normalize_text(payload.get("destination", ""))
     vessel = _normalize_text(payload.get("vessel_type", ""))
     cargo = _normalize_text(payload.get("cargo_type", "Coal"))
@@ -104,108 +138,50 @@ def _lookup_route_row(payload: dict[str, Any]) -> pd.Series | None:
     return filtered.sort_values("date").tail(1).iloc[0]
 
 
-def _build_feature_matrix(route_row: pd.Series, artifact: dict[str, Any]) -> np.ndarray:
-    categorical_columns = artifact["categorical_features"]
-    numerical_columns = artifact["numerical_features"]
+def _build_feature_matrix(frame: pd.DataFrame | pd.Series, artifact: dict[str, Any]) -> np.ndarray:
+    if isinstance(frame, pd.Series):
+        frame = frame.to_frame().T
 
-    feature_row: dict[str, Any] = {}
-    for column in categorical_columns:
-        feature_row[column] = route_row.get(column, "")
-    for column in numerical_columns:
-        feature_row[column] = float(route_row.get(column, 0.0) or 0.0)
+    if frame.empty:
+        raise ValueError("No rows available for feature encoding.")
 
-    feature_frame = pd.DataFrame([feature_row], columns=categorical_columns + numerical_columns)
+    categorical_columns = list(artifact["categorical_features"])
+    numerical_columns = list(artifact["numerical_features"])
+    missing = [column for column in categorical_columns + numerical_columns if column not in frame.columns]
+    if missing:
+        raise ValueError(f"Missing required forecast columns: {missing}")
+
     encoder = artifact["encoder"]
-    categorical_matrix = encoder.transform(feature_frame[categorical_columns])
-    numerical_matrix = feature_frame[numerical_columns].to_numpy(dtype=float)
+    categorical_matrix = encoder.transform(frame[categorical_columns].fillna("").astype(str))
+    numerical_matrix = frame[numerical_columns].replace([np.inf, -np.inf], np.nan).fillna(0.0).to_numpy(dtype=float)
     return np.hstack([categorical_matrix, numerical_matrix])
 
 
-def _engineer_features(data: pd.DataFrame) -> tuple[pd.DataFrame, list[str], list[str]]:
-    engineered = data.sort_values(["route_id", "date"]).reset_index(drop=True).copy()
-
-    for horizon in [7, 30, 60, 90]:
-        engineered[f"target_{horizon}d"] = (
-            engineered.groupby("route_id")["freight_usd_mt"].shift(-horizon)
-        )
-
-    for lag in [1, 7, 30, 60, 90]:
-        engineered[f"freight_lag_{lag}d"] = (
-            engineered.groupby("route_id")["freight_usd_mt"].shift(lag)
-        )
-
-    for window in [7, 30]:
-        engineered[f"freight_rolling_mean_{window}d"] = (
-            engineered.groupby("route_id")["freight_usd_mt"]
-            .transform(lambda x: x.shift(1).rolling(window).mean())
-        )
-
-    engineered["year"] = engineered["date"].dt.year
-    engineered["month"] = engineered["date"].dt.month
-    engineered["day_of_week"] = engineered["date"].dt.dayofweek
-    engineered["day_of_year"] = engineered["date"].dt.dayofyear
-
-    history_features = [f"freight_lag_{lag}d" for lag in [1, 7, 30, 60, 90]] + [
-        f"freight_rolling_mean_{window}d" for window in [7, 30]
-    ]
-    numerical_features = [
-        "distance_nm",
-        "synthetic_bunker_price_usd_mt",
-        "freight_usd_mt",
-        *history_features,
-        "year",
-        "month",
-        "day_of_week",
-        "day_of_year",
-    ]
-    return engineered, history_features, numerical_features
+def _get_validation_rows(dataset: pd.DataFrame, history_features: list[str]) -> pd.DataFrame:
+    validation_rows = dataset[
+        (dataset["date"] >= "2025-01-01") & (dataset["date"] < "2025-10-01")
+    ].copy()
+    return validation_rows.dropna(subset=history_features).copy()
 
 
-def _residual_quantile_band(model: Any, X_validation: np.ndarray, validation: pd.DataFrame, horizon: int) -> dict[str, float]:
-    target_column = f"target_{horizon}d"
-    mask = validation[target_column].notna().to_numpy()
-    if mask.sum() == 0:
-        raise ValueError(f"No valid validation rows for horizon {horizon}d")
-
-    actual = validation[target_column][mask].to_numpy()
-    predicted = model.predict(X_validation[mask])
-    residuals = actual - predicted
-    quantiles = np.quantile(residuals, [0.10, 0.25, 0.50, 0.75, 0.90])
-    return {
-        "p10": float(quantiles[0]),
-        "p25": float(quantiles[1]),
-        "p50": float(quantiles[2]),
-        "p75": float(quantiles[3]),
-        "p90": float(quantiles[4]),
-    }
-
-
-def _build_horizon_forecast(latest_row: pd.Series, validation_rows: pd.DataFrame, artifact: dict[str, Any], horizon: int) -> dict[str, float]:
-    model = artifact["models"][horizon]
-    X_latest = _build_feature_matrix(latest_row, artifact)
-    X_validation = _build_feature_matrix(validation_rows.iloc[0], artifact) if validation_rows.empty else np.vstack([
-        _build_feature_matrix(row, artifact) for _, row in validation_rows.iterrows()
-    ])
-
-    if validation_rows.empty:
-        prediction = float(model.predict(X_latest)[0])
-        baseline = float(latest_row.get("freight_usd_mt", 0.0) or 0.0)
+def _build_horizon_forecast(model: Any, latest_prediction: float, validation_rows: pd.DataFrame, X_validation: np.ndarray, horizon: int) -> dict[str, float]:
+    quantiles = compute_residual_quantiles(model, X_validation, validation_rows, horizon)
+    if quantiles is None:
+        baseline = float(latest_prediction)
         return {
-            "p10": round(prediction + baseline * 0.9, 2),
-            "p25": round(prediction + baseline * 0.95, 2),
-            "p50": round(prediction + baseline, 2),
-            "p75": round(prediction + baseline * 1.05, 2),
-            "p90": round(prediction + baseline * 1.10, 2),
+            "p10": round(baseline * 0.90, 2),
+            "p25": round(baseline * 0.95, 2),
+            "p50": round(baseline, 2),
+            "p75": round(baseline * 1.05, 2),
+            "p90": round(baseline * 1.10, 2),
         }
 
-    residual_band = _residual_quantile_band(model, X_validation, validation_rows, horizon)
-    latest_prediction = float(model.predict(X_latest)[0])
     return {
-        "p10": round(float(latest_prediction + residual_band["p10"]), 2),
-        "p25": round(float(latest_prediction + residual_band["p25"]), 2),
-        "p50": round(float(latest_prediction + residual_band["p50"]), 2),
-        "p75": round(float(latest_prediction + residual_band["p75"]), 2),
-        "p90": round(float(latest_prediction + residual_band["p90"]), 2),
+        "p10": round(float(latest_prediction + quantiles["p10"]), 2),
+        "p25": round(float(latest_prediction + quantiles["p25"]), 2),
+        "p50": round(float(latest_prediction + quantiles["p50"]), 2),
+        "p75": round(float(latest_prediction + quantiles["p75"]), 2),
+        "p90": round(float(latest_prediction + quantiles["p90"]), 2),
     }
 
 
@@ -215,22 +191,35 @@ def run_forecast(payload: dict[str, Any]) -> dict[str, Any]:
     artifact = _load_model_artifact()
     metadata = _load_metadata()
     feature_schema = _load_feature_schema()
+    dataset = _load_reference_dataset()
 
     latest_row = _lookup_route_row(payload)
     if latest_row is None:
         raise ValueError("No matching route data found for the requested forecast inputs")
 
-    dataset = pd.read_csv(DATASET_PATH, parse_dates=["date"])
-    engineered, history_features, _ = _engineer_features(dataset)
-    validation_rows = engineered[
-        (engineered["date"] >= "2025-01-01") & (engineered["date"] < "2025-10-01")
-    ].copy()
-    validation_rows = validation_rows.dropna(subset=history_features).copy()
+    history_features = artifact.get("history_features") or [
+        f"freight_lag_{lag}d" for lag in LAGS
+    ] + [f"freight_rolling_mean_{window}d" for window in ROLLING_WINDOWS]
+    validation_rows = _get_validation_rows(dataset, history_features)
+    if validation_rows.empty:
+        raise ValueError("No valid historical rows available for forecast uncertainty.")
+
+    X_validation = _build_feature_matrix(validation_rows, artifact)
+    X_latest = _build_feature_matrix(pd.DataFrame([latest_row]), artifact)
 
     current_freight = float(latest_row.get("freight_usd_mt", 0.0) or 0.0)
     forecast: dict[str, dict[str, float]] = {}
+
     for horizon in artifact["horizons"]:
-        forecast[str(horizon) + "d"] = _build_horizon_forecast(latest_row, validation_rows, artifact, int(horizon))
+        model = artifact["models"][int(horizon)]
+        latest_prediction = float(model.predict(X_latest)[0])
+        forecast[f"{int(horizon)}d"] = _build_horizon_forecast(
+            model,
+            latest_prediction,
+            validation_rows,
+            X_validation,
+            int(horizon),
+        )
 
     confidence_value = float(metadata.get("confidence", 0.82))
     shap_values = [
@@ -245,7 +234,7 @@ def run_forecast(payload: dict[str, Any]) -> dict[str, Any]:
         "confidence": confidence_value,
         "model_version": metadata.get("model_version", active_model),
         "dataset_version": metadata.get("dataset_version", "model_data_v1"),
-        "feature_version": feature_schema.get("model_version", "feature_schema_v1"),
+        "feature_version": metadata.get("feature_version") or feature_schema.get("feature_version") or feature_schema.get("model_version", "feature_schema_v1"),
         "training_date": metadata.get("training_date", "unknown"),
         "shap": shap_values,
     }

@@ -18,6 +18,7 @@ class ForecastInferenceIntegrationTest(unittest.TestCase):
         result = run_forecast(payload)
 
         self.assertEqual(result["model_version"], "xgb_panamax_freight_v7")
+        self.assertEqual(result["feature_version"], "lags_rolling_calendar_v1")
         self.assertNotIn("placeholder", result["dataset_version"])
         self.assertNotIn("replace-with", result["training_date"])
         self.assertGreater(result["current_freight"], 0)
