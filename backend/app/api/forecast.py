@@ -7,5 +7,6 @@ router = APIRouter(tags=["forecast"])
 
 
 @router.post("/forecast", response_model=ForecastResponse)
+@router.post("/api/forecast", response_model=ForecastResponse)
 def create_forecast(request: ForecastRequest) -> ForecastResponse:
     return forecast_service.predict(request)

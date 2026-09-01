@@ -11,6 +11,17 @@
       "metadata": "metadata.json",
       "artifact_format": "pickle",
       "status": "imported"
+    },
+    {
+      "model_version": "congestion_sih_v1",
+      "family": "congestion",
+      "algorithm": "xgboost",
+      "relative_path": "congestion/congestion_sih_v1",
+      "artifact": "congestion_model.pkl",
+      "feature_schema": "feature_schema.json",
+      "metadata": "metadata.json",
+      "artifact_format": "pickle",
+      "status": "imported"
     }
   ]
 }

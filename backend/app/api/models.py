@@ -6,5 +6,6 @@ router = APIRouter(tags=["models"])
 
 
 @router.get("/models")
+@router.get("/api/models")
 def list_models() -> dict:
     return load_model_registry()

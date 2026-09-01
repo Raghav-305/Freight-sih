@@ -1,0 +1,7 @@
+constraint_id,port_id,max_draft,max_loa,max_beam,max_dwt,berth_length,berth_count,loading_rate,discharge_rate,effective_from,effective_to,source,confidence,has_tidal_restriction
+CNS0001,DHA,18.5,296,41,112321,355,2,3188,2899,2020-01-01,,Synthetic - modeled on typical Indian coal terminal characteristics,Medium,0
+CNS0002,PAR,17.0,272,37,103214,326,2,2765,2514,2020-01-01,,Synthetic - modeled on typical Indian coal terminal characteristics,Medium,0
+CNS0003,VIZ,15.5,248,34,94107,298,2,2365,2150,2020-01-01,,Synthetic - modeled on typical Indian coal terminal characteristics,Medium,0
+CNS0004,GAN,16.5,264,36,100178,158,1,2470,2246,2020-01-01,,Synthetic - modeled on typical Indian coal terminal characteristics,Medium,0
+CNS0005,GOP,14.0,224,31,85000,134,1,1981,1801,2020-01-01,,Synthetic - modeled on typical Indian coal terminal characteristics,Medium,0
+CNS0006,HAL,12.5,200,28,75892,120,1,1723,1567,2020-01-01,,Synthetic - modeled on typical Indian coal terminal characteristics,Medium,1

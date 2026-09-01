@@ -48,17 +48,43 @@ type ForecastInputs = {
   laycan_end: string;
 };
 
+type PortCongestionResponse = {
+  port: string;
+  vessel_type: string;
+  feasible: boolean;
+  constraints: Record<string, boolean>;
+  congestion_days: number;
+  current_queue: number;
+  model_version: string;
+};
+
+type CongestionInputs = {
+  port: string;
+  vessel_type: string;
+  cargo_quantity: number;
+  arrival_date: string;
+  vessel_dwt: number;
+};
+
 const apiMode = import.meta.env.VITE_API_MODE ?? "live";
 const apiBaseUrl = import.meta.env.VITE_API_BASE_URL ?? "http://localhost:8000";
 
 const defaultInputs: ForecastInputs = {
-  origin: "Gladstone",
+  origin: "Australia",
   destination: "Dhamra",
   vessel_type: "Panamax",
   cargo_type: "Coal",
   cargo_quantity: 80000,
   laycan_start: "2026-10-10",
   laycan_end: "2026-10-20",
+};
+
+const defaultCongestionInputs: CongestionInputs = {
+  port: "Paradip",
+  vessel_type: "Panamax",
+  cargo_quantity: 80000,
+  arrival_date: "2026-07-15",
+  vessel_dwt: 78000,
 };
 
 async function api<T>(path: string, init?: RequestInit): Promise<T> {
@@ -88,6 +114,10 @@ function App() {
   const [health, setHealth] = useState<Health | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [congestionInputs, setCongestionInputs] = useState<CongestionInputs>(defaultCongestionInputs);
+  const [congestionResult, setCongestionResult] = useState<PortCongestionResponse | null>(null);
+  const [congestionLoading, setCongestionLoading] = useState(false);
+  const [congestionError, setCongestionError] = useState<string | null>(null);
 
   const horizons = useMemo(() => Object.entries(forecast?.forecast ?? {}), [forecast]);
 
@@ -126,13 +156,43 @@ function App() {
     }
   }
 
+  async function checkCongestion(nextInputs = congestionInputs) {
+    setCongestionLoading(true);
+    setCongestionError(null);
+
+    try {
+      const result = await api<PortCongestionResponse>("/port/check", {
+        method: "POST",
+        body: JSON.stringify({
+          ...nextInputs,
+          cargo_quantity: Number(nextInputs.cargo_quantity),
+          vessel_dwt: Number(nextInputs.vessel_dwt),
+        }),
+      });
+      setCongestionResult(result);
+    } catch (err) {
+      setCongestionError(err instanceof Error ? err.message : "Unable to call congestion API");
+    } finally {
+      setCongestionLoading(false);
+    }
+  }
+
   function updateField<K extends keyof ForecastInputs>(key: K, value: ForecastInputs[K]) {
     setInputs((current) => ({ ...current, [key]: value }));
+  }
+
+  function updateCongestionField<K extends keyof CongestionInputs>(key: K, value: CongestionInputs[K]) {
+    setCongestionInputs((current) => ({ ...current, [key]: value }));
   }
 
   function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     void runForecast();
+  }
+
+  function submitCongestion(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    void checkCongestion();
   }
 
   return (
@@ -180,10 +240,10 @@ function App() {
             </div>
 
             <div className="form-grid">
-              <Select label="Origin" value={inputs.origin} values={["Gladstone", "Hay Point", "Newcastle", "Australia"]} onChange={(value) => updateField("origin", value)} />
-              <Select label="Destination" value={inputs.destination} values={["Dhamra", "Paradip", "Visakhapatnam", "Gangavaram", "Gopalpur", "Haldia"]} onChange={(value) => updateField("destination", value)} />
-              <Select label="Vessel Class" value={inputs.vessel_type} values={["Panamax", "Supramax", "Capesize", "Handysize"]} onChange={(value) => updateField("vessel_type", value)} />
-              <Select label="Cargo Type" value={inputs.cargo_type} values={["Coal", "Iron ore", "Grain"]} onChange={(value) => updateField("cargo_type", value)} />
+              <Select label="Origin" value={inputs.origin} values={["Australia", "Indonesia", "Mozambique", "Russia", "USA"]} onChange={(value) => updateField("origin", value)} />
+              <Select label="Destination" value={inputs.destination} values={["Dhamra", "Gangavaram", "Gopalpur", "Haldia", "Paradip", "Vizag"]} onChange={(value) => updateField("destination", value)} />
+              <Select label="Vessel Class" value={inputs.vessel_type} values={["Panamax"]} onChange={(value) => updateField("vessel_type", value)} />
+              <Select label="Cargo Type" value={inputs.cargo_type} values={["Coal"]} onChange={(value) => updateField("cargo_type", value)} />
               <Field label="Cargo Quantity" type="number" value={inputs.cargo_quantity} onChange={(value) => updateField("cargo_quantity", Number(value))} />
               <Field label="Laycan Start" type="date" value={inputs.laycan_start} onChange={(value) => updateField("laycan_start", value)} />
               <Field label="Laycan End" type="date" value={inputs.laycan_end} onChange={(value) => updateField("laycan_end", value)} />
@@ -215,6 +275,60 @@ function App() {
               </>
             ) : null}
           </section>
+        </section>
+
+        <section className="congestion-section">
+          <div className="section-title">
+            <span className="eyebrow">Port Operations</span>
+            <h3>Port Congestion Check</h3>
+          </div>
+
+          <form className="congestion-form" onSubmit={submitCongestion}>
+            <div className="form-grid">
+              <Select label="Port" value={congestionInputs.port} values={["Dhamra", "Gangavaram", "Gopalpur", "Haldia", "Paradip", "Vizag"]} onChange={(value) => updateCongestionField("port", value)} />
+              <Select label="Vessel Class" value={congestionInputs.vessel_type} values={["Panamax", "Supramax", "Capesize", "Handysize"]} onChange={(value) => updateCongestionField("vessel_type", value)} />
+              <Field label="Cargo Quantity" type="number" value={congestionInputs.cargo_quantity} onChange={(value) => updateCongestionField("cargo_quantity", Number(value))} />
+              <Field label="Arrival Date" type="date" value={congestionInputs.arrival_date} onChange={(value) => updateCongestionField("arrival_date", value)} />
+              <Field label="Vessel DWT" type="number" value={congestionInputs.vessel_dwt} onChange={(value) => updateCongestionField("vessel_dwt", Number(value))} />
+            </div>
+            <button type="submit" disabled={congestionLoading}>
+              {congestionLoading ? "Checking congestion..." : "Check Port Congestion"}
+            </button>
+          </form>
+
+          {congestionError ? <ErrorPanel message={congestionError} /> : null}
+          {!congestionError && congestionResult ? (
+            <div className="congestion-result">
+              <div className="result-header">
+                <span className="eyebrow">Model Output</span>
+                <h4>{congestionResult.port} · {congestionResult.model_version}</h4>
+              </div>
+
+              <div className="result-grid">
+                <div className="result-card">
+                  <span>Status</span>
+                  <strong className={congestionResult.feasible ? "ok" : "warn"}>{congestionResult.feasible ? "Feasible" : "High risk"}</strong>
+                </div>
+                <div className="result-card">
+                  <span>Queue</span>
+                  <strong>{congestionResult.current_queue}</strong>
+                </div>
+                <div className="result-card">
+                  <span>Wait</span>
+                  <strong>{congestionResult.congestion_days.toFixed(2)} days</strong>
+                </div>
+              </div>
+
+              <div className="constraint-grid">
+                {Object.entries(congestionResult.constraints).map(([key, value]) => (
+                  <div key={key} className={`constraint ${value ? "ok" : "warn"}`}>
+                    <span>{key}</span>
+                    <strong>{value ? "Pass" : "Alert"}</strong>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ) : null}
         </section>
 
         <section id="models" className="table-section">

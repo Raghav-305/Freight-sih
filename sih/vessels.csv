@@ -1,0 +1,35 @@
+imo,name,vessel_type,dwt,gt,nt,loa,beam,draft,year_built,speed_laden,speed_ballast,fuel_consumption_laden,fuel_consumption_ballast,crane_count,crane_capacity,flag,owner,manager
+9339563,Global Progress,Panamax,81764,85852,79311,231.5,32.2,14.2,2019,13.9,14.9,29.3,20.4,0,0,Bahamas,Golden Ocean Group,Wallem Group
+9095119,Grand Voyager,Panamax,78514,82439,76158,233.3,32.2,14.0,2009,13.9,14.1,33.9,20.2,0,0,Liberia,Diana Shipping,V.Group
+9151262,Atlantic Harmony,Panamax,78429,82350,76076,230.6,32.3,13.9,2014,13.6,14.3,28.4,20.3,0,0,Hong Kong,Oldendorff Carriers,Fleet Management Limited
+9557549,Eastern Falcon,Panamax,77502,81377,75176,230.9,32.2,14.0,2013,14.0,13.9,31.4,22.6,0,0,Malta,Oldendorff Carriers,Anglo-Eastern
+9638539,Atlantic Eagle,Panamax,74599,78328,72361,229.2,32.3,13.9,2023,13.6,14.9,28.5,22.8,0,0,Malta,Safe Bulkers,Fleet Management Limited
+9367188,Crown Falcon,Panamax,78869,82812,76502,225.7,32.2,14.0,2010,13.1,14.6,31.9,25.0,0,0,Cyprus,Diana Shipping,Fleet Management Limited
+9404531,Western Pioneer,Panamax,81266,85329,78828,234.4,32.2,14.2,2023,13.1,14.7,28.8,21.2,0,0,Bahamas,Oldendorff Carriers,Univan Ship Management
+9174447,Royal Pride,Panamax,77679,81562,75348,227.8,32.2,14.1,2016,14.1,15.0,32.1,21.9,0,0,Hong Kong,Genco Shipping,Univan Ship Management
+9184777,Silver Spirit,Panamax,75239,79000,72981,225.1,32.3,13.9,2017,13.0,14.1,30.2,22.8,0,0,Liberia,Precious Shipping,Bernhard Schulte
+9686782,Star Falcon,Panamax,79539,83515,77152,234.0,32.3,14.4,2020,13.6,14.1,30.9,22.0,0,0,Hong Kong,Golden Ocean Group,Wallem Group
+9462030,Atlantic Venture,Panamax,75329,79095,73069,231.0,32.2,14.2,2011,14.4,14.4,28.4,21.0,0,0,Bahamas,Genco Shipping,Fleet Management Limited
+9264511,Western Discovery,Panamax,81827,85918,79372,229.7,32.2,14.1,2022,13.7,14.0,28.9,23.7,0,0,Singapore,Oldendorff Carriers,Thome Group
+9725674,Sea Pioneer,Panamax,75322,79088,73062,227.1,32.3,14.1,2008,14.1,13.9,31.9,20.5,0,0,Singapore,Precious Shipping,Anglo-Eastern
+9952378,Western Spirit,Panamax,75368,79136,73106,230.3,32.3,14.0,2015,13.9,14.7,32.5,21.0,0,0,Hong Kong,Pacific Basin,Fleet Management Limited
+9842348,Golden Eagle,Panamax,75857,79649,73581,229.9,32.3,14.5,2016,13.7,13.8,31.6,21.7,0,0,Malta,Safe Bulkers,Univan Ship Management
+9231171,Silver Phoenix,Panamax,74836,78577,72590,227.0,32.2,14.2,2008,13.7,14.5,32.8,20.4,0,0,Marshall Islands,Pacific Basin,Thome Group
+9746054,Golden Phoenix,Panamax,80145,84152,77740,233.9,32.2,14.2,2010,14.2,15.0,30.4,22.0,0,0,Marshall Islands,Genco Shipping,Wallem Group
+9133209,Global Falcon,Panamax,74225,77936,71998,233.1,32.2,14.4,2023,14.0,14.0,31.3,20.7,0,0,Panama,Golden Ocean Group,Bernhard Schulte
+9785903,Global Glory,Panamax,81648,85730,79198,234.9,32.2,14.4,2008,13.4,13.9,29.4,22.9,0,0,Singapore,Precious Shipping,V.Group
+9874716,Star Discovery,Panamax,75073,78826,72820,234.0,32.3,14.4,2021,14.2,14.8,28.8,20.8,0,0,Panama,Oldendorff Carriers,Thome Group
+9192002,Ocean Endeavour,Panamax,78985,82934,76615,226.7,32.2,14.3,2009,13.5,14.3,31.3,23.9,0,0,Marshall Islands,Precious Shipping,Univan Ship Management
+9260565,Northern Voyager,Panamax,75567,79345,73299,232.7,32.3,14.2,2010,13.7,14.4,31.0,22.6,0,0,Singapore,Oldendorff Carriers,Bernhard Schulte
+9559190,Crown Eagle,Panamax,80613,84643,78194,234.4,32.3,14.4,2016,14.4,14.8,29.2,22.2,0,0,Bahamas,Golden Ocean Group,V.Group
+9463594,Pacific Spirit,Panamax,76588,80417,74290,229.3,32.2,14.0,2011,14.3,13.7,32.3,23.3,0,0,Liberia,Diana Shipping,Wallem Group
+9490456,Atlantic Progress,Capesize,157195,161910,149335,297.7,43.3,18.2,2015,12.7,13.6,42.1,28.0,0,0,Hong Kong,Safe Bulkers,Anglo-Eastern
+9096672,Western Pioneer,Capesize,173663,178872,164979,286.8,43.9,18.2,2020,13.0,13.9,42.1,26.4,0,0,Hong Kong,Golden Ocean Group,Univan Ship Management
+9278464,Star Horizon,Capesize,158910,163677,150964,285.4,43.3,17.9,2016,13.1,13.8,42.1,29.0,0,0,Malta,Golden Ocean Group,Anglo-Eastern
+9060320,Coral Glory,Capesize,176200,181486,167390,297.9,43.5,17.5,2010,13.7,13.1,44.8,26.4,0,0,Marshall Islands,Oldendorff Carriers,Univan Ship Management
+9355626,Grand Fortune,Capesize,168122,173165,159715,292.4,43.1,18.2,2011,14.0,13.4,39.4,31.6,0,0,Singapore,Precious Shipping,Thome Group
+9215871,Blue Eagle,Capesize,159501,164286,151525,293.4,43.5,18.3,2016,12.6,13.0,42.0,31.9,0,0,Cyprus,Eagle Bulk Shipping,V.Group
+9111444,Grand Phoenix,Capesize,171571,176718,162992,290.9,44.8,18.5,2017,13.5,14.5,40.7,31.0,0,0,Liberia,Pacific Basin,Anglo-Eastern
+9057030,Global Pioneer,Capesize,177426,182748,168554,281.4,44.5,17.8,2013,12.6,14.0,41.0,29.0,0,0,Singapore,Eagle Bulk Shipping,Fleet Management Limited
+9307294,Blue Horizon,Capesize,151482,156026,143907,283.2,43.9,17.8,2018,14.0,13.8,40.0,31.8,0,0,Singapore,Eagle Bulk Shipping,Anglo-Eastern
+9191845,Eastern Progress,Capesize,150035,154536,142533,281.7,43.6,18.2,2015,13.3,13.0,40.1,26.5,0,0,Bahamas,Star Bulk Carriers,V.Group

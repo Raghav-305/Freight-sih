@@ -237,9 +237,100 @@ button:disabled {
   opacity: 0.65;
 }
 
-.forecast-form button {
+.forecast-form button,
+.congestion-form button {
   width: 100%;
   margin-top: 16px;
+}
+
+.congestion-section {
+  margin-top: 16px;
+  border: 1px solid #d9d2c4;
+  border-radius: 8px;
+  background: #ffffff;
+  padding: 18px;
+}
+
+.congestion-form {
+  margin-bottom: 16px;
+}
+
+.congestion-result {
+  border-top: 1px solid #e5ded1;
+  padding-top: 16px;
+}
+
+.result-header h4 {
+  margin-top: 4px;
+  color: #1d241f;
+}
+
+.result-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.result-card {
+  min-height: 104px;
+  border: 1px solid #ded7ca;
+  border-radius: 8px;
+  padding: 14px;
+  background: #fbfaf6;
+}
+
+.result-card span,
+.constraint span {
+  display: block;
+  color: #687268;
+  font-size: 12px;
+  font-weight: 750;
+  text-transform: uppercase;
+}
+
+.result-card strong {
+  display: block;
+  margin-top: 10px;
+  font-size: 22px;
+}
+
+.result-card strong.ok,
+.constraint.ok strong {
+  color: #2f6d42;
+}
+
+.result-card strong.warn,
+.constraint.warn strong {
+  color: #8a4b2f;
+}
+
+.constraint-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.constraint {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  border: 1px solid #ded7ca;
+  border-radius: 8px;
+  padding: 10px 12px;
+  background: #fbfaf6;
+}
+
+.constraint.ok {
+  border-color: #b9dcc0;
+  background: #f1faf4;
+}
+
+.constraint.warn {
+  border-color: #e6c5b3;
+  background: #fff8f4;
 }
 
 .horizon-grid {
@@ -414,7 +505,9 @@ th {
   }
 
   .form-grid,
-  .horizon-grid {
+  .horizon-grid,
+  .result-grid,
+  .constraint-grid {
     grid-template-columns: 1fr;
   }
 
