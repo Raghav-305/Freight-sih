@@ -162,6 +162,29 @@ function App() {
   const [market, setMarket] = useState<MarketIntelligence | null>(null);
   const [marketLoading, setMarketLoading] = useState(false);
   const [marketError, setMarketError] = useState<string | null>(null);
+  const [explainInputs, setExplainInputs] = useState({
+    origin: "Australia",
+    destination: "Dhamra",
+    vessel_type: "Panamax",
+    cargo_type: "Coal",
+    cargo_quantity: 80000,
+    horizon: 30,
+  });
+  const [explanation, setExplanation] = useState<any | null>(null);
+  const [explainLoading, setExplainLoading] = useState(false);
+  const [explainError, setExplainError] = useState<string | null>(null);
+  const [whatIfInputs, setWhatIfInputs] = useState({
+    origin: "Australia",
+    destination: "Dhamra",
+    vessel_type: "Panamax",
+    cargo_type: "Coal",
+    cargo_quantity: 80000,
+    freight_change_pct: 8,
+    bunker_change_pct: 5,
+  });
+  const [whatIfResult, setWhatIfResult] = useState<any | null>(null);
+  const [whatIfLoading, setWhatIfLoading] = useState(false);
+  const [whatIfError, setWhatIfError] = useState<string | null>(null);
 
   const horizons = useMemo(() => Object.entries(forecast?.forecast ?? {}), [forecast]);
 
@@ -254,6 +277,46 @@ function App() {
 
   function updateCongestionField<K extends keyof CongestionInputs>(key: K, value: CongestionInputs[K]) {
     setCongestionInputs((current) => ({ ...current, [key]: value }));
+  }
+
+  async function runExplain() {
+    setExplainLoading(true);
+    setExplainError(null);
+
+    try {
+      const result = await api<any>("/forecast/explain", {
+        method: "POST",
+        body: JSON.stringify({
+          ...explainInputs,
+          cargo_quantity: Number(explainInputs.cargo_quantity),
+        }),
+      });
+      setExplanation(result);
+    } catch (err) {
+      setExplainError(err instanceof Error ? err.message : "Unable to load forecast explanation");
+    } finally {
+      setExplainLoading(false);
+    }
+  }
+
+  async function runWhatIf() {
+    setWhatIfLoading(true);
+    setWhatIfError(null);
+
+    try {
+      const result = await api<any>("/forecast/what-if", {
+        method: "POST",
+        body: JSON.stringify({
+          ...whatIfInputs,
+          cargo_quantity: Number(whatIfInputs.cargo_quantity),
+        }),
+      });
+      setWhatIfResult(result);
+    } catch (err) {
+      setWhatIfError(err instanceof Error ? err.message : "Unable to run what-if forecast");
+    } finally {
+      setWhatIfLoading(false);
+    }
   }
 
   function submit(event: FormEvent<HTMLFormElement>) {
@@ -351,6 +414,109 @@ function App() {
             </div>
           ) : null}
           {!marketError && !market && marketLoading ? <p>Loading market intelligence…</p> : null}
+        </section>
+
+        <section className="content-grid analysis-grid">
+          <form className="forecast-form" onSubmit={(event) => {
+            event.preventDefault();
+            void runExplain();
+          }}>
+            <div className="section-title">
+              <span className="eyebrow">Prediction Explainability</span>
+              <h3>Model driver analysis</h3>
+            </div>
+
+            <div className="form-grid">
+              <Select label="Origin" value={explainInputs.origin} values={["Australia", "Indonesia", "Mozambique", "Russia", "USA"]} onChange={(value) => setExplainInputs((current) => ({ ...current, origin: value }))} />
+              <Select label="Destination" value={explainInputs.destination} values={["Dhamra", "Gangavaram", "Gopalpur", "Haldia", "Paradip", "Vizag"]} onChange={(value) => setExplainInputs((current) => ({ ...current, destination: value }))} />
+              <Select label="Vessel Type" value={explainInputs.vessel_type} values={["Panamax", "Supramax", "Capesize", "Handysize"]} onChange={(value) => setExplainInputs((current) => ({ ...current, vessel_type: value }))} />
+              <Select label="Cargo Type" value={explainInputs.cargo_type} values={["Coal"]} onChange={(value) => setExplainInputs((current) => ({ ...current, cargo_type: value }))} />
+              <Field label="Cargo Quantity" type="number" value={explainInputs.cargo_quantity} onChange={(value) => setExplainInputs((current) => ({ ...current, cargo_quantity: Number(value) }))} />
+              <Field label="Horizon Days" type="number" value={explainInputs.horizon} onChange={(value) => setExplainInputs((current) => ({ ...current, horizon: Number(value) }))} />
+            </div>
+            <button type="submit" disabled={explainLoading}> {explainLoading ? "Loading drivers..." : "Explain Forecast"} </button>
+          </form>
+
+          <section className="forecast-output">
+            {explainError ? <ErrorPanel message={explainError} /> : null}
+            {!explainError && explanation ? (
+              <>
+                <div className="section-title">
+                  <span className="eyebrow">Forecast Explanation</span>
+                  <h3>{explanation.horizon}</h3>
+                </div>
+                <div className="result-grid">
+                  <div className="result-card">
+                    <span>Prediction</span>
+                    <strong>${explanation.prediction.toFixed(2)}/MT</strong>
+                  </div>
+                  <div className="result-card">
+                    <span>Base Value</span>
+                    <strong>${explanation.base_value.toFixed(2)}/MT</strong>
+                  </div>
+                </div>
+                <div className="constraint-grid">
+                  {explanation.positive_drivers.map((driver: any) => (
+                    <div key={driver.feature} className="constraint ok">
+                      <span>{driver.label}</span>
+                      <strong>+${driver.contribution.toFixed(2)}</strong>
+                    </div>
+                  ))}
+                  {explanation.negative_drivers.map((driver: any) => (
+                    <div key={driver.feature} className="constraint warn">
+                      <span>{driver.label}</span>
+                      <strong>-${Math.abs(driver.contribution).toFixed(2)}</strong>
+                    </div>
+                  ))}
+                </div>
+                <pre style={{ whiteSpace: "pre-wrap", marginTop: "1rem" }}>{explanation.narrative}</pre>
+              </>
+            ) : null}
+          </section>
+        </section>
+
+        <section className="content-grid analysis-grid">
+          <form className="forecast-form" onSubmit={(event) => {
+            event.preventDefault();
+            void runWhatIf();
+          }}>
+            <div className="section-title">
+              <span className="eyebrow">What-if Forecast</span>
+              <h3>Scenario impacts</h3>
+            </div>
+
+            <div className="form-grid">
+              <Select label="Origin" value={whatIfInputs.origin} values={["Australia", "Indonesia", "Mozambique", "Russia", "USA"]} onChange={(value) => setWhatIfInputs((current) => ({ ...current, origin: value }))} />
+              <Select label="Destination" value={whatIfInputs.destination} values={["Dhamra", "Gangavaram", "Gopalpur", "Haldia", "Paradip", "Vizag"]} onChange={(value) => setWhatIfInputs((current) => ({ ...current, destination: value }))} />
+              <Select label="Vessel Type" value={whatIfInputs.vessel_type} values={["Panamax", "Supramax", "Capesize", "Handysize"]} onChange={(value) => setWhatIfInputs((current) => ({ ...current, vessel_type: value }))} />
+              <Select label="Cargo Type" value={whatIfInputs.cargo_type} values={["Coal"]} onChange={(value) => setWhatIfInputs((current) => ({ ...current, cargo_type: value }))} />
+              <Field label="Cargo Quantity" type="number" value={whatIfInputs.cargo_quantity} onChange={(value) => setWhatIfInputs((current) => ({ ...current, cargo_quantity: Number(value) }))} />
+              <Field label="Freight change %" type="number" value={whatIfInputs.freight_change_pct} onChange={(value) => setWhatIfInputs((current) => ({ ...current, freight_change_pct: Number(value) }))} />
+              <Field label="Bunker change %" type="number" value={whatIfInputs.bunker_change_pct} onChange={(value) => setWhatIfInputs((current) => ({ ...current, bunker_change_pct: Number(value) }))} />
+            </div>
+            <button type="submit" disabled={whatIfLoading}> {whatIfLoading ? "Running scenario..." : "Run What-if"} </button>
+          </form>
+
+          <section className="forecast-output">
+            {whatIfError ? <ErrorPanel message={whatIfError} /> : null}
+            {!whatIfError && whatIfResult ? (
+              <>
+                <div className="section-title">
+                  <span className="eyebrow">Scenario Output</span>
+                  <h3>{whatIfResult.route_id ?? "Route scenario"}</h3>
+                </div>
+                <div className="horizon-grid">
+                  {whatIfResult.horizons.map((item: any) => (
+                    <div className="horizon-card" key={item.horizon}>
+                      <span>{item.horizon}</span>
+                      <strong>${item.scenario_usd_mt.toFixed(2)}</strong>
+                      <small>Δ ${item.delta_usd_mt.toFixed(2)} · {item.delta_pct.toFixed(2)}%</small>
+                    </div>
+                  ))}
+                </div>
+              </>
+            ) : null}
+          </section>
         </section>
 
         <section id="forecast" className="content-grid">
