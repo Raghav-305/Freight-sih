@@ -1,0 +1,236 @@
+{
+  "Logistic Regression": {
+    "accuracy": 0.41761194029850746,
+    "balanced_accuracy": 0.3551136685934067,
+    "f1_macro": 0.2263186345750259,
+    "f1_weighted": 0.28440880822162384,
+    "confusion_matrix": [
+      [
+        229,
+        5356,
+        285
+      ],
+      [
+        28,
+        3964,
+        125
+      ],
+      [
+        0,
+        59,
+        4
+      ]
+    ],
+    "classification_report": {
+      "BEARISH": {
+        "precision": 0.8910505836575876,
+        "recall": 0.039011925042589435,
+        "f1-score": 0.07475110168108373,
+        "support": 5870.0
+      },
+      "BULLISH": {
+        "precision": 0.4226463375626399,
+        "recall": 0.9628370172455671,
+        "f1-score": 0.5874333135743924,
+        "support": 4117.0
+      },
+      "NEUTRAL": {
+        "precision": 0.00966183574879227,
+        "recall": 0.06349206349206349,
+        "f1-score": 0.016771488469601678,
+        "support": 63.0
+      },
+      "accuracy": 0.41761194029850746,
+      "macro avg": {
+        "precision": 0.4411195856563399,
+        "recall": 0.3551136685934067,
+        "f1-score": 0.2263186345750259,
+        "support": 10050.0
+      },
+      "weighted avg": {
+        "precision": 0.6936428451211544,
+        "recall": 0.41761194029850746,
+        "f1-score": 0.28440880822162384,
+        "support": 10050.0
+      }
+    },
+    "per_class_metrics": {
+      "BEARISH": {
+        "precision": 0.8910505836575876,
+        "recall": 0.039011925042589435,
+        "f1": 0.07475110168108373,
+        "support": 5870
+      },
+      "BULLISH": {
+        "precision": 0.4226463375626399,
+        "recall": 0.9628370172455671,
+        "f1": 0.5874333135743924,
+        "support": 4117
+      },
+      "NEUTRAL": {
+        "precision": 0.00966183574879227,
+        "recall": 0.06349206349206349,
+        "f1": 0.016771488469601678,
+        "support": 63
+      }
+    },
+    "mean_probability_max": 0.5047072900602512,
+    "model_name": "Logistic Regression"
+  },
+  "Random Forest": {
+    "accuracy": 1.0,
+    "balanced_accuracy": 1.0,
+    "f1_macro": 1.0,
+    "f1_weighted": 1.0,
+    "confusion_matrix": [
+      [
+        5870,
+        0,
+        0
+      ],
+      [
+        0,
+        4117,
+        0
+      ],
+      [
+        0,
+        0,
+        63
+      ]
+    ],
+    "classification_report": {
+      "BEARISH": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 5870.0
+      },
+      "BULLISH": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 4117.0
+      },
+      "NEUTRAL": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 63.0
+      },
+      "accuracy": 1.0,
+      "macro avg": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 10050.0
+      },
+      "weighted avg": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 10050.0
+      }
+    },
+    "per_class_metrics": {
+      "BEARISH": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "support": 5870
+      },
+      "BULLISH": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "support": 4117
+      },
+      "NEUTRAL": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "support": 63
+      }
+    },
+    "mean_probability_max": 0.7965553968598065,
+    "model_name": "Random Forest"
+  },
+  "XGBoost": {
+    "accuracy": 1.0,
+    "balanced_accuracy": 1.0,
+    "f1_macro": 1.0,
+    "f1_weighted": 1.0,
+    "confusion_matrix": [
+      [
+        5870,
+        0,
+        0
+      ],
+      [
+        0,
+        4117,
+        0
+      ],
+      [
+        0,
+        0,
+        63
+      ]
+    ],
+    "classification_report": {
+      "BEARISH": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 5870.0
+      },
+      "BULLISH": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 4117.0
+      },
+      "NEUTRAL": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 63.0
+      },
+      "accuracy": 1.0,
+      "macro avg": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 10050.0
+      },
+      "weighted avg": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 10050.0
+      }
+    },
+    "per_class_metrics": {
+      "BEARISH": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "support": 5870
+      },
+      "BULLISH": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "support": 4117
+      },
+      "NEUTRAL": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "support": 63
+      }
+    },
+    "mean_probability_max": 0.9999718070030212,
+    "model_name": "XGBoost"
+  }
+}

@@ -1,7 +1,17 @@
 # API Contract
 
 ## GET /market
-Returns current dry-bulk indices and route market values. Include `updated_at`, `indices.bdi`, `indices.bpi`, `indices.bsi`, `route_freight` and `bunker`.
+Returns current dry-bulk indices, route market values, and market intelligence scoring.
+
+Query params (optional): `origin`, `destination`, `vessel_class`, `as_of_date`.
+
+Include:
+- `updated_at`, `indices.bdi`, `indices.bpi`, `indices.bsi`, `route_freight`, `bunker`, `coal`
+- `market_regime`, `market_regime_interpretation`, `market_score`
+- `probabilities.bearish`, `probabilities.neutral`, `probabilities.bullish`
+- `confidence`, `freight_direction`, `market_volatility`, `forward_market_signal`
+- `bunker_pressure`, `port_pressure`, `chartering_signal`
+- `route` snapshot, `top_factors`, `model_version`, `dataset_version`, `feature_version`, `training_date`
 
 ## GET|POST /forecast
 Request: `origin`, `destination`, `vessel_type`, `cargo_quantity`, `laycan_start`, `laycan_end`.

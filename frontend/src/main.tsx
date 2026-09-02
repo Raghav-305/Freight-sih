@@ -38,6 +38,32 @@ type Health = {
   timestamp: string;
 };
 
+type MarketIntelligence = {
+  mode: string;
+  updated_at: string;
+  indices: { bdi: number; bpi: number; bsi: number; bhsi?: number; bci?: number };
+  route_freight: number;
+  bunker: number;
+  coal: number;
+  market_regime: string;
+  market_regime_interpretation: string;
+  market_score: number;
+  probabilities: { bearish: number; neutral: number; bullish: number };
+  confidence: number;
+  freight_direction: string;
+  market_volatility: string;
+  forward_market_signal: string;
+  bunker_pressure: string;
+  port_pressure: string;
+  chartering_signal: string;
+  top_factors: Array<{ feature: string; importance: number; rank: number }>;
+  model_version: string;
+  dataset_version: string;
+  feature_version: string;
+  training_date: string;
+  note: string;
+};
+
 type ForecastInputs = {
   origin: string;
   destination: string;
@@ -46,6 +72,13 @@ type ForecastInputs = {
   cargo_quantity: number;
   laycan_start: string;
   laycan_end: string;
+};
+
+type MarketInputs = {
+  origin: string;
+  destination: string;
+  vessel_class: string;
+  as_of_date: string;
 };
 
 type PortCongestionResponse = {
@@ -87,6 +120,13 @@ const defaultCongestionInputs: CongestionInputs = {
   vessel_dwt: 78000,
 };
 
+const defaultMarketInputs: MarketInputs = {
+  origin: "Australia",
+  destination: "Dhamra",
+  vessel_class: "Panamax",
+  as_of_date: "",
+};
+
 async function api<T>(path: string, init?: RequestInit): Promise<T> {
   const response = await fetch(`${apiBaseUrl}${path}`, {
     ...init,
@@ -118,13 +158,40 @@ function App() {
   const [congestionResult, setCongestionResult] = useState<PortCongestionResponse | null>(null);
   const [congestionLoading, setCongestionLoading] = useState(false);
   const [congestionError, setCongestionError] = useState<string | null>(null);
+  const [marketInputs, setMarketInputs] = useState<MarketInputs>(defaultMarketInputs);
+  const [market, setMarket] = useState<MarketIntelligence | null>(null);
+  const [marketLoading, setMarketLoading] = useState(false);
+  const [marketError, setMarketError] = useState<string | null>(null);
 
   const horizons = useMemo(() => Object.entries(forecast?.forecast ?? {}), [forecast]);
 
   useEffect(() => {
     void refreshSystem();
     void runForecast(defaultInputs);
+    void loadMarketIntelligence(defaultMarketInputs);
   }, []);
+
+  async function loadMarketIntelligence(nextInputs = marketInputs) {
+    setMarketLoading(true);
+    setMarketError(null);
+
+    try {
+      const params = new URLSearchParams({
+        origin: nextInputs.origin,
+        destination: nextInputs.destination,
+        vessel_class: nextInputs.vessel_class,
+      });
+      if (nextInputs.as_of_date) {
+        params.set("as_of_date", nextInputs.as_of_date);
+      }
+      const result = await api<MarketIntelligence>(`/market?${params.toString()}`);
+      setMarket(result);
+    } catch (err) {
+      setMarketError(err instanceof Error ? err.message : "Unable to call market intelligence API");
+    } finally {
+      setMarketLoading(false);
+    }
+  }
 
   async function refreshSystem() {
     const [healthResult, modelsResult] = await Promise.allSettled([
@@ -181,6 +248,10 @@ function App() {
     setInputs((current) => ({ ...current, [key]: value }));
   }
 
+  function updateMarketField<K extends keyof MarketInputs>(key: K, value: MarketInputs[K]) {
+    setMarketInputs((current) => ({ ...current, [key]: value }));
+  }
+
   function updateCongestionField<K extends keyof CongestionInputs>(key: K, value: CongestionInputs[K]) {
     setCongestionInputs((current) => ({ ...current, [key]: value }));
   }
@@ -204,6 +275,7 @@ function App() {
           <p>Live FastAPI forecast workspace</p>
         </div>
         <nav>
+          <a href="#market">Market Intelligence</a>
           <a className="active" href="#forecast">Forecast</a>
           <a href="#models">Models</a>
           <a href="#health">Health</a>
@@ -229,7 +301,56 @@ function App() {
           <Metric label="API Health" value={health?.status ?? "checking"} />
           <Metric label="Active Model" value={models?.active_forecasting_model ?? "loading"} />
           <Metric label="Current Freight" value={forecast ? `${money(forecast.current_freight)}/MT` : "..."} />
-          <Metric label="Confidence" value={forecast ? `${Math.round(forecast.confidence * 100)}%` : "..."} />
+          <Metric label="Market Score" value={market ? String(market.market_score) : marketLoading ? "..." : "n/a"} />
+        </section>
+
+        <section id="market" className="market-section">
+          <div className="section-title">
+            <span className="eyebrow">Market Intelligence</span>
+            <h3>30-day regime and chartering signal</h3>
+          </div>
+
+          <form className="forecast-form" onSubmit={(event) => {
+            event.preventDefault();
+            void loadMarketIntelligence(marketInputs);
+          }}>
+            <div className="form-grid">
+              <Select label="Origin" value={marketInputs.origin} values={["Australia", "Indonesia", "Mozambique", "Russia", "USA"]} onChange={(value) => updateMarketField("origin", value)} />
+              <Select label="Destination" value={marketInputs.destination} values={["Dhamra", "Gangavaram", "Gopalpur", "Haldia", "Paradip", "Vizag"]} onChange={(value) => updateMarketField("destination", value)} />
+              <Select label="Vessel Class" value={marketInputs.vessel_class} values={["Panamax", "Supramax", "Capesize", "Handysize"]} onChange={(value) => updateMarketField("vessel_class", value)} />
+              <Field label="As of Date" type="date" value={marketInputs.as_of_date} onChange={(value) => updateMarketField("as_of_date", value)} />
+            </div>
+            <button type="submit" disabled={marketLoading}>
+              {marketLoading ? "Running market intelligence..." : "Generate Market Intelligence"}
+            </button>
+          </form>
+
+          {marketError ? <ErrorPanel message={marketError} /> : null}
+          {!marketError && market ? (
+            <div className="market-grid">
+              <div className="market-card">
+                <span>Regime</span>
+                <strong>{market.market_regime}</strong>
+                <small>{market.market_regime_interpretation}</small>
+              </div>
+              <div className="market-card">
+                <span>Chartering Signal</span>
+                <strong>{market.chartering_signal}</strong>
+                <small>{market.freight_direction} · {market.market_volatility} volatility</small>
+              </div>
+              <div className="market-card">
+                <span>Probabilities</span>
+                <strong>B {Math.round(market.probabilities.bullish * 100)}%</strong>
+                <small>N {Math.round(market.probabilities.neutral * 100)}% · Be {Math.round(market.probabilities.bearish * 100)}%</small>
+              </div>
+              <div className="market-card">
+                <span>Indices</span>
+                <strong>BDI {market.indices.bdi}</strong>
+                <small>BPI {market.indices.bpi} · BSI {market.indices.bsi}</small>
+              </div>
+            </div>
+          ) : null}
+          {!marketError && !market && marketLoading ? <p>Loading market intelligence…</p> : null}
         </section>
 
         <section id="forecast" className="content-grid">

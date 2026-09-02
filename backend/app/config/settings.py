@@ -9,6 +9,7 @@ class Settings(BaseSettings):
     model_artifact_path: str = "./ml/artifacts"
     model_registry_path: str = "./ml/registry/model_registry.json"
     data_root_path: str = "./data"
+    market_intelligence_data_path: str = "./data/features/market_intelligence"
 
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8")
 

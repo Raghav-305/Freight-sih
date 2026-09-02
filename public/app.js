@@ -57,9 +57,12 @@ async function dashboard(){
 // ==== MARKET ================================================================
 async function market(){
   const m = await api('/market');
-  return layout(heading('Market Intelligence','Dry bulk indices, route freight, bunker and commodity signals \u2014 from /api/market')+
-    `<div class="grid md:grid-cols-3 xl:grid-cols-6 gap-3">${metric('BDI',m.indices.bdi)}${metric('BPI',m.indices.bpi)}${metric('BSI',m.indices.bsi)}${metric('Route Freight','$'+m.route_freight+'/MT')}${metric('Bunker','$'+m.bunker+'/MT')}${metric('Coal','$'+m.coal+'/MT')}</div>`+
-    `<div class="panel p-5 mt-5 text-xs muted">Last updated: ${m.updated_at}</div>`);
+  const probRows = Object.entries(m.probabilities || {}).map(([k,v])=>`<div><div class="muted text-xs">${k.toUpperCase()}</div><div class="font-semibold mt-1">${(v*100).toFixed(1)}%</div></div>`);
+  const factorRows = (m.top_factors||[]).slice(0,5).map(f=>`<div class="flex justify-between border-b border-[#eee9df] py-2 text-sm"><span>${esc(f.feature)}</span><span class="font-medium">${f.importance}</span></div>`).join('');
+  return layout(heading('Market Intelligence','30-day dry-bulk market regime, scoring and chartering signals — GET /api/market')+
+    `<div class="grid md:grid-cols-3 xl:grid-cols-6 gap-3">${metric('BDI',m.indices.bdi)}${metric('BPI',m.indices.bpi)}${metric('BSI',m.indices.bsi)}${metric('Route Freight','$'+m.route_freight+'/MT')}${metric('Market Score',m.market_score)}${metric('Regime',m.market_regime)}</div>`+
+    `<div class="grid lg:grid-cols-2 gap-5 mt-5"><div class="panel p-5"><div class="font-semibold">Chartering signal</div><div class="mt-3 text-lg font-semibold">${esc(m.chartering_signal)}</div><div class="mt-2 text-sm muted">${esc(m.market_regime_interpretation)} · ${esc(m.freight_direction)} freight · ${esc(m.market_volatility)} volatility</div><div class="mt-4 grid grid-cols-3 gap-4 text-sm"><div><div class="muted text-xs">Forward signal</div><div class="font-semibold mt-1">${esc(m.forward_market_signal)}</div></div><div><div class="muted text-xs">Bunker pressure</div><div class="font-semibold mt-1">${esc(m.bunker_pressure)}</div></div><div><div class="muted text-xs">Port pressure</div><div class="font-semibold mt-1">${esc(m.port_pressure)}</div></div></div></div><div class="panel p-5"><div class="font-semibold">Regime probabilities</div><div class="grid grid-cols-3 gap-4 mt-4">${probRows.join('')}</div><div class="mt-4 grid grid-cols-2 gap-4 text-sm"><div><div class="muted text-xs">Bunker</div><div class="font-semibold mt-1">$${m.bunker}/MT</div></div><div><div class="muted text-xs">Coal</div><div class="font-semibold mt-1">$${m.coal}/MT</div></div></div></div></div>`+
+    `<div class="panel p-5 mt-5"><div class="font-semibold">Top model factors</div><div class="mt-3">${factorRows||'<div class="muted text-sm">No feature importance loaded.</div>'}</div><div class="mt-4 text-xs muted">Model ${esc(m.model_version)} · Dataset ${esc(m.dataset_version)} · Updated ${esc(m.updated_at)} · ${esc(m.note||'')}</div></div>`);
 }
 
 // ==== FORECAST ===============================================================

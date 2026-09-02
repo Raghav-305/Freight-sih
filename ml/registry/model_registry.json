@@ -1,5 +1,6 @@
 {
   "active_forecasting_model": "xgb_panamax_freight_v7",
+  "active_market_intelligence_model": "market_intelligence_v1",
   "models": [
     {
       "model_version": "xgb_panamax_freight_v7",
@@ -22,6 +23,17 @@
       "metadata": "metadata.json",
       "artifact_format": "pickle",
       "status": "imported"
+    },
+    {
+      "model_version": "market_intelligence_v1",
+      "family": "market_intelligence",
+      "algorithm": "random_forest",
+      "relative_path": "market_intelligence/market_intelligence_v1",
+      "artifact": "market_intelligence_model.pkl",
+      "feature_schema": "market_intelligence_feature_columns.json",
+      "metadata": "market_intelligence_metadata.json",
+      "artifact_format": "pickle",
+      "status": "active"
     }
   ]
 }
