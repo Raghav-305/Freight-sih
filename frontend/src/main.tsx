@@ -64,6 +64,13 @@ type MarketIntelligence = {
   note: string;
 };
 
+type MarketContext = {
+  ffa: Array<{ period: string; price: number }>;
+  import_summary: { origin_country: string; quantity_mt: number; value_usd: number; month: string } | null;
+  active_events: Array<{ event_id: string; event_type: string; region: string; severity: string; start: string; end: string }>;
+  fixtures: { fixture_count: number; average_rate: number | null; average_quantity_mt: number | null; latest_fixture_date: string | null };
+};
+
 type VesselCandidate = {
   imo: string;
   vessel_name: string;
@@ -198,6 +205,9 @@ function App() {
   const [market, setMarket] = useState<MarketIntelligence | null>(null);
   const [marketLoading, setMarketLoading] = useState(false);
   const [marketError, setMarketError] = useState<string | null>(null);
+  const [marketContext, setMarketContext] = useState<MarketContext | null>(null);
+  const [marketContextLoading, setMarketContextLoading] = useState(false);
+  const [marketContextError, setMarketContextError] = useState<string | null>(null);
   const [vesselInputs, setVesselInputs] = useState(defaultVesselInputs);
   const [vesselResult, setVesselResult] = useState<VesselRecommendation | null>(null);
   const [vesselLoading, setVesselLoading] = useState(false);
@@ -232,6 +242,7 @@ function App() {
     void refreshSystem();
     void runForecast(defaultInputs);
     void loadMarketIntelligence(defaultMarketInputs);
+    void loadMarketContext(defaultMarketInputs);
     void recommendVessels(defaultVesselInputs);
   }, []);
 
@@ -254,6 +265,24 @@ function App() {
       setMarketError(err instanceof Error ? err.message : "Unable to call market intelligence API");
     } finally {
       setMarketLoading(false);
+    }
+  }
+
+  async function loadMarketContext(nextInputs = marketInputs) {
+    setMarketContextLoading(true);
+    setMarketContextError(null);
+    try {
+      const params = new URLSearchParams({
+        origin: nextInputs.origin,
+        destination: nextInputs.destination,
+        vessel_class: nextInputs.vessel_class,
+      });
+      if (nextInputs.as_of_date) params.set("as_of_date", nextInputs.as_of_date);
+      setMarketContext(await api<MarketContext>(`/market/context?${params.toString()}`));
+    } catch (err) {
+      setMarketContextError(err instanceof Error ? err.message : "Unable to load market context data");
+    } finally {
+      setMarketContextLoading(false);
     }
   }
 
@@ -440,6 +469,7 @@ function App() {
           <form className="forecast-form" onSubmit={(event) => {
             event.preventDefault();
             void loadMarketIntelligence(marketInputs);
+            void loadMarketContext(marketInputs);
           }}>
             <div className="form-grid">
               <Select label="Origin" value={marketInputs.origin} values={["Australia", "Indonesia", "Mozambique", "Russia", "USA"]} onChange={(value) => updateMarketField("origin", value)} />
@@ -478,6 +508,32 @@ function App() {
             </div>
           ) : null}
           {!marketError && !market && marketLoading ? <p>Loading market intelligence…</p> : null}
+          {marketContextError ? <ErrorPanel message={marketContextError} /> : null}
+          {!marketContextError && marketContext ? (
+            <div className="market-grid">
+              <div className="market-card">
+                <span>FFA Curve</span>
+                <strong>{marketContext.ffa.map((point) => `${point.period} ${point.price}`).join(" · ") || "n/a"}</strong>
+                <small>Latest forward freight prices</small>
+              </div>
+              <div className="market-card">
+                <span>Coal Imports</span>
+                <strong>{marketContext.import_summary ? `${(marketContext.import_summary.quantity_mt / 1000000).toFixed(2)}M MT` : "n/a"}</strong>
+                <small>{marketContext.import_summary ? `${marketContext.import_summary.month} · ${money(marketContext.import_summary.value_usd)}` : "No import record"}</small>
+              </div>
+              <div className="market-card">
+                <span>Market Events</span>
+                <strong>{marketContext.active_events.length}</strong>
+                <small>{marketContext.active_events.map((event) => `${event.event_type} · ${event.severity}`).join("; ") || "No active events"}</small>
+              </div>
+              <div className="market-card">
+                <span>Fixture History</span>
+                <strong>{marketContext.fixtures.fixture_count} fixtures</strong>
+                <small>{marketContext.fixtures.average_rate != null ? `Avg $${marketContext.fixtures.average_rate.toFixed(2)}/MT` : "No fixture history"}</small>
+              </div>
+            </div>
+          ) : null}
+          {!marketContextError && !marketContext && marketContextLoading ? <p>Loading market context…</p> : null}
         </section>
 
         <section id="vessels" className="market-section">

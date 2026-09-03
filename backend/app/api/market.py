@@ -1,6 +1,7 @@
 from fastapi import APIRouter, HTTPException, Query
 
-from backend.app.schemas.market import MarketIntelligenceResponse
+from backend.app.schemas.market import MarketContextResponse, MarketIntelligenceResponse
+from backend.app.services.market_context_service import market_context_service
 from backend.app.services.market_service import market_service
 
 router = APIRouter(tags=["market"])
@@ -22,4 +23,23 @@ def get_market_intelligence(
             as_of_date=as_of_date,
         )
     except ValueError as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+
+
+@router.get("/market/context", response_model=MarketContextResponse)
+@router.get("/api/market/context", response_model=MarketContextResponse)
+def get_market_context(
+    origin: str = Query(default="Australia"),
+    destination: str = Query(default="Dhamra"),
+    vessel_class: str = Query(default="Panamax"),
+    as_of_date: str | None = Query(default=None),
+) -> MarketContextResponse:
+    try:
+        return MarketContextResponse(**market_context_service.get_context(
+            origin=origin,
+            destination=destination,
+            vessel_class=vessel_class,
+            as_of_date=as_of_date,
+        ))
+    except (FileNotFoundError, ValueError) as exc:
         raise HTTPException(status_code=404, detail=str(exc)) from exc

@@ -68,3 +68,42 @@ class MarketIntelligenceResponse(BaseModel):
     training_date: str
     horizon_days: int = 30
     note: str
+
+
+class MarketFfaPoint(BaseModel):
+    period: str
+    price: float
+
+
+class MarketImportSummary(BaseModel):
+    origin_country: str
+    quantity_mt: float
+    value_usd: float
+    month: str
+
+
+class MarketEvent(BaseModel):
+    event_id: str
+    event_type: str
+    region: str
+    severity: str
+    start: str
+    end: str
+
+
+class FixtureSummary(BaseModel):
+    fixture_count: int
+    average_rate: float | None = None
+    average_quantity_mt: float | None = None
+    latest_fixture_date: str | None = None
+
+
+class MarketContextResponse(BaseModel):
+    origin: str
+    destination: str
+    vessel_class: str
+    as_of_date: str | None = None
+    ffa: list[MarketFfaPoint] = Field(default_factory=list)
+    import_summary: MarketImportSummary | None = None
+    active_events: list[MarketEvent] = Field(default_factory=list)
+    fixtures: FixtureSummary
