@@ -64,6 +64,34 @@ type MarketIntelligence = {
   note: string;
 };
 
+type VesselCandidate = {
+  imo: string;
+  vessel_name: string;
+  vessel_class: string;
+  destination: string;
+  dwt_mt: number;
+  draft_m: number;
+  predicted_waiting_hours: number;
+  suitability_score: number;
+  feasible: boolean;
+  eligibility: string;
+  recommendation_tier: string;
+  failed_constraints: string[];
+};
+
+type VesselRecommendation = {
+  destination: string;
+  vessel_class: string;
+  cargo_quantity: number;
+  as_of_date: string | null;
+  model_version: string;
+  target: string;
+  candidates: VesselCandidate[];
+  candidate_count: number;
+  feasible_count: number;
+  note: string;
+};
+
 type ForecastInputs = {
   origin: string;
   destination: string;
@@ -127,6 +155,14 @@ const defaultMarketInputs: MarketInputs = {
   as_of_date: "",
 };
 
+const defaultVesselInputs = {
+  destination: "Dhamra",
+  vessel_class: "Panamax",
+  cargo_quantity: 70000,
+  as_of_date: "",
+  limit: 10,
+};
+
 async function api<T>(path: string, init?: RequestInit): Promise<T> {
   const response = await fetch(`${apiBaseUrl}${path}`, {
     ...init,
@@ -162,6 +198,10 @@ function App() {
   const [market, setMarket] = useState<MarketIntelligence | null>(null);
   const [marketLoading, setMarketLoading] = useState(false);
   const [marketError, setMarketError] = useState<string | null>(null);
+  const [vesselInputs, setVesselInputs] = useState(defaultVesselInputs);
+  const [vesselResult, setVesselResult] = useState<VesselRecommendation | null>(null);
+  const [vesselLoading, setVesselLoading] = useState(false);
+  const [vesselError, setVesselError] = useState<string | null>(null);
   const [explainInputs, setExplainInputs] = useState({
     origin: "Australia",
     destination: "Dhamra",
@@ -192,6 +232,7 @@ function App() {
     void refreshSystem();
     void runForecast(defaultInputs);
     void loadMarketIntelligence(defaultMarketInputs);
+    void recommendVessels(defaultVesselInputs);
   }, []);
 
   async function loadMarketIntelligence(nextInputs = marketInputs) {
@@ -213,6 +254,28 @@ function App() {
       setMarketError(err instanceof Error ? err.message : "Unable to call market intelligence API");
     } finally {
       setMarketLoading(false);
+    }
+  }
+
+  async function recommendVessels(nextInputs = vesselInputs) {
+    setVesselLoading(true);
+    setVesselError(null);
+
+    try {
+      const result = await api<VesselRecommendation>("/vessels/recommend", {
+        method: "POST",
+        body: JSON.stringify({
+          ...nextInputs,
+          cargo_quantity: Number(nextInputs.cargo_quantity),
+          limit: Number(nextInputs.limit),
+          as_of_date: nextInputs.as_of_date || null,
+        }),
+      });
+      setVesselResult(result);
+    } catch (err) {
+      setVesselError(err instanceof Error ? err.message : "Unable to load vessel recommendations");
+    } finally {
+      setVesselLoading(false);
     }
   }
 
@@ -339,6 +402,7 @@ function App() {
         </div>
         <nav>
           <a href="#market">Market Intelligence</a>
+          <a href="#vessels">Vessel Intelligence</a>
           <a className="active" href="#forecast">Forecast</a>
           <a href="#models">Models</a>
           <a href="#health">Health</a>
@@ -414,6 +478,68 @@ function App() {
             </div>
           ) : null}
           {!marketError && !market && marketLoading ? <p>Loading market intelligence…</p> : null}
+        </section>
+
+        <section id="vessels" className="market-section">
+          <div className="section-title">
+            <span className="eyebrow">Vessel Intelligence</span>
+            <h3>Feasible vessels ranked by operational suitability</h3>
+          </div>
+
+          <form className="forecast-form" onSubmit={(event) => {
+            event.preventDefault();
+            void recommendVessels(vesselInputs);
+          }}>
+            <div className="form-grid">
+              <Select label="Destination" value={vesselInputs.destination} values={["Dhamra", "Gangavaram", "Gopalpur", "Haldia", "Paradip", "Vizag"]} onChange={(value) => setVesselInputs((current) => ({ ...current, destination: value }))} />
+              <Select label="Vessel Class" value={vesselInputs.vessel_class} values={["Panamax", "Capesize"]} onChange={(value) => setVesselInputs((current) => ({ ...current, vessel_class: value }))} />
+              <Field label="Cargo Quantity" type="number" value={vesselInputs.cargo_quantity} onChange={(value) => setVesselInputs((current) => ({ ...current, cargo_quantity: Number(value) }))} />
+              <Field label="As of Date" type="date" value={vesselInputs.as_of_date} onChange={(value) => setVesselInputs((current) => ({ ...current, as_of_date: value }))} />
+              <Field label="Results" type="number" value={vesselInputs.limit} onChange={(value) => setVesselInputs((current) => ({ ...current, limit: Number(value) }))} />
+            </div>
+            <button type="submit" disabled={vesselLoading}>
+              {vesselLoading ? "Ranking vessels..." : "Find Suitable Vessels"}
+            </button>
+          </form>
+
+          {vesselError ? <ErrorPanel message={vesselError} /> : null}
+          {!vesselError && vesselResult ? (
+            <>
+              <div className="metrics-grid">
+                <Metric label="Candidates" value={String(vesselResult.candidate_count)} />
+                <Metric label="Feasible" value={String(vesselResult.feasible_count)} />
+                <Metric label="Model" value={vesselResult.model_version} />
+                <Metric label="Target" value={vesselResult.target} />
+              </div>
+              <div className="table-wrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Vessel</th>
+                      <th>DWT</th>
+                      <th>Wait</th>
+                      <th>Score</th>
+                      <th>Status</th>
+                      <th>Recommendation</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {vesselResult.candidates.map((candidate) => (
+                      <tr key={candidate.imo}>
+                        <td>{candidate.vessel_name}<small>{candidate.imo}</small></td>
+                        <td>{candidate.dwt_mt.toLocaleString()}</td>
+                        <td>{candidate.predicted_waiting_hours.toFixed(1)} h</td>
+                        <td>{candidate.suitability_score.toFixed(1)}</td>
+                        <td><Status value={candidate.eligibility} /></td>
+                        <td>{candidate.recommendation_tier}{candidate.failed_constraints.length ? ` · ${candidate.failed_constraints.join(", ")}` : ""}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+              <p>{vesselResult.note}</p>
+            </>
+          ) : null}
         </section>
 
         <section className="content-grid analysis-grid">

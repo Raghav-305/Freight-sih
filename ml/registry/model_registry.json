@@ -34,6 +34,17 @@
       "metadata": "market_intelligence_metadata.json",
       "artifact_format": "pickle",
       "status": "active"
+    },
+    {
+      "model_version": "vessel_intelligence_v2",
+      "family": "vessel_intelligence",
+      "algorithm": "xgboost",
+      "relative_path": "vessel_intelligence/vessel_intelligence_v2",
+      "artifact": "waiting_time_model.joblib",
+      "feature_schema": "preprocessing_artifacts.joblib",
+      "metadata": "metadata.json",
+      "artifact_format": "joblib",
+      "status": "active"
     }
   ]
 }
