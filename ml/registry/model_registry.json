@@ -45,6 +45,17 @@
       "metadata": "metadata.json",
       "artifact_format": "joblib",
       "status": "active"
+    },
+    {
+      "model_version": "fos_v1",
+      "family": "freight_opportunity_score",
+      "algorithm": "random_forest_regressor_plus_rules",
+      "relative_path": "freight_opportunity_score/fos_v1",
+      "artifact": "fos_model.pkl",
+      "feature_schema": "fos_feature_schema.json",
+      "metadata": "fos_metadata.json",
+      "artifact_format": "pickle",
+      "status": "active"
     }
   ]
 }

@@ -83,6 +83,25 @@ type RiskAssessment = {
   scores: Record<string, number>;
 };
 
+type OpportunityScore = {
+  date: string;
+  route_id: string;
+  origin: string;
+  destination: string;
+  vessel_class: string;
+  horizon_days: number;
+  freight_usd_mt: number;
+  expected_return_pct: number;
+  expected_freight_usd_mt: number;
+  forecast_source: string;
+  fos: number;
+  recommendation: string;
+  components: Record<string, number>;
+  contributions: Record<string, number>;
+  model_version: string;
+  note: string;
+};
+
 type VesselCandidate = {
   imo: string;
   vessel_name: string;
@@ -189,6 +208,14 @@ const defaultRiskInputs = {
   date: "2025-10-31",
 };
 
+const defaultOpportunityInputs = {
+  origin: "Australia",
+  destination: "Dhamra",
+  vessel_class: "Panamax",
+  horizon: 30,
+  as_of_date: "",
+};
+
 async function api<T>(path: string, init?: RequestInit): Promise<T> {
   const response = await fetch(`${apiBaseUrl}${path}`, {
     ...init,
@@ -235,6 +262,10 @@ function App() {
   const [riskResult, setRiskResult] = useState<RiskAssessment | null>(null);
   const [riskLoading, setRiskLoading] = useState(false);
   const [riskError, setRiskError] = useState<string | null>(null);
+  const [opportunityInputs, setOpportunityInputs] = useState(defaultOpportunityInputs);
+  const [opportunityResult, setOpportunityResult] = useState<OpportunityScore | null>(null);
+  const [opportunityLoading, setOpportunityLoading] = useState(false);
+  const [opportunityError, setOpportunityError] = useState<string | null>(null);
   const [explainInputs, setExplainInputs] = useState({
     origin: "Australia",
     destination: "Dhamra",
@@ -268,6 +299,7 @@ function App() {
     void loadMarketContext(defaultMarketInputs);
     void recommendVessels(defaultVesselInputs);
     void assessRisk(defaultRiskInputs);
+    void assessOpportunity(defaultOpportunityInputs);
   }, []);
 
   async function loadMarketIntelligence(nextInputs = marketInputs) {
@@ -344,6 +376,25 @@ function App() {
       setRiskError(err instanceof Error ? err.message : "Unable to assess route risk");
     } finally {
       setRiskLoading(false);
+    }
+  }
+
+  async function assessOpportunity(nextInputs = opportunityInputs) {
+    setOpportunityLoading(true);
+    setOpportunityError(null);
+    try {
+      setOpportunityResult(await api<OpportunityScore>("/freight-opportunity", {
+        method: "POST",
+        body: JSON.stringify({
+          ...nextInputs,
+          horizon: Number(nextInputs.horizon),
+          as_of_date: nextInputs.as_of_date || null,
+        }),
+      }));
+    } catch (err) {
+      setOpportunityError(err instanceof Error ? err.message : "Unable to calculate freight opportunity score");
+    } finally {
+      setOpportunityLoading(false);
     }
   }
 
@@ -472,6 +523,7 @@ function App() {
           <a href="#market">Market Intelligence</a>
           <a href="#vessels">Vessel Intelligence</a>
           <a href="#risk">Risk Intelligence</a>
+          <a href="#opportunity">Freight Opportunity</a>
           <a className="active" href="#forecast">Forecast</a>
           <a href="#models">Models</a>
           <a href="#health">Health</a>
@@ -615,6 +667,51 @@ function App() {
                   </div>
                 ))}
               </div>
+            </>
+          ) : null}
+        </section>
+
+        <section id="opportunity" className="market-section">
+          <div className="section-title">
+            <span className="eyebrow">Freight Opportunity Score</span>
+            <h3>Find the strongest fixing window</h3>
+          </div>
+
+          <form className="forecast-form" onSubmit={(event) => {
+            event.preventDefault();
+            void assessOpportunity(opportunityInputs);
+          }}>
+            <div className="form-grid">
+              <Select label="Origin" value={opportunityInputs.origin} values={["Australia", "Indonesia", "Mozambique", "Russia", "USA"]} onChange={(value) => setOpportunityInputs((current) => ({ ...current, origin: value }))} />
+              <Select label="Destination" value={opportunityInputs.destination} values={["Dhamra", "Gangavaram", "Gopalpur", "Haldia", "Paradip", "Vizag"]} onChange={(value) => setOpportunityInputs((current) => ({ ...current, destination: value }))} />
+              <Select label="Vessel Class" value={opportunityInputs.vessel_class} values={["Panamax", "Capesize"]} onChange={(value) => setOpportunityInputs((current) => ({ ...current, vessel_class: value }))} />
+              <Select label="Horizon" value={String(opportunityInputs.horizon)} values={["7", "30", "60"]} onChange={(value) => setOpportunityInputs((current) => ({ ...current, horizon: Number(value) }))} />
+              <Field label="As of Date" type="date" value={opportunityInputs.as_of_date} onChange={(value) => setOpportunityInputs((current) => ({ ...current, as_of_date: value }))} />
+            </div>
+            <button type="submit" disabled={opportunityLoading}>
+              {opportunityLoading ? "Calculating opportunity..." : "Calculate Opportunity Score"}
+            </button>
+          </form>
+
+          {opportunityError ? <ErrorPanel message={opportunityError} /> : null}
+          {!opportunityError && opportunityResult ? (
+            <>
+              <div className="metrics-grid">
+                <Metric label="FOS" value={`${opportunityResult.fos}/100`} />
+                <Metric label="Recommendation" value={opportunityResult.recommendation} />
+                <Metric label="Expected Return" value={`${opportunityResult.expected_return_pct.toFixed(2)}%`} />
+                <Metric label="Expected Freight" value={`${money(opportunityResult.expected_freight_usd_mt)}/MT`} />
+              </div>
+              <div className="market-grid">
+                {Object.entries(opportunityResult.components).map(([name, score]) => (
+                  <div className="market-card" key={name}>
+                    <span>{name.replaceAll("_", " ")}</span>
+                    <strong>{score.toFixed(1)}/100</strong>
+                    <small>Contribution {opportunityResult.contributions[`${name}_score`] ?? "n/a"}</small>
+                  </div>
+                ))}
+              </div>
+              <p>{opportunityResult.forecast_source} · {opportunityResult.note}</p>
             </>
           ) : null}
         </section>

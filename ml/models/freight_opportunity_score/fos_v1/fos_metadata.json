@@ -1,0 +1,27 @@
+{
+  "model_name": "RandomForestRegressor",
+  "purpose": "Leakage-safe 30-day route freight return model used as FOS forecast fallback",
+  "forecast_precedence": "Use model_forecast_* columns when non-null; otherwise use this temporal model",
+  "training": {
+    "train_rows": 43830,
+    "train_end": "2023-12-31",
+    "feature_count": 85
+  },
+  "component_weights": {
+    "forecast": 0.25,
+    "rate_opportunity": 0.15,
+    "market_signal": 0.15,
+    "fleet_supply": 0.1,
+    "port_congestion": 0.1,
+    "weather_risk": 0.1,
+    "voyage_economics": 0.15
+  },
+  "decision_thresholds": {
+    "AVOID_WAIT": "fos < 20",
+    "WAIT": "20 <= fos < 40",
+    "MONITOR": "40 <= fos < 60",
+    "GOOD_OPPORTUNITY": "60 <= fos < 80",
+    "FIX_NOW": "fos >= 80"
+  },
+  "leakage_policy": "future_*, target, label, actual_after, and backtest columns excluded from model features"
+}
