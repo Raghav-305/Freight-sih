@@ -1,0 +1,18 @@
+{
+  "model_name": "xgb_port_congestion",
+  "model_version": "congestion_sih_v1",
+  "model_type": "XGBoost",
+  "training_date": "2025-11-15",
+  "dataset_version": "sih_port_ais_weather_v1",
+  "feature_version": "port_queue_weather_v1",
+  "target": "predicted_wait_hours",
+  "artifact": "congestion_model.pkl",
+  "artifact_format": "pickle",
+  "performance": {
+    "rmse_hours": 8.42,
+    "mae_hours": 6.18,
+    "r2_score": 0.814
+  },
+  "ports_supported": ["DHA", "GAN", "GOP", "HAL", "PAR", "VIZ"],
+  "status": "imported"
+}

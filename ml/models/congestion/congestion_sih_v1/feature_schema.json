@@ -1,0 +1,29 @@
+{
+  "model_version": "congestion_sih_v1",
+  "target": "predicted_wait_hours",
+  "feature_count": 22,
+  "features": [
+    {"name": "month", "type": "int", "description": "Arrival calendar month (1-12)"},
+    {"name": "vessels_at_anchorage", "type": "float", "description": "Average vessels at port anchorage"},
+    {"name": "vessels_in_port", "type": "float", "description": "Vessels currently berthed in port"},
+    {"name": "queue_length", "type": "float", "description": "Waiting vessel queue length"},
+    {"name": "arrivals_24h", "type": "float", "description": "Vessel arrivals in trailing 24 hours"},
+    {"name": "arrivals_7d", "type": "float", "description": "Vessel arrivals in trailing 7 days"},
+    {"name": "departures_24h", "type": "float", "description": "Vessel departures in trailing 24 hours"},
+    {"name": "departures_7d", "type": "float", "description": "Vessel departures in trailing 7 days"},
+    {"name": "average_wait", "type": "float", "description": "Historical average wait hours"},
+    {"name": "median_wait", "type": "float", "description": "Historical median wait hours"},
+    {"name": "wind_speed", "type": "float", "description": "Wind speed in knots at port"},
+    {"name": "wave_height", "type": "float", "description": "Significant wave height in meters"},
+    {"name": "precipitation", "type": "float", "description": "Rainfall in mm"},
+    {"name": "storm_flag", "type": "float", "description": "Storm alert indicator rate (0-1)"},
+    {"name": "cyclone_flag", "type": "float", "description": "Cyclone warning indicator rate (0-1)"},
+    {"name": "discharge_rate", "type": "float", "description": "Port coal discharge throughput (MT/day)"},
+    {"name": "max_draft", "type": "float", "description": "Maximum permissible berth draft (m)"},
+    {"name": "has_tidal_restriction", "type": "int", "description": "Tidal restriction flag (1 or 0)"},
+    {"name": "berth_count", "type": "int", "description": "Number of operative bulk berths"},
+    {"name": "dwt", "type": "int", "description": "Nominated vessel deadweight tonnage (DWT)"},
+    {"name": "is_capesize", "type": "int", "description": "Vessel class flag (1 if Capesize else 0)"},
+    {"name": "port_code", "type": "int", "description": "Numeric encoding of destination port"}
+  ]
+}

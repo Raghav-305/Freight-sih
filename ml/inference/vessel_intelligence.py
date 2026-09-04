@@ -14,6 +14,16 @@ DATA_PATH = PROJECT_ROOT / "data" / "raw" / "vessel_intelligence" / "vessel_inte
 MODEL_DIR = PROJECT_ROOT / "ml" / "models" / "vessel_intelligence" / "vessel_intelligence_v2"
 
 
+CANDIDATES_PATH = PROJECT_ROOT / "data" / "raw" / "vessel_intelligence" / "vessel_intelligence_candidates.csv"
+
+
+@lru_cache(maxsize=1)
+def _load_candidates() -> pd.DataFrame:
+    if CANDIDATES_PATH.exists():
+        return pd.read_csv(CANDIDATES_PATH, parse_dates=["date"])
+    return _load_data()
+
+
 @lru_cache(maxsize=1)
 def _load_data() -> pd.DataFrame:
     if not DATA_PATH.exists():
@@ -67,7 +77,7 @@ def _latest_candidates(
     vessel_class: str,
     as_of_date: str | None,
 ) -> pd.DataFrame:
-    data = _load_data()
+    data = _load_candidates()
     filtered = data[
         data["destination_port"].astype(str).str.casefold().eq(destination.casefold())
         & data["vessel_class"].astype(str).str.casefold().eq(vessel_class.casefold())

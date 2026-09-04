@@ -1,6 +1,9 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from backend.app.api.audit import router as audit_router
+from backend.app.api.charter import router as charter_router
+from backend.app.api.data_quality import router as data_quality_router
 from backend.app.api.forecast import router as forecast_router
 from backend.app.api.health import router as health_router
 from backend.app.api.market import router as market_router
@@ -12,13 +15,13 @@ from backend.app.api.vessels import router as vessels_router
 
 app = FastAPI(
     title="Freight Chartering Intelligence API",
-    version="0.1.0",
-    description="Local FastAPI boundary for forecasting, optimization, risk and model metadata.",
+    version="0.2.0",
+    description="Local FastAPI boundary for forecasting, portfolio optimization, risk, port constraints, data quality, and CVC governance.",
 )
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],
+    allow_origins=["http://localhost:5173", "http://127.0.0.1:5173", "*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -26,6 +29,9 @@ app.add_middleware(
 
 app.include_router(health_router)
 app.include_router(forecast_router)
+app.include_router(charter_router)
+app.include_router(data_quality_router)
+app.include_router(audit_router)
 app.include_router(market_router)
 app.include_router(models_router)
 app.include_router(opportunity_router)

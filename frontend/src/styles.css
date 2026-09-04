@@ -88,18 +88,32 @@ nav {
   padding: 20px 0;
 }
 
-nav a {
+nav a,
+.nav-btn {
   color: #394139;
   border-radius: 6px;
   padding: 10px 12px;
   text-decoration: none;
   font-size: 14px;
   font-weight: 650;
+  background: transparent;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.15s ease;
 }
 
 nav a.active,
-nav a:hover {
+nav a:hover,
+.nav-btn.active,
+.nav-btn:hover {
   background: #e9e3d6;
+  color: #1c211d;
+}
+
+.nav-btn.active {
+  border-left: 3px solid #2f5934;
+  font-weight: 800;
 }
 
 .review-box {
@@ -518,4 +532,95 @@ th {
   .shap-row strong {
     text-align: left;
   }
+}
+
+.tab-content {
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.allocation-card {
+  margin-top: 16px;
+  padding: 18px;
+  border: 1px solid #ddd6c8;
+  border-radius: 8px;
+  background: #ffffff;
+}
+
+.allocation-bar {
+  display: flex;
+  height: 28px;
+  border-radius: 6px;
+  overflow: hidden;
+  margin-top: 10px;
+  border: 1px solid #cfc7b8;
+}
+
+.alloc-segment {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 800;
+  color: #ffffff;
+  transition: width 0.3s ease;
+}
+
+.alloc-coa {
+  background: #1e3a8a;
+}
+
+.alloc-multi_voyage {
+  background: #2563eb;
+}
+
+.alloc-short_term {
+  background: #0284c7;
+}
+
+.alloc-spot {
+  background: #d97706;
+}
+
+.advisory-box {
+  margin-top: 16px;
+  padding: 14px 16px;
+  border-left: 4px solid #2563eb;
+  background: #f0f9ff;
+  border-radius: 4px;
+  font-size: 13px;
+  color: #1e293b;
+}
+
+.advisory-box p {
+  margin-top: 4px;
+  line-height: 1.5;
+}
+
+.advisory-box small {
+  display: block;
+  margin-top: 6px;
+  color: #64748b;
+}
+
+.failed-tag {
+  color: #dc2626;
+  font-weight: bold;
+  font-size: 12px;
+}
+
+.sidebar-status {
+  margin-top: 16px;
+  padding: 10px 12px;
+  border-radius: 6px;
+  background: #f4f1ea;
+  font-size: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  color: #69736b;
 }

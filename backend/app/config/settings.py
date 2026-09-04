@@ -10,8 +10,13 @@ class Settings(BaseSettings):
     model_registry_path: str = "./ml/registry/model_registry.json"
     data_root_path: str = "./data"
     market_intelligence_data_path: str = "./data/features/market_intelligence"
+    mlflow_tracking_uri: str = "./ml/mlruns"
 
-    model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8")
+    model_config = SettingsConfigDict(
+        env_file=".env",
+        env_file_encoding="utf-8",
+        extra="ignore"
+    )
 
 
 settings = Settings()
