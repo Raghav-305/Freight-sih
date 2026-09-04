@@ -71,6 +71,18 @@ type MarketContext = {
   fixtures: { fixture_count: number; average_rate: number | null; average_quantity_mt: number | null; latest_fixture_date: string | null };
 };
 
+type RiskAssessment = {
+  mode: string;
+  route_id: string;
+  origin_country: string;
+  destination_port: string;
+  destination_port_name: string;
+  date: string;
+  overall: number;
+  overall_risk: number;
+  scores: Record<string, number>;
+};
+
 type VesselCandidate = {
   imo: string;
   vessel_name: string;
@@ -170,6 +182,13 @@ const defaultVesselInputs = {
   limit: 10,
 };
 
+const defaultRiskInputs = {
+  route_id: "AUS_DHA_PAN",
+  origin_country: "Australia",
+  destination_port: "DHA",
+  date: "2025-10-31",
+};
+
 async function api<T>(path: string, init?: RequestInit): Promise<T> {
   const response = await fetch(`${apiBaseUrl}${path}`, {
     ...init,
@@ -212,6 +231,10 @@ function App() {
   const [vesselResult, setVesselResult] = useState<VesselRecommendation | null>(null);
   const [vesselLoading, setVesselLoading] = useState(false);
   const [vesselError, setVesselError] = useState<string | null>(null);
+  const [riskInputs, setRiskInputs] = useState(defaultRiskInputs);
+  const [riskResult, setRiskResult] = useState<RiskAssessment | null>(null);
+  const [riskLoading, setRiskLoading] = useState(false);
+  const [riskError, setRiskError] = useState<string | null>(null);
   const [explainInputs, setExplainInputs] = useState({
     origin: "Australia",
     destination: "Dhamra",
@@ -244,6 +267,7 @@ function App() {
     void loadMarketIntelligence(defaultMarketInputs);
     void loadMarketContext(defaultMarketInputs);
     void recommendVessels(defaultVesselInputs);
+    void assessRisk(defaultRiskInputs);
   }, []);
 
   async function loadMarketIntelligence(nextInputs = marketInputs) {
@@ -305,6 +329,21 @@ function App() {
       setVesselError(err instanceof Error ? err.message : "Unable to load vessel recommendations");
     } finally {
       setVesselLoading(false);
+    }
+  }
+
+  async function assessRisk(nextInputs = riskInputs) {
+    setRiskLoading(true);
+    setRiskError(null);
+    try {
+      setRiskResult(await api<RiskAssessment>("/risk", {
+        method: "POST",
+        body: JSON.stringify(nextInputs),
+      }));
+    } catch (err) {
+      setRiskError(err instanceof Error ? err.message : "Unable to assess route risk");
+    } finally {
+      setRiskLoading(false);
     }
   }
 
@@ -432,6 +471,7 @@ function App() {
         <nav>
           <a href="#market">Market Intelligence</a>
           <a href="#vessels">Vessel Intelligence</a>
+          <a href="#risk">Risk Intelligence</a>
           <a className="active" href="#forecast">Forecast</a>
           <a href="#models">Models</a>
           <a href="#health">Health</a>
@@ -534,6 +574,49 @@ function App() {
             </div>
           ) : null}
           {!marketContextError && !marketContext && marketContextLoading ? <p>Loading market context…</p> : null}
+        </section>
+
+        <section id="risk" className="market-section">
+          <div className="section-title">
+            <span className="eyebrow">Risk Intelligence</span>
+            <h3>Route risk assessment</h3>
+          </div>
+
+          <form className="forecast-form" onSubmit={(event) => {
+            event.preventDefault();
+            void assessRisk(riskInputs);
+          }}>
+            <div className="form-grid">
+              <Field label="Route ID" type="text" value={riskInputs.route_id} onChange={(value) => setRiskInputs((current) => ({ ...current, route_id: value }))} />
+              <Select label="Origin Country" value={riskInputs.origin_country} values={["Australia", "Indonesia", "Mozambique", "Russia", "USA"]} onChange={(value) => setRiskInputs((current) => ({ ...current, origin_country: value }))} />
+              <Select label="Destination Port" value={riskInputs.destination_port} values={["DHA", "GAN", "GOP", "HAL", "PAR", "VIZ"]} onChange={(value) => setRiskInputs((current) => ({ ...current, destination_port: value }))} />
+              <Field label="Assessment Date" type="date" value={riskInputs.date} onChange={(value) => setRiskInputs((current) => ({ ...current, date: value }))} />
+            </div>
+            <button type="submit" disabled={riskLoading}>
+              {riskLoading ? "Assessing route risk..." : "Assess Route Risk"}
+            </button>
+          </form>
+
+          {riskError ? <ErrorPanel message={riskError} /> : null}
+          {!riskError && riskResult ? (
+            <>
+              <div className="metrics-grid">
+                <Metric label="Overall Risk" value={`${riskResult.overall_risk}/100`} />
+                <Metric label="Route" value={riskResult.route_id} />
+                <Metric label="Port" value={riskResult.destination_port_name} />
+                <Metric label="Engine" value={riskResult.mode} />
+              </div>
+              <div className="market-grid">
+                {Object.entries(riskResult.scores).map(([name, score]) => (
+                  <div className="market-card" key={name}>
+                    <span>{name}</span>
+                    <strong>{score.toFixed(1)}/100</strong>
+                    <small>{score >= 70 ? "High exposure" : score >= 45 ? "Moderate exposure" : "Lower exposure"}</small>
+                  </div>
+                ))}
+              </div>
+            </>
+          ) : null}
         </section>
 
         <section id="vessels" className="market-section">
