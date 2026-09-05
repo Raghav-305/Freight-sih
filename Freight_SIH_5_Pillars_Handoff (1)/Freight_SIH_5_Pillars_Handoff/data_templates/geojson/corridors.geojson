@@ -1,0 +1,33 @@
+{
+  "type": "FeatureCollection",
+  "properties": {
+    "truth_class": "STATIC_REFERENCE",
+    "note": "Manually drawn reference corridors for scenario visualization. NOT AIS-derived, NOT a live vessel track."
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {"name": "Gladstone -> Torres Strait -> Lombok -> Bay of Bengal -> Paradip", "type": "IMPORT_REFERENCE_ROUTE", "commodity": "Coking Coal"},
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [151.256, -23.8433],
+          [142.2, -10.6],
+          [115.75, -8.5],
+          [92.0, 10.0],
+          [86.6106, 20.2649]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {"name": "Paradip -> Haldia (coastal)", "type": "COASTAL_REFERENCE_ROUTE", "commodity": "Coal"},
+      "geometry": {"type": "LineString", "coordinates": [[86.6106, 20.2649], [88.0670, 22.0333]]}
+    },
+    {
+      "type": "Feature",
+      "properties": {"name": "Paradip -> Ennore (coastal)", "type": "COASTAL_REFERENCE_ROUTE", "commodity": "Coal"},
+      "geometry": {"type": "LineString", "coordinates": [[86.6106, 20.2649], [80.335, 13.25]]}
+    }
+  ]
+}

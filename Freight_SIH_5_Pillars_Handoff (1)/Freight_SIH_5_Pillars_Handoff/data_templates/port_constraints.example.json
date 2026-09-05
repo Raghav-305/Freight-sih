@@ -1,0 +1,41 @@
+[
+  {
+    "port_id": "PARADIP",
+    "berth_id": "BERTH_03",
+    "berth_name": "New Coal Import Berth",
+    "commodity": "Coking Coal",
+    "max_loa_m": 300,
+    "max_beam_m": 46,
+    "base_max_draft_m": 16.0,
+    "conditional_draft_m": 16.0,
+    "condition_type": "HIGH_TIDE",
+    "source_url": "https://paradipport.gov.in/berth-specifications/",
+    "verified_reference": "2026-02-23"
+  },
+  {
+    "port_id": "PARADIP",
+    "berth_id": "BERTH_05",
+    "berth_name": "Coal Berth-01",
+    "commodity": "Thermal Coal",
+    "max_loa_m": 300,
+    "max_beam_m": 46,
+    "base_max_draft_m": 14.5,
+    "conditional_draft_m": 16.0,
+    "condition_type": "HIGH_TIDE",
+    "source_url": "https://paradipport.gov.in/berth-specifications/",
+    "verified_reference": "2026-02-23"
+  },
+  {
+    "port_id": "PARADIP",
+    "berth_id": "BERTH_06",
+    "berth_name": "Coal Berth-02",
+    "commodity": "Thermal Coal",
+    "max_loa_m": 300,
+    "max_beam_m": 46,
+    "base_max_draft_m": 14.5,
+    "conditional_draft_m": null,
+    "condition_type": null,
+    "source_url": "https://paradipport.gov.in/berth-specifications/",
+    "verified_reference": "2026-02-23"
+  }
+]

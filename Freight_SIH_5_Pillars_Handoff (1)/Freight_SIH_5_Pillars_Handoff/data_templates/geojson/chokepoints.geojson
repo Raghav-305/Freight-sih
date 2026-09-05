@@ -1,0 +1,21 @@
+{
+  "type": "FeatureCollection",
+  "properties": {
+    "truth_class": "STATIC_REFERENCE",
+    "note": "Simplified marker/box geometry for chokepoint exposure scoring, not a navigational chart."
+  },
+  "features": [
+    {"type": "Feature", "properties": {"name": "Strait of Malacca", "category": "SHIPPING_LANE_CHOKEPOINT"}, "geometry": {"type": "Point", "coordinates": [100.5, 2.8]}},
+    {"type": "Feature", "properties": {"name": "Sunda Strait", "category": "SHIPPING_LANE_CHOKEPOINT"}, "geometry": {"type": "Point", "coordinates": [105.85, -6.0]}},
+    {"type": "Feature", "properties": {"name": "Lombok Strait", "category": "SHIPPING_LANE_CHOKEPOINT"}, "geometry": {"type": "Point", "coordinates": [115.75, -8.5]}},
+    {"type": "Feature", "properties": {"name": "Torres Strait", "category": "SHIPPING_LANE_CHOKEPOINT"}, "geometry": {"type": "Point", "coordinates": [142.2, -10.6]}},
+    {
+      "type": "Feature",
+      "properties": {"name": "Bay of Bengal Cyclone Belt (reference box, not a live warning)", "category": "SEASONAL_HAZARD_ZONE_STATIC"},
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[80.0, 10.0], [95.0, 10.0], [95.0, 22.0], [80.0, 22.0], [80.0, 10.0]]]
+      }
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "name": "freight-sih-command-center-frontend-stubs",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Component stubs for the 5-pillar command center. Not a full app -- drop these into Raghav's existing Next.js/React shell (Pillar 5 IMPLEMENTATION_SPEC.md component list).",
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "maplibre-gl": "^4.7.1",
+    "recharts": "^2.12.7"
+  },
+  "devDependencies": {
+    "typescript": "^5.5.4",
+    "@types/react": "^18.3.3"
+  }
+}

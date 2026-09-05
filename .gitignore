@@ -52,12 +52,17 @@ coverage/
 # ----------------------------
 # Project data folders
 # ----------------------------
+# Ignore all CSV data files
+*.csv
+**/*.csv
+
 # Ignore generated/raw large data by default
 /data/raw/**
 /data/clean/**
 /data/processed/**
 /data/features/**
 /data/fixtures/**
+/data/charter_strategy/**
 
 # Keep minimal repo-readable files
 !data/README.md
@@ -157,3 +162,10 @@ temp/
 !README_TO_FILL.md
 !docs/**
 !public/docs/**
+
+# ----------------------------
+# Exclude all CSV files from git commits
+# ----------------------------
+*.csv
+**/*.csv
+

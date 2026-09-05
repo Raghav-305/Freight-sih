@@ -1,0 +1,18 @@
+{
+  "type": "FeatureCollection",
+  "properties": {
+    "truth_class": "STATIC_REFERENCE",
+    "note": "Approximate port reference coordinates for map anchoring only. Not for navigation. Verify against official charts before operational use."
+  },
+  "features": [
+    {"type": "Feature", "properties": {"name": "Paradip", "country": "IN", "role": "destination"}, "geometry": {"type": "Point", "coordinates": [86.6106, 20.2649]}},
+    {"type": "Feature", "properties": {"name": "Dhamra", "country": "IN", "role": "destination"}, "geometry": {"type": "Point", "coordinates": [86.9167, 20.7833]}},
+    {"type": "Feature", "properties": {"name": "Haldia", "country": "IN", "role": "coastal_leg"}, "geometry": {"type": "Point", "coordinates": [88.0670, 22.0333]}},
+    {"type": "Feature", "properties": {"name": "Visakhapatnam", "country": "IN", "role": "coastal_leg"}, "geometry": {"type": "Point", "coordinates": [83.2500, 17.6868]}},
+    {"type": "Feature", "properties": {"name": "Ennore (Kamarajar Port)", "country": "IN", "role": "coastal_leg"}, "geometry": {"type": "Point", "coordinates": [80.3350, 13.2500]}},
+    {"type": "Feature", "properties": {"name": "Chennai", "country": "IN", "role": "coastal_leg"}, "geometry": {"type": "Point", "coordinates": [80.2925, 13.0900]}},
+    {"type": "Feature", "properties": {"name": "Kolkata", "country": "IN", "role": "coastal_leg"}, "geometry": {"type": "Point", "coordinates": [88.3200, 22.5500]}},
+    {"type": "Feature", "properties": {"name": "Gladstone", "country": "AU", "role": "origin_import"}, "geometry": {"type": "Point", "coordinates": [151.2560, -23.8433]}},
+    {"type": "Feature", "properties": {"name": "Newcastle", "country": "AU", "role": "origin_import"}, "geometry": {"type": "Point", "coordinates": [151.7789, -32.9283]}}
+  ]
+}

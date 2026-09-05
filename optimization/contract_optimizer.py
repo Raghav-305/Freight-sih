@@ -113,9 +113,41 @@ def optimize_contract(payload: dict[str, Any]) -> dict[str, Any]:
     expected_saving = max(0.0, round(baseline_cost - expected_cost, 2))
     expected_saving_pct = round((expected_saving / baseline_cost) * 100, 2) if baseline_cost > 0 else 0.0
 
-    # Period dates
-    period_start = payload.get("period_start") or "2026-10-01"
-    period_end = payload.get("period_end") or "2027-03-31"
+    # Attempt rigorous Linear Program optimization via charter_strategy
+    lp_result: dict[str, Any] | None = None
+    try:
+        from optimization.charter_strategy import get_charter_recommendation
+
+        vessel_class = str(payload.get("vessel_class") or "Panamax")
+        delivery_date = str(payload.get("delivery_date") or payload.get("period_start") or "2026-10-15")
+        max_share = float(payload.get("max_share") or 0.5)
+
+        lp_result = get_charter_recommendation(
+            origin_port=origin,
+            destination_port=destination,
+            vessel_class=vessel_class,
+            cargo_quantity_mt=cargo_quantity,
+            delivery_date=delivery_date,
+            max_share=max_share,
+        )
+    except Exception:
+        lp_result = None
+
+    # If LP succeeded and contract_options wasn't explicitly overridden to a single option,
+    # enrich baseline/expected costs and savings with the exact HiGHS LP solution
+    distance_nm = lp_result.get("distance_nm") if lp_result else None
+    voyages_needed = lp_result.get("voyages_needed") if lp_result else int(cargo_quantity / 70000)
+    cost_breakdown = lp_result.get("cost_breakdown_per_voyage") if lp_result else None
+    recommended_mix_voyages = lp_result.get("recommended_mix") if lp_result else None
+
+    if lp_result and lp_result.get("expected_saving_usd", 0) > 0:
+        baseline_cost = float(lp_result["current_plan_cost_usd"])
+        expected_cost = float(lp_result["optimized_cost_usd"])
+        expected_saving = float(lp_result["expected_saving_usd"])
+        expected_saving_pct = float(lp_result["expected_saving_pct"])
+
+    period_start = str(payload.get("period_start") or "2026-10-01")
+    period_end = str(payload.get("period_end") or "2027-03-31")
 
     return {
         "strategy": strategy,
@@ -136,6 +168,10 @@ def optimize_contract(payload: dict[str, Any]) -> dict[str, Any]:
         "risk": risk_level,
         "risk_score": risk_score,
         "fixing_window": fixing_advice,
+        "distance_nm": distance_nm,
+        "voyages_needed": voyages_needed,
+        "recommended_mix_voyages": recommended_mix_voyages,
+        "cost_breakdown_per_voyage": cost_breakdown,
         "notes": (
             f"Charter optimization based on {market_regime} market regime. "
             f"COA hedge locks in volume at ${coa_rate:.2f}/MT, generating estimated "

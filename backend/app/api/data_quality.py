@@ -17,6 +17,7 @@ TARGET_DATASETS = [
     {"name": "Market Intelligence Features", "path": "data/features/market_intelligence/market_intelligence_latest.csv", "type": "intelligence"},
     {"name": "Vessel AIS Intelligence", "data_alt": "data/raw/vessel_intelligence/vessel_intelligence_daily.csv", "path": "data/raw/vessel_intelligence/vessel_intelligence_daily.csv", "type": "telemetry"},
     {"name": "Geopolitical & Weather Risk", "path": "ml/artifacts/risk_model/events_lookup.csv", "type": "risk"},
+    {"name": "Charter Strategy Route Matrices", "path": "data/charter_strategy/route_freight_lookup.csv", "type": "optimization"},
 ]
 
 

@@ -23,6 +23,29 @@ def test_charter_optimize_endpoint():
     assert data["expected_saving"] >= 0
 
 
+def test_charter_strategy_lp_endpoint():
+    payload = {
+        "origin_port": "Gladstone",
+        "destination_port": "Dhamra",
+        "vessel_class": "Panamax",
+        "cargo_quantity_mt": 480000,
+        "delivery_date": "2026-10-15",
+        "max_share": 0.5,
+    }
+    response = client.post("/charter/strategy", json=payload)
+    assert response.status_code == 200
+    data = response.json()
+    assert data["origin_port"] == "Gladstone"
+    assert data["destination_port"] == "DHA"
+    assert data["destination_port_name"] == "Dhamra"
+    assert data["vessel_class"] == "Panamax"
+    assert data["voyages_needed"] == 7
+    assert data["distance_nm"] > 4000
+    assert data["optimized_cost_usd"] <= data["current_plan_cost_usd"]
+    assert "recommended_mix" in data
+    assert "cost_breakdown_per_voyage" in data
+
+
 def test_data_quality_endpoint():
     response = client.get("/data-quality")
     assert response.status_code == 200

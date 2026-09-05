@@ -155,6 +155,10 @@ type CharterOptimization = {
   risk_score: number;
   fixing_window: string;
   notes: string;
+  distance_nm?: number | null;
+  voyages_needed?: number | null;
+  recommended_mix_voyages?: Record<string, number> | null;
+  cost_breakdown_per_voyage?: Record<string, number> | null;
 };
 
 type DataQualityReport = {
@@ -322,10 +326,13 @@ function App() {
   // Charter Portfolio Optimizer
   const [charterInputs, setCharterInputs] = useState({
     cargo_quantity: 480000,
-    origin: "Australia",
+    origin: "Gladstone",
     destination: "Dhamra",
+    vessel_class: "Panamax",
     period_start: "2026-10-01",
     period_end: "2027-03-31",
+    delivery_date: "2026-10-15",
+    max_share: 0.5,
     contract_options: ["spot", "short_term", "multi_voyage", "coa"],
     market_regime: "BULLISH",
   });
@@ -933,9 +940,25 @@ function App() {
                     onChange={(v) => setCharterInputs({ ...charterInputs, cargo_quantity: Number(v) })}
                   />
                   <Select
-                    label="Load Country"
+                    label="Load Port"
                     value={charterInputs.origin}
-                    values={["Australia", "Indonesia", "Mozambique", "Russia", "USA"]}
+                    values={[
+                      "Gladstone",
+                      "Newcastle",
+                      "Hay Point",
+                      "Dalrymple Bay",
+                      "Taboneo",
+                      "Muara Pantai",
+                      "Samarinda",
+                      "Hampton Roads",
+                      "Baltimore",
+                      "New Orleans",
+                      "Beira",
+                      "Nacala",
+                      "Ust-Luga (Baltic)",
+                      "Novorossiysk (Black Sea)",
+                      "Vostochny (Far East)",
+                    ]}
                     onChange={(v) => setCharterInputs({ ...charterInputs, origin: v })}
                   />
                   <Select
@@ -944,21 +967,27 @@ function App() {
                     values={["Dhamra", "Gangavaram", "Gopalpur", "Haldia", "Paradip", "Vizag"]}
                     onChange={(v) => setCharterInputs({ ...charterInputs, destination: v })}
                   />
-                  <Field
-                    label="Period Start"
-                    type="date"
-                    value={charterInputs.period_start}
-                    onChange={(v) => setCharterInputs({ ...charterInputs, period_start: v })}
+                  <Select
+                    label="Vessel Class"
+                    value={charterInputs.vessel_class}
+                    values={["Panamax", "Capesize"]}
+                    onChange={(v) => setCharterInputs({ ...charterInputs, vessel_class: v })}
                   />
                   <Field
-                    label="Period End"
+                    label="Delivery / Laycan Date"
                     type="date"
-                    value={charterInputs.period_end}
-                    onChange={(v) => setCharterInputs({ ...charterInputs, period_end: v })}
+                    value={charterInputs.delivery_date}
+                    onChange={(v) => setCharterInputs({ ...charterInputs, delivery_date: v })}
+                  />
+                  <Select
+                    label="Max Single Contract Share"
+                    value={String(charterInputs.max_share)}
+                    values={["0.3", "0.4", "0.5", "0.6", "0.7", "1.0"]}
+                    onChange={(v) => setCharterInputs({ ...charterInputs, max_share: Number(v) })}
                   />
                 </div>
                 <button type="submit" disabled={charterLoading}>
-                  {charterLoading ? "Optimizing Portfolio..." : "Calculate Optimal Contract Allocation"}
+                  {charterLoading ? "Optimizing Portfolio..." : "Calculate Optimal Contract Allocation (HiGHS LP)"}
                 </button>
               </form>
 
@@ -967,13 +996,30 @@ function App() {
                 <div style={{ marginTop: "1.5rem" }}>
                   <div className="metrics-grid">
                     <Metric label="Strategy" value={charterResult.strategy} />
+                    <Metric label="Voyages Needed" value={charterResult.voyages_needed ? `${charterResult.voyages_needed} Voyages` : "N/A"} />
+                    <Metric label="Voyage Distance" value={charterResult.distance_nm ? `${charterResult.distance_nm.toLocaleString()} NM` : "N/A"} />
                     <Metric label="Baseline Cost (Spot)" value={money(charterResult.baseline_cost)} />
-                    <Metric label="Optimized Cost" value={money(charterResult.expected_cost)} />
+                    <Metric label="LP Optimized Cost" value={money(charterResult.expected_cost)} />
                     <Metric label="Projected Savings" value={`${money(charterResult.expected_saving)} (${charterResult.expected_saving_pct}%)`} />
                   </div>
 
-                  <div className="allocation-card">
-                    <h4>Contract Allocation Mix</h4>
+                  {charterResult.recommended_mix_voyages && (
+                    <div className="allocation-card" style={{ marginTop: "1rem" }}>
+                      <h4>Linear Program Voyage Allocation Mix (HiGHS Solver)</h4>
+                      <div className="market-grid" style={{ marginTop: "0.5rem" }}>
+                        {Object.entries(charterResult.recommended_mix_voyages).map(([structure, voyages]) => (
+                          <div className="market-card" key={structure}>
+                            <span>{structure.toUpperCase()}</span>
+                            <strong>{voyages} Voyages</strong>
+                            <small>{charterResult.voyages_needed ? `${Math.round((voyages / charterResult.voyages_needed) * 100)}% of commitment` : ""}</small>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  <div className="allocation-card" style={{ marginTop: "1rem" }}>
+                    <h4>Contract Structure Volume Distribution</h4>
                     <div className="allocation-bar">
                       {Object.entries(charterResult.allocation).map(([type, pct]) => (
                         <div
@@ -996,6 +1042,39 @@ function App() {
                         </div>
                       ))}
                     </div>
+
+                    {charterResult.cost_breakdown_per_voyage && (
+                      <div style={{ marginTop: "1rem" }}>
+                        <span className="eyebrow" style={{ display: "block", marginBottom: "0.5rem" }}>Voyage Operating Cost Breakdown ($/Voyage)</span>
+                        <div className="market-grid">
+                          <div className="market-card">
+                            <span>BASE FREIGHT</span>
+                            <strong>{money(charterResult.cost_breakdown_per_voyage.freight_base_usd)}</strong>
+                            <small>Cargo freight component</small>
+                          </div>
+                          <div className="market-card">
+                            <span>BUNKER FUEL</span>
+                            <strong>{money(charterResult.cost_breakdown_per_voyage.bunker_cost_usd)}</strong>
+                            <small>VLSFO laden + ballast</small>
+                          </div>
+                          <div className="market-card">
+                            <span>CONGESTION DELAY</span>
+                            <strong>{money(charterResult.cost_breakdown_per_voyage.congestion_cost_usd)}</strong>
+                            <small>Port waiting demurrage</small>
+                          </div>
+                          <div className="market-card">
+                            <span>IDLE / DEADHEAD</span>
+                            <strong>{money(charterResult.cost_breakdown_per_voyage.deadhead_cost_usd + charterResult.cost_breakdown_per_voyage.idle_cost_usd)}</strong>
+                            <small>Ballast steaming & wait</small>
+                          </div>
+                          <div className="market-card">
+                            <span>RISK BUFFER</span>
+                            <strong>{money(charterResult.cost_breakdown_per_voyage.risk_penalty_usd)}</strong>
+                            <small>Weather & volatility margin</small>
+                          </div>
+                        </div>
+                      </div>
+                    )}
 
                     <div className="advisory-box" style={{ marginTop: "1rem" }}>
                       <strong>Recommended Fixing Window:</strong>
