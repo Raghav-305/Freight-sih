@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
-import maplibregl, { Map as MLMap } from "maplibre-gl";
+import * as maplibregl from "maplibre-gl";
+type MLMap = maplibregl.Map;
 import "maplibre-gl/dist/maplibre-gl.css";
 import { getChokepoints, getCorridors, getHazards, getPorts } from "../api";
 import { FreshnessBadge } from "./FreshnessBadge";

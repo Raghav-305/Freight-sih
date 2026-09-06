@@ -13,6 +13,12 @@ from backend.app.api.ports import router as ports_router
 from backend.app.api.risk import router as risk_router
 from backend.app.api.vessels import router as vessels_router
 
+from backend.app.api.command_center import router as command_center_router
+from backend.app.api.decisions import router as decisions_router
+from backend.app.api.eligibility import router as eligibility_router
+from backend.app.api.map import router as map_router
+from backend.app.api.scenarios import router as scenarios_router
+
 app = FastAPI(
     title="Freight Chartering Intelligence API",
     version="0.2.0",
@@ -38,3 +44,8 @@ app.include_router(opportunity_router)
 app.include_router(ports_router)
 app.include_router(risk_router)
 app.include_router(vessels_router)
+app.include_router(command_center_router)
+app.include_router(decisions_router)
+app.include_router(eligibility_router)
+app.include_router(map_router)
+app.include_router(scenarios_router)

@@ -1,6 +1,12 @@
 import React, { FormEvent, useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
 import "./styles.css";
+import { CommandHeader } from "./components/CommandHeader";
+import { EligibilityMatrix } from "./components/EligibilityMatrix";
+import { ScenarioComparator } from "./components/ScenarioComparator";
+import { MapCanvas } from "./components/MapCanvas";
+import { AuditTimeline } from "./components/AuditTimeline";
+import { FreshnessBadge } from "./components/FreshnessBadge";
 
 type ForecastBand = {
   p10: number;
@@ -227,7 +233,19 @@ function money(value: number) {
   return `$${value.toLocaleString(undefined, { maximumFractionDigits: 2 })}`;
 }
 
-type TabKey = "overview" | "forecast" | "charter" | "vessels" | "risk" | "opportunity" | "quality" | "governance" | "models";
+type TabKey =
+  | "overview"
+  | "forecast"
+  | "charter"
+  | "vessels"
+  | "risk"
+  | "opportunity"
+  | "scenarios"
+  | "ports"
+  | "map"
+  | "quality"
+  | "governance"
+  | "models";
 
 function App() {
   const [activeTab, setActiveTab] = useState<TabKey>("overview");
@@ -616,6 +634,27 @@ function App() {
           </button>
           <button
             type="button"
+            className={`nav-btn ${activeTab === "scenarios" ? "active" : ""}`}
+            onClick={() => setActiveTab("scenarios")}
+          >
+            Policy & Economics
+          </button>
+          <button
+            type="button"
+            className={`nav-btn ${activeTab === "ports" ? "active" : ""}`}
+            onClick={() => setActiveTab("ports")}
+          >
+            Port Operations
+          </button>
+          <button
+            type="button"
+            className={`nav-btn ${activeTab === "map" ? "active" : ""}`}
+            onClick={() => setActiveTab("map")}
+          >
+            Maritime GIS
+          </button>
+          <button
+            type="button"
             className={`nav-btn ${activeTab === "quality" ? "active" : ""}`}
             onClick={() => setActiveTab("quality")}
           >
@@ -659,8 +698,11 @@ function App() {
               {activeTab === "vessels" && "Vessel Suitability & Physical Port Constraints"}
               {activeTab === "risk" && "Route Risk Intelligence Assessment"}
               {activeTab === "opportunity" && "Freight Opportunity Score (FOS) Fixing Window"}
+              {activeTab === "scenarios" && "Pillar 1 · Policy Alignment & Landed Cost Economics"}
+              {activeTab === "ports" && "Pillar 4 · Port Physical Operations & Berth Constraints"}
+              {activeTab === "map" && "Pillar 2 · Maritime Geospatial GIS & Chokepoints"}
               {activeTab === "quality" && "Data Pipeline Quality & Lineage (ISO 8000)"}
-              {activeTab === "governance" && "Tender Audit Trail & Decision Governance"}
+              {activeTab === "governance" && "Pillar 3 · CVC Vigilance Governance & Immutable Audit Trail"}
               {activeTab === "models" && "Registered Model Artifacts & System Health"}
             </h2>
           </div>
@@ -669,6 +711,33 @@ function App() {
             <strong>{apiBaseUrl}</strong>
           </div>
         </header>
+
+        {/* Unified 5-Pillar Command Header */}
+        <div style={{ marginBottom: "1rem", borderRadius: "8px", overflow: "hidden" }}>
+          <CommandHeader />
+        </div>
+
+        {/* Mandatory CVC / GFR Compliance Advisory Banner */}
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "10px",
+            padding: "10px 14px",
+            marginBottom: "1.25rem",
+            background: "#1e293b",
+            borderLeft: "4px solid #f59e0b",
+            borderRadius: "6px",
+            fontSize: "12px",
+            color: "#e2e8f0",
+            lineHeight: 1.4,
+          }}
+        >
+          <span style={{ fontSize: "16px" }}>⚖️</span>
+          <div>
+            <strong>CVC & GFR 2017 Compliance Rule:</strong> Decision-Support System Only. Final chartering, vessel fixation, or coal procurement action requires review and approval by an authorized officer under the applicable delegation and procurement framework.
+          </div>
+        </div>
 
         {/* Global Key Metrics Strip */}
         <section className="metrics-grid">
@@ -1422,6 +1491,54 @@ function App() {
           </div>
         )}
 
+        {/* TAB: PILLAR 1 - POLICY & ECONOMICS */}
+        {activeTab === "scenarios" && (
+          <div className="tab-content">
+            <section className="market-section">
+              <div className="section-title">
+                <span className="eyebrow">Pillar 1 · Policy & Economics Evaluation</span>
+                <h3>Energy-Normalized ($USD/GJ) Coastal vs. Import Coal Parity</h3>
+              </div>
+              <p style={{ color: "#94a3b8", fontSize: "13px", marginBottom: "1.25rem", lineHeight: 1.5 }}>
+                Evaluate delivered energy costs for power utilities (NTPC/State GENCOs), optimize blending fractions under ash limits, and stress-test landed cost parity against freight, FX, and port tariff shocks.
+              </p>
+              <ScenarioComparator />
+            </section>
+          </div>
+        )}
+
+        {/* TAB: PILLAR 4 - PORT OPERATIONS */}
+        {activeTab === "ports" && (
+          <div className="tab-content">
+            <section className="market-section">
+              <div className="section-title">
+                <span className="eyebrow">Pillar 4 · Port Physical Operations & Berth Eligibility</span>
+                <h3>Berth LOA/Beam/Draft Constraints & Modelled Delay Exposure</h3>
+              </div>
+              <p style={{ color: "#94a3b8", fontSize: "13px", marginBottom: "1.25rem", lineHeight: 1.5 }}>
+                Verify physical vessel feasibility against official berth notices with high-tide conditional access. Distinguishes modelled delay exposure from contractual laytime demurrage liability.
+              </p>
+              <EligibilityMatrix />
+            </section>
+          </div>
+        )}
+
+        {/* TAB: PILLAR 2 - MARITIME GIS */}
+        {activeTab === "map" && (
+          <div className="tab-content">
+            <section className="market-section">
+              <div className="section-title">
+                <span className="eyebrow">Pillar 2 · Maritime Geospatial Intelligence</span>
+                <h3>Offline Corridors, Strategic Chokepoints & Cyclone Advisories</h3>
+              </div>
+              <p style={{ color: "#94a3b8", fontSize: "13px", marginBottom: "1.25rem", lineHeight: 1.5 }}>
+                100% offline-capable vector maritime GIS. Features verified Indian major ports, Cape/Malacca/Suez shipping corridors, strategic chokepoints, and weather warning overlays with explicit truth-class labeling.
+              </p>
+              <MapCanvas />
+            </section>
+          </div>
+        )}
+
         {/* TAB 7: DATA QUALITY */}
         {activeTab === "quality" && (
           <div className="tab-content">
@@ -1581,6 +1698,14 @@ function App() {
                       </tbody>
                     </table>
                   </div>
+
+                  <h4 style={{ marginTop: "2rem", marginBottom: "0.5rem" }}>
+                    Pillar 3: SHA-256 Tamper-Evident Decision Timeline & Official Tender Brief Export
+                  </h4>
+                  <p style={{ color: "#64748b", fontSize: "12px", marginBottom: "1rem" }}>
+                    Formal CVC decision state machine (DRAFT → ANALYSED → SUBMITTED_FOR_REVIEW → APPROVED/RETURNED/REJECTED) with self-approval locking, cryptographic hash verification, and reproducible PDF/XLSX generation.
+                  </p>
+                  <AuditTimeline />
                 </>
               )}
             </section>
