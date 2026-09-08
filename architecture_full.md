@@ -1,775 +1,757 @@
-# Comprehensive System Architecture & Technical Design Document
+# Freight-SIH: Current System Architecture
 
-**Project:** AI-Powered Maritime Freight Chartering & Decision-Support System (`Freight-sih`)  
-**Target Domain:** Dry-Bulk Maritime Logistics (Coking Coal & Thermal Coal Imports for Steel & Power PSUs)  
-**Compliance Standards:** Central Vigilance Commission (CVC) Maritime Procurement Guidelines, General Financial Rules (GFR) 2017 Rule 144, BIMCO Standard Charterparty Clauses, ISO 8000 Data Quality Standards  
-**Operational Capability:** 100% Air-Gapped Offline Capability with Zero Cloud API Dependencies  
+**Project:** AI-assisted maritime freight chartering and procurement decision support  
+**Domain:** Dry-bulk coal logistics for Indian steel, power, and mining PSUs  
+**Document status:** Repository-aligned implementation guide  
+**Last reconciled:** 2026-09-09
 
----
+This document describes the code currently in this repository. It distinguishes implemented behavior from mock data, research material, legacy demo code, and future architecture. The primary implementation is the React/Vite frontend plus FastAPI/Python backend. The top-level `public/` and `api/` surface is a separate Hatchable demonstration application.
 
-## Table of Contents
+## Contents
 
-1. [Executive Summary & Problem Statement](#1-executive-summary--problem-statement)
-2. [Unique Features & Key Competitive Differentiators (USPs)](#2-unique-features--key-competitive-differentiators-usps)
-3. [End-to-End System Architecture Topology](#3-end-to-end-system-architecture-topology)
-4. [Machine Learning & Optimization Data Flow: From Raw Input to Mathematical Output](#4-machine-learning--optimization-data-flow-from-raw-input-to-mathematical-output)
-5. [Global Data & Execution Lifecycle (Sequence Flow)](#5-global-data--execution-lifecycle-sequence-flow)
-6. [Frontend Architecture & Component Deep-Dive](#6-frontend-architecture--component-deep-dive)
-7. [Backend Gateway & API Router Directory (84 Routes)](#7-backend-gateway--api-router-directory-84-routes)
-8. [Machine Learning & Explainable AI (XAI) Engines](#8-machine-learning--explainable-ai-xai-engines)
-9. [Operations Research & Mathematical Optimization Engines](#9-operations-research--mathematical-optimization-engines)
-10. [The 5 Pillars of Maritime Intelligence](#10-the-5-pillars-of-maritime-intelligence)
-    - [Pillar 1: Landed Cost & Energy Economics](#pillar-1-landed-cost--energy-economics)
-    - [Pillar 2: Maritime GIS & Spatial Navigation](#pillar-2-maritime-gis--spatial-navigation)
-    - [Pillar 3: CVC Vigilance Governance & Cryptographic Hash Chaining](#pillar-3-cvc-vigilance-governance--cryptographic-hash-chaining)
-    - [Pillar 4: Port Operations, Berth Constraints & Demurrage](#pillar-4-port-operations-berth-constraints--demurrage)
-    - [Pillar 5: Command Center & Real-Time Telemetry](#pillar-5-command-center--real-time-telemetry)
-11. [Database Persistence & Storage Layer](#11-database-persistence--storage-layer)
-12. [Data Pipeline, Canonical Repositories & Git Hygiene](#12-data-pipeline-canonical-repositories--git-hygiene)
-13. [Verification, Testing & Contract Parity (52 Passing Tests)](#13-verification-testing--contract-parity-52-passing-tests)
-14. [Offline Execution & Demonstration Runbook](#14-offline-execution--demonstration-runbook)
+1. [System At A Glance](#1-system-at-a-glance)
+2. [Repository Structure](#2-repository-structure)
+3. [Runtime And Startup](#3-runtime-and-startup)
+4. [Request And Data Flow](#4-request-and-data-flow)
+5. [Frontend Pages And User Workflows](#5-frontend-pages-and-user-workflows)
+6. [The Five Pillars](#6-the-five-pillars)
+7. [Backend API Surface](#7-backend-api-surface)
+8. [Services And Computational Engines](#8-services-and-computational-engines)
+9. [Libraries, Techniques, And Skills](#9-libraries-techniques-and-skills)
+10. [Data, ML, And Optimization Lifecycle](#10-data-ml-and-optimization-lifecycle)
+11. [Persistence And Database Behavior](#11-persistence-and-database-behavior)
+12. [Testing And Verification](#12-testing-and-verification)
+13. [Operational Limitations And Truth Labels](#13-operational-limitations-and-truth-labels)
+14. [Architecture Diagrams](#14-architecture-diagrams)
+15. [Runbook](#15-runbook)
 
----
+## 1. System At A Glance
 
-## 1. Executive Summary & Problem Statement
+Freight-SIH is a decision-support system. It combines:
 
-### The Problem
-Indian state-owned enterprises (PSUs in steel, power, and mining like SAIL, NTPC, and Coal India) import millions of tonnes of coking and thermal coal annually from international load centers (e.g., Gladstone, Hay Point, Newcastle in Australia; Tanjung Bara, Samarinda in Indonesia; Richards Bay in South Africa) to Indian discharge ports (Paradip, Dhamra, Haldia, Visakhapatnam, Krishnapatnam). 
+- Market intelligence and route freight context.
+- Multi-horizon freight forecasting and forecast explanation.
+- Contract allocation and charter strategy optimization.
+- Vessel and port feasibility checks.
+- Maritime map layers for ports, corridors, chokepoints, and hazard advisories.
+- Scenario and landed-cost economics.
+- CVC/GFR governance workflows with audit events and reports.
+- Data-quality and model-registry views.
 
-Chartering bulk carriers (Panamax, Supramax, Capesize) in volatile global dry-bulk freight markets presents severe operational and regulatory challenges:
-1. **Market Volatility:** Spot freight rates fluctuate drastically due to seasonal commodity swings, bunker fuel spikes, and global chokepoint delays.
-2. **Contract Structuring Dilemma:** Decision-makers struggle to balance Spot voyage charters, Multi-Voyage Contracts (MVC), Time Charters, and long-term Contracts of Affreightment (COA).
-3. **Physical & Nautical Bottlenecks:** Vessels arriving with drafts exceeding berth depths or lengths exceeding LOA limits face multi-day lightering or anchorage delays, triggering catastrophic demurrage charges ($15,000 to $30,000 USD/day).
-4. **Vigilance & Procurement Governance (CVC / GFR):** Public procurement must withstand rigorous audits by the Central Vigilance Commission (CVC) and Comptroller and Auditor General (CAG). Decisions made without verifiable audit trails, justifiable objective criteria, or two-man approval rules risk formal inquiries.
+The system does not autonomously fix a vessel, award a contract, or approve a procurement decision. Human authorization remains required.
 
-### The Solution (`Freight-sih`)
-`Freight-sih` is an enterprise-grade, offline-capable decision-support platform designed to transform maritime freight procurement. It brings together:
-* **Machine Learning:** Multi-horizon probabilistic freight rate forecasts ($P_{10}, P_{50}, P_{90}$) with tree-based SHAP explainability.
-* **Operations Research:** HiGHS Linear Programming (LP) and portfolio optimization algorithms that allocate cargo commitments across contract types while minimizing total landed procurement costs.
-* **Nautical Engineering:** Physical berth constraint solvers checking LOA, beam, draft, and high-tide conditional access across East Coast Indian ports.
-* **Cryptographic CVC Governance:** An immutable SHA-256 hash-chained decision audit ledger, enforcing two-man separation of duties (preventing self-approval) and generating statutory PDF/Excel tender briefs.
-* **Spatial Maritime GIS:** Real-world nautical routing, chokepoint vulnerability scoring, and IMD cyclone weather feeds.
+### Source of truth
 
----
+For runtime behavior, use these files in this order:
 
-## 2. Unique Features & Key Competitive Differentiators (USPs)
+1. `backend/app/main.py` and `backend/app/api/` for route registration and contracts.
+2. `backend/app/services/` for business rules and service behavior.
+3. `frontend/src/main.tsx`, `frontend/src/api.ts`, and `frontend/src/components/` for the user interface.
+4. `ml/`, `optimization/`, `data/`, and `database/` for computation and persistence inputs.
+5. `tests/` for executable expectations.
 
-`Freight-sih` incorporates 12 innovative architectural and algorithmic capabilities that distinguish it from conventional freight dashboards and generic ERP modules:
+`README.md`, handoff documents, and this file are documentation layers over those sources and must be reconciled when behavior changes.
 
-```
-+----------------------------------------------------------------------------------------------------+
-|                                 FREIGHT-SIH UNIQUE ADVANTAGES (USPs)                               |
-+------------------------------------+------------------------------------+--------------------------+
-| 1. Cryptographic SHA-256 Hash Chain | 2. Two-Man Rule Enforcement (CVC)  | 3. Frozen State Snapshot |
-| Mathematically tamper-proof ledger | Blocks self-approval (HTTP 409)    | Locks forecast at submit |
-+------------------------------------+------------------------------------+--------------------------+
-| 4. Energy-Normalized Cost ($/GJ)   | 5. Dynamic Local Tree-SHAP XAI     | 6. HiGHS Linear Program  |
-| Converts $/MT to true heat content | Real-time per-query attributions   | Multi-contract cost min  |
-+------------------------------------+------------------------------------+--------------------------+
-| 7. High-Tide Harmonic Windows      | 8. Multi-Horizon Quantiles (P10/90)| 9. Statutory Tender Brief|
-| Spring tide conditional clearance  | 7D, 30D, 60D, 90D rate bands       | 1-Click CVC PDF & Excel  |
-+------------------------------------+------------------------------------+--------------------------+
-| 10. BIMCO Laycan Eco-Steaming      | 11. Multi-Source Blend Optimizer   | 12. 100% Air-Gapped DB   |
-| Speed-consumption vs laycan date   | GCV, Ash & Sulfur constrained      | Zero cloud dependencies  |
-+------------------------------------+------------------------------------+--------------------------+
-```
+## 2. Repository Structure
 
-### 1. Cryptographic SHA-256 Decision Audit Chaining
-Unlike standard database logging where rows can be altered or deleted by a database administrator, every action in `Freight-sih` (Draft, Analyse, Submit, Approve, Return, Reject) is sealed in a continuous SHA-256 hash chain:
-$$\text{Hash}_k = \text{SHA-256}\Big(\text{Hash}_{k-1} + \text{CanonicalJSON}\big(\text{DecisionID}, \text{Action}, \text{Actor}, \text{Role}, \text{Payload}\big)\Big)$$
-An active tamper-detection algorithm recalculates every link from the 64-zero genesis block upon request, mathematically proving zero post-facto tampering for CVC and CAG scrutiny.
-
-### 2. Statutory Two-Man Rule Enforcement (GFR 2017 Rule 144)
-Enforces strict separation of duties directly within the API gateway. If the officer who drafted or submitted a procurement strategy attempts to approve it, the backend aborts the transaction with an HTTP `409 Conflict` (`SELF_APPROVAL_BLOCKED`), guaranteeing institutional integrity.
-
-### 3. Immutable Frozen Snapshot at Tender Submission
-When a chartering strategy is submitted for supervisory review, the system automatically captures a frozen JSON snapshot of all live predictive variables (XGBoost $P_{10}/P_{50}/P_{90}$ rates, recommended vessels, bunker prices, and risk scores). Approvers evaluate the exact data that justified the recommendation, preventing justifications based on retroactive hindsight.
-
-### 4. Energy-Normalized Delivered Cost ($\$/\text{GJ}$)
-Thermal power plant boilers burn energy, not tonnage. `Freight-sih` normalizes delivered cost by Gross Calorific Value (GCV):
-$$\text{Energy Cost (\$/GJ)} = \frac{\text{Landed Cost (\$/MT)}}{\text{GCV (kcal/kg)} \times 0.004184 \text{ GJ/kcal-MT}}$$
-This allows procurement officers to immediately discover when a nominally higher-priced foreign coal (e.g. Australian $6,000 \text{ kcal/kg}$ at $\$115/\text{MT} = \$4.58/\text{GJ}$) is more cost-effective than cheaper domestic coal (e.g. $3,400 \text{ kcal/kg}$ at $\$80/\text{MT} = \$5.62/\text{GJ}$).
-
-### 5. Dynamic Local Tree-SHAP Explainability (XAI)
-Rather than displaying canned or static feature importance charts, the system invokes `shap.TreeExplainer` dynamically on the actual input vector. It computes the exact dollar-per-tonne attribution ($\phi_i$) for every feature in real time (e.g. $+1.85 \text{ \$/MT}$ from Singapore bunker surge, $-0.65 \text{ \$/MT}$ from low queue wait at Dhamra).
-
-### 6. HiGHS Mixed-Integer Linear Programming Solver
-Employs `scipy.optimize.linprog(method="highs")` to find the exact global cost minimum across Spot, 3-Voyage, 6-Voyage, and 12-Voyage contracts. The solver simultaneously accounts for volume discount tiers (3%, 6%, 9%), sea-day bunker consumption, port congestion demurrage, berth idle time, ballast deadhead voyages, and market volatility risk premiums.
-
-### 7. High-Tide Conditional Window Clearance
-Avoids binary "pass/fail" draft rejections. At tidal ports (Paradip, Haldia), vessels exceeding static berth draft by $\le 1.2 \text{ meters}$ are checked against spring tide harmonic forecasts. If tidal rise permits safe UKC, the vessel receives a `CONDITIONAL: HIGH_TIDE_PERMITTED` status, unlocking Capesize and deep-draft Panamax stems.
-
-### 8. Multi-Horizon Calibrated Predictive Quantiles
-Projects freight rates across 4 operational horizons ($T+7, T+30, T+60, T+90$ days) with calibrated probability distributions ($P_{10}$ optimistic floor, $P_{50}$ median expectation, $P_{90}$ worst-case ceiling), empowering officers to hedge against adverse rate spikes.
-
-### 9. Statutory CVC Tender Brief Generators
-With a single click, compiles an official multi-page PDF (via ReportLab) or Excel workbook (via openpyxl). The document features official CVC disclaimer watermarks, cryptographic SHA-256 verification stamps, 10 executive audit sections, cost waterfalls, and designated signature lines for internal vigilance audits.
-
-### 10. BIMCO Clause 10 Ballast Steaming & Speed Optimizer
-Models non-linear speed-consumption curves ($32 \text{ MT/day}$ at $14.0 \text{ kts}$ vs $21 \text{ MT/day}$ at $11.5 \text{ kts}$ Eco speed). Solves the optimal transit speed from ballast staging hubs (Singapore/Colombo) to load ports (Gladstone/Newcastle) to guarantee arrival before the Laycan Cancelling Date while maximizing fuel savings.
-
-### 11. Multi-Source Constrained Coal Blend Optimizer
-Formulates and solves a constrained optimization problem balancing multi-source imported and domestic coals to meet boiler-specific moisture, ash, and sulfur environmental thresholds at minimal delivered landed cost.
-
-### 12. 100% Air-Gapped Offline Operation with Auto-Fallback DB
-Requires zero internet connection, cloud subscriptions, or external API keys. Automatically connects to local SQLite (`data/freight_intelligence.db`) with automatic table creation if PostgreSQL is unreachable, allowing smooth demonstrations on air-gapped laptops.
-
----
-
-## 3. End-to-End System Architecture Topology
-
-```mermaid
-graph TB
-    subgraph ClientTier["CLIENT TIER: Executive Command Center (React 19 + TypeScript + Vite)"]
-        UI_Head[CommandHeader.tsx<br/>Status, Mode, CVC Badge]
-        Tab_Exec[Executive Overview<br/>Macro, Baltic, FFA, Coal]
-        Tab_Fore[Forecast & Dynamic SHAP<br/>P10/P50/P90, What-If]
-        Tab_Port[Portfolio Optimizer<br/>HiGHS LP & Contract Mix]
-        Tab_Vess[Vessels & Ports<br/>AIS Proximity & Specs]
-        Tab_Econ[Policy & Economics<br/>ScenarioComparator.tsx]
-        Tab_Ops[Port Operations<br/>EligibilityMatrix.tsx]
-        Tab_GIS[Maritime GIS<br/>MapCanvas.tsx MapLibre GL]
-        Tab_Risk[Risk & Opportunity<br/>FOS Fixing Window]
-        Tab_Gov[CVC Governance<br/>AuditTimeline.tsx]
-        Tab_Data[Data Quality & Models<br/>ISO 8000 Integrity]
-        
-        API_Client[frontend/src/api.ts<br/>Unified Typed Client]
-        UI_Head --> API_Client
-        Tab_Exec --> API_Client
-        Tab_Fore --> API_Client
-        Tab_Port --> API_Client
-        Tab_Vess --> API_Client
-        Tab_Econ --> API_Client
-        Tab_Ops --> API_Client
-        Tab_GIS --> API_Client
-        Tab_Risk --> API_Client
-        Tab_Gov --> API_Client
-        Tab_Data --> API_Client
-    end
-
-    subgraph APITier["GATEWAY TIER: FastAPI Application (backend/app/main.py :8000)"]
-        Router_Health["health.py (/health)"]
-        Router_Fore["forecast.py (/forecast, /analysis/*)"]
-        Router_Charter["charter.py (/charter/optimize, /charter/strategy)"]
-        Router_Market["market.py (/market, /market/context)"]
-        Router_Vessels["vessels.py (/vessels/recommend)"]
-        Router_Ports["ports.py (/port/check, /port/congestion)"]
-        Router_Risk["risk.py (/risk)"]
-        Router_Oppo["opportunity.py (/freight-opportunity)"]
-        Router_Quality["data_quality.py (/data-quality)"]
-        Router_Audit["audit.py (/audit/logs, /audit/review)"]
-        Router_Models["models.py (/models, /models/performance)"]
-        Router_Cmd["command_center.py (/api/command-center/*)"]
-        Router_Dec["decisions.py (/api/decisions/*)"]
-        Router_Elig["eligibility.py (/api/ports/eligibility, /api/delay/*)"]
-        Router_Map["map.py (/api/map/*)"]
-        Router_Scen["scenarios.py (/api/scenarios/*)"]
-    end
-
-    subgraph ServiceTier["CORE BUSINESS LOGIC & 5 PILLARS SERVICES"]
-        Svc_Econ["Pillar 1: economics.py<br/>Landed Cost, $/GJ, Blending"]
-        Svc_GIS["Pillar 2: map_data.py & imd_adapter.py<br/>GeoJSON & Cyclone Telemetry"]
-        Svc_Audit["Pillar 3: audit.py, decisions.py, reports.py<br/>SHA-256 Chaining & PDF/XLSX Engine"]
-        Svc_Ops["Pillar 4: eligibility.py<br/>LOA/Beam/Draft & Demurrage Quantiles"]
-        Svc_Cmd["Pillar 5: command_center.py<br/>Executive KPI Aggregator"]
-        Svc_Analysis["analysis_service.py<br/>Dynamic SHAP & Scenario Deltas"]
-        Svc_Context["market_context_service.py<br/>Baltic Indices & Forward Curves"]
-    end
-
-    subgraph ComputeTier["COMPUTATIONAL, ML & OR ENGINES"]
-        OR_LP["HiGHS LP Solver (optimization/charter_strategy.py)<br/>scipy.optimize.linprog"]
-        OR_Contract["Portfolio Optimizer (optimization/contract_optimizer.py)<br/>Risk-Adjusted Spot vs COA Mix"]
-        OR_Scenario["Scenario Engine (optimization/scenario_engine.py)<br/>Multi-Factor Shocks"]
-        OR_Position["Ballast Steaming (optimization/positioning.py)<br/>BIMCO Clause 10 Laycan ETA"]
-        
-        ML_Forecast["XGBoost Regressor (ml/inference/forecast.py)<br/>Panamax Freight Rates (7D/30D/60D/90D)"]
-        ML_SHAP["TreeExplainer (ml/explainability/shap_explainer.py)<br/>Dynamic Feature Importance"]
-        ML_Congest["Congestion Model (ml/inference/congestion.py)<br/>Queue Wait Times"]
-        ML_Market["Market Intelligence (ml/inference/market_intelligence.py)<br/>Regime Classifier & Trend"]
-        ML_Vessel["Vessel Intelligence (ml/inference/vessel_intelligence.py)<br/>Suitability & AIS Proximity"]
-        ML_FOS["Opportunity Score (ml/inference/freight_opportunity_score.py)<br/>Fixing Window Heuristics"]
-        ML_Risk["Risk Assessment (ml/inference/risk.py)<br/>6-Component Risk Matrix"]
-    end
-
-    subgraph DataTier["PERSISTENCE, SPATIAL & REFERENCE DATA TIER"]
-        DB_SQLite["SQLite Zero-Config Database<br/>(data/freight_intelligence.db)"]
-        DB_PG["PostgreSQL Session Fallback<br/>(backend/app/database/session.py)"]
-        
-        Tables_Core["Core Tables:<br/>• model_versions • predictions<br/>• recommendations • audit_logs<br/>• reference_ports"]
-        Tables_Pillars["Pillar Tables:<br/>• decisions • decision_events (SHA-256 Hashed)<br/>• map_freshness"]
-        
-        Geo_Files["Spatial Layers (data/reference/):<br/>• ports.geojson • corridors.geojson<br/>• chokepoints.geojson • port_constraints.json"]
-        Lookup_CSVs["Operational Lookups (data/charter_strategy/):<br/>• port_coordinates.csv • bunker_by_date.csv<br/>• route_freight_lookup.csv • wait_by_port.csv"]
-    end
-
-    API_Client <==> APITier
-    
-    Router_Health --> Svc_Cmd
-    Router_Fore --> Svc_Analysis
-    Router_Fore --> ML_Forecast
-    Router_Charter --> OR_LP
-    Router_Charter --> OR_Contract
-    Router_Market --> Svc_Context
-    Router_Market --> ML_Market
-    Router_Vessels --> ML_Vessel
-    Router_Ports --> Svc_Ops
-    Router_Risk --> ML_Risk
-    Router_Oppo --> ML_FOS
-    Router_Quality --> DataTier
-    Router_Audit --> Tables_Core
-    Router_Models --> Tables_Core
-    Router_Cmd --> Svc_Cmd
-    Router_Dec --> Svc_Audit
-    Router_Elig --> Svc_Ops
-    Router_Map --> Svc_GIS
-    Router_Scen --> Svc_Econ
-
-    Svc_Audit --> Tables_Pillars
-    Svc_Audit --> DB_SQLite
-    Svc_Econ --> OR_Scenario
-    Svc_GIS --> Geo_Files
-    Svc_Ops --> Geo_Files
-    Svc_Ops --> Tables_Core
-    OR_LP --> Lookup_CSVs
-    
-    DB_SQLite --- Tables_Core
-    DB_SQLite --- Tables_Pillars
-    DB_PG -.-> Tables_Core
+```text
+freight-chartering-v4/
+|-- frontend/                         Active React 19 + Vite application
+|   |-- src/main.tsx                   Single tabbed application shell
+|   |-- src/api.ts                     Five-pillar API client
+|   |-- src/components/                Map, governance, scenario, eligibility UI
+|   |-- src/styles.css                 Shared application styling
+|   |-- package.json                   Frontend dependencies and scripts
+|   `-- vite.config.ts                Dev server and /api proxy
+|-- backend/
+|   |-- app/main.py                    FastAPI app and router registration
+|   |-- app/api/                       HTTP route modules
+|   |-- app/services/                  Domain services and business rules
+|   |-- app/database/                  SQLAlchemy and governance SQLite access
+|   |-- app/schemas/                   Request/response models
+|   |-- app/config/                    Settings and environment configuration
+|   |-- app/dependencies/              FastAPI dependency helpers
+|   `-- requirements.txt               Python dependencies
+|-- ml/
+|   |-- inference/                     Forecast, congestion, risk, vessel, FOS logic
+|   |-- explainability/                Forecast explanation helpers
+|   |-- features/                      Feature construction
+|   |-- preprocessing/                 Data preparation
+|   |-- models/                        Serialized model artifacts
+|   |-- artifacts/                     Evaluation and precomputed artifacts
+|   |-- registry/model_registry.json   Active model metadata
+|   `-- evaluation/                    Evaluation outputs and utilities
+|-- optimization/                     OR and scenario engines
+|   |-- charter_strategy.py            Charter mix and LP strategy
+|   |-- contract_optimizer.py          Contract allocation
+|   |-- vessel_selection.py             Vessel ranking/selection
+|   |-- positioning.py                 Ballast/positioning calculations
+|   `-- scenario_engine.py             Scenario shocks and comparisons
+|-- data/                              Runtime data and reference inputs
+|   |-- raw/                            Source-like market and operational data
+|   |-- processed/                      Model-ready data
+|   |-- features/                       Derived feature datasets
+|   |-- reference/                      Port constraints and static references
+|   |-- charter_strategy/               Freight, bunker, distance, and wait lookups
+|   `-- clean/                          Cleaned datasets
+|-- database/
+|   |-- schema/                         PostgreSQL initialization schema
+|   |-- migrations/                     SQL migration material
+|   `-- seeds/                          Seed data
+|-- tests/                              Backend, frontend contracts, ML, OR, pillars
+|-- docs/                               Model handoffs and pillar documentation
+|-- market_intelligence/                Research pipeline, reports, and notebook
+|-- AI-FREIGHT/                         Research/alternate ML workspace
+|-- sih/                                Supporting AIS, port, weather, and congestion files
+|-- public/                             Legacy Hatchable static frontend
+|-- api/                                Legacy Hatchable JavaScript endpoints
+|-- lib/sim.js                          Legacy deterministic simulation logic
+|-- hatchable.toml                      Legacy/demo hosting configuration
+|-- docker-compose.yml                  PostgreSQL, FastAPI, and Vite services
+|-- README.md                           Setup and project specification
+`-- architecture_full.md                This current architecture document
 ```
 
----
+### Important boundary: active versus legacy application
 
-## 4. Machine Learning & Optimization Data Flow: From Raw Input to Mathematical Output
+The active application is under `frontend/` and `backend/`. It is started with Vite and FastAPI. The top-level `public/index.html`, `public/app.js`, `api/*.js`, and `lib/sim.js` form a separate older Hatchable/demo surface. They are not imported by `backend/app/main.py` and do not implement the active React Maritime GIS tab.
 
-The following diagram details the exact transformation pipeline from raw operational and market inputs, through preprocessing, model inference, mathematical optimization, and final synthesis:
+## 3. Runtime And Startup
 
-```mermaid
-graph TD
-    subgraph RawData["1. RAW INPUT DATA & USER QUERY PARAMETERS"]
-        U_Route["User Inputs: Origin Port, Destination Port, Vessel Class, Cargo MT, Laycan"]
-        R_Baltic["Baltic Indices: BDI, BPI, BCI (data/raw/baltic_indices/)"]
-        R_Bunker["Bunker Fuel Prices: VLSFO Singapore, Fujairah (data/raw/bunker/)"]
-        R_FFA["Paper Forward Curves: 1M, 2M, 3M FFA (data/raw/ffa/)"]
-        R_AIS["AIS Live Feed: Vessel Coords, Speed, Draft, Heading (data/raw/ais/)"]
-        R_Port["Port Telemetry: Waiting Vessels, Berth Queue, Turnaround (data/raw/congestion/)"]
-        R_Weather["IMD Weather: Cyclone Track, Swell Height, Wind Speed (data/raw/weather/)"]
-        R_Specs["Vessel Specs: DWT, LOA, Beam, Draft, Engine Rating (data/charter_strategy/)"]
-    end
+### Local development
 
-    subgraph FeaturePipeline["2. FEATURE ENGINEERING & PREPROCESSING PIPELINE"]
-        FE_Distance["Haversine Distance & Canal Dues Calculator<br/>(Nautical Miles between Origin & Destination)"]
-        FE_Lags["Temporal Lag & Momentum Features<br/>(7D, 14D, 30D Moving Averages, Rate Deltas)"]
-        FE_Contango["FFA Curve Slope / Contango-Backwardation Spread<br/>(Spot vs Forward 1M/2M Spread)"]
-        FE_Queue["Queue Density & Seasonal Congestion Factor<br/>(Vessels at Anchorage / Active Berths)"]
-        FE_Encode["ColumnTransformer Preprocessor (ml/preprocessing/)<br/>OneHotEncoder(Route, VesselClass) + StandardScaler(Continuous)"]
-        
-        U_Route --> FE_Distance
-        R_Baltic --> FE_Lags
-        R_Bunker --> FE_Lags
-        R_FFA --> FE_Contango
-        R_Port --> FE_Queue
-        
-        FE_Distance --> FE_Encode
-        FE_Lags --> FE_Encode
-        FE_Contango --> FE_Encode
-        FE_Queue --> FE_Encode
-    end
-
-    subgraph Tensor["3. STANDARDIZED FEATURE VECTOR (22 FEATURES)"]
-        Vector["x = [distance, bdi, bpi, vlsfo, ffa_1m, ffa_2m, ffa_spread, wait_hours, queue_len, swell, loa, beam, draft, dwt, speed, ...]"]
-        FE_Encode --> Vector
-    end
-
-    subgraph MultiModelExecution["4. MULTI-MODEL INFERENCE & SOLVER EXECUTION"]
-        M_XGB["XGBoost Panamax Freight Regressor<br/>(ml/inference/forecast.py)"]
-        M_SHAP["SHAP TreeExplainer<br/>(ml/explainability/shap_explainer.py)"]
-        M_Cong["Congestion Wait-Time Regressor<br/>(ml/inference/congestion.py)"]
-        M_Regime["Market Regime Random Forest<br/>(ml/inference/market_intelligence.py)"]
-        M_FOS["Freight Opportunity Score Engine<br/>(ml/inference/freight_opportunity_score.py)"]
-        M_Risk["Composite Risk Scoring Matrix<br/>(ml/inference/risk.py)"]
-        M_LP["HiGHS Linear Programming Solver<br/>(optimization/charter_strategy.py)"]
-        M_Elig["Berth Constraint & Tide Validator<br/>(backend/app/services/eligibility.py)"]
-        
-        Vector --> M_XGB
-        Vector --> M_SHAP
-        Vector --> M_Cong
-        Vector --> M_Regime
-        Vector --> M_FOS
-        Vector --> M_Risk
-        
-        U_Route --> M_LP
-        Vector --> M_LP
-        R_Specs --> M_Elig
-        U_Route --> M_Elig
-    end
-
-    subgraph ModelOutputs["5. RAW MATHEMATICAL & PREDICTIVE OUTPUTS"]
-        O_Quantiles["Forecast Quantiles ($/MT):<br/>P10 (Floor), P50 (Median), P90 (Ceiling)<br/>Horizons: 7D, 30D, 60D, 90D"]
-        O_SHAP["Local Feature Attributions:<br/>phi_i ($/MT impact per feature)"]
-        O_Wait["Expected Waiting Hours & Queue Delay<br/>(P10, P50, P90 Waiting Days)"]
-        O_Regime["Regime Class: BULLISH / BEARISH / SIDEWAYS<br/>Confidence Probability Distribution"]
-        O_FOS["Opportunity Score (0-100)<br/>Advisory: Fix Promptly / Stagger / Wait"]
-        O_Risk["6-Factor Risk Vector:<br/>[Weather, Geopolitical, Congestion, Bunker, Counterparty, FX]"]
-        O_LP["Optimal Voyage Allocation Vector:<br/>[x_spot, x_3v, x_6v, x_12v]<br/>Expected Cost Savings ($ and %)"]
-        O_Elig["Berth Status: ELIGIBLE / CONDITIONAL / REJECTED<br/>Demurrage Exposure Claim ($ USD)"]
-        
-        M_XGB --> O_Quantiles
-        M_SHAP --> O_SHAP
-        M_Cong --> O_Wait
-        M_Regime --> O_Regime
-        M_FOS --> O_FOS
-        M_Risk --> O_Risk
-        M_LP --> O_LP
-        M_Elig --> O_Elig
-    end
-
-    subgraph Synthesis["6. BUSINESS SYNTHESIS & GOVERNANCE SEALING"]
-        S_Landed["Delivered Landed Cost ($/MT) & Energy Normalization ($/GJ)<br/>FOB + Freight(P50) + BAF + Insurance + Port Dues + Demurrage Buffer"]
-        S_Snapshot["Frozen Recommendation Snapshot<br/>(Locked JSON state containing all outputs at submit time)"]
-        S_Hash["Cryptographic SHA-256 Ledger Sealing<br/>Hash_k = SHA256(Hash_k-1 + Payload)"]
-        
-        O_Quantiles --> S_Landed
-        O_LP --> S_Landed
-        O_Elig --> S_Landed
-        
-        S_Landed --> S_Snapshot
-        O_SHAP --> S_Snapshot
-        O_Risk --> S_Snapshot
-        O_FOS --> S_Snapshot
-        
-        S_Snapshot --> S_Hash
-    end
-
-    subgraph Delivery["7. USER INTERFACE & COMPLIANCE ARTIFACTS"]
-        UI_Render["Executive Command Center React Dashboard<br/>(Visual Waterfall, Risk Radars, Map Canvas, Audit Timeline)"]
-        Report_PDF["Statutory Tender Brief PDF (ReportLab)<br/>(CVC Watermarks, Hash Stamps, Signature Blocks)"]
-        Report_XLSX["Executive Audit Workbook (openpyxl)<br/>(Formatted Worksheets & Cost Ledgers)"]
-        
-        S_Hash --> UI_Render
-        S_Hash --> Report_PDF
-        S_Hash --> Report_XLSX
-    end
-```
-
-### Detailed Pipeline Transformation Table
-
-| Stage | Input Data | Transformation / Operation | Mathematical Formulation | Output Produced |
-| :--- | :--- | :--- | :--- | :--- |
-| **1. Ingestion** | User inputs, Baltic BPI, VLSFO Bunker, FFA curves, Port queues, AIS feeds | Parsing, validation, and missing value imputation via `SimpleImputer` | $x_{\text{imp}} = \text{mean}(x)$ if missing | Validated raw parameter dict |
-| **2. Feature Prep** | Origin/Destination coordinates, historical time series | Haversine nautical distance, temporal rolling averages, FFA forward spreads | $d = 2R \arcsin\left(\sqrt{\sin^2(\frac{\Delta \phi}{2}) + \cos \phi_1 \cos \phi_2 \sin^2(\frac{\Delta \lambda}{2})}\right)$ | 22 Continuous and Categorical features |
-| **3. Encoding** | 22 Raw features | `ColumnTransformer` with `OneHotEncoder` and `StandardScaler` | $z = \frac{x - \mu}{\sigma}$ | Standardized input tensor $X \in \mathbb{R}^{1 \times 22}$ |
-| **4. Rate Forecast** | Input tensor $X$ | XGBoost Tree Ensemble Inference (`panamax_freight_v7`) | $\hat{y} = \sum_{k=1}^K f_k(X)$ with quantile mapping | Multi-horizon $P_{10}, P_{50}, P_{90}$ rates (\$/MT) |
-| **5. XAI** | Input tensor $X$, XGBoost model | TreeExplainer recursive path traversal | $f(X) = \phi_0 + \sum_{i=1}^{22} \phi_i$ | Vector of dollar attributions $\phi \in \mathbb{R}^{22}$ |
-| **6. Congestion** | Port arrivals, queue count, monsoonal month | Multivariate XGBoost Regressor | $\hat{w} = g(X_{\text{port}})$ | Expected wait hours ($P_{10}/P_{50}/P_{90}$) |
-| **7. LP Optimizer** | Cargo volume, contract rates, bunker, demurrage | `scipy.optimize.linprog(method="highs")` | $\min c^T x \quad \text{s.t.} \quad A x \ge b, \; x \ge 0$ | Optimal voyage vector $[x_{\text{spot}}, x_{3v}, x_{6v}, x_{12v}]$ |
-| **8. Port Eligibility**| Vessel LOA, beam, draft vs Berth specs | Dimensional inequality check & tidal harmonic evaluation | $\text{Draft} \le \text{BerthDepth} + \text{TidalRise} - \text{UKC}$ | Status: `ELIGIBLE`, `CONDITIONAL`, `REJECTED` |
-| **9. Economics** | FOB price, freight, demurrage, calorific value | Landed cost summation & calorific energy conversion | $\text{Energy} = \frac{\text{LandedCost}}{\text{GCV} \times 0.004184}$ | Delivered Landed Cost (\$/MT) and Energy (\$/GJ) |
-| **10. Governance**| Officer actions, decision payload, prior hash | Canonical JSON serialization & SHA-256 hash chaining | $H_k = \text{SHA256}(H_{k-1} + \text{JSON}_{\text{canon}}(P_k))$ | Immutable cryptographic block & tamper proof |
-
----
-
-## 5. Global Data & Execution Lifecycle (Sequence Flow)
-
-```mermaid
-sequenceDiagram
-    autonumber
-    actor Officer as Chartering Officer (User)
-    actor Approver as Financial Approver (Two-Man Rule)
-    participant UI as Command Center UI (React)
-    participant Gateway as FastAPI Router
-    participant ML as ML Inference & SHAP Engine
-    participant OR as HiGHS Linear Programming Solver
-    participant Ops as Port Constraints & Demurrage Engine
-    participant Econ as Energy & Landed-Cost Engine
-    participant Gov as CVC Audit & Hash Chaining Engine
-    participant DB as SQLite / PostgreSQL Database
-
-    Officer->>UI: Selects Route (Gladstone -> Paradip), Volume (150,000 MT), Laycan
-    UI->>Gateway: POST /forecast & POST /analysis/explain
-    Gateway->>ML: Run XGBoost Panamax Forecast & SHAP Attribution
-    ML-->>Gateway: Returns P10/P50/P90 rates & feature impact deltas
-    Gateway-->>UI: Displays Forecast curve & Explainability waterfall
-
-    Officer->>UI: Adjusts Diversification Cap & Triggers Portfolio Optimization
-    UI->>Gateway: POST /charter/strategy (LP Request)
-    Gateway->>OR: Solve LP Min Cost: Spot + 3V + 6V + 12V Mix
-    OR-->>Gateway: Optimal Voyage Allocation & Cost Breakdown
-    Gateway-->>UI: Renders Contract Allocation Bar & Expected Savings
-
-    Officer->>UI: Validates Vessel Eligibility & Laycan Risks
-    UI->>Gateway: POST /api/ports/eligibility & POST /api/delay/exposure
-    Gateway->>Ops: Check Berth LOA, Beam, Draft, Tides & Demurrage Exposure
-    Ops-->>Gateway: Status: CONDITIONAL (Tide-Permitted), P50 Delay: 2.1 Days
-    Gateway-->>UI: Highlights High-Tide Clearance & Demurrage Buffer
-
-    Officer->>UI: Evaluates Total Landed Cost per GigaJoule ($/GJ)
-    UI->>Gateway: POST /api/scenarios/evaluate & POST /api/scenarios/blend
-    Gateway->>Econ: Compute FOB + Freight + Demurrage + Port Handling / Calorific Value
-    Econ-->>Gateway: Landed Cost: $118.42/MT, Delivered Energy: $4.72/GJ
-    Gateway-->>UI: Displays Landed Cost Waterfall & Blend Feasibility
-
-    Officer->>UI: Initiates Decision Creation ("Create Tender Strategy")
-    UI->>Gateway: POST /api/decisions (Payload, Officer ID)
-    Gateway->>Gov: Create Decision (Status: DRAFT)
-    Gov->>DB: INSERT into decisions & INSERT genesis event into decision_events
-    Gov-->>UI: Decision ID: DEC-2026-001 (Hash: h0)
-
-    Officer->>UI: Freezes Forecast & Submits for Supervisory Review
-    UI->>Gateway: POST /api/decisions/DEC-2026-001/submit (Author: Officer)
-    Gateway->>Gov: Transition DRAFT -> SUBMITTED_FOR_REVIEW
-    Gov->>Gov: Freeze P10/P50/P90 & Recommendations in Snapshot
-    Gov->>Gov: Compute Hash_k = SHA256(Hash_k-1 + Payload)
-    Gov->>DB: Record SUBMIT event into decision_events
-    Gov-->>UI: Submission Complete (Status: SUBMITTED_FOR_REVIEW)
-
-    Officer->>UI: Attempts Self-Approval as Officer
-    UI->>Gateway: POST /api/decisions/DEC-2026-001/approve (Actor: Officer)
-    Gateway->>Gov: Verify Two-Man Rule
-    Gov-->>Gateway: Conflict: Author cannot approve own decision!
-    Gateway-->>UI: HTTP 409 Conflict: SELF_APPROVAL_BLOCKED
-
-    Approver->>UI: Independent Approver logs in and Reviews Strategy
-    Approver->>UI: Clicks "Approve Tender Brief"
-    UI->>Gateway: POST /api/decisions/DEC-2026-001/approve (Actor: Approver)
-    Gateway->>Gov: Verify Distinct Actor & Advance Status -> APPROVED
-    Gov->>Gov: Compute Hash_k+1 = SHA256(Hash_k + ApprovalPayload)
-    Gov->>DB: Record APPROVE event into decision_events
-    Gov-->>UI: Status: APPROVED, Tamper Verification: 100% VALID
-
-    Approver->>UI: Clicks "Download Official CVC Tender Brief (PDF)"
-    UI->>Gateway: GET /api/decisions/DEC-2026-001/report?format=pdf
-    Gateway->>Gov: Generate ReportLab PDF with CVC Watermark, Hash Proof & Signatures
-    Gov-->>UI: Streams tender_brief_DEC-2026-001.pdf
-    UI-->>Approver: Download complete. Statutory compliance assured.
-```
-
----
-
-## 6. Frontend Architecture & Component Deep-Dive
-
-The frontend is constructed using **React 19**, **TypeScript**, and **Vite**, with styling managed through modern Vanilla CSS employing a curated dark-mode nautical palette (Deep Navy `#0b1329`, Surface Blue `#152243`, Accent Cyan `#00e5ff`, Gold `#ffb300`, Emerald `#00e676`, and Alert Coral `#ff5252`).
-
-### 1. Global Navigation & Layout (`frontend/src/main.tsx`)
-The top-level shell coordinates multi-tabbed operations and maintains global system state:
-* **Route & Vessel Selectors:** Origin load port (`Gladstone`, `Newcastle`, `Tanjung Bara`), Destination discharge port (`Dhamra`, `Paradip`, `Haldia`, `Visakhapatnam`), Vessel Class (`Panamax`, `Supramax`, `Capesize`), Cargo Quantity (default `75,000 MT`), and Delivery Date.
-* **Master Tabs Structure:**
-  1. **Executive Overview**: High-level macro regime, Baltic indices, forward curves, and coal statistics.
-  2. **Forecast & SHAP**: Multi-horizon freight price projection, dynamic SHAP waterfall, and What-If scenario sandbox.
-  3. **Portfolio Optimizer**: HiGHS LP contract allocator (Spot, 3V, 6V, 12V) with cost breakdown.
-  4. **Vessels & Ports**: AIS candidate ranking, DWT/draft feasibility, and port limits.
-  5. **Policy & Economics (Pillar 1)**: Landed cost breakdown, energy normalization ($\$/\text{GJ}$), coal blending, and sensitivity shock matrices.
-  6. **Port Operations (Pillar 4)**: Physical berth constraints, tidal accessibility, probabilistic delay exposure, and demurrage calculations.
-  7. **Maritime GIS (Pillar 2)**: Full-screen interactive MapLibre GL map showing real corridors, chokepoints, and weather hazards.
-  8. **Risk Intelligence**: Composite risk radar chart and Freight Opportunity Score (FOS) fixing window advisory.
-  9. **CVC Governance (Pillar 3)**: Immutable decision timeline, two-man approval workflow, cryptographic tamper verification, and PDF/Excel tender report generation.
-  10. **ISO 8000 Data Quality & Models**: Pipeline completeness, duplicate %, freshness tracker, and registered model artifacts.
-
-### 2. Specialized Pillar Components (`frontend/src/components/`)
-
-#### `CommandHeader.tsx`
-* Pinned executive telemetry banner visible at all times.
-* Displays:
-  - System Operational Status (`ONLINE` / `DEGRADED`).
-  - Active Data Mode (`Live SQLite Engine` / `PostgreSQL Live`).
-  - Active Decision Tracker: shows currently loaded Decision ID and state.
-  - CVC Vigilance Badge: confirms two-man rule enforcement and hash chain verification status.
-
-#### `ScenarioComparator.tsx` (Pillar 1: Economics)
-* Compares up to 3 procurement scenarios side-by-side.
-* Renders:
-  - Landed Cost per Tonne Breakdown: FOB price + Ocean Freight + Bunker Adjustment Factor (BAF) + Insurance + Port Dues + Demurrage Buffer.
-  - Energy Normalization Widget: calculates cost per GigaJoule ($\$/\text{GJ}$) based on gross calorific value (e.g., $6,000 \text{ kcal/kg} = 25.104 \text{ GJ/MT}$).
-  - Coal Blend Optimizer: calculates optimal blend ratios between high-CV Australian coal and low-ash domestic/Indonesian coal to satisfy boiler emission limits.
-  - Sensitivity Shock Table: visualizes delivered cost impact under $+10\% / +20\%$ freight hikes, $\pm 15\%$ bunker movements, and $+3 / +7$ day port congestion delays.
-
-#### `MapCanvas.tsx` (Pillar 2: Maritime GIS)
-* Built on top of **MapLibre GL** with an offline-compatible dark raster/vector style.
-* Features:
-  - Dynamic Port Markers: color-coded by draft compatibility (Green = Safe, Amber = Conditional/Tidal, Red = Draft Exceeded).
-  - Oceanic Corridors: GeoJSON linestrings representing active routes from Australia/Indonesia to India via Malacca and Sunda Straits.
-  - Strategic Chokepoints: pulsating radar circles over Malacca Strait, Sunda Strait, and Singapore Strait displaying maritime security and congestion risk indices.
-  - Hazard Layers: overlay of active IMD cyclone trajectories and high-swell areas.
-
-#### `AuditTimeline.tsx` (Pillar 3: CVC Governance)
-* Complete visual interface for the decision lifecycle and cryptographic audit ledger.
-* Capabilities:
-  - Decision Creation & Status Tracker (`DRAFT` $\to$ `ANALYSED` $\to$ `SUBMITTED_FOR_REVIEW` $\to$ `APPROVED` | `RETURNED` | `REJECTED`).
-  - Interactive Action Controls: Buttons to Analyse, Submit for Review, Approve, Return with Feedback, or Reject.
-  - Two-Man Rule Guard: displays an explicit warning if the logged-in user is the author and prevents unauthorized self-approval.
-  - Hash Verification Badge: displays calculated SHA-256 event hash vs previous block hash with a green "Chain Verified & Untampered" badge.
-  - Export Controls: One-click buttons to download official PDF tender briefs and openpyxl Excel workbooks.
-
-#### `EligibilityMatrix.tsx` (Pillar 4: Port Operations)
-* Evaluates physical vessel dimensions against berth limits for Paradip, Dhamra, Haldia, Visakhapatnam, and Krishnapatnam.
-* Visual Features:
-  - Dimensional Gauge: LOA vs Max Berth LOA, Beam vs Channel Limit, Arrival Draft vs Berth Depth.
-  - High-Tide Window Indicator: highlights whether a deep-draft vessel can dock during spring tide windows.
-  - Probabilistic Delay Chart: visualizes $P_{10}$, $P_{50}$, and $P_{90}$ anticipated waiting times based on monthly port congestion distributions.
-  - Contractual Demurrage Calculator: allows adjusting daily hire rate and laytime terms to calculate expected demurrage exposure.
-
-#### `FreshnessBadge.tsx`
-* Enforces honest transparency regarding data provenance.
-* Emits color-coded status badges:
-  - `VERIFIED_GOV` (Official Indian Major Port trust data).
-  - `OBSERVED_TELEMETRY` (AIS positions & satellite feeds).
-  - `STATISTICAL_PROXY` (Calibrated econometric approximations).
-  - `SYNTHETIC_FALLBACK` (Air-gapped simulation fallback).
-
----
-
-## 7. Backend Gateway & API Router Directory (84 Routes)
-
-The backend is built with **FastAPI** (`backend/app/main.py`), utilizing modular routers located in `backend/app/api/`. Every endpoint is registered both directly (e.g. `/decisions`) and with the `/api` prefix (e.g. `/api/decisions`) to guarantee zero-mismatch client routing.
-
-### Complete Inventory of Endpoints (84 Routes across 16 Routers)
-
-| Router File | Method | Path | Summary & Business Logic |
-| :--- | :---: | :--- | :--- |
-| **`health.py`** | `GET` | `/health`, `/api/health` | Returns backend health status, API version, and uptime timestamp. |
-| **`forecast.py`** | `POST` | `/forecast`, `/api/forecast` | Runs XGBoost Panamax freight rate inference returning $P_{10}, P_{50}, P_{90}$ quantiles for 7D, 30D, 60D, 90D horizons. |
-| | `POST` | `/analysis/explain`, `/api/analysis/explain` | Runs dynamic SHAP TreeExplainer returning exact feature impact attributions. |
-| | `POST` | `/forecast/what-if`, `/api/forecast/what-if` | Simulates rate adjustments under hypothetical fuel, commodity, or route changes. |
-| **`charter.py`** | `POST` | `/charter/optimize`, `/api/charter/optimize` | Solves portfolio mix across Spot, 3V, 6V, and COA contracts; logs recommendation to database. |
-| | `POST` | `/charter/strategy`, `/api/charter/strategy` | Solves exact HiGHS Linear Programming optimization model minimizing multi-factor freight cost. |
-| **`data_quality.py`** | `GET` | `/data-quality`, `/api/data-quality` | Evaluates ISO 8000 metrics (completeness, duplicate %, freshness) across all 7 data pipelines. |
-| **`audit.py`** | `GET` | `/audit/logs`, `/api/audit/logs` | Fetches historical CVC procurement audit trail from `audit_logs` table. |
-| | `POST` | `/audit/review`, `/api/audit/review` | Records human review actions (Approve / Reject) with reviewer notes under DoFP. |
-| **`market.py`** | `GET` | `/market`, `/api/market` | Returns current market intelligence, macro regime (Bullish/Bearish), and 30-day forecast. |
-| | `GET` | `/market/context`, `/api/market/context` | Returns historical Baltic Dry Index (BDI), BPI, bunker prices, and FFA forward curve. |
-| **`models.py`** | `GET` | `/models`, `/api/models` | Catalogs all registered active ML models, versions, algorithms, and training dates. |
-| | `GET` | `/models/performance`, `/api/models/performance` | Returns evaluation metrics (RMSE, MAE, MAPE, R²) for active models. |
-| **`opportunity.py`** | `POST` | `/freight-opportunity`, `/api/freight-opportunity` | Computes Freight Opportunity Score (0–100) and recommends fixing window (Fix Now / Wait). |
-| **`ports.py`** | `POST` | `/port/check`, `/api/port/check` | Evaluates vessel LOA, beam, and draft against physical port constraints. |
-| | `POST` | `/port/congestion`, `/api/port/congestion` | Predicts expected berth waiting hours based on historical queue depth and seasonal arrival rates. |
-| **`risk.py`** | `POST` | `/risk`, `/api/risk` | Calculates 6-part risk index: weather, geopolitical, congestion, bunker, counterparty, and currency. |
-| **`vessels.py`** | `POST` | `/vessels/recommend`, `/api/vessels/recommend` | Ranks candidate bulk carriers by DWT suitability, wait times, fuel efficiency, and AIS position. |
-| **`command_center.py`** | `GET` | `/command-center/summary`, `/api/command-center/summary` | Aggregates executive KPIs, active decisions, pending approvals, and system telemetry. |
-| **`decisions.py`** | `POST` | `/decisions`, `/api/decisions` | Initializes a new procurement decision in `DRAFT` status with canonical input hash. |
-| | `GET` | `/decisions/{id}`, `/api/decisions/{id}` | Retrieves decision details, frozen snapshot, and current lifecycle state. |
-| | `POST` | `/decisions/{id}/{action}`, `/api/decisions/{id}/{action}` | Executes lifecycle action (`analyse`, `submit`, `approve`, `return`, `reject`) with two-man rule validation. |
-| | `GET` | `/decisions/{id}/audit`, `/api/decisions/{id}/audit` | Retrieves cryptographic SHA-256 audit ledger and verifies hash chain integrity. |
-| | `GET` | `/decisions/{id}/report`, `/api/decisions/{id}/report` | Generates official tender brief in PDF (ReportLab) or Excel (openpyxl) format. |
-| **`eligibility.py`** | `POST` | `/ports/eligibility`, `/api/ports/eligibility` | Checks vessel physical parameters against Paradip, Dhamra, Haldia, Vizag, and Krishnapatnam berths. |
-| | `POST` | `/delay/exposure`, `/api/delay/exposure` | Runs Monte Carlo simulation returning $P_{10}, P_{50}, P_{90}$ port delay exposure days. |
-| | `POST` | `/demurrage/estimate`, `/api/demurrage/estimate` | Computes laytime allowance, delay exceeding laytime, and net demurrage claim in USD. |
-| **`map.py`** | `GET` | `/map/ports`, `/api/map/ports` | Returns GeoJSON FeatureCollection of all Indian discharge ports and international load ports. |
-| | `GET` | `/map/corridors`, `/api/map/corridors` | Returns GeoJSON LineString coordinates of validated nautical navigation routes. |
-| | `GET` | `/map/chokepoints`, `/api/map/chokepoints` | Returns GeoJSON Points of key chokepoints (Malacca, Sunda, Singapore) with risk ratings. |
-| | `GET` | `/map/hazards`, `/api/map/hazards` | Returns real-time IMD cyclone hazard polygons and sea-swell warning zones. |
-| | `GET` | `/map/freshness`, `/api/map/freshness` | Returns layer update timestamps, truth-class ratings, and ingestion status. |
-| **`scenarios.py`** | `POST` | `/scenarios/evaluate`, `/api/scenarios/evaluate` | Computes full landed cost per tonne and normalized energy cost in $\$ / \text{GJ}$. |
-| | `POST` | `/scenarios/compare`, `/api/scenarios/compare` | Evaluates and ranks multiple procurement strategies side-by-side. |
-| | `POST` | `/scenarios/sensitivity`, `/api/scenarios/sensitivity` | Evaluates a 2D sensitivity grid over bunker fuel and freight rate shocks. |
-| | `POST` | `/scenarios/blend`, `/api/scenarios/blend` | Computes optimal coal blend ratio meeting calorific, ash, and sulfur bounds. |
-
----
-
-## 8. Machine Learning & Explainable AI (XAI) Engines
-
-All machine learning models reside in the `ml/` hierarchy, operating strictly from local serialized artifacts (`.pkl`, `.json`) without requiring internet access or third-party cloud inference.
-
-### 1. Panamax Freight Rate Forecaster (`ml/inference/forecast.py`)
-* **Algorithm:** Gradient Boosted Decision Trees (**XGBoost**).
-* **Model Artifact:** `ml/models/forecasting/xgboost/panamax_freight_v7/model.pkl`.
-* **Horizons:** Evaluates 4 distinct forward horizons:
-  - $T+7$ Days (Short-term operational fixing).
-  - $T+30$ Days (Monthly cargo stem planning).
-  - $T+60$ Days (Quarterly tender structuring).
-  - $T+90$ Days (Long-term COA hedging).
-* **Probabilistic Quantiles:** Emits calibrated predictive distributions:
-  - $P_{10}$ (Optimistic freight rate floor).
-  - $P_{50}$ (Median expected freight rate).
-  - $P_{90}$ (Pessimistic freight rate ceiling / risk exposure).
-* **Metrics:** Validated out-of-sample on historical fixture data with MAPE between $4.2\%$ and $9.9\%$.
-
-### 2. Dynamic SHAP Explainability Engine (`ml/explainability/shap_explainer.py`)
-* **Mathematical Foundation:** Implements Shapley additive explanations:
-  $$f(x) = \phi_0 + \sum_{i=1}^{M} \phi_i$$
-  where $\phi_0$ is the base expected freight rate and $\phi_i$ is the exact dollar-per-tonne attribution of feature $i$.
-* **Implementation:** Uses `shap.TreeExplainer` over the trained XGBoost tree ensemble. Computes real-time attributions for each query rather than displaying static placeholders.
-* **Interpretation:** Explains *why* a rate is elevated (e.g. `+1.85 $/MT` driven by Singapore VLSFO bunker spike; `-0.65 $/MT` offset by low waiting times at Dhamra).
-
-### 3. Port Congestion Waiting-Time Model (`ml/inference/congestion.py`)
-* **Algorithm:** Multi-variate XGBoost Regressor trained on historical AIS vessel arrivals, berth turnaround times, and monsoonal disruptions.
-* **Target:** `predicted_wait_hours` at load and discharge ports.
-* **Outputs:** Expected waiting hours, anchorage queue counts, and demurrage probability flags.
-
-### 4. Macro Market Intelligence & Opportunity Scoring (`ml/inference/market_intelligence.py` & `fos_model.py`)
-* **Market Regime Classifier:** Multi-class Random Forest categorizing market state into `BULLISH` (rising rates), `BEARISH` (softening rates), or `SIDEWAYS` (range-bound).
-* **Freight Opportunity Score (FOS):** Normalized 0–100 index combining rate momentum, forward curve spreads, bunker fuel trends, and port congestion severity.
-* **Fixing Advisory:**
-  - $FOS \ge 70$: **"Fix Promptly"** (Market rising; locking spot/short-term now avoids rate inflation).
-  - $35 \le FOS < 70$: **"Stagger / DCA"** (Balanced market; recommend 50% spot, 50% multi-voyage).
-  - $FOS < 35$: **"Wait / Float on Spot"** (Market softening; delay long-term commitments).
-
----
-
-## 9. Operations Research & Mathematical Optimization Engines
-
-The `optimization/` package houses exact mathematical solvers and simulation engines designed to minimize logistics costs while enforcing operational and physical constraints.
-
-### 1. HiGHS Linear Programming Charter Strategy Solver (`optimization/charter_strategy.py`)
-* **Mathematical Solver:** `scipy.optimize.linprog(method="highs")`.
-* **Objective Function:** Minimize total procurement cost:
-  $$\min \sum_{c \in C} \left( \text{FreightCost}_c + \text{BunkerCost}_c + \text{DemurrageCost}_c + \text{IdleCost}_c + \text{BallastCost}_c + \text{RiskBuffer}_c \right) \cdot x_c$$
-  where $x_c$ is the number of voyages assigned to contract type $c \in \{\text{Spot}, \text{3-Voyage}, \text{6-Voyage}, \text{12-Voyage}\}$.
-* **Cost Components:**
-  - $\text{FreightCost}_c = \text{DWT} \cdot \text{Rate} \cdot (1 - \text{Discount}_c)$.
-  - $\text{BunkerCost}_c = \text{SeaDays} \cdot \text{Consumption (MT/day)} \cdot \text{FuelPrice (\$/MT)}$.
-  - $\text{DemurrageCost}_c = \text{CongestionDays} \cdot \text{DailyHireRate (\$/day)}$.
-  - $\text{IdleCost}_c = \text{BerthWaitDays} \cdot \text{VesselOperatingExpense (\$/day)}$.
-  - $\text{BallastCost}_c = \text{BallastSeaDays} \cdot \text{EcoConsumption} \cdot \text{FuelPrice}$.
-  - $\text{RiskBuffer}_c = \text{VolatilityRiskPremium} \cdot \text{VarianceFactor}$.
-* **Contract Discounts:**
-  - Spot: $0\%$ discount (100% market exposure).
-  - 3-Voyage: $3\%$ volume discount.
-  - 6-Voyage COA: $6\%$ volume discount.
-  - 12-Voyage Annual COA: $9\%$ volume discount.
-* **Constraints:**
-  1. Total volume carried must meet or exceed total cargo demand:
-     $$\sum_{c \in C} x_c \cdot \text{VesselCapacity} \ge \text{TotalCargoDemand}$$
-  2. Diversification limits:
-     $$x_{\text{Spot}} \cdot \text{Capacity} \le \text{MaxSpotExposure} \cdot \text{TotalDemand}$$
-
-### 2. Ballast Steaming & BIMCO Clause 10 Laycan Calculator (`optimization/positioning.py`)
-* **Nautical Calculation:** Computes great-circle nautical distance using the haversine formula between ballast staging hubs (Singapore, Colombo, Port Klang) and load terminals (Gladstone, Newcastle).
-* **Speed-Consumption Curve:** Models quadratic fuel burn curves:
-  - Full Steaming ($14.0 \text{ knots}$): $32 \text{ MT fuel/day}$.
-  - Eco Steaming ($11.5 \text{ knots}$): $21 \text{ MT fuel/day}$ ($34\%$ fuel savings).
-* **BIMCO Compliance:** Evaluates estimated time of arrival (ETA) against the Laycan Cancelling Date (Clause 10). If Eco speed arrives $\ge 36 \text{ hours}$ before cancelling date, Eco speed is mandated; if at risk of missing laycan, speed is dynamically increased to full steam.
-
----
-
-## 10. The 5 Pillars of Maritime Intelligence
-
-The 5 Pillars represent the core operational disciplines required for institutional-grade maritime freight chartering:
-
-### Pillar 1: Landed Cost & Energy Economics
-Located in `backend/app/services/economics.py` and `frontend/src/components/ScenarioComparator.tsx`.
-* **Delivered Landed Cost:**
-  $$\text{Landed Cost (\$/MT)} = \text{FOB Cost} + \text{Ocean Freight} + \text{BAF} + \text{Insurance} + \text{Port Handling} + \text{Demurrage Buffer}$$
-* **Energy Normalization:**
-  $$\text{Energy Cost (\$/GJ)} = \frac{\text{Landed Cost (\$/MT)}}{\text{GCV (kcal/kg)} \times 0.004184 \text{ GJ/kcal-MT}}$$
-* **Coal Blend Optimizer:**
-  Solves a constrained blending matrix between imported and domestic coals:
-  $$\text{GCV}_{\text{blend}} = \sum w_i \cdot \text{GCV}_i \ge \text{TargetGCV}, \quad \text{Ash}_{\text{blend}} \le \text{MaxAshLimit}, \quad \text{Sulfur}_{\text{blend}} \le \text{MaxSulfurLimit}$$
-
-### Pillar 2: Maritime GIS & Spatial Navigation
-Located in `backend/app/services/map_data.py`, `backend/app/services/imd_adapter.py`, and `frontend/src/components/MapCanvas.tsx`.
-* **GeoJSON Layers (`data/reference/`):**
-  - `ports.geojson`: Physical coordinates, maximum draft depths, berth counts, and crane unloading rates.
-  - `corridors.geojson`: Real shipping navigation coordinates through the Java Sea, Sunda Strait, Malacca Strait, and Bay of Bengal.
-  - `chokepoints.geojson`: Strategic chokepoint geometries with vulnerability ratings and passage throughput.
-* **IMD Weather & Cyclone Telemetry:**
-  - Adapts India Meteorological Department (IMD) cyclone advisories in the Bay of Bengal.
-  - Flags vessels intersecting cyclone radius ($< 150 \text{ nautical miles}$) and sea-swell alerts ($> 4.5 \text{ meters}$).
-
-### Pillar 3: CVC Vigilance Governance & Cryptographic Hash Chaining
-Located in `backend/app/services/audit.py`, `backend/app/services/decisions.py`, `backend/app/services/reports.py`, and `frontend/src/components/AuditTimeline.tsx`.
-* **Cryptographic SHA-256 Hash Chaining:**
-  $$\text{Hash}_0 = 0000000000000000000000000000000000000000000000000000000000000000 \quad \text{(64 zeros)}$$
-  $$\text{Hash}_k = \text{SHA-256}\Big(\text{Hash}_{k-1} + \text{CanonicalJSON}\big(\text{DecisionID}, \text{Action}, \text{Actor}, \text{Role}, \text{Payload}\big)\Big)$$
-* **Active Tamper Detection:** Recalculates hashes sequentially from genesis block upon demand.
-* **Two-Man Separation of Duties:** Blocks decision author from approving own strategy (HTTP 409).
-* **Frozen Snapshot:** Locks ML forecasts and vessel recommendations at submit time.
-* **Statutory Reports:** Generates official multi-page PDF briefs (ReportLab) and Excel workbooks (openpyxl).
-
-### Pillar 4: Port Operations, Berth Constraints & Demurrage
-Located in `backend/app/services/eligibility.py` and `frontend/src/components/EligibilityMatrix.tsx`.
-* **Dimensional Checks:** $\text{LOA}_{\text{vessel}} \le \text{MaxBerthLOA} - 15 \text{m}$, Beam within crane outreach, $\text{Draft} \le \text{BerthDepth} - \text{UKC}$.
-* **High-Tide Conditional Access:** Grants `CONDITIONAL` clearance during spring tide windows if draft excess is $\le 1.2 \text{ meters}$.
-* **Demurrage Calculation:** Computes allowed laytime based on discharge rate and calculates USD demurrage exposure beyond laytime.
-
-### Pillar 5: Command Center & Real-Time Telemetry
-Located in `backend/app/services/command_center.py` and `frontend/src/components/CommandHeader.tsx`.
-* Synthesizes live status, active decisions, pending reviews, port congestion alerts, and data pipeline integrity.
-
----
-
-## 11. Database Persistence & Storage Layer
-
-```mermaid
-graph TD
-    App[FastAPI Application Backend] --> Session[backend/app/database/session.py<br/>Database Engine Factory]
-    
-    Session -->|Check Connection| PG{Is PostgreSQL<br/>Available?}
-    PG -->|Yes| LivePG[(PostgreSQL Server<br/>postgresql://user:pass@host/db)]
-    PG -->|No / Connection Failed| AutoFallback[(Local SQLite Fallback<br/>data/freight_intelligence.db)]
-
-    subgraph SchemaModels["SQLAlchemy ORM Entities (backend/app/database/models.py)"]
-        M1[ModelVersionRecord<br/>Registered ML Models & Versions]
-        M2[PredictionRecord<br/>User Request Inputs & Quantile Outputs]
-        M3[RecommendationRecord<br/>LP & Contract Optimization Outputs]
-        M4[AuditLogRecord<br/>CVC Audit Trail & DoFP Actions]
-        M5[PortReference<br/>Physical Berth Caps, LOA, Draft, Rates]
-    end
-
-    subgraph PillarPersistence["SQLite Dedicated Pillar Tables (backend/app/database/decisions.py)"]
-        P1["decisions<br/>• decision_id (PK)<br/>• status (DRAFT/APPROVED/etc)<br/>• input_hash<br/>• payload_json<br/>• created_by"]
-        P2["decision_events (Hash-Chained)<br/>• event_id (PK Auto)<br/>• decision_id (FK)<br/>• event_type<br/>• actor & role<br/>• previous_hash<br/>• current_hash (SHA-256)"]
-        P3["map_freshness<br/>• layer_id (PK)<br/>• truth_class<br/>• last_success_at<br/>• status"]
-    end
-
-    AutoFallback --- SchemaModels
-    AutoFallback --- PillarPersistence
-    LivePG --- SchemaModels
-```
-
-* **Zero-Config SQLite:** Primary database at `data/freight_intelligence.db`. Utilizes thread-safe connection context managers (`threading.Lock`) to eliminate concurrency locks.
-* **PostgreSQL Engine:** Automatically used if configured in `DATABASE_URL` and reachable; falls back to SQLite gracefully without throwing unhandled exceptions.
-* **Test Isolation:** Cleans database state with `DELETE FROM` and resets `sqlite_sequence`, avoiding Windows OS file-locking crashes.
-
----
-
-## 12. Data Pipeline, Canonical Repositories & Git Hygiene
-
-* **Storage Layout:**
-  - `data/raw/`: Historical time series (Baltic indices, bunker prices, AIS telemetry, weather).
-  - `data/reference/`: Authoritative GeoJSON layers (`ports.geojson`, `corridors.geojson`, `chokepoints.geojson`).
-  - `data/charter_strategy/`: 13 lookup matrices utilized by the HiGHS LP solver.
-  - `data/features/`: Feature stores for offline ML inference.
-* **Git Hygiene:** Global `.gitignore` rules (`*.csv`, `**/*.csv`) guarantee that no CSV tabular files are committed to git repositories.
-
----
-
-## 13. Verification, Testing & Contract Parity (52 Passing Tests)
-
-Automated tests in `tests/` validate the complete stack:
-* **Pillar 1:** `test_scenarios_and_economics.py` (Landed cost, blending, sensitivity grids).
-* **Pillar 2:** `test_map_endpoints.py` (GeoJSON features, layer freshness).
-* **Pillar 3:** `test_decisions_and_audit.py` (SHA-256 hash chaining, two-man rule blocking, PDF/Excel generation).
-* **Pillar 4:** `test_eligibility_and_delay.py` (LOA/draft limits, demurrage calculation).
-* **Pillar 5 & Optimization:** `test_charter_strategy.py`, `test_optimization.py` (HiGHS LP solver, contract portfolio optimizer).
-* **API & Model Tests:** `test_charter_and_quality_endpoints.py`, `test_analysis_endpoints.py`, `test_vessel_intelligence_endpoint.py`, `test_risk_endpoint.py`, `test_opportunity_score_endpoint.py`, `test_market_endpoint.py`.
-* **Frontend Contracts:** `tests/frontend/` (Validates that backend Pydantic models match frontend TypeScript schemas).
+Backend:
 
 ```powershell
-.venv\Scripts\python.exe -m pytest tests -v
-# Outcome: 52 passed in 13.21s
+.venv\Scripts\python.exe -m uvicorn backend.app.main:app --host 127.0.0.1 --port 8000
 ```
 
----
+Frontend:
 
-## 14. Offline Execution & Demonstration Runbook
-
-### Step 1: Start Backend API Daemon
 ```powershell
-.venv\Scripts\python.exe -m uvicorn backend.app.main:app --host 0.0.0.0 --port 8000
-```
-Interactive API documentation live at `http://127.0.0.1:8000/docs`.
-
-### Step 2: Start Frontend Executive Command Center
-```powershell
+npm --prefix frontend install
 npm --prefix frontend run dev
 ```
-Open `http://localhost:5173` or `http://127.0.0.1:5173` in any modern web browser.
 
-### Step 3: Run Full Automated Verification Suite
+URLs:
+
+- Frontend: `http://127.0.0.1:5173`
+- API documentation: `http://127.0.0.1:8000/docs`
+- Health endpoint: `http://127.0.0.1:8000/health`
+
+The Vite development server proxies `/api` to `http://127.0.0.1:8000` when requests use the configured proxy path. `frontend/src/api.ts` normally uses `VITE_API_BASE_URL`, which defaults to `http://127.0.0.1:8000`.
+
+### Docker Compose
+
+```powershell
+docker compose up --build
+```
+
+The compose file defines PostgreSQL on host port `5432`, FastAPI on `8000`, and Vite on `5173`. The backend mounts `ml/` and `data/` read-only. PostgreSQL is a runtime dependency, but parts of the application can fall back to local SQLite.
+
+## 4. Request And Data Flow
+
+### Standard request path
+
+```text
+User action in React tab
+  -> frontend/src/main.tsx or component
+  -> fetch client in main.tsx or frontend/src/api.ts
+  -> FastAPI route in backend/app/api/
+  -> service, ML module, optimization module, file lookup, or database
+  -> response schema/JSON
+  -> React state update and rendered panel/table/map layer
+```
+
+There are currently two frontend API styles:
+
+- Older tab logic in `frontend/src/main.tsx` has a local `api()` helper and mostly calls unprefixed paths such as `/forecast` and `/market`.
+- The five-pillar components use `frontend/src/api.ts` and mostly call `/api/...` paths.
+
+`backend/app/main.py` publishes the registered routers with both the direct path and the `/api` prefix. This dual publication is why both client styles work.
+
+### Startup and eager requests
+
+The React shell mounts the executive view and eagerly requests several health, market, model, and command-center values. Selecting a tab then activates its tab-specific component and requests. Browser network activity can therefore include requests for more than the currently visible tab.
+
+### Map request path
+
+```text
+MapCanvas
+  -> getPorts(), getCorridors(), getChokepoints(), getHazards()
+  -> /api/map/*
+  -> backend/app/api/map.py
+  -> backend/app/services/map_data.py and imd_adapter.py
+  -> wrapped GeoJSON or hazard response
+  -> MapCanvas overlays
+```
+
+The basemap is separated from application data. `MapCanvas` attempts OpenFreeMap tiles, but the visible offline surface uses the bundled `world-atlas` country geometry projected through `d3-geo`; application markers/routes are drawn over it. This is the reliable local fallback when external tile requests fail.
+
+## 5. Frontend Pages And User Workflows
+
+There are not separate route files for each page. `frontend/src/main.tsx` is one React application with 12 state-selected tabs. The sidebar changes `activeTab`, and the matching section renders.
+
+### 5.1 Executive Overview
+
+Purpose: operational market snapshot and first-level chartering context.
+
+Displays current freight, market regime, FOS signal, Baltic indices, macro signals, FFA curve, coal imports, events, fixture history, and a market-intelligence action.
+
+Dependencies: `/market`, `/market/context`, `/health`, command-center summary values, and market/fixture data under `data/raw/`.
+
+### 5.2 Forecast & SHAP
+
+Purpose: route-specific freight forecast and explanation.
+
+Users select origin, destination, vessel class, cargo, quantity, and laycan dates. The UI renders current freight, forecast bands across multiple horizons, model metadata, and SHAP-style drivers. A what-if flow compares changed assumptions.
+
+Dependencies: `/forecast`, `/forecast/explain`, `/forecast/what-if`, forecast artifacts under `ml/models/` and `ml/artifacts/`, and processed feature data.
+
+### 5.3 Portfolio Optimizer
+
+Purpose: allocate cargo across spot, multi-voyage, short-term, and COA-style contract choices.
+
+The UI collects cargo, route, vessel, risk, and planning inputs, then renders allocation, cost, savings, fixing window, constraints, and sensitivity context.
+
+Dependencies: `/charter/optimize`, `/charter/strategy`, `optimization/contract_optimizer.py`, `optimization/charter_strategy.py`, and `data/charter_strategy/`.
+
+### 5.4 Vessel Intelligence
+
+Purpose: rank vessels for cargo and route fit.
+
+The view combines vessel suitability, operational constraints, and port checks. It is decision support, not a live AIS tracking console.
+
+Dependencies: `/vessels/recommend`, `/port/check`, vessel/AIS/reference data under `data/`, `sih/`, and ML artifacts.
+
+### 5.5 Risk Intelligence
+
+Purpose: expose risk components and recommendation posture.
+
+Dependencies: `/risk`, risk artifacts under `ml/artifacts/risk_model/`, active events, and market context services.
+
+### 5.6 Freight Opportunity
+
+Purpose: identify whether current conditions support fixing, waiting, or monitoring.
+
+The Freight Opportunity Score combines component scores, contributions, confidence/context, and a fixing-window recommendation.
+
+Dependencies: `/freight-opportunity`, FOS feature data under `data/features/freight_opportunity_score/`, and FOS artifacts/inference code under `ml/`.
+
+### 5.7 Policy & Economics
+
+Purpose: compare landed-cost and market scenarios.
+
+`ScenarioComparator` calls the scenarios API and renders side-by-side outcomes, sensitivity, and blend/economic results.
+
+Dependencies: `/api/scenarios/evaluate`, `/api/scenarios/compare`, `/api/scenarios/sensitivity`, `/api/blends/evaluate`, `backend/app/services/economics.py`, and `optimization/scenario_engine.py`.
+
+### 5.8 Port Operations
+
+Purpose: determine vessel eligibility and quantify delay/demurrage exposure.
+
+`EligibilityMatrix` checks LOA, beam, draft, berth constraints, and conditional access fields. Delay exposure and demurrage are operational cost signals.
+
+Dependencies: `/api/ports/eligibility`, `/api/delay/exposure`, `/api/demurrage/estimate`, `data/reference/port_constraints.json`, and `backend/app/services/eligibility.py`.
+
+### 5.9 Maritime GIS
+
+Purpose: show verified static maritime reference layers and hazard-advisory context.
+
+The view renders ports as blue points, shipping corridors as yellow lines, strategic chokepoints as orange points, and hazard advisories as red demo points when geometry is available.
+
+The local map surface uses `world-atlas`, `topojson-client`, and `d3-geo` for country geometry. OpenFreeMap is attempted for a richer basemap but is not required for the local surface. The map supports drag panning and wheel zoom for the local surface; layer toggles control application overlays.
+
+Dependencies: `/api/map/ports`, `/api/map/corridors`, `/api/map/chokepoints`, `/api/map/hazards`, `/api/map/freshness`, `backend/app/services/map_data.py`, and `backend/app/services/imd_adapter.py`.
+
+### 5.10 Data Quality
+
+Purpose: inspect configured datasets for health, row counts, missingness, duplicates, and freshness.
+
+Dependencies: `/data-quality`, `backend/app/api/data_quality.py`, and configured local files.
+
+### 5.11 CVC Governance
+
+Purpose: review decision state, audit history, approval responsibility, and generated reports.
+
+`AuditTimeline` uses decision workflow and audit endpoints. The workflow requires human review and blocks self-approval according to the implemented state rules.
+
+Dependencies: `/api/decisions`, `/api/decisions/{id}/audit`, `/api/decisions/{id}/report?format=pdf|xlsx`, `/audit/logs`, `/audit/review`, `backend/app/services/decisions.py`, `audit.py`, and `reports.py`.
+
+### 5.12 Model Registry
+
+Purpose: show active model metadata, versions, status, artifacts, and available performance data.
+
+Dependencies: `/models`, `/models/performance`, and `ml/registry/model_registry.json`.
+
+## 6. The Five Pillars
+
+### Pillar 1: Landed Cost, Energy Economics, And Scenarios
+
+**Ownership:** `backend/app/services/economics.py`, `optimization/scenario_engine.py`, and `ScenarioComparator`.
+
+This pillar translates route, cargo, bunker, freight, port, quality, and contract assumptions into comparable economics. It supports landed cost, energy-normalized cost where the endpoint contract supplies the required quality inputs, scenario comparison, sensitivity shocks, and coal blend evaluation.
+
+**Flow:** user assumptions -> scenario/economics API -> economics service and scenario engine -> cost/risk/sensitivity/blend result -> Policy & Economics tab.
+
+### Pillar 2: Maritime GIS, Corridors, Chokepoints, And Hazards
+
+**Ownership:** `backend/app/api/map.py`, `backend/app/services/map_data.py`, `backend/app/services/imd_adapter.py`, and `frontend/src/components/MapCanvas.tsx`.
+
+Static reference layers come from local data and are returned as GeoJSON. Hazard data is explicitly truth-labelled; by default the IMD adapter is demo/mock behavior unless live mode is enabled and wired. External tiles are optional; local country geometry is bundled for predictable rendering.
+
+### Pillar 3: CVC/GFR Governance, Decisions, Audit, And Reports
+
+**Ownership:** `backend/app/api/decisions.py`, `backend/app/services/decisions.py`, `audit.py`, `reports.py`, and `AuditTimeline`.
+
+This pillar implements a decision state machine, action authorization, audit events, hash-chain verification, self-approval prevention, and PDF/XLSX report generation. It creates an auditable record but does not replace statutory review or authorized procurement approval.
+
+```text
+create -> analyse -> submit -> approve
+                  |       |-> return -> analyse/submit
+                  |       |-> reject
+                  `-> audit/report at relevant stages
+```
+
+### Pillar 4: Port Operations, Eligibility, Delay, And Demurrage
+
+**Ownership:** `backend/app/api/eligibility.py`, `backend/app/services/eligibility.py`, `data/reference/port_constraints.json`, and `EligibilityMatrix`.
+
+This pillar checks vessel/port physical compatibility and produces operational delay exposure. Constraint behavior is driven by available reference fields. Conditional draft handling is not a universal high-tide solver for every port; it applies where the active reference data and service logic define a conditional rule.
+
+### Pillar 5: Command Center, Health, Freshness, And Telemetry Summary
+
+**Ownership:** `backend/app/api/command_center.py`, health routes, map freshness service, and `CommandHeader`.
+
+This pillar aggregates service health, decision counts, pending review counts, model status, and map/data freshness values for the executive shell. It is an application summary layer, not a full streaming telemetry platform.
+
+## 7. Backend API Surface
+
+`backend/app/main.py` is the route registry. The application currently has 16 logical router modules and approximately 39 logical operations. Routes are mounted in both direct and `/api` forms, giving approximately 78 URL variants. This is different from the older claim of 84 routes.
+
+| Router | Representative operations | Responsibility |
+|---|---|---|
+| `health.py` | `/health` | Service health and status |
+| `forecast.py` | `/forecast`, `/forecast/explain`, `/forecast/what-if` | Forecast and explanation |
+| `charter.py` | `/charter/optimize`, `/charter/strategy` | Charter strategy and allocation |
+| `market.py` | `/market`, `/market/context` | Market regime and context |
+| `vessels.py` | `/vessels/recommend` | Vessel recommendation |
+| `ports.py` | `/ports`, `/port/check` | Port data and physical checks |
+| `risk.py` | `/risk` | Risk assessment |
+| `opportunity.py` | `/freight-opportunity` | Freight Opportunity Score |
+| `data_quality.py` | `/data-quality` | Dataset quality scan |
+| `audit.py` | `/audit/logs`, `/audit/review` | Recommendation/audit views |
+| `models.py` | `/models`, `/models/performance` | Registry and performance |
+| `command_center.py` | `/api/command-center/*` | Executive summary |
+| `decisions.py` | `/api/decisions/*` | Governed decision lifecycle |
+| `eligibility.py` | `/api/ports/eligibility`, `/api/delay/*`, `/api/demurrage/*` | Operations and cost exposure |
+| `map.py` | `/api/map/*` | GeoJSON and hazard layers |
+| `scenarios.py` | `/api/scenarios/*`, `/api/blends/evaluate` | Economics and scenarios |
+
+The authoritative endpoint details are the route decorators and schemas in `backend/app/api/` and `backend/app/schemas/`.
+
+## 8. Services And Computational Engines
+
+### Backend services
+
+- `economics.py`: landed-cost and economic calculations.
+- `eligibility.py`: port/vessel constraints and delay exposure.
+- `map_data.py`: static maritime GeoJSON and freshness metadata.
+- `imd_adapter.py`: hazard-advisory adapter; demo by default unless live mode is configured.
+- Forecasting/analysis services: forecast response construction, what-if analysis, and explanation data.
+- Market context/intelligence services: indices, regimes, curves, and market signals.
+- Risk services: risk factors and recommendation posture.
+- `decisions.py`: governed decision lifecycle.
+- `audit.py`: audit events and hash-chain operations.
+- `reports.py`: PDF/XLSX report generation.
+
+### ML and inference
+
+The `ml/` tree contains inference, preprocessing, feature engineering, explainability helpers, model artifacts, evaluation, and registry metadata. Serialized artifacts are loaded by active inference paths; not every research notebook or artifact folder is part of the live request path.
+
+### Optimization
+
+The `optimization/` package contains:
+
+- `charter_strategy.py`: charter strategy calculations and LP-facing inputs.
+- `contract_optimizer.py`: contract allocation and strategy enrichment.
+- `scenario_engine.py`: scenario shock/compare logic.
+- `positioning.py`: positioning and ballast calculations.
+- `vessel_selection.py`: vessel selection logic.
+
+Where configured, charter optimization uses `scipy.optimize.linprog(method="highs")`. The optimizer output remains advisory and is returned through FastAPI for human review.
+
+## 9. Libraries, Techniques, And Skills
+
+This section records the technologies and engineering techniques used by the current implementation. A library listed here is either pinned in the active dependency manifests or directly used by the active source tree. Research-only notebooks and legacy Hatchable dependencies are not presented as active runtime dependencies.
+
+### 9.1 Frontend libraries and web platform
+
+Declared in `frontend/package.json`:
+
+| Library | Role in this project |
+|---|---|
+| React 19 | Component model, state, effects, and the single tabbed command-center UI |
+| React DOM 19 | Browser rendering through `createRoot` |
+| TypeScript 5.8 | Static typing for React components, API contracts, and UI state |
+| Vite 7 | Development server, module graph, proxying, and production bundling |
+| `@vitejs/plugin-react` | React transform and Vite integration |
+| `maplibre-gl` 6 (MapLibre GL) | Map container, controls, GeoJSON sources, vector-style support, and map interaction foundation |
+| `d3-geo` | Geographic projections, paths, and graticules for the local offline basemap |
+| `topojson-client` | Converts bundled TopoJSON country geometry into GeoJSON-like features |
+| `world-atlas` | Bundled country boundary dataset used when external map tiles are unavailable |
+
+Browser platform techniques used in `frontend/src/` include `fetch`, CSS, inline style objects, SVG, pointer events, wheel events, HTML forms, accessible labels, and the browser `Abort`/lifecycle model through React effects. The frontend has no router; tab selection is state-driven in `main.tsx`.
+
+### 9.2 Backend and API libraries
+
+Pinned in `backend/requirements.txt`:
+
+| Library | Role in this project |
+|---|---|
+| FastAPI | HTTP API framework, router registration, dependency injection, and OpenAPI generation |
+| Uvicorn | ASGI server used to run the FastAPI application |
+| Pydantic 2 | Request/response validation and typed API schemas |
+| Pydantic Settings | Environment-driven configuration |
+| SQLAlchemy 2 | ORM, sessions, database models, and persistence abstraction |
+| Psycopg 3 | PostgreSQL driver, including the binary distribution |
+| `python-dotenv` | Local environment file loading |
+
+Python standard-library techniques are also important: `pathlib` for repository-relative files, `json` and CSV parsing for reference data, `datetime` for freshness and forecast windows, `hashlib` for audit chaining, `sqlite3` for the governance store, `logging` for diagnostics, and `typing`/dataclasses for contracts.
+
+### 9.3 AI, data science, and model libraries
+
+| Library | Role in this project |
+|---|---|
+| NumPy | Numerical arrays, vectorized calculations, and feature/model inputs |
+| Pandas | Tabular ingestion, cleaning, lookup tables, and feature preparation |
+| scikit-learn | Preprocessing, metrics, model utilities, and compatible ML workflows |
+| XGBoost | Freight and market prediction artifacts/inference where the active model path uses XGBoost |
+| Joblib | Serialization/loading of model and preprocessing artifacts |
+| SHAP | Tree-model explanation support and feature contribution workflows |
+
+The repository also contains notebooks, evaluation artifacts, and research workspaces. Those are useful for model development and handoff but are not automatically part of every live API request.
+
+### 9.4 Database, reporting, and operational tooling
+
+- PostgreSQL is the configured relational runtime database in Docker and production-like settings.
+- SQLite is used for local fallback behavior and the separate governance decision/event store.
+- SQLAlchemy provides the application persistence boundary; direct `sqlite3` is used by governance storage.
+- Report generation uses the PDF/XLSX capabilities exposed by the backend reporting service and its installed runtime dependencies; verify exact optional packages in the environment before deploying report generation.
+- Docker Compose coordinates PostgreSQL, FastAPI, and Vite for local multi-service execution.
+- Pytest is the Python test runner used by the repository test suite.
+- npm is the frontend package manager and script runner.
+- Mermaid is used in this document for architecture diagrams.
+
+### 9.5 Core engineering techniques
+
+#### Web and application architecture
+
+- Layered frontend/backend separation.
+- REST-style JSON APIs with Pydantic contracts.
+- Dual route publication (`/path` and `/api/path`) for compatibility between old and new frontend clients.
+- State-driven tab navigation instead of a client-side router.
+- Controlled React components for visibility toggles and form inputs.
+- Service-layer ownership of business rules rather than putting calculations in route handlers.
+- Repository-relative configuration and environment-variable overrides.
+- Graceful local fallback paths for database and basemap behavior.
+
+#### Data engineering
+
+- Raw, clean, processed, feature, reference, and artifact directory separation.
+- CSV/JSON/GeoJSON ingestion and normalization.
+- GeoJSON `FeatureCollection` validation and support for wrapped API responses.
+- Explicit freshness metadata and truth-class labels.
+- Deterministic lookup-table calculations for freight, bunker, distance, wait, and port constraints.
+- Data-quality checks for row counts, missingness, duplicates, and freshness.
+
+#### AI/ML techniques
+
+- Supervised regression for freight-rate estimation.
+- Multi-horizon forecasting for operational planning windows.
+- Prediction bands/quantile-style outputs (`P10`, `P50`, `P90`) where supplied by the active model path.
+- Feature preprocessing and serialized artifact reuse.
+- Tree-model explainability and SHAP-style feature contributions.
+- Classification/regime signals for market intelligence.
+- Congestion and waiting-time inference from port/monthly data.
+- Vessel suitability and ranking based on specifications, route, and constraints.
+- Freight Opportunity Score decomposition into score components and recommendations.
+- Model registry metadata, evaluation artifacts, and versioned model paths.
+- Mock/demo adapters where live external sources are not available, explicitly labelled in the UI.
+
+#### Operations research and maritime economics
+
+- Linear programming through `scipy.optimize.linprog(method="highs")` where the active charter-strategy path invokes it.
+- Contract allocation across spot, multi-voyage, short-term, and COA-style choices.
+- Cost decomposition across freight, bunker, port wait, demurrage, operating cost, and risk assumptions.
+- Scenario analysis using controlled shocks and side-by-side comparisons.
+- Sensitivity grids for testing input changes.
+- Energy-normalized landed-cost comparisons where GCV/quality inputs are present.
+- Vessel/port eligibility checks using LOA, beam, draft, berth, and conditional fields.
+- Ballast/positioning and laycan-oriented calculations in the optimization package.
+
+#### GIS and visualization
+
+- GeoJSON point and line layers for application data.
+- Longitude-first/latitude-second coordinate convention.
+- Mercator projection through `d3-geo` for local country geometry.
+- TopoJSON-to-feature conversion for compact bundled boundary data.
+- SVG rendering for an offline basemap and overlay routes/markers.
+- Map panning through pointer events and zoom through wheel events on the visible local surface.
+- MapLibre controls and GeoJSON layers when a usable style/canvas is available.
+- Layer visibility state synchronized between controls and rendered overlays.
+
+#### Governance and security techniques
+
+- Decision state machine: draft, analyse, submit, approve, return, reject.
+- Separation of duties and self-approval blocking.
+- Append-style audit event recording.
+- SHA-256 hash chaining for audit-event integrity.
+- Frozen decision context at governed workflow stages where implemented.
+- Human-in-the-loop approval requirement.
+- Report generation for PDF/XLSX review artifacts.
+- Truth-class labelling to separate static reference, demo simulation, and live values.
+
+#### Reliability and verification techniques
+
+- `Promise.allSettled` for independent map-layer fetches.
+- Per-layer error isolation so one malformed response does not suppress other layers.
+- API response normalization for wrapped versus raw GeoJSON.
+- Build-time TypeScript/Vite validation.
+- Python unit and contract tests across governance, economics, map, eligibility, ML, and optimization.
+- Browser-level validation for map geometry, markers, controls, and fallback rendering.
+- Explicit documentation of stale claims, mocked services, external dependencies, and unverified metrics.
+
+### 9.6 Development skills applied to this repository
+
+The implementation work represented in this repository uses these practical skills:
+
+- Full-stack TypeScript/React development.
+- FastAPI service and OpenAPI contract design.
+- Python data engineering and model inference integration.
+- XGBoost model serving and SHAP explainability.
+- Operations research and linear optimization.
+- Maritime route, port, vessel, and demurrage domain modelling.
+- GeoJSON, TopoJSON, projections, and browser GIS visualization.
+- PostgreSQL, SQLAlchemy, and SQLite persistence design.
+- Auditability, CVC/GFR workflow modelling, and report generation.
+- Docker-based local orchestration.
+- Test-driven contract checking and browser runtime debugging.
+- Documentation reconciliation against executable source code.
+
+## 10. Data, ML, And Optimization Lifecycle
+
+### Forecast lifecycle
+
+```text
+Raw/processed route data
+  -> feature preparation
+  -> serialized forecasting artifact
+  -> multi-horizon forecast
+  -> residual/quantile handling
+  -> explanation drivers
+  -> /forecast response
+  -> Forecast & SHAP tab
+```
+
+### Market lifecycle
+
+```text
+Market/reference files
+  -> market features and model/precomputed signals
+  -> BDI/BPI/BSI, regime, probabilities, curves
+  -> /market and /market/context
+  -> Executive Overview
+```
+
+### Congestion lifecycle
+
+```text
+Port/monthly lookup files and congestion artifacts
+  -> expected wait calculation/model
+  -> port check or delay exposure
+  -> Port Operations and Vessel Intelligence
+```
+
+### Vessel lifecycle
+
+```text
+Vessel specifications, AIS/reference data, constraints
+  -> feasibility and suitability features
+  -> vessel ranking/recommendation
+  -> /vessels/recommend
+```
+
+### Freight Opportunity lifecycle
+
+```text
+FOS feature data and artifacts
+  -> score and contribution calculation
+  -> fixing-window recommendation
+  -> /freight-opportunity
+```
+
+### Optimization lifecycle
+
+```text
+Cargo/route/vessel/risk assumptions
+  -> freight, bunker, distance, port wait, and operating lookups
+  -> contract allocation and/or HiGHS LP
+  -> cost, coverage, risk, and fixing-window result
+```
+
+## 11. Persistence And Database Behavior
+
+Persistence is currently split rather than a single unified repository.
+
+### SQLAlchemy application store
+
+`backend/app/database/` provides SQLAlchemy session/model behavior for application metadata and operational records such as recommendations, predictions, model metadata, audit-related rows, and reference records. The configured database may be PostgreSQL, with local SQLite fallback behavior when PostgreSQL is unavailable.
+
+### Governance decision store
+
+Governance decisions and decision events use a separate direct SQLite connection in `backend/app/database/decisions.py`. This is a distinct persistence boundary when changing schemas or transaction behavior.
+
+### PostgreSQL schema and migrations
+
+`database/schema/`, `database/migrations/`, and `database/seeds/` contain PostgreSQL-oriented schema and seed material. They do not eliminate the application-level SQLite fallback or the separate governance store.
+
+## 12. Testing And Verification
+
+Run the complete Python suite with:
+
 ```powershell
 .venv\Scripts\python.exe -m pytest tests -v
 ```
 
----
+The repository includes tests for audit hash chains (`tests/test_audit.py`), decision lifecycle (`tests/test_decisions.py`), reports (`tests/test_reports.py`), economics (`tests/test_economics.py`), eligibility (`tests/test_eligibility.py`), map contracts (`tests/test_map.py`), backend contracts (`tests/backend/`), frontend contracts (`tests/frontend/`), ML (`tests/ml/`), and optimization (`tests/optimization/`).
 
-*Authored for the National Maritime Logistics & Dry-Bulk Freight Intelligence Program.*  
-*All rights reserved.*
+`frontend/package.json` currently exposes a placeholder frontend test script; the reliable frontend check is:
+
+```powershell
+npm --prefix frontend run build
+```
+
+The older “52 passing tests” claim is not treated as current fact unless the suite is executed and produces that result. Model metrics must likewise come from current evaluation outputs.
+
+## 13. Operational Limitations And Truth Labels
+
+The UI distinguishes:
+
+- `STATIC_REFERENCE`: local ports, corridors, chokepoints, constraints, and other reference layers.
+- `DEMO_SIMULATION`: demo hazard/advisory or simulated operational values.
+- Live/production values: only where active backend configuration and source actually provide them.
+
+Important limitations:
+
+1. The default IMD adapter is demo/mock behavior unless live mode is explicitly configured and implemented.
+2. OpenFreeMap is an external tile dependency and may fail in restricted/offline environments. The local `world-atlas` fallback is the reliable basemap.
+3. The local fallback map is an SVG projection, not a full GIS tile engine. It supports pan/zoom presentation behavior but does not provide arbitrary high-resolution tile detail.
+4. Delay exposure is a direct calculation in the active service path, not a universal Monte Carlo simulation.
+5. Port constraints combine reference files with some backend-defined values; they should not automatically be described as official or exhaustive.
+6. PostgreSQL, SQLAlchemy SQLite fallback, and governance SQLite are separate persistence paths.
+7. Top-level Hatchable assets are a separate demo surface and should not be presented as the FastAPI/React production path.
+8. The system is decision support. Final chartering and procurement actions require authorized human approval.
+
+## 14. Architecture Diagrams
+
+### Runtime topology
+
+```mermaid
+flowchart LR
+    User[Authorized user]
+    Browser[React 19 + Vite frontend]
+    Client[main.tsx api helper or src/api.ts]
+    FastAPI[FastAPI backend/app/main.py]
+    Routers[API routers backend/app/api]
+    Services[Domain services backend/app/services]
+    Compute[ML and optimization ml/ and optimization/]
+    Files[CSV JSON GeoJSON and artifacts]
+    DB[(PostgreSQL or SQLite)]
+    Reports[PDF/XLSX reports]
+
+    User --> Browser --> Client --> FastAPI --> Routers
+    Routers --> Services
+    Routers --> Compute
+    Services --> Files
+    Compute --> Files
+    Services --> DB
+    Routers --> Reports
+    Reports --> DB
+```
+
+### Five-pillar ownership
+
+```mermaid
+flowchart TB
+    UI[React tabbed command center]
+    P1[Pillar 1 Economics and scenarios]
+    P2[Pillar 2 GIS and hazards]
+    P3[Pillar 3 Governance and audit]
+    P4[Pillar 4 Port operations]
+    P5[Pillar 5 Command center and health]
+    API[FastAPI routers]
+    DATA[Local files ML artifacts and databases]
+
+    UI --> API
+    API --> P1
+    API --> P2
+    API --> P3
+    API --> P4
+    API --> P5
+    P1 --> DATA
+    P2 --> DATA
+    P3 --> DATA
+    P4 --> DATA
+    P5 --> DATA
+```
+
+### Governance flow
+
+```mermaid
+stateDiagram-v2
+    [*] --> Draft
+    Draft --> Analysed: analyse
+    Analysed --> Submitted: submit
+    Submitted --> Approved: authorized approver
+    Submitted --> Returned: return
+    Submitted --> Rejected: reject
+    Returned --> Analysed: revise and analyse
+    Approved --> [*]
+    Rejected --> [*]
+```
+
+## 15. Runbook
+
+### Start the active stack
+
+```powershell
+# Terminal 1
+.venv\Scripts\python.exe -m uvicorn backend.app.main:app --host 127.0.0.1 --port 8000
+
+# Terminal 2
+npm --prefix frontend run dev
+```
+
+Open `http://127.0.0.1:5173` and use the sidebar tabs. For the map, open **Maritime GIS**. The local country basemap and application overlays do not require external tiles.
+
+### Validate the stack
+
+```powershell
+npm --prefix frontend run build
+.venv\Scripts\python.exe -m pytest tests -v
+```
+
+### Inspect API contracts
+
+Open `http://127.0.0.1:8000/docs`. Check the route implementation under `backend/app/api/` before changing frontend calls. When adding a feature, update the route, schema, service, frontend component, tests, and this document together.
+
+### Change discipline
+
+When implementation changes:
+
+1. Update the owning backend/frontend source.
+2. Add or update a focused test or contract check.
+3. Run the frontend build and relevant Python tests.
+4. Update truth labels and this architecture document.
+5. Keep legacy Hatchable code clearly separated from the active FastAPI/React path.
