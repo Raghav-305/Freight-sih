@@ -4,6 +4,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 class Settings(BaseSettings):
     environment: str = "local"
     database_url: str = "postgresql+psycopg://freight_user:freight_password@localhost:5432/freight_intelligence"
+    freight_database_url: str | None = None
     cors_origins: str = "http://localhost:5173"
     model_root_path: str = "./ml/models"
     model_artifact_path: str = "./ml/artifacts"

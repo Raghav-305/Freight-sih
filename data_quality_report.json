@@ -1,0 +1,56 @@
+{
+    "freight_rates": {
+        "total_rows": 0,
+        "missing_rates_pct": NaN,
+        "invalid_negative_rates": 0,
+        "unique_routes": 0
+    },
+    "vessels": {
+        "total_vessels": 3,
+        "missing_draft_pct": 0.0,
+        "invalid_dwt_count": 0
+    },
+    "ports": {
+        "total_ports": 4,
+        "total_constraints_configured": 8
+    },
+    "gold_feature_store": {
+        "total_feature_rows": 0,
+        "features_version": "feature_set_v1",
+        "available_columns": [
+            "time",
+            "route_id",
+            "vessel_class",
+            "freight_today",
+            "freight_lag_1",
+            "freight_lag_3",
+            "freight_lag_7",
+            "freight_lag_14",
+            "freight_lag_30",
+            "freight_ma_7",
+            "freight_ma_30",
+            "freight_volatility_7",
+            "freight_volatility_30",
+            "bdi",
+            "bpi",
+            "bsi",
+            "coal_price",
+            "bunker_price",
+            "ffa_1m",
+            "ffa_3m",
+            "ffa_6m",
+            "fleet_utilization",
+            "fleet_idle",
+            "port_congestion_origin",
+            "port_congestion_destination",
+            "weather_origin",
+            "weather_destination",
+            "cargo_demand",
+            "ton_miles",
+            "usd_inr",
+            "month",
+            "week",
+            "day_of_week"
+        ]
+    }
+}

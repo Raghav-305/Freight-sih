@@ -98,6 +98,13 @@ freight-chartering-v4/
 |   |-- schema/                         PostgreSQL initialization schema
 |   |-- migrations/                     SQL migration material
 |   `-- seeds/                          Seed data
+|-- freight-database/                  Optional TimescaleDB freight feature store
+|   |-- init.sql                        Master schema and seed records
+|   |-- pipelines/                      CSV ingestion and ML feature building
+|   |-- data/raw/                       Feature-store source CSVs
+|   |-- create_views.py                 Analytical SQL views
+|   |-- data_quality_report.py          Feature-store quality audit
+|   `-- README.md                       Activation and usage instructions
 |-- tests/                              Backend, frontend contracts, ML, OR, pillars
 |-- docs/                               Model handoffs and pillar documentation
 |-- market_intelligence/                Research pipeline, reports, and notebook
@@ -115,6 +122,8 @@ freight-chartering-v4/
 ### Important boundary: active versus legacy application
 
 The active application is under `frontend/` and `backend/`. It is started with Vite and FastAPI. The top-level `public/index.html`, `public/app.js`, `api/*.js`, and `lib/sim.js` form a separate older Hatchable/demo surface. They are not imported by `backend/app/main.py` and do not implement the active React Maritime GIS tab.
+
+The optional `freight-database/` feature store is separate from the core application database. Its activation, ingestion, feature-building, views, and quality-audit commands are documented in [freight-database/README.md](freight-database/README.md).
 
 ## 3. Runtime And Startup
 
@@ -187,6 +196,17 @@ MapCanvas
 ```
 
 The basemap is separated from application data. `MapCanvas` attempts OpenFreeMap tiles, but the visible offline surface uses the bundled `world-atlas` country geometry projected through `d3-geo`; application markers/routes are drawn over it. This is the reliable local fallback when external tile requests fail.
+
+The optional freight feature-store path is:
+
+```text
+freight-database/data/raw/*.csv
+  -> pipelines/ingest/ingest_pipeline.py
+  -> TimescaleDB master/time-series tables
+  -> pipelines/features/build_features.py
+  -> route_daily_features
+  -> optional views and ML/data-quality consumers
+```
 
 ## 5. Frontend Pages And User Workflows
 
@@ -607,6 +627,10 @@ Persistence is currently split rather than a single unified repository.
 ### SQLAlchemy application store
 
 `backend/app/database/` provides SQLAlchemy session/model behavior for application metadata and operational records such as recommendations, predictions, model metadata, audit-related rows, and reference records. The configured database may be PostgreSQL, with local SQLite fallback behavior when PostgreSQL is unavailable.
+
+### Optional freight feature store
+
+`freight-database/` adds a separate TimescaleDB/PostgreSQL store for time-series freight rates, port calls, AIS positions, commodity/bunker/FFA prices, weather, master data, and `route_daily_features`. It is controlled by `FREIGHT_DATABASE_URL` and does not replace `DATABASE_URL` or the SQLite fallback. See [freight-database/README.md](freight-database/README.md) for activation, ingestion, feature-building, views, and quality-audit commands.
 
 ### Governance decision store
 

@@ -18,6 +18,7 @@ from backend.app.api.decisions import router as decisions_router
 from backend.app.api.eligibility import router as eligibility_router
 from backend.app.api.map import router as map_router
 from backend.app.api.scenarios import router as scenarios_router
+from backend.app.api.freight_database import router as freight_database_router
 
 app = FastAPI(
     title="Freight Chartering Intelligence API",
@@ -49,3 +50,4 @@ app.include_router(decisions_router)
 app.include_router(eligibility_router)
 app.include_router(map_router)
 app.include_router(scenarios_router)
+app.include_router(freight_database_router)
