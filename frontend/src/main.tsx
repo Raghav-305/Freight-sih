@@ -211,10 +211,15 @@ type AuditLogResponse = {
 };
 
 const apiMode = import.meta.env.VITE_API_MODE ?? "live";
-const apiBaseUrl = (import.meta.env.VITE_API_BASE_URL ?? "http://127.0.0.1:8000").replace("localhost", "127.0.0.1");
+const apiBaseUrl = (import.meta.env.VITE_API_BASE_URL ?? "").replace("localhost", "127.0.0.1").replace(/\/$/, "");
+
+function apiUrl(path: string) {
+  const apiPath = path.startsWith("/api/") ? path : `/api${path}`;
+  return `${apiBaseUrl}${apiPath}`;
+}
 
 async function api<T>(path: string, init?: RequestInit): Promise<T> {
-  const response = await fetch(`${apiBaseUrl}${path}`, {
+  const response = await fetch(apiUrl(path), {
     ...init,
     headers: {
       "Content-Type": "application/json",
@@ -708,7 +713,7 @@ function App() {
           </div>
           <div className="api-pill">
             <span>{apiMode}</span>
-            <strong>{apiBaseUrl}</strong>
+            <strong>{apiBaseUrl || "same origin"}</strong>
           </div>
         </header>
 

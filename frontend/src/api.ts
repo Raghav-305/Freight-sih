@@ -1,7 +1,7 @@
 // Thin typed client over the reference backend. One file, no framework
 // lock-in -- swap BASE_URL for an env var once Raghav wires real config.
 
-export const BASE_URL = (import.meta.env.VITE_API_BASE_URL ?? "http://127.0.0.1:8000").replace("localhost", "127.0.0.1");
+export const BASE_URL = (import.meta.env.VITE_API_BASE_URL ?? "").replace("localhost", "127.0.0.1").replace(/\/$/, "");
 
 async function req<T>(path: string, init?: RequestInit): Promise<T> {
   const res = await fetch(`${BASE_URL}${path}`, {
