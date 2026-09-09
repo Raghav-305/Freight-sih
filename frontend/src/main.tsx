@@ -917,9 +917,19 @@ function App() {
                     <div className="horizon-grid">
                       {Object.entries(forecast.forecast).map(([horizon, band]) => (
                         <div className="horizon-card" key={horizon}>
-                          <span>{horizon.toUpperCase()} HORIZON</span>
-                          <strong>{money(band.p50)}</strong>
-                          <small>P10: {money(band.p10)} · P90: {money(band.p90)}</small>
+                          <div className="horizon-card-top">
+                            <span className="horizon-badge">{horizon.toUpperCase()} HORIZON</span>
+                            <span className="horizon-status">P50 Benchmark</span>
+                          </div>
+                          <div className="horizon-main-val">
+                            <strong>{money(band.p50)}</strong>
+                            <span className="horizon-unit">/ MT</span>
+                          </div>
+                          <div className="horizon-quantiles">
+                            <span className="q-floor" title="Optimistic Rate Floor (P10)">P10: <strong>{money(band.p10)}</strong></span>
+                            <span className="q-sep">·</span>
+                            <span className="q-ceiling" title="Pessimistic Rate Ceiling (P90)">P90: <strong>{money(band.p90)}</strong></span>
+                          </div>
                         </div>
                       ))}
                     </div>
@@ -970,13 +980,26 @@ function App() {
                       <h3>Delta Analysis</h3>
                     </div>
                     <div className="horizon-grid">
-                      {whatIfResult.horizons?.map((item: any) => (
-                        <div className="horizon-card" key={item.horizon}>
-                          <span>{item.horizon}</span>
-                          <strong>${item.scenario_usd_mt.toFixed(2)}</strong>
-                          <small>Δ ${item.delta_usd_mt.toFixed(2)} ({item.delta_pct.toFixed(1)}%)</small>
-                        </div>
-                      ))}
+                      {whatIfResult.horizons?.map((item: any) => {
+                        const isUp = item.delta_usd_mt >= 0;
+                        return (
+                          <div className="horizon-card whatif-card" key={item.horizon}>
+                            <div className="horizon-card-top">
+                              <span className="horizon-badge">{item.horizon.toUpperCase()}</span>
+                              <span className={`delta-pill ${isUp ? "delta-up" : "delta-down"}`}>
+                                {isUp ? "▲ +" : "▼ -"}${Math.abs(item.delta_usd_mt).toFixed(2)} ({item.delta_pct > 0 ? "+" : ""}{item.delta_pct.toFixed(1)}%)
+                              </span>
+                            </div>
+                            <div className="horizon-main-val">
+                              <strong>${item.scenario_usd_mt.toFixed(2)}</strong>
+                              <span className="horizon-unit">/ MT</span>
+                            </div>
+                            <div className="horizon-quantiles">
+                              <span>Baseline: <strong>${item.baseline_usd_mt.toFixed(2)}/MT</strong></span>
+                            </div>
+                          </div>
+                        );
+                      })}
                     </div>
                   </>
                 )}
@@ -1825,24 +1848,41 @@ function ErrorPanel({ message }: { message: string }) {
 }
 
 function ShapList({ forecast }: { forecast: ForecastResponse }) {
+  const maxImpact = Math.max(...forecast.shap.map((s) => Math.abs(s.impact)), 1.0);
   return (
     <div className="shap-panel">
-      <h4>SHAP Model Explainability Drivers</h4>
-      {forecast.shap.map((item) => (
-        <div className="shap-row" key={item.feature}>
-          <span>{item.feature}</span>
-          <div>
-            <i style={{ width: `${Math.min(Math.abs(item.impact) * 100, 100)}%` }} />
-          </div>
-          <strong>
-            {item.direction === "up" ? "+" : "-"}
-            {item.impact}
-          </strong>
+      <div className="shap-header">
+        <div>
+          <h4>Feature Impact Attribution (TreeSHAP)</h4>
+          <span className="shap-subtitle">Marginal freight impact ($/MT) attributed by model ensemble</span>
         </div>
-      ))}
-      <footer>
-        Model: {forecast.model_version} · Trained: {forecast.training_date}
-      </footer>
+        <span className="gov-tag">ISO 8000 XAI</span>
+      </div>
+      <div className="shap-list">
+        {forecast.shap.map((item) => {
+          const isUp = item.direction === "up";
+          const widthPct = Math.min(Math.max((Math.abs(item.impact) / maxImpact) * 100, 10), 100);
+          return (
+            <div className="shap-row" key={item.feature}>
+              <span className="shap-label" title={item.feature}>{item.feature}</span>
+              <div className="shap-bar-container">
+                <div
+                  className={`shap-bar ${isUp ? "bar-up" : "bar-down"}`}
+                  style={{ width: `${widthPct}%` }}
+                />
+              </div>
+              <span className={`shap-pill ${isUp ? "pill-up" : "pill-down"}`}>
+                {isUp ? "+$" : "-$"}{Math.abs(item.impact).toFixed(2)}/MT
+              </span>
+            </div>
+          );
+        })}
+      </div>
+      <div className="shap-footer">
+        <span>Model: <strong>{forecast.model_version}</strong></span>
+        <span>Training Cutoff: <strong>{forecast.training_date}</strong></span>
+        <span>Predictive Confidence: <strong>{(forecast.confidence * 100).toFixed(0)}%</strong></span>
+      </div>
     </div>
   );
 }
