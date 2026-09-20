@@ -1,0 +1,309 @@
+/* ==========================================================================
+   MARITIME CHARTERING PLATFORM - DESIGN SYSTEM (GIGW COMPLIANT)
+   Visual Direction: KHAKI / BLACK / WHITE
+   Ministry of Ports, Shipping & Waterways / Ministry of Coal
+   ========================================================================== */
+
+@import "@fontsource/inter/400.css";
+@import "@fontsource/inter/500.css";
+@import "@fontsource/inter/600.css";
+@import "@fontsource/inter/700.css";
+@import "@fontsource/merriweather/400.css";
+@import "@fontsource/merriweather/700.css";
+@import "@fontsource/noto-sans-devanagari/400.css";
+@import "@fontsource/noto-sans-devanagari/600.css";
+@import "@fontsource/noto-sans-devanagari/700.css";
+
+:root {
+  /* Primary Khaki / Black / White Palette */
+  --ink: #14120E;              /* near-black, primary text, header bar, primary buttons */
+  --charcoal: #2B2820;         /* dark panels, sidebar active state, secondary text */
+  --khaki-700: #6B5E3C;        /* dark khaki borders, heavy accents */
+  --khaki-500: #8A7F5C;        /* mid khaki, secondary borders, badges */
+  --khaki-300: #C3B091;        /* light khaki accents, borders, dividers */
+  --sand-100: #E8E0CC;         /* warm sand tint, secondary panels, card outlines */
+  --paper: #F7F4EC;            /* official warm paper page background */
+  --white: #FFFFFF;            /* card backgrounds */
+
+  /* Muted Status Colors with explicit text & icon requirements */
+  --olive: #4F6B2A;            /* good/eligible/bullish */
+  --olive-bg: #F0F5E9;
+  --olive-border: #9CB879;
+
+  --amber: #B7791F;            /* caution/conditional/neutral */
+  --amber-bg: #FDF7EC;
+  --amber-border: #D6A856;
+
+  --brick: #9B2C2C;            /* high risk/ineligible/bearish */
+  --brick-bg: #FBF0F0;
+  --brick-border: #D18484;
+
+  /* Typography */
+  --font-serif: "Merriweather", Georgia, "Times New Roman", serif;
+  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-devanagari: "Noto Sans Devanagari", "Nirmala UI", sans-serif;
+
+  /* Sizing & Spacing */
+  --radius: 4px;               /* Strict 4px radius - no pill/bubbly radius on primary containers */
+  --radius-sm: 2px;
+  --radius-pill: 9999px;
+  --shadow-subtle: 0 1px 3px rgba(20, 18, 14, 0.06), 0 1px 2px rgba(20, 18, 14, 0.04);
+  --shadow-card: 0 2px 4px rgba(20, 18, 14, 0.08);
+  --shadow-modal: 0 10px 25px rgba(20, 18, 14, 0.2);
+
+  /* Font scale variable controlled via utility bar */
+  --font-scale: 1rem;          /* 16px default */
+}
+
+/* High Contrast Mode (Accessibility GIGW) */
+body.high-contrast {
+  --ink: #000000 !important;
+  --charcoal: #000000 !important;
+  --khaki-700: #000000 !important;
+  --khaki-500: #000000 !important;
+  --khaki-300: #000000 !important;
+  --sand-100: #CCCCCC !important;
+  --paper: #FFFFFF !important;
+  --white: #FFFFFF !important;
+  --olive: #006600 !important;
+  --olive-bg: #FFFFFF !important;
+  --olive-border: #006600 !important;
+  --amber: #804000 !important;
+  --amber-bg: #FFFFFF !important;
+  --amber-border: #804000 !important;
+  --brick: #990000 !important;
+  --brick-bg: #FFFFFF !important;
+  --brick-border: #990000 !important;
+}
+
+/* Font Size Scales */
+body.font-scale-sm {
+  --font-scale: 0.875rem;      /* 14px */
+}
+body.font-scale-md {
+  --font-scale: 1rem;          /* 16px */
+}
+body.font-scale-lg {
+  --font-scale: 1.125rem;      /* 18px */
+}
+
+/* Base Resets */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: var(--font-scale);
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Hindi language typography */
+html[lang="hi"] body {
+  font-family: var(--font-devanagari), var(--font-sans);
+}
+
+/* Accessible focus ring */
+:focus-visible {
+  outline: 2px solid var(--khaki-700);
+  outline-offset: 2px;
+}
+
+/* Motion Preferences */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Typography elements */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--ink);
+  font-family: var(--font-serif);
+  margin-top: 0;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+p {
+  margin-top: 0;
+  margin-bottom: 0.75rem;
+  color: var(--charcoal);
+}
+
+a {
+  color: var(--khaki-700);
+  text-decoration: underline;
+}
+a:hover {
+  color: var(--ink);
+}
+
+/* Form Elements */
+input, select, textarea, button {
+  font-family: inherit;
+  font-size: 0.9375rem;
+}
+
+input[type="text"],
+input[type="date"],
+input[type="number"],
+select,
+textarea {
+  background-color: var(--white);
+  border: 1px solid var(--khaki-500);
+  border-radius: var(--radius);
+  color: var(--ink);
+  padding: 8px 12px;
+  width: 100%;
+  transition: border-color 0.15s ease-in-out;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: var(--ink);
+  outline: 2px solid var(--khaki-700);
+  outline-offset: 1px;
+}
+
+button {
+  cursor: pointer;
+  border-radius: var(--radius);
+  font-weight: 600;
+  padding: 8px 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+
+/* Buttons without gradients (Formal, Government standard) */
+.btn-primary {
+  background-color: var(--ink);
+  color: var(--white);
+  border: 1px solid var(--ink);
+}
+.btn-primary:hover {
+  background-color: var(--charcoal);
+  border-color: var(--charcoal);
+}
+
+.btn-secondary {
+  background-color: var(--white);
+  color: var(--ink);
+  border: 1px solid var(--khaki-500);
+}
+.btn-secondary:hover {
+  background-color: var(--sand-100);
+  border-color: var(--khaki-700);
+}
+
+.btn-outline {
+  background-color: transparent;
+  color: var(--khaki-700);
+  border: 1px solid var(--khaki-300);
+}
+.btn-outline:hover {
+  background-color: var(--sand-100);
+  color: var(--ink);
+}
+
+/* Layout Grid */
+.portal-layout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--paper);
+}
+
+.portal-body-wrapper {
+  display: flex;
+  flex: 1;
+}
+
+.portal-sidebar {
+  width: 280px;
+  flex-shrink: 0;
+  background-color: var(--white);
+  border-right: 1px solid var(--sand-100);
+  display: flex;
+  flex-direction: column;
+  padding: 16px 12px;
+}
+
+.portal-main-content {
+  flex: 1;
+  min-width: 0;
+  padding: 24px 32px 64px 32px;
+  background-color: var(--paper);
+}
+
+@media (max-width: 900px) {
+  .portal-body-wrapper {
+    flex-direction: column;
+  }
+  .portal-sidebar {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid var(--sand-100);
+  }
+  .portal-main-content {
+    padding: 16px;
+  }
+}
+
+/* Print Stylesheet */
+@media print {
+  .portal-utility-bar,
+  .portal-sidebar,
+  .btn-primary,
+  .btn-secondary,
+  .btn-outline,
+  .tour-overlay,
+  .command-palette-modal,
+  nav,
+  button {
+    display: none !important;
+  }
+
+  body {
+    background-color: #FFFFFF !important;
+    color: #000000 !important;
+    font-size: 11pt !important;
+  }
+
+  .portal-main-content {
+    padding: 0 !important;
+  }
+
+  .print-header {
+    display: block !important;
+    border-bottom: 2px solid #000000;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+  }
+
+  .print-footer {
+    display: block !important;
+    border-top: 1px solid #666666;
+    margin-top: 24px;
+    padding-top: 8px;
+    font-size: 9pt;
+    text-align: center;
+  }
+}

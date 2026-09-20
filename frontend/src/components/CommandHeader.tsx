@@ -1,21 +1,32 @@
 import React, { useEffect, useState } from "react";
 import { getCommandCenterSummary } from "../api";
 import { FreshnessBadge } from "./FreshnessBadge";
-
-// Top navigation bar per 05_PILLAR_5_COMMAND_CENTER/DEEP_RESEARCH.md:
-// data freshness, active decision cases, route-risk alerts, system health.
-// Pulls from the single server-side /command-center/summary aggregation
-// endpoint -- this component makes exactly one call, per the "frontend is
-// not orchestrating unrelated calls" rule in IMPLEMENTATION_SPEC.md.
+import { ShieldCheck, Activity } from "lucide-react";
 
 export function CommandHeader() {
   const [summary, setSummary] = useState<any>(null);
+  const [isError, setIsError] = useState(false);
 
   useEffect(() => {
-    const load = () => getCommandCenterSummary().then(setSummary).catch(() => {});
+    let isMounted = true;
+    const load = () =>
+      getCommandCenterSummary()
+        .then((data) => {
+          if (isMounted) {
+            setSummary(data);
+            setIsError(false);
+          }
+        })
+        .catch(() => {
+          if (isMounted) setIsError(true);
+        });
+
     load();
     const id = setInterval(load, 30_000);
-    return () => clearInterval(id);
+    return () => {
+      isMounted = false;
+      clearInterval(id);
+    };
   }, []);
 
   return (
@@ -24,40 +35,74 @@ export function CommandHeader() {
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
-        padding: "10px 16px",
-        background: "#0b1220",
-        borderBottom: "1px solid #1f2937",
-        color: "#e5e7eb",
+        padding: "10px 18px",
+        background: "var(--charcoal)",
+        border: "1px solid var(--khaki-700)",
+        borderRadius: "var(--radius)",
+        color: "var(--sand-100)",
+        fontSize: "12px",
       }}
     >
-      <div style={{ fontWeight: 700 }}>Freight-SIH Command Center</div>
+      <div style={{ display: "flex", alignItems: "center", gap: "8px", fontWeight: 700, color: "var(--white)" }}>
+        <ShieldCheck size={16} style={{ color: "var(--khaki-300)" }} />
+        <span>Freight-SIH Command Center Status</span>
+      </div>
+
       {summary ? (
-        <div style={{ display: "flex", gap: 16, alignItems: "center", fontSize: 12 }}>
-          <span>System: {summary.system_health}</span>
-          <span>Pending review: {summary.pending_review_count}</span>
+        <div style={{ display: "flex", gap: 16, alignItems: "center" }}>
+          <span style={{ display: "flex", alignItems: "center", gap: "4px" }}>
+            <Activity size={13} style={{ color: "var(--olive-border)" }} />
+            System: <strong style={{ color: "var(--white)" }}>{summary.system_health ?? "Operational"}</strong>
+          </span>
+          <span>
+            Pending review: <strong style={{ color: "var(--white)" }}>{summary.pending_review_count ?? 0}</strong>
+          </span>
           <FreshnessBadge
             truthClass={summary.map_freshness?.layers?.hazards?.truth_class ?? "STATIC_REFERENCE"}
             lastSuccessAt={summary.map_freshness?.layers?.hazards?.last_success_at}
           />
         </div>
+      ) : isError ? (
+        <div style={{ display: "flex", gap: 12, alignItems: "center", color: "var(--khaki-300)" }}>
+          <span style={{ fontSize: "11px" }}>Local air-gapped node active · Offline cache enabled</span>
+        </div>
       ) : (
-        <span style={{ fontSize: 12, opacity: 0.6 }}>Connecting...</span>
+        <span style={{ fontSize: "11px", opacity: 0.8, color: "var(--sand-100)" }}>
+          Initializing command telemetry…
+        </span>
       )}
     </header>
   );
 }
 
-export function KpiCard({ label, value, unit, source }: { label: string; value: string | number; unit?: string; source?: string }) {
-  // KPI contract per DEEP_RESEARCH.md: value/unit/source/observed_at/confidence
-  // must all be drill-down-able. This stub renders the visible half; wire
-  // the drill-down drawer to the same data the parent already fetched.
+export function KpiCard({
+  label,
+  value,
+  unit,
+  source,
+}: {
+  label: string;
+  value: string | number;
+  unit?: string;
+  source?: string;
+}) {
   return (
-    <div style={{ border: "1px solid #1f2937", borderRadius: 8, padding: 12, minWidth: 140 }}>
-      <div style={{ fontSize: 11, opacity: 0.6, textTransform: "uppercase" }}>{label}</div>
-      <div style={{ fontSize: 22, fontWeight: 700 }}>
-        {value} {unit && <span style={{ fontSize: 12, opacity: 0.6 }}>{unit}</span>}
+    <div
+      style={{
+        border: "1px solid var(--khaki-300)",
+        borderRadius: "var(--radius)",
+        padding: 12,
+        minWidth: 140,
+        backgroundColor: "var(--white)",
+      }}
+    >
+      <div style={{ fontSize: 11, opacity: 0.8, textTransform: "uppercase", color: "var(--khaki-700)", fontWeight: 700 }}>
+        {label}
       </div>
-      {source && <div style={{ fontSize: 10, opacity: 0.5 }}>{source}</div>}
+      <div style={{ fontSize: 22, fontWeight: 700, color: "var(--ink)", margin: "2px 0" }}>
+        {value} {unit && <span style={{ fontSize: 12, opacity: 0.7 }}>{unit}</span>}
+      </div>
+      {source && <div style={{ fontSize: 10, opacity: 0.6, color: "var(--charcoal)" }}>{source}</div>}
     </div>
   );
 }

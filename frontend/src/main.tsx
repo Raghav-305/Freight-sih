@@ -8,6 +8,30 @@ import { MapCanvas } from "./components/MapCanvas";
 import { AuditTimeline } from "./components/AuditTimeline";
 import { AnchorStatus } from "./components/AnchorStatus";
 import { FreshnessBadge } from "./components/FreshnessBadge";
+import { LanguageProvider } from "./i18n/LanguageContext";
+import { UtilityBar } from "./components/ui/UtilityBar";
+import { GovHeader } from "./components/ui/GovHeader";
+import { ComplianceBanner } from "./components/ui/ComplianceBanner";
+import { GovBreadcrumbs } from "./components/ui/GovBreadcrumbs";
+import { GovSidebar, PageTab } from "./components/ui/GovSidebar";
+import { GovFooter } from "./components/ui/GovFooter";
+import { KpiCard } from "./components/ui/KpiCard";
+import { CommandPalette } from "./components/ui/CommandPalette";
+import { GuidedTour } from "./components/ui/GuidedTour";
+import { ExecutiveOverviewPage } from "./components/pages/ExecutiveOverviewPage";
+import { ForecastPage } from "./components/pages/ForecastPage";
+import { PortfolioOptimizerPage } from "./components/pages/PortfolioOptimizerPage";
+import { VesselIntelligencePage } from "./components/pages/VesselIntelligencePage";
+import { RiskIntelligencePage } from "./components/pages/RiskIntelligencePage";
+import { FreightOpportunityPage } from "./components/pages/FreightOpportunityPage";
+import { PolicyEconomicsPage } from "./components/pages/PolicyEconomicsPage";
+import { PortOperationsPage } from "./components/pages/PortOperationsPage";
+import { MaritimeGisPage } from "./components/pages/MaritimeGisPage";
+import { DataQualityPage } from "./components/pages/DataQualityPage";
+import { CvcGovernancePage } from "./components/pages/CvcGovernancePage";
+import { ModelRegistryPage } from "./components/pages/ModelRegistryPage";
+import { CounterfactualPage } from "./components/pages/CounterfactualPage";
+import { PillarType } from "./components/ui/PageHero";
 
 type ForecastBand = {
   p10: number;
@@ -307,7 +331,79 @@ type TabKey =
   | "counterfactual";
 
 function App() {
+  const todayStr = new Date().toISOString().slice(0, 10);
   const [activeTab, setActiveTab] = useState<TabKey>("overview");
+  const [visitedTabs, setVisitedTabs] = useState<Set<string>>(() => new Set(["overview"]));
+  const [commandPaletteOpen, setCommandPaletteOpen] = useState(false);
+  const [tourOpen, setTourOpen] = useState(false);
+
+  const handleSelectTab = (tab: string) => {
+    setActiveTab(tab as TabKey);
+    setVisitedTabs((prev) => new Set([...prev, tab]));
+  };
+
+  useEffect(() => {
+    const onKeyDown = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "k") {
+        e.preventDefault();
+        setCommandPaletteOpen((prev) => !prev);
+      }
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, []);
+
+  function getOpportunityLabel(raw?: string) {
+    if (!raw) return "Good opportunity";
+    if (raw === "GOOD_OPPORTUNITY") return "Good opportunity";
+    if (raw === "CONSIDER_FIXING") return "Consider fixing";
+    if (raw === "WAIT") return "Wait";
+    if (raw === "MONITOR") return "Monitor";
+    return raw.replace(/_/g, " ").toLowerCase().replace(/\b\w/g, (c) => c.toUpperCase());
+  }
+
+  function getPillarForTab(tab: string): PillarType {
+    switch (tab) {
+      case "forecast":
+      case "opportunity":
+      case "charter":
+      case "scenarios":
+        return "Economics";
+      case "map":
+      case "risk":
+        return "Maritime GIS";
+      case "ports":
+      case "vessels":
+        return "Port Operations";
+      case "governance":
+      case "quality":
+      case "models":
+      case "counterfactual":
+        return "Governance";
+      case "overview":
+      default:
+        return "Command Center";
+    }
+  }
+
+  function getTitleForTab(tab: string): string {
+    switch (tab) {
+      case "overview": return "Executive Overview";
+      case "forecast": return "Forecast & SHAP";
+      case "opportunity": return "Freight Opportunity";
+      case "charter": return "Portfolio Optimizer";
+      case "scenarios": return "Policy & Economics";
+      case "map": return "Maritime GIS";
+      case "risk": return "Risk Intelligence";
+      case "ports": return "Port Operations";
+      case "vessels": return "Vessel Intelligence";
+      case "governance": return "CVC Governance";
+      case "quality": return "Data Quality (ISO 8000)";
+      case "models": return "Model Registry";
+      case "counterfactual": return "Counterfactuals (Layer 6)";
+      default: return tab;
+    }
+  }
 
   // Forecast state
   const [forecastInputs, setForecastInputs] = useState({
@@ -332,7 +428,7 @@ function App() {
     origin: "Australia",
     destination: "Dhamra",
     vessel_class: "Panamax",
-    as_of_date: "",
+    as_of_date: todayStr,
   });
   const [market, setMarket] = useState<MarketIntelligence | null>(null);
   const [marketLoading, setMarketLoading] = useState(false);
@@ -356,7 +452,7 @@ function App() {
     destination: "Dhamra",
     vessel_class: "Panamax",
     horizon: 30,
-    as_of_date: "",
+    as_of_date: todayStr,
   });
   const [opportunityResult, setOpportunityResult] = useState<OpportunityScore | null>(null);
   const [opportunityLoading, setOpportunityLoading] = useState(false);
@@ -367,12 +463,13 @@ function App() {
     destination: "Dhamra",
     vessel_class: "Panamax",
     cargo_quantity: 70000,
-    as_of_date: "",
+    as_of_date: todayStr,
     limit: 8,
   });
   const [vesselResult, setVesselResult] = useState<VesselRecommendation | null>(null);
   const [vesselLoading, setVesselLoading] = useState(false);
   const [vesselError, setVesselError] = useState<string | null>(null);
+
 
   // Port Congestion Check
   const [congestionInputs, setCongestionInputs] = useState({
@@ -765,1871 +862,313 @@ function App() {
   }
 
   return (
-    <main className="workspace">
-      <aside className="sidebar">
-        <div className="brand-block">
-          <span className="eyebrow">SIH Decision Support</span>
-          <h1>Maritime Chartering Platform</h1>
-          <p>National Freight & Procurement Intelligence</p>
-        </div>
+    <LanguageProvider>
+      <div className="portal-layout">
+        {/* Accessible Utility Bar (GIGW) */}
+        <UtilityBar onOpenCommandPalette={() => setCommandPaletteOpen(true)} />
 
-        <nav>
-          <button
-            type="button"
-            className={`nav-btn ${activeTab === "overview" ? "active" : ""}`}
-            onClick={() => setActiveTab("overview")}
-          >
-            Executive Overview
-          </button>
-          <button
-            type="button"
-            className={`nav-btn ${activeTab === "forecast" ? "active" : ""}`}
-            onClick={() => setActiveTab("forecast")}
-          >
-            Forecast & SHAP
-          </button>
-          <button
-            type="button"
-            className={`nav-btn ${activeTab === "charter" ? "active" : ""}`}
-            onClick={() => setActiveTab("charter")}
-          >
-            Portfolio Optimizer
-          </button>
-          <button
-            type="button"
-            className={`nav-btn ${activeTab === "vessels" ? "active" : ""}`}
-            onClick={() => setActiveTab("vessels")}
-          >
-            Vessel Intelligence
-          </button>
-          <button
-            type="button"
-            className={`nav-btn ${activeTab === "risk" ? "active" : ""}`}
-            onClick={() => setActiveTab("risk")}
-          >
-            Risk Intelligence
-          </button>
-          <button
-            type="button"
-            className={`nav-btn ${activeTab === "opportunity" ? "active" : ""}`}
-            onClick={() => setActiveTab("opportunity")}
-          >
-            Freight Opportunity
-          </button>
-          <button
-            type="button"
-            className={`nav-btn ${activeTab === "scenarios" ? "active" : ""}`}
-            onClick={() => setActiveTab("scenarios")}
-          >
-            Policy & Economics
-          </button>
-          <button
-            type="button"
-            className={`nav-btn ${activeTab === "ports" ? "active" : ""}`}
-            onClick={() => setActiveTab("ports")}
-          >
-            Port Operations
-          </button>
-          <button
-            type="button"
-            className={`nav-btn ${activeTab === "map" ? "active" : ""}`}
-            onClick={() => setActiveTab("map")}
-          >
-            Maritime GIS
-          </button>
-          <button
-            type="button"
-            className={`nav-btn ${activeTab === "quality" ? "active" : ""}`}
-            onClick={() => setActiveTab("quality")}
-          >
-            Data Quality
-          </button>
-          <button
-            type="button"
-            className={`nav-btn ${activeTab === "governance" ? "active" : ""}`}
-            onClick={() => setActiveTab("governance")}
-          >
-            CVC Governance
-          </button>
-          <button
-            type="button"
-            className={`nav-btn ${activeTab === "models" ? "active" : ""}`}
-            onClick={() => setActiveTab("models")}
-          >
-            Model Registry
-          </button>
-          <button
-            type="button"
-            className={`nav-btn ${activeTab === "counterfactual" ? "active" : ""}`}
-            onClick={() => setActiveTab("counterfactual")}
-            style={{
-              borderColor: activeTab === "counterfactual" ? "#38bdf8" : undefined,
-              fontWeight: 700,
-            }}
-          >
-            Counterfactuals (Layer 6)
-          </button>
-        </nav>
-
-        <div className="review-box">
-          <strong>Human Review Required</strong>
-          <small>AI-assisted recommendations remain subject to authorized approval under Delegation of Financial Powers (DoFP).</small>
-        </div>
-
-        <div className="sidebar-status">
-          <span>Mode: <strong>{apiMode}</strong></span>
-          <span>API: <strong>{health?.status ?? "online"}</strong></span>
-        </div>
-      </aside>
-
-      <section className="main-pane">
-        <header className="topbar">
-          <div>
-            <span className="eyebrow">Smart India Hackathon · Ministry of Ports & Coal</span>
-            <h2>
-              {activeTab === "overview" && "Executive Command Center"}
-              {activeTab === "forecast" && "Route Freight Rate Forecast & Explainability"}
-              {activeTab === "charter" && "Charter Contract Portfolio Optimization"}
-              {activeTab === "vessels" && "Vessel Suitability & Physical Port Constraints"}
-              {activeTab === "risk" && "Route Risk Intelligence Assessment"}
-              {activeTab === "opportunity" && "Freight Opportunity Score (FOS) Fixing Window"}
-              {activeTab === "scenarios" && "Pillar 1 · Policy Alignment & Landed Cost Economics"}
-              {activeTab === "ports" && "Pillar 4 · Port Physical Operations & Berth Constraints"}
-              {activeTab === "map" && "Pillar 2 · Maritime Geospatial GIS & Chokepoints"}
-              {activeTab === "quality" && "Data Pipeline Quality & Lineage (ISO 8000)"}
-              {activeTab === "governance" && "Pillar 3 · CVC Vigilance Governance & Immutable Audit Trail"}
-              {activeTab === "models" && "Registered Model Artifacts & System Health"}
-              {activeTab === "counterfactual" && "Layer 6 · Counterfactual Explanations & Sensitivity Search"}
-            </h2>
-          </div>
-          <div className="api-pill">
-            <span>{apiMode}</span>
-            <strong>{apiBaseUrl || "same origin"}</strong>
-          </div>
-        </header>
-
-        {/* Unified 5-Pillar Command Header */}
-        <div style={{ marginBottom: "1rem", borderRadius: "8px", overflow: "hidden" }}>
-          <CommandHeader />
-        </div>
-
-        {/* Mandatory CVC / GFR Compliance Advisory Banner */}
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "10px",
-            padding: "10px 14px",
-            marginBottom: "1.25rem",
-            background: "#1e293b",
-            borderLeft: "4px solid #f59e0b",
-            borderRadius: "6px",
-            fontSize: "12px",
-            color: "#e2e8f0",
-            lineHeight: 1.4,
+        {/* Sovereign Government Header with Emblem Placeholder & Diagnostics */}
+        <GovHeader
+          apiMode={apiMode}
+          serverHealth={health?.status ?? "healthy"}
+          activeModel={models?.active_forecasting_model ?? "xgb_panamax_freight_v7"}
+          lastUpdated={market?.updated_at ?? "2026-09-20 18:00 UTC"}
+          onRetryConnection={() => {
+            void refreshSystem();
+            void loadMarketIntelligence();
           }}
-        >
-          <span style={{ fontSize: "16px" }}>⚖️</span>
-          <div>
-            <strong>CVC & GFR 2017 Compliance Rule:</strong> Decision-Support System Only. Final chartering, vessel fixation, or coal procurement action requires review and approval by an authorized officer under the applicable delegation and procurement framework.
-          </div>
-        </div>
+        />
 
-        {/* Global Key Metrics Strip */}
-        <section className="metrics-grid">
-          <Metric label="Current Spot Rate" value={forecast?.current_freight ? `${money(forecast.current_freight)}/MT` : "..."} />
-          <Metric label="Market Regime" value={market?.market_regime ?? "BULLISH"} />
-          <Metric label="FOS Signal" value={opportunityResult?.recommendation ?? "GOOD_OPPORTUNITY"} />
-          <Metric label="Baltic BDI / BPI" value={market?.indices ? `${market.indices.bdi} / ${market.indices.bpi}` : "1,842 / 1,620"} />
-        </section>
+        <div className="portal-body-wrapper">
+          {/* 5-Pillar Governed Sidebar */}
+          <GovSidebar
+            activeTab={activeTab as PageTab}
+            onSelectTab={handleSelectTab}
+            visitedTabs={visitedTabs}
+            apiMode={apiMode}
+          />
 
-        {/* TAB 1: EXECUTIVE OVERVIEW */}
-        {activeTab === "overview" && (
-          <div className="tab-content">
-            <section className="market-section">
-              <div className="section-title">
-                <span className="eyebrow">30-Day Market Regime & Chartering Advisory</span>
-                <h3>Macro Signals & Forward Market Context</h3>
-              </div>
+          {/* Main Content Area */}
+          <main id="main-content" className="portal-main-content">
+            {/* Breadcrumb Trail */}
+            <GovBreadcrumbs
+              pillar={getPillarForTab(activeTab)}
+              pageTitle={getTitleForTab(activeTab)}
+              onNavigateHome={() => handleSelectTab("overview")}
+            />
 
-              <form
-                className="forecast-form"
-                onSubmit={(e) => {
-                  e.preventDefault();
+            {/* Mandatory CVC / GFR 2017 Compliance Rule Banner on every page */}
+            <ComplianceBanner />
+
+            {/* Global Key Metrics Strip (GIGW KpiCard components) */}
+            <section
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
+                gap: "16px",
+                marginBottom: "24px",
+              }}
+            >
+              {/* 1. Current Spot Rate (Handles missing/loading/unavailable properly) */}
+              <KpiCard
+                label="Current Spot Rate"
+                value={
+                  forecast?.current_freight
+                    ? `${money(forecast.current_freight)}`
+                    : market?.route_freight
+                    ? `${money(market.route_freight)}`
+                    : null
+                }
+                unit="/MT"
+                helperText="USD per tonne for the selected route"
+                tooltipText="The latest freight price for a voyage on the selected route and vessel class."
+                isLoading={forecastLoading && !market?.route_freight}
+                isUnavailable={!forecastLoading && !forecast?.current_freight && !market?.route_freight}
+                isMock={apiMode === "mock"}
+                onRetry={() => {
+                  void runForecast();
+                  void loadMarketIntelligence();
+                }}
+              />
+
+              {/* 2. Market Regime */}
+              <KpiCard
+                label="Market Regime"
+                value={market?.market_regime ?? "BULLISH"}
+                helperText="Bullish, neutral or bearish"
+                tooltipText="The overall direction of the freight market. Bullish means rates are expected to rise."
+                status={
+                  market?.market_regime === "BULLISH"
+                    ? "good"
+                    : market?.market_regime === "NEUTRAL"
+                    ? "caution"
+                    : "risk"
+                }
+                isMock={apiMode === "mock"}
+              />
+
+              {/* 3. Opportunity Signal */}
+              <KpiCard
+                label="Opportunity Signal"
+                value={getOpportunityLabel(opportunityResult?.recommendation)}
+                helperText="Is now a good time to fix?"
+                tooltipText="A screening signal that weighs freight, fuel, port pressure and market direction. It is not an instruction to buy."
+                status={
+                  opportunityResult?.recommendation === "GOOD_OPPORTUNITY"
+                    ? "good"
+                    : opportunityResult?.recommendation === "WAIT"
+                    ? "risk"
+                    : "caution"
+                }
+                isMock={apiMode === "mock"}
+              />
+
+              {/* 4. Baltic BDI / BPI */}
+              <KpiCard
+                label="Baltic BDI / BPI"
+                value={
+                  market?.indices
+                    ? `${market.indices.bdi} / ${market.indices.bpi}`
+                    : "1,842 / 1,620"
+                }
+                helperText="Dry bulk and Panamax indices"
+                tooltipText="Standard market benchmarks for dry bulk shipping. Compare them with the route rate to see whether the route is moving with the wider market."
+                referenceTag={apiMode === "live" ? undefined : "Reference value"}
+                isMock={apiMode === "mock"}
+              />
+            </section>
+
+            {/* TAB 1: EXECUTIVE OVERVIEW */}
+            {activeTab === "overview" && (
+              <ExecutiveOverviewPage
+                marketInputs={marketInputs}
+                setMarketInputs={setMarketInputs}
+                onGenerateMarketIntelligence={() => {
                   void loadMarketIntelligence(marketInputs);
                   void loadMarketContext(marketInputs);
                 }}
-              >
-                <div className="form-grid">
-                  <Select
-                    label="Origin"
-                    value={marketInputs.origin}
-                    values={["Australia", "Indonesia", "Mozambique", "Russia", "USA"]}
-                    onChange={(v) => setMarketInputs({ ...marketInputs, origin: v })}
-                  />
-                  <Select
-                    label="Destination"
-                    value={marketInputs.destination}
-                    values={["Dhamra", "Gangavaram", "Gopalpur", "Haldia", "Paradip", "Vizag"]}
-                    onChange={(v) => setMarketInputs({ ...marketInputs, destination: v })}
-                  />
-                  <Select
-                    label="Vessel Class"
-                    value={marketInputs.vessel_class}
-                    values={["Panamax", "Supramax", "Capesize", "Handysize"]}
-                    onChange={(v) => setMarketInputs({ ...marketInputs, vessel_class: v })}
-                  />
-                  <Field
-                    label="As of Date"
-                    type="date"
-                    value={marketInputs.as_of_date}
-                    onChange={(v) => setMarketInputs({ ...marketInputs, as_of_date: v })}
-                  />
-                </div>
-                <button type="submit" disabled={marketLoading}>
-                  {marketLoading ? "Loading Intelligence..." : "Generate Market Intelligence"}
-                </button>
-              </form>
+                marketLoading={marketLoading}
+                market={market}
+                marketContext={marketContext}
+                onNavigateTab={handleSelectTab}
+                visitedTabs={visitedTabs}
+                onStartTour={() => setTourOpen(true)}
+              />
+            )}
 
-              {market && market.market_regime && (
-                <div className="market-grid" style={{ marginTop: "1rem" }}>
-                  <div className="market-card">
-                    <span>Regime</span>
-                    <strong>{market.market_regime}</strong>
-                    <small>{market.market_regime_interpretation}</small>
-                  </div>
-                  <div className="market-card">
-                    <span>Chartering Signal</span>
-                    <strong>{market.chartering_signal}</strong>
-                    <small>{market.freight_direction} · {market.market_volatility} Volatility</small>
-                  </div>
-                  <div className="market-card">
-                    <span>Probabilities</span>
-                    <strong>Bullish {market.probabilities ? Math.round(market.probabilities.bullish * 100) : 0}%</strong>
-                    <small>
-                      Neutral {market.probabilities ? Math.round(market.probabilities.neutral * 100) : 0}% · Bearish {market.probabilities ? Math.round(market.probabilities.bearish * 100) : 0}%
-                    </small>
-                  </div>
-                  <div className="market-card">
-                    <span>Bunker Pressure</span>
-                    <strong>{market.bunker_pressure}</strong>
-                    <small>Bunker ${market.bunker}/MT · Coal ${market.coal}/MT</small>
-                  </div>
-                </div>
-              )}
+            {/* TAB 2: FORECAST & SHAP */}
+            {activeTab === "forecast" && (
+              <ForecastPage
+                inputs={forecastInputs}
+                setInputs={setForecastInputs}
+                onRunForecast={() => void runForecast()}
+                loading={forecastLoading}
+                error={forecastError}
+                forecast={forecast}
+                whatIfInputs={whatIfInputs}
+                setWhatIfInputs={setWhatIfInputs}
+                onRunWhatIf={() => void runWhatIf()}
+                whatIfLoading={whatIfLoading}
+                whatIfError={whatIfError}
+                whatIfResult={whatIfResult}
+              />
+            )}
 
-              {marketContext && (
-                <div className="market-grid" style={{ marginTop: "1rem" }}>
-                  <div className="market-card">
-                    <span>FFA Curve</span>
-                    <strong>{marketContext.ffa.map((p) => `${p.period} ${p.price}`).join(" · ") || "Flat"}</strong>
-                    <small>Forward freight agreements</small>
-                  </div>
-                  <div className="market-card">
-                    <span>Coal Imports</span>
-                    <strong>{marketContext.import_summary ? `${(marketContext.import_summary.quantity_mt / 1000000).toFixed(2)}M MT` : "4.82M MT"}</strong>
-                    <small>Monthly import volume</small>
-                  </div>
-                  <div className="market-card">
-                    <span>Market Events</span>
-                    <strong>{marketContext.active_events.length} Active Events</strong>
-                    <small>Geopolitical and weather alerts</small>
-                  </div>
-                  <div className="market-card">
-                    <span>Fixture History</span>
-                    <strong>{marketContext.fixtures.fixture_count} Fixtures</strong>
-                    <small>{marketContext.fixtures.average_rate ? `Avg $${marketContext.fixtures.average_rate.toFixed(2)}/MT` : "Historical fixtures"}</small>
-                  </div>
-                </div>
-              )}
-            </section>
-          </div>
-        )}
+            {/* TAB 3: CHARTER PORTFOLIO OPTIMIZER */}
+            {activeTab === "charter" && (
+              <PortfolioOptimizerPage
+                inputs={charterInputs}
+                setInputs={setCharterInputs}
+                onRunOptimization={() => void runCharterOptimization()}
+                loading={charterLoading}
+                error={charterError}
+                result={charterResult}
+              />
+            )}
 
-        {/* TAB 10: COUNTERFACTUAL EXPLANATIONS (LAYER 6) */}
-        {activeTab === "counterfactual" && (
-          <div className="tab-content">
-            <section className="market-section">
-              <div className="section-title">
-                <span className="eyebrow">Layer 6 Explainability · Decision Flip & Sensitivity Search</span>
-                <h3>Counterfactual Explanations & Systematic Sensitivity Hub</h3>
-                <small style={{ color: "var(--gov-muted)" }}>
-                  Answers: <em>"What is the smallest realistic change that flips this decision or saves the most procurement capital?"</em>
-                </small>
-              </div>
+            {/* TAB 4: VESSEL INTELLIGENCE */}
+            {activeTab === "vessels" && (
+              <VesselIntelligencePage
+                inputs={vesselInputs}
+                setInputs={setVesselInputs}
+                onRecommendVessels={() => void recommendVessels()}
+                loading={vesselLoading}
+                error={vesselError}
+                result={vesselResult}
+              />
+            )}
 
-              {/* Sub-mode Switcher */}
-              <div className="mode-switcher" style={{ marginTop: "1rem" }}>
-                <button
-                  type="button"
-                  className={`mode-btn ${cfMode === "risk" ? "active" : ""}`}
-                  onClick={() => setCfMode("risk")}
-                >
-                  1. Risk Decision Explainer
-                </button>
-                <button
-                  type="button"
-                  className={`mode-btn ${cfMode === "charter" ? "active" : ""}`}
-                  onClick={() => setCfMode("charter")}
-                >
-                  2. Charter Cost Sensitivity Explainer
-                </button>
-                <button
-                  type="button"
-                  className={`mode-btn ${cfMode === "sandbox" ? "active" : ""}`}
-                  onClick={() => {
-                    setCfMode("sandbox");
-                    void runRiskSimulation();
-                    void runCharterSimulation();
-                  }}
-                >
-                  3. Interactive What-If Sandbox
-                </button>
-              </div>
-
-              {/* MODE 1: RISK EXPLAINER */}
-              {cfMode === "risk" && (
-                <div>
-                  <form
-                    className="forecast-form"
-                    onSubmit={(e) => {
-                      e.preventDefault();
-                      void fetchRiskCounterfactuals(riskInputs);
-                    }}
-                  >
-                    <div className="form-grid">
-                      <Field
-                        label="Route ID"
-                        type="text"
-                        value={riskInputs.route_id}
-                        onChange={(v) => setRiskInputs({ ...riskInputs, route_id: v })}
-                      />
-                      <Select
-                        label="Origin Country"
-                        value={riskInputs.origin_country}
-                        values={["Australia", "Indonesia", "Mozambique", "Russia", "USA"]}
-                        onChange={(v) => setRiskInputs({ ...riskInputs, origin_country: v })}
-                      />
-                      <Select
-                        label="Destination Port"
-                        value={riskInputs.destination_port}
-                        values={["DHA", "GAN", "GOP", "HAL", "PAR", "VIZ"]}
-                        onChange={(v) => setRiskInputs({ ...riskInputs, destination_port: v })}
-                      />
-                      <Field
-                        label="Assessment Date"
-                        type="date"
-                        value={riskInputs.date}
-                        onChange={(v) => setRiskInputs({ ...riskInputs, date: v })}
-                      />
-                    </div>
-                    <button type="submit" disabled={riskCfLoading}>
-                      {riskCfLoading ? "Searching Levers..." : "Run Systematic Risk Counterfactual Search"}
-                    </button>
-                  </form>
-
-                  {riskCfError && <ErrorPanel message={riskCfError} />}
-
-                  {!riskCfLoading && riskCfResult && (
-                    <div style={{ marginTop: "1.5rem" }}>
-                      <div className="metrics-grid">
-                        <Metric label="Baseline Overall Risk" value={`${riskCfResult.baseline.overall}/100`} />
-                        <Metric label="Primary Risk Driver" value={riskCfResult.biggest_lever.toUpperCase()} />
-                        <Metric
-                          label="Max Single Factor Drop"
-                          value={`-${riskCfResult.counterfactuals[0]?.overall_drops_by.toFixed(1)} pts`}
-                        />
-                        <Metric
-                          label="Target If Resolved"
-                          value={`${riskCfResult.counterfactuals[0]?.if_resolved_overall_becomes.toFixed(1)}/100`}
-                        />
-                      </div>
-
-                      <div className="cf-banner" style={{ marginTop: "1rem" }}>
-                        <div className="cf-banner-badge">EXECUTIVE SUMMARY</div>
-                        <div className="cf-banner-text">{riskCfResult.summary_insight}</div>
-                      </div>
-
-                      <div className="table-wrap" style={{ marginTop: "1rem" }}>
-                        <table>
-                          <thead>
-                            <tr>
-                              <th>Rank</th>
-                              <th>Risk Factor Lever</th>
-                              <th>Current Score</th>
-                              <th>If Resolved (10.0 Floor)</th>
-                              <th>Overall Risk Drops By</th>
-                              <th>Impact Share</th>
-                              <th>Interactive Simulation</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {riskCfResult.counterfactuals.map((cf, idx) => (
-                              <tr key={cf.factor}>
-                                <td><strong>#{idx + 1}</strong></td>
-                                <td>
-                                  <span className={`factor-badge factor-${cf.factor}`}>
-                                    {cf.factor.toUpperCase()}
-                                  </span>
-                                </td>
-                                <td><strong>{cf.current_score.toFixed(1)}/100</strong></td>
-                                <td>
-                                  <strong style={{ color: "#0284c7" }}>
-                                    {cf.if_resolved_overall_becomes.toFixed(1)}/100
-                                  </strong>
-                                </td>
-                                <td>
-                                  <span className="delta-drop-pill">
-                                    -{cf.overall_drops_by.toFixed(1)} pts
-                                  </span>
-                                </td>
-                                <td>
-                                  <div className="progress-bar-cf">
-                                    <div
-                                      className="progress-fill-cf"
-                                      style={{
-                                        width: `${Math.min(100, Math.max(10, (cf.overall_drops_by / (riskCfResult.counterfactuals[0]?.overall_drops_by || 1)) * 100))}%`,
-                                      }}
-                                    />
-                                  </div>
-                                </td>
-                                <td>
-                                  <button
-                                    type="button"
-                                    className="small-action-btn"
-                                    onClick={() => {
-                                      setCfMode("sandbox");
-                                      const newOverrides = { ...riskOverrides, [cf.factor]: 10.0 };
-                                      setRiskOverrides(newOverrides);
-                                      void runRiskSimulation(newOverrides);
-                                    }}
-                                  >
-                                    Test in Sandbox →
-                                  </button>
-                                </td>
-                              </tr>
-                            ))}
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              )}
-
-              {/* MODE 2: CHARTER EXPLAINER */}
-              {cfMode === "charter" && (
-                <div>
-                  <form
-                    className="forecast-form"
-                    onSubmit={(e) => {
-                      e.preventDefault();
-                      void fetchCharterCounterfactuals(charterInputs);
-                    }}
-                  >
-                    <div className="form-grid">
-                      <Field
-                        label="Total Cargo Commitment (MT)"
-                        type="number"
-                        value={charterInputs.cargo_quantity}
-                        onChange={(v) => setCharterInputs({ ...charterInputs, cargo_quantity: Number(v) })}
-                      />
-                      <Select
-                        label="Load Port"
-                        value={charterInputs.origin}
-                        values={[
-                          "Gladstone",
-                          "Newcastle",
-                          "Hay Point",
-                          "Dalrymple Bay",
-                          "Taboneo",
-                          "Muara Pantai",
-                          "Samarinda",
-                          "Hampton Roads",
-                          "Baltimore",
-                          "New Orleans",
-                          "Beira",
-                          "Nacala",
-                          "Vostochny (Far East)",
-                        ]}
-                        onChange={(v) => setCharterInputs({ ...charterInputs, origin: v })}
-                      />
-                      <Select
-                        label="Discharge Port"
-                        value={charterInputs.destination}
-                        values={["Dhamra", "Gangavaram", "Gopalpur", "Haldia", "Paradip", "Vizag"]}
-                        onChange={(v) => setCharterInputs({ ...charterInputs, destination: v })}
-                      />
-                      <Select
-                        label="Vessel Class"
-                        value={charterInputs.vessel_class}
-                        values={["Panamax", "Capesize"]}
-                        onChange={(v) => setCharterInputs({ ...charterInputs, vessel_class: v })}
-                      />
-                      <Field
-                        label="Delivery / Laycan Date"
-                        type="date"
-                        value={charterInputs.delivery_date}
-                        onChange={(v) => setCharterInputs({ ...charterInputs, delivery_date: v })}
-                      />
-                    </div>
-                    <button type="submit" disabled={charterCfLoading}>
-                      {charterCfLoading ? "Simulating Market Shifts..." : "Run HiGHS LP Cost Sensitivity Search"}
-                    </button>
-                  </form>
-
-                  {charterCfError && <ErrorPanel message={charterCfError} />}
-
-                  {!charterCfLoading && charterCfResult && (
-                    <div style={{ marginTop: "1.5rem" }}>
-                      <div className="metrics-grid">
-                        <Metric label="LP Optimized Baseline" value={money(charterCfResult.baseline.optimized_cost_usd)} />
-                        <Metric label="Max Sensitivity Lever" value={charterCfResult.biggest_lever.replace("_", " ").toUpperCase()} />
-                        <Metric label="Route" value={`${charterCfResult.baseline.origin_port} → ${charterCfResult.baseline.destination_port_name}`} />
-                        <Metric label="Voyages Needed" value={`${charterCfResult.baseline.voyages_needed} Voyages`} />
-                      </div>
-
-                      <div className="cf-banner cf-banner-blue" style={{ marginTop: "1rem" }}>
-                        <div className="cf-banner-badge">COST LEVERAGE INSIGHT</div>
-                        <div className="cf-banner-text">{charterCfResult.summary_insight}</div>
-                      </div>
-
-                      <div className="cf-sensitivity-grid" style={{ marginTop: "1.2rem" }}>
-                        {/* Bunker Sensitivity */}
-                        <div className="sensitivity-column">
-                          <div className="sens-header">
-                            <strong>Bunker Price Shifts</strong>
-                            <small>VLSFO USD/MT shifts (-2% to -20%)</small>
-                          </div>
-                          <div className="sens-cards">
-                            {charterCfResult.cost_sensitivity
-                              .filter((s) => s.lever === "bunker_price")
-                              .map((s) => (
-                                <div className="sens-card" key={s.change}>
-                                  <span className="sens-change">{s.change}</span>
-                                  <div className="sens-cost">{money(s.new_cost_usd)}</div>
-                                  <span className="savings-pill">Saves {money(s.saving_usd)}</span>
-                                </div>
-                              ))}
-                          </div>
-                        </div>
-
-                        {/* Congestion Sensitivity */}
-                        <div className="sensitivity-column">
-                          <div className="sens-header">
-                            <strong>Port Congestion Reduction</strong>
-                            <small>Fewer berth wait days (-0.5 to -3.0 d)</small>
-                          </div>
-                          <div className="sens-cards">
-                            {charterCfResult.cost_sensitivity
-                              .filter((s) => s.lever === "congestion")
-                              .map((s) => (
-                                <div className="sens-card" key={s.change}>
-                                  <span className="sens-change">{s.change}</span>
-                                  <div className="sens-cost">{money(s.new_cost_usd)}</div>
-                                  <span className="savings-pill">Saves {money(s.saving_usd)}</span>
-                                </div>
-                              ))}
-                          </div>
-                        </div>
-
-                        {/* Spot Rate Sensitivity */}
-                        <div className="sensitivity-column">
-                          <div className="sens-header">
-                            <strong>Spot Freight Rate Drops</strong>
-                            <small>Market softening (-2% to -20%)</small>
-                          </div>
-                          <div className="sens-cards">
-                            {charterCfResult.cost_sensitivity
-                              .filter((s) => s.lever === "spot_rate")
-                              .map((s) => (
-                                <div className="sens-card" key={s.change}>
-                                  <span className="sens-change">{s.change}</span>
-                                  <div className="sens-cost">{money(s.new_cost_usd)}</div>
-                                  <span className="savings-pill">Saves {money(s.saving_usd)}</span>
-                                </div>
-                              ))}
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="cf-note-card" style={{ marginTop: "1rem" }}>
-                        <strong>Architectural Truth & Contract Allocation Stability:</strong>
-                        <p>{charterCfResult.note}</p>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              )}
-
-              {/* MODE 3: INTERACTIVE WHAT-IF SANDBOX */}
-              {cfMode === "sandbox" && (
-                <div style={{ marginTop: "1rem" }}>
-                  <div className="content-grid">
-                    {/* Left: Risk Sandbox */}
-                    <div className="sandbox-slider-card">
-                      <div className="section-title">
-                        <span className="eyebrow">Interactive Risk Engine Sandbox</span>
-                        <h4>Dynamic Sub-Score Dial</h4>
-                        <small style={{ color: "var(--gov-muted)" }}>
-                          Tweak any individual risk sub-score to evaluate hypothetical route safety in real-time.
-                        </small>
-                      </div>
-
-                      {Object.keys(riskOverrides).map((factor) => (
-                        <div className="slider-row" key={factor}>
-                          <span className="slider-label">{factor}</span>
-                          <input
-                            type="range"
-                            className="slider-input"
-                            min="0"
-                            max="100"
-                            step="1"
-                            value={riskOverrides[factor]}
-                            onChange={(e) => {
-                              const val = Number(e.target.value);
-                              const updated = { ...riskOverrides, [factor]: val };
-                              setRiskOverrides(updated);
-                              void runRiskSimulation(updated);
-                            }}
-                          />
-                          <span className="slider-val">{riskOverrides[factor].toFixed(0)}</span>
-                        </div>
-                      ))}
-
-                      {riskSimResult && (
-                        <div style={{ marginTop: "1rem", padding: "12px", background: "#f8fafc", borderRadius: "6px", border: "1px solid #e2e8f0" }}>
-                          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                            <span>Simulated Overall Risk:</span>
-                            <strong style={{ fontSize: "16px", color: "var(--gov-navy)" }}>
-                              {riskSimResult.simulated.overall.toFixed(1)}/100
-                            </strong>
-                          </div>
-                          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "6px" }}>
-                            <span>Change from Baseline:</span>
-                            <span
-                              className="delta-drop-pill"
-                              style={{
-                                background: riskSimResult.overall_delta >= 0 ? "#ecfdf5" : "#fee2e2",
-                                color: riskSimResult.overall_delta >= 0 ? "#059669" : "#991b1b",
-                                borderColor: riskSimResult.overall_delta >= 0 ? "rgba(5, 150, 105, 0.25)" : "rgba(153, 27, 27, 0.25)",
-                              }}
-                            >
-                              {riskSimResult.overall_delta >= 0 ? `-${riskSimResult.overall_delta.toFixed(1)} pts` : `+${Math.abs(riskSimResult.overall_delta).toFixed(1)} pts`} ({riskSimResult.impact_direction})
-                            </span>
-                          </div>
-                        </div>
-                      )}
-                    </div>
-
-                    {/* Right: Charter Solver Sandbox */}
-                    <div className="sandbox-slider-card">
-                      <div className="section-title">
-                        <span className="eyebrow">Interactive HiGHS Solver Sandbox</span>
-                        <h4>Procurement Parameter Shift</h4>
-                        <small style={{ color: "var(--gov-muted)" }}>
-                          Simulate macro bunker price swings, port congestion shocks, and freight rate shifts.
-                        </small>
-                      </div>
-
-                      <div className="slider-row">
-                        <span className="slider-label">Bunker Price (%)</span>
-                        <input
-                          type="range"
-                          className="slider-input"
-                          min="-30"
-                          max="30"
-                          step="1"
-                          value={charterShifts.bunker_pct_change}
-                          onChange={(e) => {
-                            const updated = { ...charterShifts, bunker_pct_change: Number(e.target.value) };
-                            setCharterShifts(updated);
-                            void runCharterSimulation(updated);
-                          }}
-                        />
-                        <span className="slider-val">{charterShifts.bunker_pct_change > 0 ? `+${charterShifts.bunker_pct_change}%` : `${charterShifts.bunker_pct_change}%`}</span>
-                      </div>
-
-                      <div className="slider-row">
-                        <span className="slider-label">Congestion (Days)</span>
-                        <input
-                          type="range"
-                          className="slider-input"
-                          min="-4"
-                          max="4"
-                          step="0.5"
-                          value={charterShifts.congestion_days_delta}
-                          onChange={(e) => {
-                            const updated = { ...charterShifts, congestion_days_delta: Number(e.target.value) };
-                            setCharterShifts(updated);
-                            void runCharterSimulation(updated);
-                          }}
-                        />
-                        <span className="slider-val">{charterShifts.congestion_days_delta > 0 ? `+${charterShifts.congestion_days_delta}d` : `${charterShifts.congestion_days_delta}d`}</span>
-                      </div>
-
-                      <div className="slider-row">
-                        <span className="slider-label">Spot Rate (%)</span>
-                        <input
-                          type="range"
-                          className="slider-input"
-                          min="-30"
-                          max="30"
-                          step="1"
-                          value={charterShifts.spot_rate_pct_change}
-                          onChange={(e) => {
-                            const updated = { ...charterShifts, spot_rate_pct_change: Number(e.target.value) };
-                            setCharterShifts(updated);
-                            void runCharterSimulation(updated);
-                          }}
-                        />
-                        <span className="slider-val">{charterShifts.spot_rate_pct_change > 0 ? `+${charterShifts.spot_rate_pct_change}%` : `${charterShifts.spot_rate_pct_change}%`}</span>
-                      </div>
-
-                      {charterSimResult && (
-                        <div style={{ marginTop: "1rem", padding: "12px", background: "#f8fafc", borderRadius: "6px", border: "1px solid #e2e8f0" }}>
-                          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                            <span>Simulated Optimized Cost:</span>
-                            <strong style={{ fontSize: "16px", color: "var(--gov-navy)" }}>
-                              {money(charterSimResult.simulated.optimized_cost_usd)}
-                            </strong>
-                          </div>
-                          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "6px" }}>
-                            <span>Net Cost Delta:</span>
-                            <span
-                              className="savings-pill"
-                              style={{
-                                background: charterSimResult.saving_usd >= 0 ? "#ecfdf5" : "#fee2e2",
-                                color: charterSimResult.saving_usd >= 0 ? "#047857" : "#991b1b",
-                                borderColor: charterSimResult.saving_usd >= 0 ? "#a7f3d0" : "#fca5a5",
-                              }}
-                            >
-                              {charterSimResult.saving_usd >= 0 ? `Saves ${money(charterSimResult.saving_usd)}` : `Increases by ${money(Math.abs(charterSimResult.saving_usd))}`}
-                            </span>
-                          </div>
-                          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "6px" }}>
-                            <span>Contract Mix Shift:</span>
-                            <small style={{ fontWeight: 700, color: charterSimResult.mix_changed ? "#0284c7" : "#64748b" }}>
-                              {charterSimResult.mix_changed ? "Mix Re-allocated" : "Mix Unchanged (Cost Shift Only)"}
-                            </small>
-                          </div>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              )}
-            </section>
-          </div>
-        )}
-
-        {/* TAB 2: FORECAST & SHAP */}
-        {activeTab === "forecast" && (
-          <div className="tab-content">
-            <section className="content-grid">
-              <form
-                className="forecast-form"
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  void runForecast();
+            {/* TAB 5: RISK INTELLIGENCE */}
+            {activeTab === "risk" && (
+              <RiskIntelligencePage
+                inputs={riskInputs}
+                setInputs={setRiskInputs}
+                onAssessRisk={() => void assessRisk(riskInputs)}
+                loading={riskLoading}
+                error={riskError}
+                result={riskResult}
+                riskCfLoading={riskCfLoading}
+                riskCfError={riskCfError}
+                riskCfResult={riskCfResult}
+                onNavigateToSandbox={(factor) => {
+                  setActiveTab("counterfactual");
+                  setCfMode("sandbox");
+                  const updated = { ...riskOverrides, [factor]: 10.0 };
+                  setRiskOverrides(updated);
+                  void runRiskSimulation(updated);
                 }}
-              >
-                <div className="section-title">
-                  <span className="eyebrow">Forecast Parameters</span>
-                  <h3>Route & Laycan Definition</h3>
-                </div>
-                <div className="form-grid">
-                  <Select
-                    label="Origin"
-                    value={forecastInputs.origin}
-                    values={["Australia", "Indonesia", "Mozambique", "Russia", "USA"]}
-                    onChange={(v) => setForecastInputs({ ...forecastInputs, origin: v })}
-                  />
-                  <Select
-                    label="Destination"
-                    value={forecastInputs.destination}
-                    values={["Dhamra", "Gangavaram", "Gopalpur", "Haldia", "Paradip", "Vizag"]}
-                    onChange={(v) => setForecastInputs({ ...forecastInputs, destination: v })}
-                  />
-                  <Select
-                    label="Vessel Class"
-                    value={forecastInputs.vessel_type}
-                    values={["Panamax", "Supramax", "Capesize"]}
-                    onChange={(v) => setForecastInputs({ ...forecastInputs, vessel_type: v })}
-                  />
-                  <Field
-                    label="Cargo Quantity (MT)"
-                    type="number"
-                    value={forecastInputs.cargo_quantity}
-                    onChange={(v) => setForecastInputs({ ...forecastInputs, cargo_quantity: Number(v) })}
-                  />
-                  <Field
-                    label="Laycan Start"
-                    type="date"
-                    value={forecastInputs.laycan_start}
-                    onChange={(v) => setForecastInputs({ ...forecastInputs, laycan_start: v })}
-                  />
-                  <Field
-                    label="Laycan End"
-                    type="date"
-                    value={forecastInputs.laycan_end}
-                    onChange={(v) => setForecastInputs({ ...forecastInputs, laycan_end: v })}
-                  />
-                </div>
-                <button type="submit" disabled={forecastLoading}>
-                  {forecastLoading ? "Predicting..." : "Generate Forecast"}
-                </button>
-              </form>
+              />
+            )}
 
-              <section className="forecast-output">
-                {forecastError && <ErrorPanel message={forecastError} />}
-                {!forecastError && forecast && (
-                  <>
-                    <div className="section-title">
-                      <span className="eyebrow">Multi-Horizon Quantiles</span>
-                      <h3>{forecast.model_version}</h3>
-                    </div>
-                    <div className="horizon-grid">
-                      {Object.entries(forecast.forecast).map(([horizon, band]) => (
-                        <div className="horizon-card" key={horizon}>
-                          <div className="horizon-card-top">
-                            <span className="horizon-badge">{horizon.toUpperCase()} HORIZON</span>
-                            <span className="horizon-status">P50 Benchmark</span>
-                          </div>
-                          <div className="horizon-main-val">
-                            <strong>{money(band.p50)}</strong>
-                            <span className="horizon-unit">/ MT</span>
-                          </div>
-                          <div className="horizon-quantiles">
-                            <span className="q-floor" title="Optimistic Rate Floor (P10)">P10: <strong>{money(band.p10)}</strong></span>
-                            <span className="q-sep">·</span>
-                            <span className="q-ceiling" title="Pessimistic Rate Ceiling (P90)">P90: <strong>{money(band.p90)}</strong></span>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                    <ShapList forecast={forecast} />
-                  </>
-                )}
-              </section>
+            {/* TAB 6: FREIGHT OPPORTUNITY SCORE */}
+            {activeTab === "opportunity" && (
+              <FreightOpportunityPage
+                inputs={opportunityInputs}
+                setInputs={setOpportunityInputs}
+                onAssessOpportunity={() => void assessOpportunity(opportunityInputs)}
+                loading={opportunityLoading}
+                error={opportunityError}
+                result={opportunityResult}
+              />
+            )}
+
+            {/* TAB 7: PILLAR 1 - POLICY & ECONOMICS */}
+            {activeTab === "scenarios" && <PolicyEconomicsPage />}
+
+            {/* TAB 8: PILLAR 4 - PORT OPERATIONS */}
+            {activeTab === "ports" && <PortOperationsPage />}
+
+            {/* TAB 9: PILLAR 2 - MARITIME GIS */}
+            {activeTab === "map" && <MaritimeGisPage />}
+
+            {/* TAB 10: DATA QUALITY (ISO 8000) */}
+            {activeTab === "quality" && (
+              <DataQualityPage
+                dataQuality={dataQuality}
+                loading={qualityLoading}
+                error={qualityError}
+                onRefresh={() => void loadDataQuality()}
+              />
+            )}
+
+            {/* TAB 11: CVC GOVERNANCE & AUDIT */}
+            {activeTab === "governance" && (
+              <CvcGovernancePage
+                reviewForm={reviewForm}
+                setReviewForm={setReviewForm}
+                onSubmitReview={submitReview}
+                reviewMessage={reviewMessage}
+                auditData={auditData}
+              />
+            )}
+
+            {/* TAB 12: MODEL REGISTRY */}
+            {activeTab === "models" && (
+              <ModelRegistryPage
+                models={models}
+                onRefresh={() => void refreshSystem()}
+              />
+            )}
+
+            {/* TAB 13: COUNTERFACTUAL EXPLANATIONS (LAYER 6) */}
+            {activeTab === "counterfactual" && (
+              <CounterfactualPage
+                cfMode={cfMode}
+                setCfMode={setCfMode}
+                riskInputs={riskInputs}
+                setRiskInputs={setRiskInputs}
+                fetchRiskCounterfactuals={fetchRiskCounterfactuals}
+                riskCfLoading={riskCfLoading}
+                riskCfError={riskCfError}
+                riskCfResult={riskCfResult}
+                riskOverrides={riskOverrides}
+                setRiskOverrides={setRiskOverrides}
+                runRiskSimulation={runRiskSimulation}
+                riskSimResult={riskSimResult}
+                riskSimLoading={riskSimLoading}
+                charterInputs={charterInputs}
+                setCharterInputs={setCharterInputs}
+                fetchCharterCounterfactuals={fetchCharterCounterfactuals}
+                charterCfLoading={charterCfLoading}
+                charterCfError={charterCfError}
+                charterCfResult={charterCfResult}
+                charterShifts={charterShifts}
+                setCharterShifts={setCharterShifts}
+                runCharterSimulation={runCharterSimulation}
+                charterSimResult={charterSimResult}
+                charterSimLoading={charterSimLoading}
+              />
+            )}
+
+            {/* Footer Health Strip */}
+            <section className="health-strip" style={{ marginTop: "32px" }}>
+              <span>FastAPI Health: <strong>{health?.status ?? "online"}</strong></span>
+              <span>Active ML Model: <strong>{models?.active_forecasting_model ?? "xgb_panamax_freight_v7"}</strong></span>
+              <span>Deployment: <strong>Local, air-gapped decision support</strong></span>
+              <button type="button" onClick={() => void refreshSystem()}>Refresh Status</button>
             </section>
+          </main>
+        </div>
 
-            {/* Scenario What-If Section */}
-            <section className="content-grid analysis-grid" style={{ marginTop: "1.5rem" }}>
-              <form
-                className="forecast-form"
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  void runWhatIf();
-                }}
-              >
-                <div className="section-title">
-                  <span className="eyebrow">Sensitivity Simulation</span>
-                  <h3>What-If Scenario Shocks</h3>
-                </div>
-                <div className="form-grid">
-                  <Field
-                    label="Freight Change %"
-                    type="number"
-                    value={whatIfInputs.freight_change_pct}
-                    onChange={(v) => setWhatIfInputs({ ...whatIfInputs, freight_change_pct: Number(v) })}
-                  />
-                  <Field
-                    label="Bunker Fuel Change %"
-                    type="number"
-                    value={whatIfInputs.bunker_change_pct}
-                    onChange={(v) => setWhatIfInputs({ ...whatIfInputs, bunker_change_pct: Number(v) })}
-                  />
-                </div>
-                <button type="submit" disabled={whatIfLoading}>
-                  {whatIfLoading ? "Simulating..." : "Run What-if"}
-                </button>
-              </form>
+        {/* GIGW Official Sovereign Footer */}
+        <GovFooter
+          modelVersion={models?.active_forecasting_model ?? "xgb_panamax_freight_v7"}
+          datasetVersion="dwt_fixtures_2026_q3"
+          lastUpdated={market?.updated_at ?? "2026-09-20"}
+        />
 
-              <section className="forecast-output">
-                {whatIfError && <ErrorPanel message={whatIfError} />}
-                {!whatIfError && whatIfResult && (
-                  <>
-                    <div className="section-title">
-                      <span className="eyebrow">Scenario Impact</span>
-                      <h3>Delta Analysis</h3>
-                    </div>
-                    <div className="horizon-grid">
-                      {whatIfResult.horizons?.map((item: any) => {
-                        const isUp = item.delta_usd_mt >= 0;
-                        return (
-                          <div className="horizon-card whatif-card" key={item.horizon}>
-                            <div className="horizon-card-top">
-                              <span className="horizon-badge">{item.horizon.toUpperCase()}</span>
-                              <span className={`delta-pill ${isUp ? "delta-up" : "delta-down"}`}>
-                                {isUp ? "▲ +" : "▼ -"}${Math.abs(item.delta_usd_mt).toFixed(2)} ({item.delta_pct > 0 ? "+" : ""}{item.delta_pct.toFixed(1)}%)
-                              </span>
-                            </div>
-                            <div className="horizon-main-val">
-                              <strong>${item.scenario_usd_mt.toFixed(2)}</strong>
-                              <span className="horizon-unit">/ MT</span>
-                            </div>
-                            <div className="horizon-quantiles">
-                              <span>Baseline: <strong>${item.baseline_usd_mt.toFixed(2)}/MT</strong></span>
-                            </div>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  </>
-                )}
-              </section>
-            </section>
-          </div>
-        )}
-
-        {/* TAB 3: CHARTER PORTFOLIO OPTIMIZER */}
-        {activeTab === "charter" && (
-          <div className="tab-content">
-            <section className="market-section">
-              <div className="section-title">
-                <span className="eyebrow">Portfolio Hedging & Cost Minimization</span>
-                <h3>Spot vs COA vs Multi-Voyage Charter Allocator</h3>
-              </div>
-
-              <form
-                className="forecast-form"
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  void runCharterOptimization();
-                }}
-              >
-                <div className="form-grid">
-                  <Field
-                    label="Total Cargo Commitment (MT)"
-                    type="number"
-                    value={charterInputs.cargo_quantity}
-                    onChange={(v) => setCharterInputs({ ...charterInputs, cargo_quantity: Number(v) })}
-                  />
-                  <Select
-                    label="Load Port"
-                    value={charterInputs.origin}
-                    values={[
-                      "Gladstone",
-                      "Newcastle",
-                      "Hay Point",
-                      "Dalrymple Bay",
-                      "Taboneo",
-                      "Muara Pantai",
-                      "Samarinda",
-                      "Hampton Roads",
-                      "Baltimore",
-                      "New Orleans",
-                      "Beira",
-                      "Nacala",
-                      "Ust-Luga (Baltic)",
-                      "Novorossiysk (Black Sea)",
-                      "Vostochny (Far East)",
-                    ]}
-                    onChange={(v) => setCharterInputs({ ...charterInputs, origin: v })}
-                  />
-                  <Select
-                    label="Discharge Port"
-                    value={charterInputs.destination}
-                    values={["Dhamra", "Gangavaram", "Gopalpur", "Haldia", "Paradip", "Vizag"]}
-                    onChange={(v) => setCharterInputs({ ...charterInputs, destination: v })}
-                  />
-                  <Select
-                    label="Vessel Class"
-                    value={charterInputs.vessel_class}
-                    values={["Panamax", "Capesize"]}
-                    onChange={(v) => setCharterInputs({ ...charterInputs, vessel_class: v })}
-                  />
-                  <Field
-                    label="Delivery / Laycan Date"
-                    type="date"
-                    value={charterInputs.delivery_date}
-                    onChange={(v) => setCharterInputs({ ...charterInputs, delivery_date: v })}
-                  />
-                  <Select
-                    label="Max Single Contract Share"
-                    value={String(charterInputs.max_share)}
-                    values={["0.3", "0.4", "0.5", "0.6", "0.7", "1.0"]}
-                    onChange={(v) => setCharterInputs({ ...charterInputs, max_share: Number(v) })}
-                  />
-                </div>
-                <button type="submit" disabled={charterLoading}>
-                  {charterLoading ? "Optimizing Portfolio..." : "Calculate Optimal Contract Allocation (HiGHS LP)"}
-                </button>
-              </form>
-
-              {charterError && <ErrorPanel message={charterError} />}
-              {!charterError && charterResult && (
-                <div style={{ marginTop: "1.5rem" }}>
-                  <div className="metrics-grid">
-                    <Metric label="Strategy" value={charterResult.strategy} />
-                    <Metric label="Voyages Needed" value={charterResult.voyages_needed ? `${charterResult.voyages_needed} Voyages` : "N/A"} />
-                    <Metric label="Voyage Distance" value={charterResult.distance_nm ? `${charterResult.distance_nm.toLocaleString()} NM` : "N/A"} />
-                    <Metric label="Baseline Cost (Spot)" value={money(charterResult.baseline_cost)} />
-                    <Metric label="LP Optimized Cost" value={money(charterResult.expected_cost)} />
-                    <Metric label="Projected Savings" value={`${money(charterResult.expected_saving)} (${charterResult.expected_saving_pct}%)`} />
-                  </div>
-
-                  {charterResult.recommended_mix_voyages && (
-                    <div className="allocation-card" style={{ marginTop: "1rem" }}>
-                      <h4>Linear Program Voyage Allocation Mix (HiGHS Solver)</h4>
-                      <div className="market-grid" style={{ marginTop: "0.5rem" }}>
-                        {Object.entries(charterResult.recommended_mix_voyages).map(([structure, voyages]) => (
-                          <div className="market-card" key={structure}>
-                            <span>{structure.toUpperCase()}</span>
-                            <strong>{voyages} Voyages</strong>
-                            <small>{charterResult.voyages_needed ? `${Math.round((voyages / charterResult.voyages_needed) * 100)}% of commitment` : ""}</small>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-
-                  <div className="allocation-card" style={{ marginTop: "1rem" }}>
-                    <h4>Contract Structure Volume Distribution</h4>
-                    <div className="allocation-bar">
-                      {Object.entries(charterResult.allocation).map(([type, pct]) => (
-                        <div
-                          key={type}
-                          className={`alloc-segment alloc-${type}`}
-                          style={{ width: `${pct}%` }}
-                          title={`${type.toUpperCase()}: ${pct}%`}
-                        >
-                          {pct > 8 ? `${type.toUpperCase()} ${pct}%` : ""}
-                        </div>
-                      ))}
-                    </div>
-
-                    <div className="market-grid" style={{ marginTop: "1rem" }}>
-                      {Object.entries(charterResult.allocation).map(([type, pct]) => (
-                        <div className="market-card" key={type}>
-                          <span>{type.toUpperCase()} ALLOCATION</span>
-                          <strong>{pct}% ({((pct / 100) * charterResult.cargo_quantity).toLocaleString()} MT)</strong>
-                          <small>Rate: ${charterResult.rates_usd_mt[type]?.toFixed(2)}/MT</small>
-                        </div>
-                      ))}
-                    </div>
-
-                    {charterResult.cost_breakdown_per_voyage && (
-                      <div style={{ marginTop: "1rem" }}>
-                        <span className="eyebrow" style={{ display: "block", marginBottom: "0.5rem" }}>Voyage Operating Cost Breakdown ($/Voyage)</span>
-                        <div className="market-grid">
-                          <div className="market-card">
-                            <span>BASE FREIGHT</span>
-                            <strong>{money(charterResult.cost_breakdown_per_voyage.freight_base_usd)}</strong>
-                            <small>Cargo freight component</small>
-                          </div>
-                          <div className="market-card">
-                            <span>BUNKER FUEL</span>
-                            <strong>{money(charterResult.cost_breakdown_per_voyage.bunker_cost_usd)}</strong>
-                            <small>VLSFO laden + ballast</small>
-                          </div>
-                          <div className="market-card">
-                            <span>CONGESTION DELAY</span>
-                            <strong>{money(charterResult.cost_breakdown_per_voyage.congestion_cost_usd)}</strong>
-                            <small>Port waiting demurrage</small>
-                          </div>
-                          <div className="market-card">
-                            <span>IDLE / DEADHEAD</span>
-                            <strong>{money(charterResult.cost_breakdown_per_voyage.deadhead_cost_usd + charterResult.cost_breakdown_per_voyage.idle_cost_usd)}</strong>
-                            <small>Ballast steaming & wait</small>
-                          </div>
-                          <div className="market-card">
-                            <span>RISK BUFFER</span>
-                            <strong>{money(charterResult.cost_breakdown_per_voyage.risk_penalty_usd)}</strong>
-                            <small>Weather & volatility margin</small>
-                          </div>
-                        </div>
-                      </div>
-                    )}
-
-                    <div className="advisory-box" style={{ marginTop: "1rem" }}>
-                      <strong>Recommended Fixing Window:</strong>
-                      <p>{charterResult.fixing_window}</p>
-                      <small>{charterResult.notes}</small>
-                    </div>
-
-                    {/* Charter Cost Sensitivity & Counterfactuals (Layer 6) */}
-                    <div style={{ marginTop: "2rem", borderTop: "1px solid var(--gov-border)", paddingTop: "1.5rem" }}>
-                      <div className="section-title">
-                        <span className="eyebrow">Layer 6 Explainability · HiGHS LP Cost Sensitivity</span>
-                        <h4>Procurement Cost Sensitivity & Counterfactual Levers</h4>
-                        <small style={{ color: "var(--gov-muted)" }}>
-                          Evaluates procurement cost changes under realistic market shifts in bunker price, port congestion delay, and spot freight rate.
-                        </small>
-                      </div>
-
-                      {charterCfLoading && <p style={{ color: "var(--gov-muted)", marginTop: "0.5rem" }}>Running perturbation sensitivity analysis...</p>}
-                      {charterCfError && <ErrorPanel message={charterCfError} />}
-
-                      {!charterCfLoading && charterCfResult && (
-                        <div style={{ marginTop: "1rem" }}>
-                          <div className="cf-banner cf-banner-blue">
-                            <div className="cf-banner-badge">MAX SENSITIVITY: {charterCfResult.biggest_lever.replace("_", " ").toUpperCase()}</div>
-                            <div className="cf-banner-text">{charterCfResult.summary_insight}</div>
-                          </div>
-
-                          <div className="cf-sensitivity-grid" style={{ marginTop: "1.2rem" }}>
-                            {/* Bunker Sensitivity */}
-                            <div className="sensitivity-column">
-                              <div className="sens-header">
-                                <strong>Bunker Fuel Sensitivity</strong>
-                                <small>VLSFO Price Shocks</small>
-                              </div>
-                              <div className="sens-cards">
-                                {charterCfResult.cost_sensitivity
-                                  .filter((s) => s.lever === "bunker_price")
-                                  .map((s) => (
-                                    <div className="sens-card" key={s.change}>
-                                      <span className="sens-change">{s.change}</span>
-                                      <div className="sens-cost">{money(s.new_cost_usd)}</div>
-                                      <span className="savings-pill">Saves {money(s.saving_usd)}</span>
-                                    </div>
-                                  ))}
-                              </div>
-                            </div>
-
-                            {/* Congestion Sensitivity */}
-                            <div className="sensitivity-column">
-                              <div className="sens-header">
-                                <strong>Port Congestion Sensitivity</strong>
-                                <small>Wait Time Reduction</small>
-                              </div>
-                              <div className="sens-cards">
-                                {charterCfResult.cost_sensitivity
-                                  .filter((s) => s.lever === "congestion")
-                                  .map((s) => (
-                                    <div className="sens-card" key={s.change}>
-                                      <span className="sens-change">{s.change}</span>
-                                      <div className="sens-cost">{money(s.new_cost_usd)}</div>
-                                      <span className="savings-pill">Saves {money(s.saving_usd)}</span>
-                                    </div>
-                                  ))}
-                              </div>
-                            </div>
-
-                            {/* Spot Rate Sensitivity */}
-                            <div className="sensitivity-column">
-                              <div className="sens-header">
-                                <strong>Spot Freight Rate Sensitivity</strong>
-                                <small>Prompt Market Shifts</small>
-                              </div>
-                              <div className="sens-cards">
-                                {charterCfResult.cost_sensitivity
-                                  .filter((s) => s.lever === "spot_rate")
-                                  .map((s) => (
-                                    <div className="sens-card" key={s.change}>
-                                      <span className="sens-change">{s.change}</span>
-                                      <div className="sens-cost">{money(s.new_cost_usd)}</div>
-                                      <span className="savings-pill">Saves {money(s.saving_usd)}</span>
-                                    </div>
-                                  ))}
-                              </div>
-                            </div>
-                          </div>
-
-                          <div className="cf-note-card" style={{ marginTop: "1rem" }}>
-                            <strong>Design Rationale & Integrity Note:</strong>
-                            <p>{charterCfResult.note}</p>
-                          </div>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              )}
-            </section>
-          </div>
-        )}
-
-        {/* TAB 4: VESSELS */}
-        {activeTab === "vessels" && (
-          <div className="tab-content">
-            <section className="market-section">
-              <div className="section-title">
-                <span className="eyebrow">Operational Feasibility Matrix</span>
-                <h3>Vessel Intelligence</h3>
-              </div>
-
-              <form
-                className="forecast-form"
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  void recommendVessels(vesselInputs);
-                }}
-              >
-                <div className="form-grid">
-                  <Select
-                    label="Destination Port"
-                    value={vesselInputs.destination}
-                    values={["Dhamra", "Gangavaram", "Gopalpur", "Haldia", "Paradip", "Vizag"]}
-                    onChange={(v) => setVesselInputs({ ...vesselInputs, destination: v })}
-                  />
-                  <Select
-                    label="Vessel Class"
-                    value={vesselInputs.vessel_class}
-                    values={["Panamax", "Capesize", "Supramax", "Handysize"]}
-                    onChange={(v) => setVesselInputs({ ...vesselInputs, vessel_class: v })}
-                  />
-                  <Field
-                    label="Cargo Quantity (MT)"
-                    type="number"
-                    value={vesselInputs.cargo_quantity}
-                    onChange={(v) => setVesselInputs({ ...vesselInputs, cargo_quantity: Number(v) })}
-                  />
-                  <Field
-                    label="Max Results"
-                    type="number"
-                    value={vesselInputs.limit}
-                    onChange={(v) => setVesselInputs({ ...vesselInputs, limit: Number(v) })}
-                  />
-                </div>
-                <button type="submit" disabled={vesselLoading}>
-                  {vesselLoading ? "Ranking..." : "Find Suitable Vessels"}
-                </button>
-              </form>
-
-              {vesselError && <ErrorPanel message={vesselError} />}
-              {!vesselError && vesselResult && (
-                <>
-                  <div className="metrics-grid">
-                    <Metric label="Total Candidates" value={String(vesselResult.candidate_count)} />
-                    <Metric label="Feasible Vessels" value={String(vesselResult.feasible_count)} />
-                    <Metric label="Model Engine" value={vesselResult.model_version} />
-                    <Metric label="Target Metric" value={vesselResult.target} />
-                  </div>
-
-                  <div className="table-wrap">
-                    <table>
-                      <thead>
-                        <tr>
-                          <th>Vessel</th>
-                          <th>DWT</th>
-                          <th>Draft</th>
-                          <th>Predicted Wait</th>
-                          <th>Suitability</th>
-                          <th>Status</th>
-                          <th>Tier & Constraints</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {vesselResult.candidates.map((c) => (
-                          <tr key={c.imo}>
-                            <td>
-                              <strong>{c.vessel_name}</strong>
-                              <br />
-                              <small>IMO {c.imo}</small>
-                            </td>
-                            <td>{c.dwt_mt.toLocaleString()} MT</td>
-                            <td>{c.draft_m.toFixed(1)} m</td>
-                            <td>{c.predicted_waiting_hours.toFixed(1)} h</td>
-                            <td><strong>{c.suitability_score.toFixed(1)}/100</strong></td>
-                            <td><Status value={c.eligibility} /></td>
-                            <td>
-                              {c.recommendation_tier}
-                              {c.failed_constraints.length > 0 && (
-                                <span className="failed-tag">
-                                  {` [Failed: ${c.failed_constraints.join(", ")}]`}
-                                </span>
-                              )}
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                </>
-              )}
-            </section>
-
-            {/* Port Physical Constraints Check */}
-            <section className="congestion-section" style={{ marginTop: "1.5rem" }}>
-              <div className="section-title">
-                <span className="eyebrow">Physical Berth & Draft Validation</span>
-                <h3>Individual Port Feasibility Checker</h3>
-              </div>
-
-              <form
-                className="congestion-form"
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  void runPortCongestion();
-                }}
-              >
-                <div className="form-grid">
-                  <Select
-                    label="Port"
-                    value={congestionInputs.port}
-                    values={["Dhamra", "Gangavaram", "Gopalpur", "Haldia", "Paradip", "Vizag"]}
-                    onChange={(v) => setCongestionInputs({ ...congestionInputs, port: v })}
-                  />
-                  <Select
-                    label="Vessel Class"
-                    value={congestionInputs.vessel_type}
-                    values={["Panamax", "Capesize", "Supramax", "Handysize"]}
-                    onChange={(v) => setCongestionInputs({ ...congestionInputs, vessel_type: v })}
-                  />
-                  <Field
-                    label="Cargo Quantity"
-                    type="number"
-                    value={congestionInputs.cargo_quantity}
-                    onChange={(v) => setCongestionInputs({ ...congestionInputs, cargo_quantity: Number(v) })}
-                  />
-                  <Field
-                    label="Arrival Date"
-                    type="date"
-                    value={congestionInputs.arrival_date}
-                    onChange={(v) => setCongestionInputs({ ...congestionInputs, arrival_date: v })}
-                  />
-                </div>
-                <button type="submit" disabled={congestionLoading}>
-                  {congestionLoading ? "Validating..." : "Check Port Congestion"}
-                </button>
-              </form>
-
-              {congestionError && <ErrorPanel message={congestionError} />}
-              {!congestionError && congestionResult && (
-                <div className="congestion-result">
-                  <div className="result-header">
-                    <span className="eyebrow">Port Evaluation</span>
-                    <h4>{congestionResult.port} · {congestionResult.vessel_type}</h4>
-                  </div>
-                  <div className="result-grid">
-                    <div className="result-card">
-                      <span>Status</span>
-                      <strong className={congestionResult.feasible ? "ok" : "warn"}>
-                        {congestionResult.feasible ? "FEASIBLE" : "INCOMPATIBLE / HIGH RISK"}
-                      </strong>
-                    </div>
-                    <div className="result-card">
-                      <span>Current Queue</span>
-                      <strong>{congestionResult.current_queue} vessels</strong>
-                    </div>
-                    <div className="result-card">
-                      <span>Expected Wait</span>
-                      <strong>{congestionResult.congestion_days.toFixed(1)} days</strong>
-                    </div>
-                  </div>
-
-                  <div className="constraint-grid">
-                    {Object.entries(congestionResult.constraints).map(([name, pass]) => (
-                      <div key={name} className={`constraint ${pass ? "ok" : "warn"}`}>
-                        <span>{name.replace("_", " ").toUpperCase()}</span>
-                        <strong>{pass ? "PASS" : "FAIL"}</strong>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </section>
-          </div>
-        )}
-
-        {/* TAB 5: RISK INTELLIGENCE */}
-        {activeTab === "risk" && (
-          <div className="tab-content">
-            <section className="market-section">
-              <div className="section-title">
-                <span className="eyebrow">Geopolitical & Port Risk</span>
-                <h3>Risk Intelligence</h3>
-              </div>
-
-              <form
-                className="forecast-form"
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  void assessRisk(riskInputs);
-                }}
-              >
-                <div className="form-grid">
-                  <Field
-                    label="Route ID"
-                    type="text"
-                    value={riskInputs.route_id}
-                    onChange={(v) => setRiskInputs({ ...riskInputs, route_id: v })}
-                  />
-                  <Select
-                    label="Origin Country"
-                    value={riskInputs.origin_country}
-                    values={["Australia", "Indonesia", "Mozambique", "Russia", "USA"]}
-                    onChange={(v) => setRiskInputs({ ...riskInputs, origin_country: v })}
-                  />
-                  <Select
-                    label="Destination Port"
-                    value={riskInputs.destination_port}
-                    values={["DHA", "GAN", "GOP", "HAL", "PAR", "VIZ"]}
-                    onChange={(v) => setRiskInputs({ ...riskInputs, destination_port: v })}
-                  />
-                  <Field
-                    label="Assessment Date"
-                    type="date"
-                    value={riskInputs.date}
-                    onChange={(v) => setRiskInputs({ ...riskInputs, date: v })}
-                  />
-                </div>
-                <button type="submit" disabled={riskLoading}>
-                  {riskLoading ? "Assessing..." : "Assess Route Risk"}
-                </button>
-              </form>
-
-              {riskError && <ErrorPanel message={riskError} />}
-              {!riskError && riskResult && (
-                <>
-                  <div className="metrics-grid">
-                    <Metric label="Overall Risk" value={`${riskResult.overall_risk}/100`} />
-                    <Metric label="Route" value={riskResult.route_id} />
-                    <Metric label="Port" value={riskResult.destination_port_name} />
-                    <Metric label="Engine" value={riskResult.mode} />
-                  </div>
-                  <div className="market-grid">
-                    {Object.entries(riskResult.scores).map(([name, score]) => (
-                      <div className="market-card" key={name}>
-                        <span>{name.toUpperCase()} RISK</span>
-                        <strong>{score.toFixed(1)}/100</strong>
-                        <small>{score >= 70 ? "High exposure" : score >= 45 ? "Moderate exposure" : "Lower exposure"}</small>
-                      </div>
-                    ))}
-                  </div>
-
-                  {/* Counterfactual Risk Explanations (Layer 6) */}
-                  <div style={{ marginTop: "2rem", borderTop: "1px solid var(--gov-border)", paddingTop: "1.5rem" }}>
-                    <div className="section-title">
-                      <span className="eyebrow">Layer 6 Explainability · Systematic Perturbation Search</span>
-                      <h4>Counterfactual Risk Levers & Decision Drivers</h4>
-                      <small style={{ color: "var(--gov-muted)" }}>
-                        Answers: <em>"What is the smallest realistic change that would flip or resolve this route risk?"</em>
-                      </small>
-                    </div>
-
-                    {riskCfLoading && <p style={{ color: "var(--gov-muted)", marginTop: "0.5rem" }}>Calculating smallest lever perturbations...</p>}
-                    {riskCfError && <ErrorPanel message={riskCfError} />}
-
-                    {!riskCfLoading && riskCfResult && (
-                      <div style={{ marginTop: "1rem" }}>
-                        <div className="cf-banner">
-                          <div className="cf-banner-badge">PRIMARY LEVER: {riskCfResult.biggest_lever.toUpperCase()}</div>
-                          <div className="cf-banner-text">{riskCfResult.summary_insight}</div>
-                        </div>
-
-                        <div className="table-wrap" style={{ marginTop: "1rem" }}>
-                          <table>
-                            <thead>
-                              <tr>
-                                <th>Rank</th>
-                                <th>Risk Factor Lever</th>
-                                <th>Current Score</th>
-                                <th>If Resolved (10.0 Floor)</th>
-                                <th>Overall Drop</th>
-                                <th>Impact Share</th>
-                                <th>Action</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              {riskCfResult.counterfactuals.map((cf, idx) => (
-                                <tr key={cf.factor}>
-                                  <td><strong>#{idx + 1}</strong></td>
-                                  <td>
-                                    <span className={`factor-badge factor-${cf.factor}`}>
-                                      {cf.factor.toUpperCase()}
-                                    </span>
-                                  </td>
-                                  <td><strong>{cf.current_score.toFixed(1)}/100</strong></td>
-                                  <td>
-                                    <span style={{ color: "#0284c7", fontWeight: 700 }}>
-                                      {cf.if_resolved_overall_becomes.toFixed(1)}/100
-                                    </span>
-                                  </td>
-                                  <td>
-                                    <span className="delta-drop-pill">
-                                      -{cf.overall_drops_by.toFixed(1)} pts
-                                    </span>
-                                  </td>
-                                  <td>
-                                    <div className="progress-bar-cf">
-                                      <div
-                                        className="progress-fill-cf"
-                                        style={{
-                                          width: `${Math.min(100, Math.max(10, (cf.overall_drops_by / (riskCfResult.counterfactuals[0]?.overall_drops_by || 1)) * 100))}%`,
-                                        }}
-                                      />
-                                    </div>
-                                  </td>
-                                  <td>
-                                    <button
-                                      type="button"
-                                      className="small-action-btn"
-                                      onClick={() => {
-                                        setActiveTab("counterfactual");
-                                        setCfMode("sandbox");
-                                        setRiskOverrides((prev) => ({ ...prev, [cf.factor]: 10.0 }));
-                                      }}
-                                    >
-                                      Simulate Resolution →
-                                    </button>
-                                  </td>
-                                </tr>
-                              ))}
-                            </tbody>
-                          </table>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                </>
-              )}
-            </section>
-          </div>
-        )}
-
-        {/* TAB 6: FREIGHT OPPORTUNITY SCORE */}
-        {activeTab === "opportunity" && (
-          <div className="tab-content">
-            <section className="market-section">
-              <div className="section-title">
-                <span className="eyebrow">Optimal Fixing Window Search</span>
-                <h3>Freight Opportunity Score</h3>
-              </div>
-
-              <form
-                className="forecast-form"
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  void assessOpportunity(opportunityInputs);
-                }}
-              >
-                <div className="form-grid">
-                  <Select
-                    label="Origin"
-                    value={opportunityInputs.origin}
-                    values={["Australia", "Indonesia", "Mozambique", "Russia", "USA"]}
-                    onChange={(v) => setOpportunityInputs({ ...opportunityInputs, origin: v })}
-                  />
-                  <Select
-                    label="Destination"
-                    value={opportunityInputs.destination}
-                    values={["Dhamra", "Gangavaram", "Gopalpur", "Haldia", "Paradip", "Vizag"]}
-                    onChange={(v) => setOpportunityInputs({ ...opportunityInputs, destination: v })}
-                  />
-                  <Select
-                    label="Vessel Class"
-                    value={opportunityInputs.vessel_class}
-                    values={["Panamax", "Capesize"]}
-                    onChange={(v) => setOpportunityInputs({ ...opportunityInputs, vessel_class: v })}
-                  />
-                  <Select
-                    label="Horizon Days"
-                    value={String(opportunityInputs.horizon)}
-                    values={["7", "30", "60"]}
-                    onChange={(v) => setOpportunityInputs({ ...opportunityInputs, horizon: Number(v) })}
-                  />
-                  <Field
-                    label="As of Date"
-                    type="date"
-                    value={opportunityInputs.as_of_date}
-                    onChange={(v) => setOpportunityInputs({ ...opportunityInputs, as_of_date: v })}
-                  />
-                </div>
-                <button type="submit" disabled={opportunityLoading}>
-                  {opportunityLoading ? "Calculating..." : "Calculate Opportunity Score"}
-                </button>
-              </form>
-
-              {opportunityError && <ErrorPanel message={opportunityError} />}
-              {!opportunityError && opportunityResult && (
-                <>
-                  <div className="metrics-grid">
-                    <Metric label="FOS Score" value={`${opportunityResult.fos}/100`} />
-                    <Metric label="Recommendation" value={opportunityResult.recommendation} />
-                    <Metric label="Expected Return" value={`${opportunityResult.expected_return_pct.toFixed(2)}%`} />
-                    <Metric label="Expected Freight" value={`${money(opportunityResult.expected_freight_usd_mt)}/MT`} />
-                  </div>
-                  <div className="market-grid">
-                    {Object.entries(opportunityResult.components).map(([name, score]) => (
-                      <div className="market-card" key={name}>
-                        <span>{name.replaceAll("_", " ").toUpperCase()}</span>
-                        <strong>{score.toFixed(1)}/100</strong>
-                        <small>Weight Contribution: {opportunityResult.contributions[`${name}_score`] ?? "Normal"}</small>
-                      </div>
-                    ))}
-                  </div>
-                  <p style={{ marginTop: "1rem", color: "#64748b" }}>
-                    {opportunityResult.forecast_source} · {opportunityResult.note}
-                  </p>
-                </>
-              )}
-            </section>
-          </div>
-        )}
-
-        {/* TAB: PILLAR 1 - POLICY & ECONOMICS */}
-        {activeTab === "scenarios" && (
-          <div className="tab-content">
-            <section className="market-section">
-              <div className="section-title">
-                <span className="eyebrow">Pillar 1 · Policy & Economics Evaluation</span>
-                <h3>Energy-Normalized ($USD/GJ) Coastal vs. Import Coal Parity</h3>
-              </div>
-              <p style={{ color: "#94a3b8", fontSize: "13px", marginBottom: "1.25rem", lineHeight: 1.5 }}>
-                Evaluate delivered energy costs for power utilities (NTPC/State GENCOs), optimize blending fractions under ash limits, and stress-test landed cost parity against freight, FX, and port tariff shocks.
-              </p>
-              <ScenarioComparator />
-            </section>
-          </div>
-        )}
-
-        {/* TAB: PILLAR 4 - PORT OPERATIONS */}
-        {activeTab === "ports" && (
-          <div className="tab-content">
-            <section className="market-section">
-              <div className="section-title">
-                <span className="eyebrow">Pillar 4 · Port Physical Operations & Berth Eligibility</span>
-                <h3>Berth LOA/Beam/Draft Constraints & Modelled Delay Exposure</h3>
-              </div>
-              <p style={{ color: "#94a3b8", fontSize: "13px", marginBottom: "1.25rem", lineHeight: 1.5 }}>
-                Verify physical vessel feasibility against official berth notices with high-tide conditional access. Distinguishes modelled delay exposure from contractual laytime demurrage liability.
-              </p>
-              <EligibilityMatrix />
-            </section>
-          </div>
-        )}
-
-        {/* TAB: PILLAR 2 - MARITIME GIS */}
-        {activeTab === "map" && (
-          <div className="tab-content">
-            <section className="market-section">
-              <div className="section-title">
-                <span className="eyebrow">Pillar 2 · Maritime Geospatial Intelligence</span>
-                <h3>Offline Corridors, Strategic Chokepoints & Cyclone Advisories</h3>
-              </div>
-              <p style={{ color: "#94a3b8", fontSize: "13px", marginBottom: "1.25rem", lineHeight: 1.5 }}>
-                100% offline-capable vector maritime GIS. Features verified Indian major ports, Cape/Malacca/Suez shipping corridors, strategic chokepoints, and weather warning overlays with explicit truth-class labeling.
-              </p>
-              <MapCanvas />
-            </section>
-          </div>
-        )}
-
-        {/* TAB 7: DATA QUALITY */}
-        {activeTab === "quality" && (
-          <div className="tab-content">
-            <section className="market-section">
-              <div className="section-title">
-                <span className="eyebrow">Pipeline Integrity (ISO 8000 Compliance)</span>
-                <h3>Data Freshness, Missing Values & Duplicate Diagnostics</h3>
-              </div>
-
-              {qualityLoading && <p>Inspecting data streams...</p>}
-              {qualityError && <ErrorPanel message={qualityError} />}
-              {!qualityLoading && dataQuality && (
-                <>
-                  <div className="metrics-grid">
-                    <Metric label="Pipeline Health" value={dataQuality.overall_status} />
-                    <Metric label="Monitored Pipelines" value={String(dataQuality.total_datasets_monitored)} />
-                    <Metric label="Healthy Streams" value={`${dataQuality.healthy_count} / ${dataQuality.total_datasets_monitored}`} />
-                    <Metric label="Sample Records" value={dataQuality.total_sampled_rows.toLocaleString()} />
-                  </div>
-
-                  <div className="table-wrap">
-                    <table>
-                      <thead>
-                        <tr>
-                          <th>Pipeline / Dataset</th>
-                          <th>Category</th>
-                          <th>Status</th>
-                          <th>Rows</th>
-                          <th>Columns</th>
-                          <th>Missing %</th>
-                          <th>Duplicate %</th>
-                          <th>Last Updated</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {dataQuality.datasets.map((d) => (
-                          <tr key={d.dataset}>
-                            <td>
-                              <strong>{d.dataset}</strong>
-                              <br />
-                              <small>{d.path}</small>
-                            </td>
-                            <td>{d.type}</td>
-                            <td><Status value={d.status} /></td>
-                            <td>{d.rows.toLocaleString()}</td>
-                            <td>{d.columns}</td>
-                            <td>{d.missing_pct}%</td>
-                            <td>{d.duplicate_pct}%</td>
-                            <td>{d.last_updated}</td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-
-                  <p style={{ marginTop: "1rem", color: "#6b7280", fontSize: "13px" }}>
-                    {dataQuality.governance_note}
-                  </p>
-                </>
-              )}
-            </section>
-          </div>
-        )}
-
-        {/* TAB 8: GOVERNANCE & AUDIT */}
-        {activeTab === "governance" && (
-          <div className="tab-content">
-            <section className="market-section">
-              <div className="section-title">
-                <span className="eyebrow">Central Vigilance Commission (CVC) Compliance</span>
-                <h3>Tender Review & Human Sign-off Workflow</h3>
-              </div>
-
-              <form className="forecast-form" onSubmit={submitReview}>
-                <div className="form-grid">
-                  <Field
-                    label="Reviewing Officer Name / Designation"
-                    type="text"
-                    value={reviewForm.reviewer_name}
-                    onChange={(v) => setReviewForm({ ...reviewForm, reviewer_name: v })}
-                  />
-                  <Select
-                    label="Procurement Action"
-                    value={reviewForm.decision}
-                    values={["APPROVED", "REJECTED", "MODIFIED"]}
-                    onChange={(v) => setReviewForm({ ...reviewForm, decision: v })}
-                  />
-                  <Field
-                    label="Official Tender Reference"
-                    type="text"
-                    value={reviewForm.tender_reference}
-                    onChange={(v) => setReviewForm({ ...reviewForm, tender_reference: v })}
-                  />
-                  <Field
-                    label="Vigilance Comments / Remarks"
-                    type="text"
-                    value={reviewForm.comment}
-                    onChange={(v) => setReviewForm({ ...reviewForm, comment: v })}
-                  />
-                </div>
-                <button type="submit">Log Official Tender Decision</button>
-                {reviewMessage && <p style={{ marginTop: "0.5rem", fontWeight: "bold", color: "#10b981" }}>{reviewMessage}</p>}
-              </form>
-
-              {auditData && (
-                <>
-                  <h4 style={{ marginTop: "1.5rem", marginBottom: "0.75rem" }}>Recent Tender Recommendations</h4>
-                  <div className="table-wrap">
-                    <table>
-                      <thead>
-                        <tr>
-                          <th>ID</th>
-                          <th>Type</th>
-                          <th>Strategy / Summary</th>
-                          <th>Status</th>
-                          <th>Reviewer</th>
-                          <th>Created At</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {auditData.recent_recommendations.map((r) => (
-                          <tr key={r.id}>
-                            <td>REC-{r.id}</td>
-                            <td>{r.type}</td>
-                            <td>{r.summary}</td>
-                            <td><Status value={r.status} /></td>
-                            <td>{r.reviewer ?? "Pending Assignment"}</td>
-                            <td>{r.created_at}</td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-
-                  <h4 style={{ marginTop: "1.5rem", marginBottom: "0.75rem" }}>Immutable Audit Trail</h4>
-                  <div className="table-wrap">
-                    <table>
-                      <thead>
-                        <tr>
-                          <th>Log ID</th>
-                          <th>Timestamp</th>
-                          <th>Action</th>
-                          <th>User / Desk</th>
-                          <th>Entity ID</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {auditData.audit_trail.map((l) => (
-                          <tr key={l.id}>
-                            <td>AUD-{l.id}</td>
-                            <td>{l.timestamp}</td>
-                            <td><strong>{l.action}</strong></td>
-                            <td>{l.user_id}</td>
-                            <td>{l.entity_id}</td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-
-                  <h4 style={{ marginTop: "2rem", marginBottom: "0.5rem" }}>
-                    Pillar 3: SHA-256 Tamper-Evident Decision Timeline & Official Tender Brief Export
-                  </h4>
-                  <p style={{ color: "#64748b", fontSize: "12px", marginBottom: "1rem" }}>
-                    Formal CVC decision state machine (DRAFT → ANALYSED → SUBMITTED_FOR_REVIEW → APPROVED/RETURNED/REJECTED) with self-approval locking, cryptographic hash verification, and reproducible PDF/XLSX generation.
-                  </p>
-                  <AuditTimeline />
-                </>
-              )}
-
-              {/* OPTIONAL testnet anchoring of the decision_events chain (needs internet) */}
-              <AnchorStatus />
-            </section>
-          </div>
-        )}
-
-        {/* TAB 9: MODEL REGISTRY */}
-        {activeTab === "models" && (
-          <div className="tab-content">
-            <section className="table-section">
-              <div className="section-title">
-                <span className="eyebrow">Offline Local Artifacts</span>
-                <h3>Registered Model Repository</h3>
-              </div>
-              <div className="table-wrap">
-                <table>
-                  <thead>
-                    <tr>
-                      <th>Version</th>
-                      <th>Family</th>
-                      <th>Algorithm</th>
-                      <th>Artifact Path</th>
-                      <th>Status</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {(models?.models ?? []).map((model) => (
-                      <tr key={model.model_version}>
-                        <td><strong>{model.model_version}</strong></td>
-                        <td>{model.family}</td>
-                        <td>{model.algorithm}</td>
-                        <td>{model.relative_path}/{model.artifact}</td>
-                        <td><Status value={model.status} /></td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </section>
-          </div>
-        )}
-
-        {/* Footer Health Strip */}
-        <section className="health-strip">
-          <span>FastAPI Health: <strong>{health?.status ?? "online"}</strong></span>
-          <span>Active ML Model: <strong>{models?.active_forecasting_model ?? "xgb_panamax_freight_v7"}</strong></span>
-          <span>Architecture: <strong>Air-Gapped Local Decision Support</strong></span>
-          <button type="button" onClick={() => void refreshSystem()}>Refresh Status</button>
-        </section>
-      </section>
-    </main>
+        {/* Command Palette & Guided Tour Modals */}
+        <CommandPalette
+          isOpen={commandPaletteOpen}
+          onClose={() => setCommandPaletteOpen(false)}
+          onSelectTab={handleSelectTab}
+        />
+        <GuidedTour
+          isOpen={tourOpen}
+          onClose={() => setTourOpen(false)}
+        />
+      </div>
+    </LanguageProvider>
   );
 }
 
