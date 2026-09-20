@@ -1,0 +1,361 @@
+date,commodity,price,currency,unit,data_source
+2020-01-01,Thermal Coal (Australia),69.66,USD,USD/mt,Real - World Bank Pink Sheet (Newcastle 6000kcal)
+2020-01-01,Thermal Coal (Indonesia),78.66,USD,USD/mt,Estimated - interpolated between confirmed ESDM HBA anchors
+2020-01-01,Thermal Coal (USA),62.92,USD,USD/mt,Synthetic - no free bulk historical source found (EIA needs API key)
+2020-01-01,Thermal Coal (Mozambique),62.47,USD,USD/mt,Synthetic - no dedicated Mozambique benchmark exists (free or paid)
+2020-01-01,Thermal Coal (Russia),57.41,USD,USD/mt,Synthetic - no free published source found
+2020-01-31,Thermal Coal (Australia),69.66,USD,USD/mt,Real - World Bank Pink Sheet (Newcastle 6000kcal)
+2020-01-31,Thermal Coal (Indonesia),72.63,USD,USD/mt,Estimated - interpolated between confirmed ESDM HBA anchors
+2020-01-31,Thermal Coal (USA),59.04,USD,USD/mt,Synthetic - no free bulk historical source found (EIA needs API key)
+2020-01-31,Thermal Coal (Mozambique),59.94,USD,USD/mt,Synthetic - no dedicated Mozambique benchmark exists (free or paid)
+2020-01-31,Thermal Coal (Russia),55.33,USD,USD/mt,Synthetic - no free published source found
+2020-03-01,Thermal Coal (Australia),66.74,USD,USD/mt,Real - World Bank Pink Sheet (Newcastle 6000kcal)
+2020-03-01,Thermal Coal (Indonesia),69.41,USD,USD/mt,Estimated - interpolated between confirmed ESDM HBA anchors
+2020-03-01,Thermal Coal (USA),56.85,USD,USD/mt,Synthetic - no free bulk historical source found (EIA needs API key)
+2020-03-01,Thermal Coal (Mozambique),58.39,USD,USD/mt,Synthetic - no dedicated Mozambique benchmark exists (free or paid)
+2020-03-01,Thermal Coal (Russia),51.3,USD,USD/mt,Synthetic - no free published source found
+2020-03-31,Thermal Coal (Australia),66.74,USD,USD/mt,Real - World Bank Pink Sheet (Newcastle 6000kcal)
+2020-03-31,Thermal Coal (Indonesia),63.58,USD,USD/mt,Estimated - interpolated between confirmed ESDM HBA anchors
+2020-03-31,Thermal Coal (USA),52.81,USD,USD/mt,Synthetic - no free bulk historical source found (EIA needs API key)
+2020-03-31,Thermal Coal (Mozambique),54.17,USD,USD/mt,Synthetic - no dedicated Mozambique benchmark exists (free or paid)
+2020-03-31,Thermal Coal (Russia),45.65,USD,USD/mt,Synthetic - no free published source found
+2020-04-30,Thermal Coal (Australia),58.55,USD,USD/mt,Real - World Bank Pink Sheet (Newcastle 6000kcal)
+2020-04-30,Thermal Coal (Indonesia),64.18,USD,USD/mt,Estimated - interpolated between confirmed ESDM HBA anchors
+2020-04-30,Thermal Coal (USA),48.71,USD,USD/mt,Synthetic - no free bulk historical source found (EIA needs API key)
+2020-04-30,Thermal Coal (Mozambique),49.25,USD,USD/mt,Synthetic - no dedicated Mozambique benchmark exists (free or paid)
+2020-04-30,Thermal Coal (Russia),45.56,USD,USD/mt,Synthetic - no free published source found
+2020-05-30,Thermal Coal (Australia),52.49,USD,USD/mt,Real - World Bank Pink Sheet (Newcastle 6000kcal)
+2020-05-30,Thermal Coal (Indonesia),60.84,USD,USD/mt,Estimated - interpolated between confirmed ESDM HBA anchors
+2020-05-30,Thermal Coal (USA),48.56,USD,USD/mt,Synthetic - no free bulk historical source found (EIA needs API key)
+2020-05-30,Thermal Coal (Mozambique),52.38,USD,USD/mt,Synthetic - no dedicated Mozambique benchmark exists (free or paid)
+2020-05-30,Thermal Coal (Russia),43.52,USD,USD/mt,Synthetic - no free published source found
+2020-06-29,Thermal Coal (Australia),52.21,USD,USD/mt,Real - World Bank Pink Sheet (Newcastle 6000kcal)
+2020-06-29,Thermal Coal (Indonesia),57.65,USD,USD/mt,Estimated - interpolated between confirmed ESDM HBA anchors
+2020-06-29,Thermal Coal (USA),49.89,USD,USD/mt,Synthetic - no free bulk historical source found (EIA needs API key)
+2020-06-29,Thermal Coal (Mozambique),54.7,USD,USD/mt,Synthetic - no dedicated Mozambique benchmark exists (free or paid)
+2020-06-29,Thermal Coal (Russia),46.81,USD,USD/mt,Synthetic - no free published source found
+2020-07-29,Thermal Coal (Australia),51.56,USD,USD/mt,Real - World Bank Pink Sheet (Newcastle 6000kcal)
+2020-07-29,Thermal Coal (Indonesia),55.68,USD,USD/mt,Estimated - interpolated between confirmed ESDM HBA anchors
+2020-07-29,Thermal Coal (USA),49.71,USD,USD/mt,Synthetic - no free bulk historical source found (EIA needs API key)
+2020-07-29,Thermal Coal (Mozambique),53.69,USD,USD/mt,Synthetic - no dedicated Mozambique benchmark exists (free or paid)
+2020-07-29,Thermal Coal (Russia),49.66,USD,USD/mt,Synthetic - no free published source found
+2020-08-28,Thermal Coal (Australia),50.14,USD,USD/mt,Real - World Bank Pink Sheet (Newcastle 6000kcal)
+2020-08-28,Thermal Coal (Indonesia),52.81,USD,USD/mt,Estimated - interpolated between confirmed ESDM HBA anchors
+2020-08-28,Thermal Coal (USA),54.52,USD,USD/mt,Synthetic - no free bulk historical source found (EIA needs API key)
+2020-08-28,Thermal Coal (Mozambique),55.5,USD,USD/mt,Synthetic - no dedicated Mozambique benchmark exists (free or paid)
+2020-08-28,Thermal Coal (Russia),51.13,USD,USD/mt,Synthetic - no free published source found
+2020-09-27,Thermal Coal (Australia),54.6,USD,USD/mt,Real - World Bank Pink Sheet (Newcastle 6000kcal)
+2020-09-27,Thermal Coal (Indonesia),49.42,USD,USD/mt,Real - Indonesia ESDM (HBA)
+2020-09-27,Thermal Coal (USA),52.49,USD,USD/mt,Synthetic - no free bulk historical source found (EIA needs API key)
+2020-09-27,Thermal Coal (Mozambique),56.49,USD,USD/mt,Synthetic - no dedicated Mozambique benchmark exists (free or paid)
+2020-09-27,Thermal Coal (Russia),54.45,USD,USD/mt,Synthetic - no free published source found
+2020-10-27,Thermal Coal (Australia),58.4,USD,USD/mt,Real - World Bank Pink Sheet (Newcastle 6000kcal)
+2020-10-27,Thermal Coal (Indonesia),55.03,USD,USD/mt,Estimated - interpolated between confirmed ESDM HBA anchors
+2020-10-27,Thermal Coal (USA),57.91,USD,USD/mt,Synthetic - no free bulk historical source found (EIA needs API key)
+2020-10-27,Thermal Coal (Mozambique),62.43,USD,USD/mt,Synthetic - no dedicated Mozambique benchmark exists (free or paid)
+2020-10-27,Thermal Coal (Russia),54.51,USD,USD/mt,Synthetic - no free published source found
+2020-11-26,Thermal Coal (Australia),64.4,USD,USD/mt,Real - World Bank Pink Sheet (Newcastle 6000kcal)
+2020-11-26,Thermal Coal (Indonesia),62.03,USD,USD/mt,Estimated - interpolated between confirmed ESDM HBA anchors
+2020-11-26,Thermal Coal (USA),61.03,USD,USD/mt,Synthetic - no free bulk historical source found (EIA needs API key)
+2020-11-26,Thermal Coal (Mozambique),73.04,USD,USD/mt,Synthetic - no dedicated Mozambique benchmark exists (free or paid)
+2020-11-26,Thermal Coal (Russia),66.0,USD,USD/mt,Synthetic - no free published source found
+2020-12-26,Thermal Coal (Australia),83.03,USD,USD/mt,Real - World Bank Pink Sheet (Newcastle 6000kcal)
+2020-12-26,Thermal Coal (Indonesia),70.19,USD,USD/mt,Estimated - interpolated between confirmed ESDM HBA anchors
+2020-12-26,Thermal Coal (USA),58.41,USD,USD/mt,Synthetic - no free bulk historical source found (EIA needs API key)
+2020-12-26,Thermal Coal (Mozambique),79.19,USD,USD/mt,Synthetic - no dedicated Mozambique benchmark exists (free or paid)
+2020-12-26,Thermal Coal (Russia),73.49,USD,USD/mt,Synthetic - no free published source found
+2021-01-25,Thermal Coal (Australia),86.83,USD,USD/mt,Real - World Bank Pink Sheet (Newcastle 6000kcal)
+2021-01-25,Thermal Coal (Indonesia),75.84,USD,USD/mt,Real - Indonesia ESDM (HBA)
+2021-01-25,Thermal Coal (USA),61.92,USD,USD/mt,Synthetic - no free bulk historical source found (EIA needs API key)
+2021-01-25,Thermal Coal (Mozambique),80.56,USD,USD/mt,Synthetic - no dedicated Mozambique benchmark exists (free or paid)
+2021-01-25,Thermal Coal (Russia),72.78,USD,USD/mt,Synthetic - no free published source found
+2021-02-24,Thermal Coal (Australia),86.74,USD,USD/mt,Real - World Bank Pink Sheet (Newcastle 6000kcal)
+2021-02-24,Thermal Coal (Indonesia),87.79,USD,USD/mt,Real - Indonesia ESDM (HBA)
+2021-02-24,Thermal Coal (USA),65.21,USD,USD/mt,Synthetic - no free bulk historical source found (EIA needs API key)
+2021-02-24,Thermal Coal (Mozambique),78.63,USD,USD/mt,Synthetic - no dedicated Mozambique benchmark exists (free or paid)
+2021-02-24,Thermal Coal (Russia),76.44,USD,USD/mt,Synthetic - no free published source found
+2021-03-26,Thermal Coal (Australia),94.92,USD,USD/mt,Real - World Bank Pink Sheet (Newcastle 6000kcal)
+2021-03-26,Thermal Coal (Indonesia),84.47,USD,USD/mt,Real - Indonesia ESDM (HBA)
+2021-03-26,Thermal Coal (USA),70.43,USD,USD/mt,Synthetic - no free bulk historical source found (EIA needs API key)
+2021-03-26,Thermal Coal (Mozambique),80.64,USD,USD/mt,Synthetic - no dedicated Mozambique benchmark exists (free or paid)
+2021-03-26,Thermal Coal (Russia),73.97,USD,USD/mt,Synthetic - no free published source found
+2021-04-25,Thermal Coal (Australia),92.22,USD,USD/mt,Real - World Bank Pink Sheet (Newcastle 6000kcal)
+2021-04-25,Thermal Coal (Indonesia),86.68,USD,USD/mt,Real - Indonesia ESDM (HBA)
+2021-04-25,Thermal Coal (USA),70.45,USD,USD/mt,Synthetic - no free bulk historical source found (EIA needs API key)
+2021-04-25,Thermal Coal (Mozambique),84.83,USD,USD/mt,Synthetic - no dedicated Mozambique benchmark exists (free or paid)
+2021-04-25,Thermal Coal (Russia),79.54,USD,USD/mt,Synthetic - no free published source found
+2021-05-25,Thermal Coal (Australia),107.04,USD,USD/mt,Real - World Bank Pink Sheet (Newcastle 6000kcal)
+2021-05-25,Thermal Coal (Indonesia),89.74,USD,USD/mt,Real - Indonesia ESDM (HBA)
+2021-05-25,Thermal Coal (USA),77.5,USD,USD/mt,Synthetic - no free bulk historical source found (EIA needs API key)
+2021-05-25,Thermal Coal (Mozambique),97.53,USD,USD/mt,Synthetic - no dedicated Mozambique benchmark exists (free or paid)
+2021-05-25,Thermal Coal (Russia),96.28,USD,USD/mt,Synthetic - no free published source found
+2021-06-24,Thermal Coal (Australia),129.97,USD,USD/mt,Real - World Bank Pink Sheet (Newcastle 6000kcal)
+2021-06-24,Thermal Coal (Indonesia),100.33,USD,USD/mt,Real - Indonesia ESDM (HBA)
+2021-06-24,Thermal Coal (USA),82.41,USD,USD/mt,Synthetic - no free bulk historical source found (EIA needs API key)
+2021-06-24,Thermal Coal (Mozambique),112.91,USD,USD/mt,Synthetic - no dedicated Mozambique benchmark exists (free or paid)
+2021-06-24,Thermal Coal (Russia),108.22,USD,USD/mt,Synthetic - no free published source found
+2021-07-24,Thermal Coal (Australia),151.97,USD,USD/mt,Real - World Bank Pink Sheet (Newcastle 6000kcal)
+2021-07-24,Thermal Coal (Indonesia),115.35,USD,USD/mt,Real - Indonesia ESDM (HBA)
+2021-07-24,Thermal Coal (USA),88.69,USD,USD/mt,Synthetic - no free bulk historical source found (EIA needs API key)
+2021-07-24,Thermal Coal (Mozambique),123.6,USD,USD/mt,Synthetic - no dedicated Mozambique benchmark exists (free or paid)
+2021-07-24,Thermal Coal (Russia),125.69,USD,USD/mt,Synthetic - no free published source found
+2021-08-23,Thermal Coal (Australia),169.58,USD,USD/mt,Real - World Bank Pink Sheet (Newcastle 6000kcal)
+2021-08-23,Thermal Coal (Indonesia),130.99,USD,USD/mt,Real - Indonesia ESDM (HBA)
+2021-08-23,Thermal Coal (USA),98.07,USD,USD/mt,Synthetic - no free bulk historical source found (EIA needs API key)
+2021-08-23,Thermal Coal (Mozambique),142.75,USD,USD/mt,Synthetic - no dedicated Mozambique benchmark exists (free or paid)
+2021-08-23,Thermal Coal (Russia),144.17,USD,USD/mt,Synthetic - no free published source found
+2021-09-22,Thermal Coal (Australia),185.69,USD,USD/mt,Real - World Bank Pink Sheet (Newcastle 6000kcal)
+2021-09-22,Thermal Coal (Indonesia),150.03,USD,USD/mt,Real - Indonesia ESDM (HBA)
+2021-09-22,Thermal Coal (USA),97.59,USD,USD/mt,Synthetic - no free bulk historical source found (EIA needs API key)
+2021-09-22,Thermal Coal (Mozambique),156.78,USD,USD/mt,Synthetic - no dedicated Mozambique benchmark exists (free or paid)
+2021-09-22,Thermal Coal (Russia),153.17,USD,USD/mt,Synthetic - no free published source found
+2021-10-22,Thermal Coal (Australia),224.51,USD,USD/mt,Real - World Bank Pink Sheet (Newcastle 6000kcal)
+2021-10-22,Thermal Coal (Indonesia),161.63,USD,USD/mt,Real - Indonesia ESDM (HBA)
+2021-10-22,Thermal Coal (USA),105.19,USD,USD/mt,Synthetic - no free bulk historical source found (EIA needs API key)
+2021-10-22,Thermal Coal (Mozambique),164.81,USD,USD/mt,Synthetic - no dedicated Mozambique benchmark exists (free or paid)
+2021-10-22,Thermal Coal (Russia),172.75,USD,USD/mt,Synthetic - no free published source found
+2021-11-21,Thermal Coal (Australia),157.48,USD,USD/mt,Real - World Bank Pink Sheet (Newcastle 6000kcal)
+2021-11-21,Thermal Coal (Indonesia),215.01,USD,USD/mt,Real - Indonesia ESDM (HBA)
+2021-11-21,Thermal Coal (USA),110.75,USD,USD/mt,Synthetic - no free bulk historical source found (EIA needs API key)
+2021-11-21,Thermal Coal (Mozambique),174.28,USD,USD/mt,Synthetic - no dedicated Mozambique benchmark exists (free or paid)
+2021-11-21,Thermal Coal (Russia),179.69,USD,USD/mt,Synthetic - no free published source found
+2021-12-21,Thermal Coal (Australia),169.65,USD,USD/mt,Real - World Bank Pink Sheet (Newcastle 6000kcal)
+2021-12-21,Thermal Coal (Indonesia),159.79,USD,USD/mt,Real - Indonesia ESDM (HBA)
+2021-12-21,Thermal Coal (USA),117.47,USD,USD/mt,Synthetic - no free bulk historical source found (EIA needs API key)
+2021-12-21,Thermal Coal (Mozambique),175.37,USD,USD/mt,Synthetic - no dedicated Mozambique benchmark exists (free or paid)
+2021-12-21,Thermal Coal (Russia),197.49,USD,USD/mt,Synthetic - no free published source found
+2022-01-20,Thermal Coal (Australia),196.95,USD,USD/mt,Real - World Bank Pink Sheet (Newcastle 6000kcal)
+2022-01-20,Thermal Coal (Indonesia),158.5,USD,USD/mt,Real - Indonesia ESDM (HBA)
+2022-01-20,Thermal Coal (USA),142.03,USD,USD/mt,Synthetic - no free bulk historical source found (EIA needs API key)
+2022-01-20,Thermal Coal (Mozambique),215.81,USD,USD/mt,Synthetic - no dedicated Mozambique benchmark exists (free or paid)
+2022-01-20,Thermal Coal (Russia),234.66,USD,USD/mt,Synthetic - no free published source found
+2022-02-19,Thermal Coal (Australia),219.78,USD,USD/mt,Real - World Bank Pink Sheet (Newcastle 6000kcal)
+2022-02-19,Thermal Coal (Indonesia),159.15,USD,USD/mt,Estimated - interpolated between confirmed ESDM HBA anchors
+2022-02-19,Thermal Coal (USA),183.3,USD,USD/mt,Synthetic - no free bulk historical source found (EIA needs API key)
+2022-02-19,Thermal Coal (Mozambique),242.23,USD,USD/mt,Synthetic - no dedicated Mozambique benchmark exists (free or paid)
+2022-02-19,Thermal Coal (Russia),263.81,USD,USD/mt,Synthetic - no free published source found
+2022-03-21,Thermal Coal (Australia),314.04,USD,USD/mt,Real - World Bank Pink Sheet (Newcastle 6000kcal)
+2022-03-21,Thermal Coal (Indonesia),153.22,USD,USD/mt,Estimated - interpolated between confirmed ESDM HBA anchors
+2022-03-21,Thermal Coal (USA),212.28,USD,USD/mt,Synthetic - no free bulk historical source found (EIA needs API key)
+2022-03-21,Thermal Coal (Mozambique),287.73,USD,USD/mt,Synthetic - no dedicated Mozambique benchmark exists (free or paid)
+2022-03-21,Thermal Coal (Russia),298.26,USD,USD/mt,Synthetic - no free published source found
+2022-04-20,Thermal Coal (Australia),310.85,USD,USD/mt,Real - World Bank Pink Sheet (Newcastle 6000kcal)
+2022-04-20,Thermal Coal (Indonesia),153.02,USD,USD/mt,Estimated - interpolated between confirmed ESDM HBA anchors
+2022-04-20,Thermal Coal (USA),231.62,USD,USD/mt,Synthetic - no free bulk historical source found (EIA needs API key)
+2022-04-20,Thermal Coal (Mozambique),296.59,USD,USD/mt,Synthetic - no dedicated Mozambique benchmark exists (free or paid)
+2022-04-20,Thermal Coal (Russia),314.15,USD,USD/mt,Synthetic - no free published source found
+2022-05-20,Thermal Coal (Australia),371.86,USD,USD/mt,Real - World Bank Pink Sheet (Newcastle 6000kcal)
+2022-05-20,Thermal Coal (Indonesia),150.18,USD,USD/mt,Estimated - interpolated between confirmed ESDM HBA anchors
+2022-05-20,Thermal Coal (USA),243.77,USD,USD/mt,Synthetic - no free bulk historical source found (EIA needs API key)
+2022-05-20,Thermal Coal (Mozambique),315.31,USD,USD/mt,Synthetic - no dedicated Mozambique benchmark exists (free or paid)
+2022-05-20,Thermal Coal (Russia),338.3,USD,USD/mt,Synthetic - no free published source found
+2022-06-19,Thermal Coal (Australia),374.08,USD,USD/mt,Real - World Bank Pink Sheet (Newcastle 6000kcal)
+2022-06-19,Thermal Coal (Indonesia),149.66,USD,USD/mt,Estimated - interpolated between confirmed ESDM HBA anchors
+2022-06-19,Thermal Coal (USA),249.35,USD,USD/mt,Synthetic - no free bulk historical source found (EIA needs API key)
+2022-06-19,Thermal Coal (Mozambique),333.43,USD,USD/mt,Synthetic - no dedicated Mozambique benchmark exists (free or paid)
+2022-06-19,Thermal Coal (Russia),361.11,USD,USD/mt,Synthetic - no free published source found
+2022-07-19,Thermal Coal (Australia),402.2,USD,USD/mt,Real - World Bank Pink Sheet (Newcastle 6000kcal)
+2022-07-19,Thermal Coal (Indonesia),147.19,USD,USD/mt,Estimated - interpolated between confirmed ESDM HBA anchors
+2022-07-19,Thermal Coal (USA),250.87,USD,USD/mt,Synthetic - no free bulk historical source found (EIA needs API key)
+2022-07-19,Thermal Coal (Mozambique),340.32,USD,USD/mt,Synthetic - no dedicated Mozambique benchmark exists (free or paid)
+2022-07-19,Thermal Coal (Russia),370.49,USD,USD/mt,Synthetic - no free published source found
+2022-08-18,Thermal Coal (Australia),406.97,USD,USD/mt,Real - World Bank Pink Sheet (Newcastle 6000kcal)
+2022-08-18,Thermal Coal (Indonesia),146.44,USD,USD/mt,Estimated - interpolated between confirmed ESDM HBA anchors
+2022-08-18,Thermal Coal (USA),255.11,USD,USD/mt,Synthetic - no free bulk historical source found (EIA needs API key)
+2022-08-18,Thermal Coal (Mozambique),329.37,USD,USD/mt,Synthetic - no dedicated Mozambique benchmark exists (free or paid)
+2022-08-18,Thermal Coal (Russia),353.7,USD,USD/mt,Synthetic - no free published source found
+2022-09-17,Thermal Coal (Australia),430.81,USD,USD/mt,Real - World Bank Pink Sheet (Newcastle 6000kcal)
+2022-09-17,Thermal Coal (Indonesia),144.24,USD,USD/mt,Estimated - interpolated between confirmed ESDM HBA anchors
+2022-09-17,Thermal Coal (USA),245.23,USD,USD/mt,Synthetic - no free bulk historical source found (EIA needs API key)
+2022-09-17,Thermal Coal (Mozambique),321.79,USD,USD/mt,Synthetic - no dedicated Mozambique benchmark exists (free or paid)
+2022-09-17,Thermal Coal (Russia),360.85,USD,USD/mt,Synthetic - no free published source found
+2022-10-17,Thermal Coal (Australia),389.79,USD,USD/mt,Real - World Bank Pink Sheet (Newcastle 6000kcal)
+2022-10-17,Thermal Coal (Indonesia),143.95,USD,USD/mt,Estimated - interpolated between confirmed ESDM HBA anchors
+2022-10-17,Thermal Coal (USA),229.72,USD,USD/mt,Synthetic - no free bulk historical source found (EIA needs API key)
+2022-10-17,Thermal Coal (Mozambique),283.3,USD,USD/mt,Synthetic - no dedicated Mozambique benchmark exists (free or paid)
+2022-10-17,Thermal Coal (Russia),328.55,USD,USD/mt,Synthetic - no free published source found
+2022-11-16,Thermal Coal (Australia),342.16,USD,USD/mt,Real - World Bank Pink Sheet (Newcastle 6000kcal)
+2022-11-16,Thermal Coal (Indonesia),142.23,USD,USD/mt,Estimated - interpolated between confirmed ESDM HBA anchors
+2022-11-16,Thermal Coal (USA),224.63,USD,USD/mt,Synthetic - no free bulk historical source found (EIA needs API key)
+2022-11-16,Thermal Coal (Mozambique),267.8,USD,USD/mt,Synthetic - no dedicated Mozambique benchmark exists (free or paid)
+2022-11-16,Thermal Coal (Russia),288.97,USD,USD/mt,Synthetic - no free published source found
+2022-12-16,Thermal Coal (Australia),379.23,USD,USD/mt,Real - World Bank Pink Sheet (Newcastle 6000kcal)
+2022-12-16,Thermal Coal (Indonesia),141.24,USD,USD/mt,Estimated - interpolated between confirmed ESDM HBA anchors
+2022-12-16,Thermal Coal (USA),211.01,USD,USD/mt,Synthetic - no free bulk historical source found (EIA needs API key)
+2022-12-16,Thermal Coal (Mozambique),229.63,USD,USD/mt,Synthetic - no dedicated Mozambique benchmark exists (free or paid)
+2022-12-16,Thermal Coal (Russia),258.55,USD,USD/mt,Synthetic - no free published source found
+2023-01-15,Thermal Coal (Australia),317.99,USD,USD/mt,Real - World Bank Pink Sheet (Newcastle 6000kcal)
+2023-01-15,Thermal Coal (Indonesia),142.66,USD,USD/mt,Estimated - interpolated between confirmed ESDM HBA anchors
+2023-01-15,Thermal Coal (USA),183.16,USD,USD/mt,Synthetic - no free bulk historical source found (EIA needs API key)
+2023-01-15,Thermal Coal (Mozambique),228.0,USD,USD/mt,Synthetic - no dedicated Mozambique benchmark exists (free or paid)
+2023-01-15,Thermal Coal (Russia),243.45,USD,USD/mt,Synthetic - no free published source found
+2023-02-14,Thermal Coal (Australia),207.48,USD,USD/mt,Real - World Bank Pink Sheet (Newcastle 6000kcal)
+2023-02-14,Thermal Coal (Indonesia),132.88,USD,USD/mt,Estimated - interpolated between confirmed ESDM HBA anchors
+2023-02-14,Thermal Coal (USA),174.72,USD,USD/mt,Synthetic - no free bulk historical source found (EIA needs API key)
+2023-02-14,Thermal Coal (Mozambique),195.89,USD,USD/mt,Synthetic - no dedicated Mozambique benchmark exists (free or paid)
+2023-02-14,Thermal Coal (Russia),216.66,USD,USD/mt,Synthetic - no free published source found
+2023-03-16,Thermal Coal (Australia),187.23,USD,USD/mt,Real - World Bank Pink Sheet (Newcastle 6000kcal)
+2023-03-16,Thermal Coal (Indonesia),138.98,USD,USD/mt,Estimated - interpolated between confirmed ESDM HBA anchors
+2023-03-16,Thermal Coal (USA),142.52,USD,USD/mt,Synthetic - no free bulk historical source found (EIA needs API key)
+2023-03-16,Thermal Coal (Mozambique),176.02,USD,USD/mt,Synthetic - no dedicated Mozambique benchmark exists (free or paid)
+2023-03-16,Thermal Coal (Russia),175.77,USD,USD/mt,Synthetic - no free published source found
+2023-04-15,Thermal Coal (Australia),194.28,USD,USD/mt,Real - World Bank Pink Sheet (Newcastle 6000kcal)
+2023-04-15,Thermal Coal (Indonesia),133.19,USD,USD/mt,Estimated - interpolated between confirmed ESDM HBA anchors
+2023-04-15,Thermal Coal (USA),132.83,USD,USD/mt,Synthetic - no free bulk historical source found (EIA needs API key)
+2023-04-15,Thermal Coal (Mozambique),161.99,USD,USD/mt,Synthetic - no dedicated Mozambique benchmark exists (free or paid)
+2023-04-15,Thermal Coal (Russia),166.52,USD,USD/mt,Synthetic - no free published source found
+2023-05-15,Thermal Coal (Australia),160.48,USD,USD/mt,Real - World Bank Pink Sheet (Newcastle 6000kcal)
+2023-05-15,Thermal Coal (Indonesia),128.93,USD,USD/mt,Estimated - interpolated between confirmed ESDM HBA anchors
+2023-05-15,Thermal Coal (USA),132.82,USD,USD/mt,Synthetic - no free bulk historical source found (EIA needs API key)
+2023-05-15,Thermal Coal (Mozambique),142.87,USD,USD/mt,Synthetic - no dedicated Mozambique benchmark exists (free or paid)
+2023-05-15,Thermal Coal (Russia),153.27,USD,USD/mt,Synthetic - no free published source found
+2023-06-14,Thermal Coal (Australia),139.42,USD,USD/mt,Real - World Bank Pink Sheet (Newcastle 6000kcal)
+2023-06-14,Thermal Coal (Indonesia),130.09,USD,USD/mt,Estimated - interpolated between confirmed ESDM HBA anchors
+2023-06-14,Thermal Coal (USA),119.21,USD,USD/mt,Synthetic - no free bulk historical source found (EIA needs API key)
+2023-06-14,Thermal Coal (Mozambique),131.84,USD,USD/mt,Synthetic - no dedicated Mozambique benchmark exists (free or paid)
+2023-06-14,Thermal Coal (Russia),141.32,USD,USD/mt,Synthetic - no free published source found
+2023-07-14,Thermal Coal (Australia),140.63,USD,USD/mt,Real - World Bank Pink Sheet (Newcastle 6000kcal)
+2023-07-14,Thermal Coal (Indonesia),129.13,USD,USD/mt,Estimated - interpolated between confirmed ESDM HBA anchors
+2023-07-14,Thermal Coal (USA),111.59,USD,USD/mt,Synthetic - no free bulk historical source found (EIA needs API key)
+2023-07-14,Thermal Coal (Mozambique),124.89,USD,USD/mt,Synthetic - no dedicated Mozambique benchmark exists (free or paid)
+2023-07-14,Thermal Coal (Russia),135.99,USD,USD/mt,Synthetic - no free published source found
+2023-08-13,Thermal Coal (Australia),152.61,USD,USD/mt,Real - World Bank Pink Sheet (Newcastle 6000kcal)
+2023-08-13,Thermal Coal (Indonesia),129.97,USD,USD/mt,Estimated - interpolated between confirmed ESDM HBA anchors
+2023-08-13,Thermal Coal (USA),107.62,USD,USD/mt,Synthetic - no free bulk historical source found (EIA needs API key)
+2023-08-13,Thermal Coal (Mozambique),126.16,USD,USD/mt,Synthetic - no dedicated Mozambique benchmark exists (free or paid)
+2023-08-13,Thermal Coal (Russia),128.85,USD,USD/mt,Synthetic - no free published source found
+2023-09-12,Thermal Coal (Australia),162.47,USD,USD/mt,Real - World Bank Pink Sheet (Newcastle 6000kcal)
+2023-09-12,Thermal Coal (Indonesia),122.94,USD,USD/mt,Estimated - interpolated between confirmed ESDM HBA anchors
+2023-09-12,Thermal Coal (USA),102.27,USD,USD/mt,Synthetic - no free bulk historical source found (EIA needs API key)
+2023-09-12,Thermal Coal (Mozambique),112.6,USD,USD/mt,Synthetic - no dedicated Mozambique benchmark exists (free or paid)
+2023-09-12,Thermal Coal (Russia),127.13,USD,USD/mt,Synthetic - no free published source found
+2023-10-12,Thermal Coal (Australia),142.12,USD,USD/mt,Real - World Bank Pink Sheet (Newcastle 6000kcal)
+2023-10-12,Thermal Coal (Indonesia),123.96,USD,USD/mt,Real - Indonesia ESDM (HBA)
+2023-10-12,Thermal Coal (USA),100.43,USD,USD/mt,Synthetic - no free bulk historical source found (EIA needs API key)
+2023-10-12,Thermal Coal (Mozambique),109.87,USD,USD/mt,Synthetic - no dedicated Mozambique benchmark exists (free or paid)
+2023-10-12,Thermal Coal (Russia),125.08,USD,USD/mt,Synthetic - no free published source found
+2023-11-11,Thermal Coal (Australia),126.82,USD,USD/mt,Real - World Bank Pink Sheet (Newcastle 6000kcal)
+2023-11-11,Thermal Coal (Indonesia),139.8,USD,USD/mt,Real - Indonesia ESDM (HBA)
+2023-11-11,Thermal Coal (USA),95.36,USD,USD/mt,Synthetic - no free bulk historical source found (EIA needs API key)
+2023-11-11,Thermal Coal (Mozambique),107.85,USD,USD/mt,Synthetic - no dedicated Mozambique benchmark exists (free or paid)
+2023-11-11,Thermal Coal (Russia),113.48,USD,USD/mt,Synthetic - no free published source found
+2023-12-11,Thermal Coal (Australia),141.82,USD,USD/mt,Real - World Bank Pink Sheet (Newcastle 6000kcal)
+2023-12-11,Thermal Coal (Indonesia),117.38,USD,USD/mt,Real - Indonesia ESDM (HBA)
+2023-12-11,Thermal Coal (USA),90.16,USD,USD/mt,Synthetic - no free bulk historical source found (EIA needs API key)
+2023-12-11,Thermal Coal (Mozambique),100.63,USD,USD/mt,Synthetic - no dedicated Mozambique benchmark exists (free or paid)
+2023-12-11,Thermal Coal (Russia),111.87,USD,USD/mt,Synthetic - no free published source found
+2024-01-10,Thermal Coal (Australia),124.9,USD,USD/mt,Real - World Bank Pink Sheet (Newcastle 6000kcal)
+2024-01-10,Thermal Coal (Indonesia),125.85,USD,USD/mt,Real - Indonesia ESDM (HBA)
+2024-01-10,Thermal Coal (USA),93.01,USD,USD/mt,Synthetic - no free bulk historical source found (EIA needs API key)
+2024-01-10,Thermal Coal (Mozambique),98.7,USD,USD/mt,Synthetic - no dedicated Mozambique benchmark exists (free or paid)
+2024-01-10,Thermal Coal (Russia),110.13,USD,USD/mt,Synthetic - no free published source found
+2024-02-09,Thermal Coal (Australia),124.22,USD,USD/mt,Real - World Bank Pink Sheet (Newcastle 6000kcal)
+2024-02-09,Thermal Coal (Indonesia),124.95,USD,USD/mt,Real - Indonesia ESDM (HBA)
+2024-02-09,Thermal Coal (USA),91.67,USD,USD/mt,Synthetic - no free bulk historical source found (EIA needs API key)
+2024-02-09,Thermal Coal (Mozambique),100.74,USD,USD/mt,Synthetic - no dedicated Mozambique benchmark exists (free or paid)
+2024-02-09,Thermal Coal (Russia),110.81,USD,USD/mt,Synthetic - no free published source found
+2024-03-10,Thermal Coal (Australia),131.49,USD,USD/mt,Real - World Bank Pink Sheet (Newcastle 6000kcal)
+2024-03-10,Thermal Coal (Indonesia),109.77,USD,USD/mt,Real - Indonesia ESDM (HBA)
+2024-03-10,Thermal Coal (USA),94.12,USD,USD/mt,Synthetic - no free bulk historical source found (EIA needs API key)
+2024-03-10,Thermal Coal (Mozambique),99.86,USD,USD/mt,Synthetic - no dedicated Mozambique benchmark exists (free or paid)
+2024-03-10,Thermal Coal (Russia),104.71,USD,USD/mt,Synthetic - no free published source found
+2024-04-09,Thermal Coal (Australia),134.97,USD,USD/mt,Real - World Bank Pink Sheet (Newcastle 6000kcal)
+2024-04-09,Thermal Coal (Indonesia),121.13,USD,USD/mt,Real - Indonesia ESDM (HBA)
+2024-04-09,Thermal Coal (USA),88.67,USD,USD/mt,Synthetic - no free bulk historical source found (EIA needs API key)
+2024-04-09,Thermal Coal (Mozambique),100.8,USD,USD/mt,Synthetic - no dedicated Mozambique benchmark exists (free or paid)
+2024-04-09,Thermal Coal (Russia),109.58,USD,USD/mt,Synthetic - no free published source found
+2024-05-09,Thermal Coal (Australia),142.01,USD,USD/mt,Real - World Bank Pink Sheet (Newcastle 6000kcal)
+2024-05-09,Thermal Coal (Indonesia),121.3,USD,USD/mt,Estimated - interpolated between confirmed ESDM HBA anchors
+2024-05-09,Thermal Coal (USA),92.54,USD,USD/mt,Synthetic - no free bulk historical source found (EIA needs API key)
+2024-05-09,Thermal Coal (Mozambique),108.79,USD,USD/mt,Synthetic - no dedicated Mozambique benchmark exists (free or paid)
+2024-05-09,Thermal Coal (Russia),113.86,USD,USD/mt,Synthetic - no free published source found
+2024-06-08,Thermal Coal (Australia),135.1,USD,USD/mt,Real - World Bank Pink Sheet (Newcastle 6000kcal)
+2024-06-08,Thermal Coal (Indonesia),119.85,USD,USD/mt,Estimated - interpolated between confirmed ESDM HBA anchors
+2024-06-08,Thermal Coal (USA),92.76,USD,USD/mt,Synthetic - no free bulk historical source found (EIA needs API key)
+2024-06-08,Thermal Coal (Mozambique),105.48,USD,USD/mt,Synthetic - no dedicated Mozambique benchmark exists (free or paid)
+2024-06-08,Thermal Coal (Russia),116.43,USD,USD/mt,Synthetic - no free published source found
+2024-07-08,Thermal Coal (Australia),137.55,USD,USD/mt,Real - World Bank Pink Sheet (Newcastle 6000kcal)
+2024-07-08,Thermal Coal (Indonesia),118.08,USD,USD/mt,Estimated - interpolated between confirmed ESDM HBA anchors
+2024-07-08,Thermal Coal (USA),94.68,USD,USD/mt,Synthetic - no free bulk historical source found (EIA needs API key)
+2024-07-08,Thermal Coal (Mozambique),109.17,USD,USD/mt,Synthetic - no dedicated Mozambique benchmark exists (free or paid)
+2024-07-08,Thermal Coal (Russia),116.54,USD,USD/mt,Synthetic - no free published source found
+2024-08-07,Thermal Coal (Australia),145.76,USD,USD/mt,Real - World Bank Pink Sheet (Newcastle 6000kcal)
+2024-08-07,Thermal Coal (Indonesia),119.5,USD,USD/mt,Estimated - interpolated between confirmed ESDM HBA anchors
+2024-08-07,Thermal Coal (USA),95.56,USD,USD/mt,Synthetic - no free bulk historical source found (EIA needs API key)
+2024-08-07,Thermal Coal (Mozambique),108.46,USD,USD/mt,Synthetic - no dedicated Mozambique benchmark exists (free or paid)
+2024-08-07,Thermal Coal (Russia),107.4,USD,USD/mt,Synthetic - no free published source found
+2024-09-06,Thermal Coal (Australia),139.2,USD,USD/mt,Real - World Bank Pink Sheet (Newcastle 6000kcal)
+2024-09-06,Thermal Coal (Indonesia),113.62,USD,USD/mt,Estimated - interpolated between confirmed ESDM HBA anchors
+2024-09-06,Thermal Coal (USA),89.34,USD,USD/mt,Synthetic - no free bulk historical source found (EIA needs API key)
+2024-09-06,Thermal Coal (Mozambique),104.06,USD,USD/mt,Synthetic - no dedicated Mozambique benchmark exists (free or paid)
+2024-09-06,Thermal Coal (Russia),100.1,USD,USD/mt,Synthetic - no free published source found
+2024-10-06,Thermal Coal (Australia),146.63,USD,USD/mt,Real - World Bank Pink Sheet (Newcastle 6000kcal)
+2024-10-06,Thermal Coal (Indonesia),114.13,USD,USD/mt,Estimated - interpolated between confirmed ESDM HBA anchors
+2024-10-06,Thermal Coal (USA),84.26,USD,USD/mt,Synthetic - no free bulk historical source found (EIA needs API key)
+2024-10-06,Thermal Coal (Mozambique),89.99,USD,USD/mt,Synthetic - no dedicated Mozambique benchmark exists (free or paid)
+2024-10-06,Thermal Coal (Russia),103.36,USD,USD/mt,Synthetic - no free published source found
+2024-11-05,Thermal Coal (Australia),142.12,USD,USD/mt,Real - World Bank Pink Sheet (Newcastle 6000kcal)
+2024-11-05,Thermal Coal (Indonesia),114.22,USD,USD/mt,Estimated - interpolated between confirmed ESDM HBA anchors
+2024-11-05,Thermal Coal (USA),82.32,USD,USD/mt,Synthetic - no free bulk historical source found (EIA needs API key)
+2024-11-05,Thermal Coal (Mozambique),88.98,USD,USD/mt,Synthetic - no dedicated Mozambique benchmark exists (free or paid)
+2024-11-05,Thermal Coal (Russia),96.3,USD,USD/mt,Synthetic - no free published source found
+2024-12-05,Thermal Coal (Australia),129.81,USD,USD/mt,Real - World Bank Pink Sheet (Newcastle 6000kcal)
+2024-12-05,Thermal Coal (Indonesia),108.69,USD,USD/mt,Estimated - interpolated between confirmed ESDM HBA anchors
+2024-12-05,Thermal Coal (USA),82.55,USD,USD/mt,Synthetic - no free bulk historical source found (EIA needs API key)
+2024-12-05,Thermal Coal (Mozambique),91.85,USD,USD/mt,Synthetic - no dedicated Mozambique benchmark exists (free or paid)
+2024-12-05,Thermal Coal (Russia),90.63,USD,USD/mt,Synthetic - no free published source found
+2025-01-04,Thermal Coal (Australia),118.6,USD,USD/mt,Real - World Bank Pink Sheet (Newcastle 6000kcal)
+2025-01-04,Thermal Coal (Indonesia),114.03,USD,USD/mt,Estimated - interpolated between confirmed ESDM HBA anchors
+2025-01-04,Thermal Coal (USA),78.01,USD,USD/mt,Synthetic - no free bulk historical source found (EIA needs API key)
+2025-01-04,Thermal Coal (Mozambique),83.88,USD,USD/mt,Synthetic - no dedicated Mozambique benchmark exists (free or paid)
+2025-01-04,Thermal Coal (Russia),90.11,USD,USD/mt,Synthetic - no free published source found
+2025-02-03,Thermal Coal (Australia),106.93,USD,USD/mt,Real - World Bank Pink Sheet (Newcastle 6000kcal)
+2025-02-03,Thermal Coal (Indonesia),108.26,USD,USD/mt,Estimated - interpolated between confirmed ESDM HBA anchors
+2025-02-03,Thermal Coal (USA),78.48,USD,USD/mt,Synthetic - no free bulk historical source found (EIA needs API key)
+2025-02-03,Thermal Coal (Mozambique),83.86,USD,USD/mt,Synthetic - no dedicated Mozambique benchmark exists (free or paid)
+2025-02-03,Thermal Coal (Russia),88.54,USD,USD/mt,Synthetic - no free published source found
+2025-03-05,Thermal Coal (Australia),103.97,USD,USD/mt,Real - World Bank Pink Sheet (Newcastle 6000kcal)
+2025-03-05,Thermal Coal (Indonesia),108.74,USD,USD/mt,Estimated - interpolated between confirmed ESDM HBA anchors
+2025-03-05,Thermal Coal (USA),81.01,USD,USD/mt,Synthetic - no free bulk historical source found (EIA needs API key)
+2025-03-05,Thermal Coal (Mozambique),81.69,USD,USD/mt,Synthetic - no dedicated Mozambique benchmark exists (free or paid)
+2025-03-05,Thermal Coal (Russia),83.58,USD,USD/mt,Synthetic - no free published source found
+2025-04-04,Thermal Coal (Australia),98.61,USD,USD/mt,Real - World Bank Pink Sheet (Newcastle 6000kcal)
+2025-04-04,Thermal Coal (Indonesia),112.43,USD,USD/mt,Estimated - interpolated between confirmed ESDM HBA anchors
+2025-04-04,Thermal Coal (USA),80.18,USD,USD/mt,Synthetic - no free bulk historical source found (EIA needs API key)
+2025-04-04,Thermal Coal (Mozambique),82.25,USD,USD/mt,Synthetic - no dedicated Mozambique benchmark exists (free or paid)
+2025-04-04,Thermal Coal (Russia),89.17,USD,USD/mt,Synthetic - no free published source found
+2025-05-04,Thermal Coal (Australia),104.41,USD,USD/mt,Real - World Bank Pink Sheet (Newcastle 6000kcal)
+2025-05-04,Thermal Coal (Indonesia),104.9,USD,USD/mt,Estimated - interpolated between confirmed ESDM HBA anchors
+2025-05-04,Thermal Coal (USA),78.91,USD,USD/mt,Synthetic - no free bulk historical source found (EIA needs API key)
+2025-05-04,Thermal Coal (Mozambique),83.56,USD,USD/mt,Synthetic - no dedicated Mozambique benchmark exists (free or paid)
+2025-05-04,Thermal Coal (Russia),86.9,USD,USD/mt,Synthetic - no free published source found
+2025-06-03,Thermal Coal (Australia),109.03,USD,USD/mt,Real - World Bank Pink Sheet (Newcastle 6000kcal)
+2025-06-03,Thermal Coal (Indonesia),104.44,USD,USD/mt,Estimated - interpolated between confirmed ESDM HBA anchors
+2025-06-03,Thermal Coal (USA),78.55,USD,USD/mt,Synthetic - no free bulk historical source found (EIA needs API key)
+2025-06-03,Thermal Coal (Mozambique),87.71,USD,USD/mt,Synthetic - no dedicated Mozambique benchmark exists (free or paid)
+2025-06-03,Thermal Coal (Russia),88.71,USD,USD/mt,Synthetic - no free published source found
+2025-07-03,Thermal Coal (Australia),112.9,USD,USD/mt,Real - World Bank Pink Sheet (Newcastle 6000kcal)
+2025-07-03,Thermal Coal (Indonesia),107.71,USD,USD/mt,Estimated - interpolated between confirmed ESDM HBA anchors
+2025-07-03,Thermal Coal (USA),79.69,USD,USD/mt,Synthetic - no free bulk historical source found (EIA needs API key)
+2025-07-03,Thermal Coal (Mozambique),91.35,USD,USD/mt,Synthetic - no dedicated Mozambique benchmark exists (free or paid)
+2025-07-03,Thermal Coal (Russia),92.0,USD,USD/mt,Synthetic - no free published source found
+2025-08-02,Thermal Coal (Australia),112.15,USD,USD/mt,Real - World Bank Pink Sheet (Newcastle 6000kcal)
+2025-08-02,Thermal Coal (Indonesia),101.1,USD,USD/mt,Estimated - interpolated between confirmed ESDM HBA anchors
+2025-08-02,Thermal Coal (USA),75.94,USD,USD/mt,Synthetic - no free bulk historical source found (EIA needs API key)
+2025-08-02,Thermal Coal (Mozambique),90.47,USD,USD/mt,Synthetic - no dedicated Mozambique benchmark exists (free or paid)
+2025-08-02,Thermal Coal (Russia),88.25,USD,USD/mt,Synthetic - no free published source found
+2025-09-01,Thermal Coal (Australia),106.32,USD,USD/mt,Real - World Bank Pink Sheet (Newcastle 6000kcal)
+2025-09-01,Thermal Coal (Indonesia),101.34,USD,USD/mt,Estimated - interpolated between confirmed ESDM HBA anchors
+2025-09-01,Thermal Coal (USA),79.84,USD,USD/mt,Synthetic - no free bulk historical source found (EIA needs API key)
+2025-09-01,Thermal Coal (Mozambique),85.03,USD,USD/mt,Synthetic - no dedicated Mozambique benchmark exists (free or paid)
+2025-09-01,Thermal Coal (Russia),88.42,USD,USD/mt,Synthetic - no free published source found
+2025-10-01,Thermal Coal (Australia),107.5,USD,USD/mt,Real - World Bank Pink Sheet (Newcastle 6000kcal)
+2025-10-01,Thermal Coal (Indonesia),102.16,USD,USD/mt,Estimated - interpolated between confirmed ESDM HBA anchors
+2025-10-01,Thermal Coal (USA),77.66,USD,USD/mt,Synthetic - no free bulk historical source found (EIA needs API key)
+2025-10-01,Thermal Coal (Mozambique),78.56,USD,USD/mt,Synthetic - no dedicated Mozambique benchmark exists (free or paid)
+2025-10-01,Thermal Coal (Russia),86.58,USD,USD/mt,Synthetic - no free published source found
+2025-10-31,Thermal Coal (Australia),107.5,USD,USD/mt,Real - World Bank Pink Sheet (Newcastle 6000kcal)
+2025-10-31,Thermal Coal (Indonesia),100.91,USD,USD/mt,Estimated - interpolated between confirmed ESDM HBA anchors
+2025-10-31,Thermal Coal (USA),76.26,USD,USD/mt,Synthetic - no free bulk historical source found (EIA needs API key)
+2025-10-31,Thermal Coal (Mozambique),81.86,USD,USD/mt,Synthetic - no dedicated Mozambique benchmark exists (free or paid)
+2025-10-31,Thermal Coal (Russia),84.08,USD,USD/mt,Synthetic - no free published source found

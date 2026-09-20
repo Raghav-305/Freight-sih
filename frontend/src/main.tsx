@@ -6,6 +6,7 @@ import { EligibilityMatrix } from "./components/EligibilityMatrix";
 import { ScenarioComparator } from "./components/ScenarioComparator";
 import { MapCanvas } from "./components/MapCanvas";
 import { AuditTimeline } from "./components/AuditTimeline";
+import { AnchorStatus } from "./components/AnchorStatus";
 import { FreshnessBadge } from "./components/FreshnessBadge";
 
 type ForecastBand = {
@@ -210,8 +211,55 @@ type AuditLogResponse = {
   cvc_compliance_statement: string;
 };
 
+type RiskCounterfactualItem = {
+  factor: string;
+  current_score: number;
+  if_resolved_overall_becomes: number;
+  overall_drops_by: number;
+};
+
+type RiskCounterfactualResponse = {
+  baseline: Record<string, any>;
+  biggest_lever: string;
+  counterfactuals: RiskCounterfactualItem[];
+  summary_insight: string;
+};
+
+type CharterSensitivityItem = {
+  lever: string;
+  change: string;
+  new_cost_usd: number;
+  saving_usd: number;
+  mix_changed: boolean;
+};
+
+type CharterCounterfactualResponse = {
+  baseline: Record<string, any>;
+  biggest_lever: string;
+  cost_sensitivity: CharterSensitivityItem[];
+  note: string;
+  summary_insight: string;
+};
+
+type CustomRiskSimulation = {
+  baseline: Record<string, any>;
+  simulated: Record<string, any>;
+  overrides_applied: Record<string, number>;
+  overall_delta: number;
+  impact_direction: string;
+};
+
+type CustomCharterSimulation = {
+  baseline: Record<string, any>;
+  simulated: Record<string, any>;
+  shifts: Record<string, number>;
+  saving_usd: number;
+  mix_changed: boolean;
+};
+
+
 const apiMode = import.meta.env.VITE_API_MODE ?? "live";
-const apiBaseUrl = (import.meta.env.VITE_API_BASE_URL ?? "").replace("localhost", "127.0.0.1").replace(/\/$/, "");
+const apiBaseUrl = (import.meta.env.VITE_API_BASE_URL || "http://127.0.0.1:8000").replace("localhost", "127.0.0.1").replace(/\/$/, "");
 
 function apiUrl(path: string) {
   const apiPath = path.startsWith("/api/") ? path : `/api${path}`;
@@ -227,7 +275,12 @@ async function api<T>(path: string, init?: RequestInit): Promise<T> {
     },
   });
 
-  const payload = await response.json().catch(() => ({}));
+  const contentType = response.headers.get("content-type") ?? "";
+  if (!contentType.includes("application/json")) {
+    throw new Error(`Expected JSON response from ${path}, but received ${contentType || "empty/HTML response"}`);
+  }
+
+  const payload = await response.json();
   if (!response.ok) {
     throw new Error(payload.detail ?? `Request failed with ${response.status}`);
   }
@@ -250,7 +303,8 @@ type TabKey =
   | "map"
   | "quality"
   | "governance"
-  | "models";
+  | "models"
+  | "counterfactual";
 
 function App() {
   const [activeTab, setActiveTab] = useState<TabKey>("overview");
@@ -378,6 +432,36 @@ function App() {
   });
   const [reviewMessage, setReviewMessage] = useState<string | null>(null);
 
+  // Layer 6: Counterfactual Explanations State
+  const [cfMode, setCfMode] = useState<"risk" | "charter" | "sandbox">("risk");
+  const [riskCfResult, setRiskCfResult] = useState<RiskCounterfactualResponse | null>(null);
+  const [riskCfLoading, setRiskCfLoading] = useState(false);
+  const [riskCfError, setRiskCfError] = useState<string | null>(null);
+
+  const [charterCfResult, setCharterCfResult] = useState<CharterCounterfactualResponse | null>(null);
+  const [charterCfLoading, setCharterCfLoading] = useState(false);
+  const [charterCfError, setCharterCfError] = useState<string | null>(null);
+
+  // Counterfactual Sandbox states
+  const [riskOverrides, setRiskOverrides] = useState<Record<string, number>>({
+    market: 50,
+    port: 50,
+    weather: 50,
+    geopolitical: 50,
+    supply: 50,
+    contract: 50,
+  });
+  const [riskSimResult, setRiskSimResult] = useState<CustomRiskSimulation | null>(null);
+  const [riskSimLoading, setRiskSimLoading] = useState(false);
+
+  const [charterShifts, setCharterShifts] = useState({
+    bunker_pct_change: -8,
+    congestion_days_delta: -1.0,
+    spot_rate_pct_change: -5,
+  });
+  const [charterSimResult, setCharterSimResult] = useState<CustomCharterSimulation | null>(null);
+  const [charterSimLoading, setCharterSimLoading] = useState(false);
+
   useEffect(() => {
     void refreshSystem();
     void runForecast();
@@ -389,7 +473,100 @@ function App() {
     void runCharterOptimization();
     void loadDataQuality();
     void loadAuditLogs();
+    void fetchRiskCounterfactuals();
+    void fetchCharterCounterfactuals();
   }, []);
+
+  async function fetchRiskCounterfactuals(nextInputs = riskInputs) {
+    setRiskCfLoading(true);
+    setRiskCfError(null);
+    try {
+      const res = await api<RiskCounterfactualResponse>("/counterfactual/risk", {
+        method: "POST",
+        body: JSON.stringify(nextInputs),
+      });
+      setRiskCfResult(res);
+      if (res.baseline) {
+        setRiskOverrides({
+          market: res.baseline.market ?? 50,
+          port: res.baseline.port ?? 50,
+          weather: res.baseline.weather ?? 50,
+          geopolitical: res.baseline.geopolitical ?? 50,
+          supply: res.baseline.supply ?? 50,
+          contract: res.baseline.contract ?? 50,
+        });
+      }
+    } catch (err) {
+      setRiskCfError(err instanceof Error ? err.message : "Risk counterfactual error");
+    } finally {
+      setRiskCfLoading(false);
+    }
+  }
+
+  async function fetchCharterCounterfactuals(nextInputs = charterInputs) {
+    setCharterCfLoading(true);
+    setCharterCfError(null);
+    try {
+      const res = await api<CharterCounterfactualResponse>("/counterfactual/charter", {
+        method: "POST",
+        body: JSON.stringify({
+          origin_port: nextInputs.origin,
+          destination_port: nextInputs.destination,
+          vessel_class: nextInputs.vessel_class,
+          cargo_quantity_mt: nextInputs.cargo_quantity,
+          delivery_date: nextInputs.delivery_date || "2026-10-15",
+        }),
+      });
+      setCharterCfResult(res);
+    } catch (err) {
+      setCharterCfError(err instanceof Error ? err.message : "Charter sensitivity error");
+    } finally {
+      setCharterCfLoading(false);
+    }
+  }
+
+  async function runRiskSimulation(customOverrides = riskOverrides) {
+    setRiskSimLoading(true);
+    try {
+      const res = await api<CustomRiskSimulation>("/counterfactual/risk/simulate", {
+        method: "POST",
+        body: JSON.stringify({
+          route_id: riskInputs.route_id,
+          origin_country: riskInputs.origin_country,
+          destination_port: riskInputs.destination_port,
+          date: riskInputs.date,
+          overrides: customOverrides,
+        }),
+      });
+      setRiskSimResult(res);
+    } catch (err) {
+      console.error("Risk simulation error", err);
+    } finally {
+      setRiskSimLoading(false);
+    }
+  }
+
+  async function runCharterSimulation(shifts = charterShifts) {
+    setCharterSimLoading(true);
+    try {
+      const res = await api<CustomCharterSimulation>("/counterfactual/charter/simulate", {
+        method: "POST",
+        body: JSON.stringify({
+          origin_port: charterInputs.origin,
+          destination_port: charterInputs.destination,
+          vessel_class: charterInputs.vessel_class,
+          cargo_quantity_mt: charterInputs.cargo_quantity,
+          delivery_date: charterInputs.delivery_date || "2026-10-15",
+          ...shifts,
+        }),
+      });
+      setCharterSimResult(res);
+    } catch (err) {
+      console.error("Charter simulation error", err);
+    } finally {
+      setCharterSimLoading(false);
+    }
+  }
 
   async function refreshSystem() {
     const [healthResult, modelsResult] = await Promise.allSettled([
@@ -473,6 +650,7 @@ function App() {
         body: JSON.stringify(nextInputs),
       });
       setRiskResult(res);
+      void fetchRiskCounterfactuals(nextInputs);
     } catch (err) {
       setRiskError(err instanceof Error ? err.message : "Risk assessment error");
     } finally {
@@ -541,6 +719,7 @@ function App() {
         }),
       });
       setCharterResult(res);
+      void fetchCharterCounterfactuals(charterInputs);
     } catch (err) {
       setCharterError(err instanceof Error ? err.message : "Charter optimization error");
     } finally {
@@ -679,6 +858,17 @@ function App() {
           >
             Model Registry
           </button>
+          <button
+            type="button"
+            className={`nav-btn ${activeTab === "counterfactual" ? "active" : ""}`}
+            onClick={() => setActiveTab("counterfactual")}
+            style={{
+              borderColor: activeTab === "counterfactual" ? "#38bdf8" : undefined,
+              fontWeight: 700,
+            }}
+          >
+            Counterfactuals (Layer 6)
+          </button>
         </nav>
 
         <div className="review-box">
@@ -709,6 +899,7 @@ function App() {
               {activeTab === "quality" && "Data Pipeline Quality & Lineage (ISO 8000)"}
               {activeTab === "governance" && "Pillar 3 · CVC Vigilance Governance & Immutable Audit Trail"}
               {activeTab === "models" && "Registered Model Artifacts & System Health"}
+              {activeTab === "counterfactual" && "Layer 6 · Counterfactual Explanations & Sensitivity Search"}
             </h2>
           </div>
           <div className="api-pill">
@@ -746,10 +937,10 @@ function App() {
 
         {/* Global Key Metrics Strip */}
         <section className="metrics-grid">
-          <Metric label="Current Spot Rate" value={forecast ? `${money(forecast.current_freight)}/MT` : "..."} />
-          <Metric label="Market Regime" value={market ? market.market_regime : "BULLISH"} />
-          <Metric label="FOS Signal" value={opportunityResult ? opportunityResult.recommendation : "GOOD_OPPORTUNITY"} />
-          <Metric label="Baltic BDI / BPI" value={market ? `${market.indices.bdi} / ${market.indices.bpi}` : "1,842 / 1,620"} />
+          <Metric label="Current Spot Rate" value={forecast?.current_freight ? `${money(forecast.current_freight)}/MT` : "..."} />
+          <Metric label="Market Regime" value={market?.market_regime ?? "BULLISH"} />
+          <Metric label="FOS Signal" value={opportunityResult?.recommendation ?? "GOOD_OPPORTUNITY"} />
+          <Metric label="Baltic BDI / BPI" value={market?.indices ? `${market.indices.bdi} / ${market.indices.bpi}` : "1,842 / 1,620"} />
         </section>
 
         {/* TAB 1: EXECUTIVE OVERVIEW */}
@@ -800,7 +991,7 @@ function App() {
                 </button>
               </form>
 
-              {market && (
+              {market && market.market_regime && (
                 <div className="market-grid" style={{ marginTop: "1rem" }}>
                   <div className="market-card">
                     <span>Regime</span>
@@ -814,8 +1005,10 @@ function App() {
                   </div>
                   <div className="market-card">
                     <span>Probabilities</span>
-                    <strong>Bullish {Math.round(market.probabilities.bullish * 100)}%</strong>
-                    <small>Neutral {Math.round(market.probabilities.neutral * 100)}% · Bearish {Math.round(market.probabilities.bearish * 100)}%</small>
+                    <strong>Bullish {market.probabilities ? Math.round(market.probabilities.bullish * 100) : 0}%</strong>
+                    <small>
+                      Neutral {market.probabilities ? Math.round(market.probabilities.neutral * 100) : 0}% · Bearish {market.probabilities ? Math.round(market.probabilities.bearish * 100) : 0}%
+                    </small>
                   </div>
                   <div className="market-card">
                     <span>Bunker Pressure</span>
@@ -846,6 +1039,483 @@ function App() {
                     <span>Fixture History</span>
                     <strong>{marketContext.fixtures.fixture_count} Fixtures</strong>
                     <small>{marketContext.fixtures.average_rate ? `Avg $${marketContext.fixtures.average_rate.toFixed(2)}/MT` : "Historical fixtures"}</small>
+                  </div>
+                </div>
+              )}
+            </section>
+          </div>
+        )}
+
+        {/* TAB 10: COUNTERFACTUAL EXPLANATIONS (LAYER 6) */}
+        {activeTab === "counterfactual" && (
+          <div className="tab-content">
+            <section className="market-section">
+              <div className="section-title">
+                <span className="eyebrow">Layer 6 Explainability · Decision Flip & Sensitivity Search</span>
+                <h3>Counterfactual Explanations & Systematic Sensitivity Hub</h3>
+                <small style={{ color: "var(--gov-muted)" }}>
+                  Answers: <em>"What is the smallest realistic change that flips this decision or saves the most procurement capital?"</em>
+                </small>
+              </div>
+
+              {/* Sub-mode Switcher */}
+              <div className="mode-switcher" style={{ marginTop: "1rem" }}>
+                <button
+                  type="button"
+                  className={`mode-btn ${cfMode === "risk" ? "active" : ""}`}
+                  onClick={() => setCfMode("risk")}
+                >
+                  1. Risk Decision Explainer
+                </button>
+                <button
+                  type="button"
+                  className={`mode-btn ${cfMode === "charter" ? "active" : ""}`}
+                  onClick={() => setCfMode("charter")}
+                >
+                  2. Charter Cost Sensitivity Explainer
+                </button>
+                <button
+                  type="button"
+                  className={`mode-btn ${cfMode === "sandbox" ? "active" : ""}`}
+                  onClick={() => {
+                    setCfMode("sandbox");
+                    void runRiskSimulation();
+                    void runCharterSimulation();
+                  }}
+                >
+                  3. Interactive What-If Sandbox
+                </button>
+              </div>
+
+              {/* MODE 1: RISK EXPLAINER */}
+              {cfMode === "risk" && (
+                <div>
+                  <form
+                    className="forecast-form"
+                    onSubmit={(e) => {
+                      e.preventDefault();
+                      void fetchRiskCounterfactuals(riskInputs);
+                    }}
+                  >
+                    <div className="form-grid">
+                      <Field
+                        label="Route ID"
+                        type="text"
+                        value={riskInputs.route_id}
+                        onChange={(v) => setRiskInputs({ ...riskInputs, route_id: v })}
+                      />
+                      <Select
+                        label="Origin Country"
+                        value={riskInputs.origin_country}
+                        values={["Australia", "Indonesia", "Mozambique", "Russia", "USA"]}
+                        onChange={(v) => setRiskInputs({ ...riskInputs, origin_country: v })}
+                      />
+                      <Select
+                        label="Destination Port"
+                        value={riskInputs.destination_port}
+                        values={["DHA", "GAN", "GOP", "HAL", "PAR", "VIZ"]}
+                        onChange={(v) => setRiskInputs({ ...riskInputs, destination_port: v })}
+                      />
+                      <Field
+                        label="Assessment Date"
+                        type="date"
+                        value={riskInputs.date}
+                        onChange={(v) => setRiskInputs({ ...riskInputs, date: v })}
+                      />
+                    </div>
+                    <button type="submit" disabled={riskCfLoading}>
+                      {riskCfLoading ? "Searching Levers..." : "Run Systematic Risk Counterfactual Search"}
+                    </button>
+                  </form>
+
+                  {riskCfError && <ErrorPanel message={riskCfError} />}
+
+                  {!riskCfLoading && riskCfResult && (
+                    <div style={{ marginTop: "1.5rem" }}>
+                      <div className="metrics-grid">
+                        <Metric label="Baseline Overall Risk" value={`${riskCfResult.baseline.overall}/100`} />
+                        <Metric label="Primary Risk Driver" value={riskCfResult.biggest_lever.toUpperCase()} />
+                        <Metric
+                          label="Max Single Factor Drop"
+                          value={`-${riskCfResult.counterfactuals[0]?.overall_drops_by.toFixed(1)} pts`}
+                        />
+                        <Metric
+                          label="Target If Resolved"
+                          value={`${riskCfResult.counterfactuals[0]?.if_resolved_overall_becomes.toFixed(1)}/100`}
+                        />
+                      </div>
+
+                      <div className="cf-banner" style={{ marginTop: "1rem" }}>
+                        <div className="cf-banner-badge">EXECUTIVE SUMMARY</div>
+                        <div className="cf-banner-text">{riskCfResult.summary_insight}</div>
+                      </div>
+
+                      <div className="table-wrap" style={{ marginTop: "1rem" }}>
+                        <table>
+                          <thead>
+                            <tr>
+                              <th>Rank</th>
+                              <th>Risk Factor Lever</th>
+                              <th>Current Score</th>
+                              <th>If Resolved (10.0 Floor)</th>
+                              <th>Overall Risk Drops By</th>
+                              <th>Impact Share</th>
+                              <th>Interactive Simulation</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {riskCfResult.counterfactuals.map((cf, idx) => (
+                              <tr key={cf.factor}>
+                                <td><strong>#{idx + 1}</strong></td>
+                                <td>
+                                  <span className={`factor-badge factor-${cf.factor}`}>
+                                    {cf.factor.toUpperCase()}
+                                  </span>
+                                </td>
+                                <td><strong>{cf.current_score.toFixed(1)}/100</strong></td>
+                                <td>
+                                  <strong style={{ color: "#0284c7" }}>
+                                    {cf.if_resolved_overall_becomes.toFixed(1)}/100
+                                  </strong>
+                                </td>
+                                <td>
+                                  <span className="delta-drop-pill">
+                                    -{cf.overall_drops_by.toFixed(1)} pts
+                                  </span>
+                                </td>
+                                <td>
+                                  <div className="progress-bar-cf">
+                                    <div
+                                      className="progress-fill-cf"
+                                      style={{
+                                        width: `${Math.min(100, Math.max(10, (cf.overall_drops_by / (riskCfResult.counterfactuals[0]?.overall_drops_by || 1)) * 100))}%`,
+                                      }}
+                                    />
+                                  </div>
+                                </td>
+                                <td>
+                                  <button
+                                    type="button"
+                                    className="small-action-btn"
+                                    onClick={() => {
+                                      setCfMode("sandbox");
+                                      const newOverrides = { ...riskOverrides, [cf.factor]: 10.0 };
+                                      setRiskOverrides(newOverrides);
+                                      void runRiskSimulation(newOverrides);
+                                    }}
+                                  >
+                                    Test in Sandbox →
+                                  </button>
+                                </td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {/* MODE 2: CHARTER EXPLAINER */}
+              {cfMode === "charter" && (
+                <div>
+                  <form
+                    className="forecast-form"
+                    onSubmit={(e) => {
+                      e.preventDefault();
+                      void fetchCharterCounterfactuals(charterInputs);
+                    }}
+                  >
+                    <div className="form-grid">
+                      <Field
+                        label="Total Cargo Commitment (MT)"
+                        type="number"
+                        value={charterInputs.cargo_quantity}
+                        onChange={(v) => setCharterInputs({ ...charterInputs, cargo_quantity: Number(v) })}
+                      />
+                      <Select
+                        label="Load Port"
+                        value={charterInputs.origin}
+                        values={[
+                          "Gladstone",
+                          "Newcastle",
+                          "Hay Point",
+                          "Dalrymple Bay",
+                          "Taboneo",
+                          "Muara Pantai",
+                          "Samarinda",
+                          "Hampton Roads",
+                          "Baltimore",
+                          "New Orleans",
+                          "Beira",
+                          "Nacala",
+                          "Vostochny (Far East)",
+                        ]}
+                        onChange={(v) => setCharterInputs({ ...charterInputs, origin: v })}
+                      />
+                      <Select
+                        label="Discharge Port"
+                        value={charterInputs.destination}
+                        values={["Dhamra", "Gangavaram", "Gopalpur", "Haldia", "Paradip", "Vizag"]}
+                        onChange={(v) => setCharterInputs({ ...charterInputs, destination: v })}
+                      />
+                      <Select
+                        label="Vessel Class"
+                        value={charterInputs.vessel_class}
+                        values={["Panamax", "Capesize"]}
+                        onChange={(v) => setCharterInputs({ ...charterInputs, vessel_class: v })}
+                      />
+                      <Field
+                        label="Delivery / Laycan Date"
+                        type="date"
+                        value={charterInputs.delivery_date}
+                        onChange={(v) => setCharterInputs({ ...charterInputs, delivery_date: v })}
+                      />
+                    </div>
+                    <button type="submit" disabled={charterCfLoading}>
+                      {charterCfLoading ? "Simulating Market Shifts..." : "Run HiGHS LP Cost Sensitivity Search"}
+                    </button>
+                  </form>
+
+                  {charterCfError && <ErrorPanel message={charterCfError} />}
+
+                  {!charterCfLoading && charterCfResult && (
+                    <div style={{ marginTop: "1.5rem" }}>
+                      <div className="metrics-grid">
+                        <Metric label="LP Optimized Baseline" value={money(charterCfResult.baseline.optimized_cost_usd)} />
+                        <Metric label="Max Sensitivity Lever" value={charterCfResult.biggest_lever.replace("_", " ").toUpperCase()} />
+                        <Metric label="Route" value={`${charterCfResult.baseline.origin_port} → ${charterCfResult.baseline.destination_port_name}`} />
+                        <Metric label="Voyages Needed" value={`${charterCfResult.baseline.voyages_needed} Voyages`} />
+                      </div>
+
+                      <div className="cf-banner cf-banner-blue" style={{ marginTop: "1rem" }}>
+                        <div className="cf-banner-badge">COST LEVERAGE INSIGHT</div>
+                        <div className="cf-banner-text">{charterCfResult.summary_insight}</div>
+                      </div>
+
+                      <div className="cf-sensitivity-grid" style={{ marginTop: "1.2rem" }}>
+                        {/* Bunker Sensitivity */}
+                        <div className="sensitivity-column">
+                          <div className="sens-header">
+                            <strong>Bunker Price Shifts</strong>
+                            <small>VLSFO USD/MT shifts (-2% to -20%)</small>
+                          </div>
+                          <div className="sens-cards">
+                            {charterCfResult.cost_sensitivity
+                              .filter((s) => s.lever === "bunker_price")
+                              .map((s) => (
+                                <div className="sens-card" key={s.change}>
+                                  <span className="sens-change">{s.change}</span>
+                                  <div className="sens-cost">{money(s.new_cost_usd)}</div>
+                                  <span className="savings-pill">Saves {money(s.saving_usd)}</span>
+                                </div>
+                              ))}
+                          </div>
+                        </div>
+
+                        {/* Congestion Sensitivity */}
+                        <div className="sensitivity-column">
+                          <div className="sens-header">
+                            <strong>Port Congestion Reduction</strong>
+                            <small>Fewer berth wait days (-0.5 to -3.0 d)</small>
+                          </div>
+                          <div className="sens-cards">
+                            {charterCfResult.cost_sensitivity
+                              .filter((s) => s.lever === "congestion")
+                              .map((s) => (
+                                <div className="sens-card" key={s.change}>
+                                  <span className="sens-change">{s.change}</span>
+                                  <div className="sens-cost">{money(s.new_cost_usd)}</div>
+                                  <span className="savings-pill">Saves {money(s.saving_usd)}</span>
+                                </div>
+                              ))}
+                          </div>
+                        </div>
+
+                        {/* Spot Rate Sensitivity */}
+                        <div className="sensitivity-column">
+                          <div className="sens-header">
+                            <strong>Spot Freight Rate Drops</strong>
+                            <small>Market softening (-2% to -20%)</small>
+                          </div>
+                          <div className="sens-cards">
+                            {charterCfResult.cost_sensitivity
+                              .filter((s) => s.lever === "spot_rate")
+                              .map((s) => (
+                                <div className="sens-card" key={s.change}>
+                                  <span className="sens-change">{s.change}</span>
+                                  <div className="sens-cost">{money(s.new_cost_usd)}</div>
+                                  <span className="savings-pill">Saves {money(s.saving_usd)}</span>
+                                </div>
+                              ))}
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="cf-note-card" style={{ marginTop: "1rem" }}>
+                        <strong>Architectural Truth & Contract Allocation Stability:</strong>
+                        <p>{charterCfResult.note}</p>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {/* MODE 3: INTERACTIVE WHAT-IF SANDBOX */}
+              {cfMode === "sandbox" && (
+                <div style={{ marginTop: "1rem" }}>
+                  <div className="content-grid">
+                    {/* Left: Risk Sandbox */}
+                    <div className="sandbox-slider-card">
+                      <div className="section-title">
+                        <span className="eyebrow">Interactive Risk Engine Sandbox</span>
+                        <h4>Dynamic Sub-Score Dial</h4>
+                        <small style={{ color: "var(--gov-muted)" }}>
+                          Tweak any individual risk sub-score to evaluate hypothetical route safety in real-time.
+                        </small>
+                      </div>
+
+                      {Object.keys(riskOverrides).map((factor) => (
+                        <div className="slider-row" key={factor}>
+                          <span className="slider-label">{factor}</span>
+                          <input
+                            type="range"
+                            className="slider-input"
+                            min="0"
+                            max="100"
+                            step="1"
+                            value={riskOverrides[factor]}
+                            onChange={(e) => {
+                              const val = Number(e.target.value);
+                              const updated = { ...riskOverrides, [factor]: val };
+                              setRiskOverrides(updated);
+                              void runRiskSimulation(updated);
+                            }}
+                          />
+                          <span className="slider-val">{riskOverrides[factor].toFixed(0)}</span>
+                        </div>
+                      ))}
+
+                      {riskSimResult && (
+                        <div style={{ marginTop: "1rem", padding: "12px", background: "#f8fafc", borderRadius: "6px", border: "1px solid #e2e8f0" }}>
+                          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                            <span>Simulated Overall Risk:</span>
+                            <strong style={{ fontSize: "16px", color: "var(--gov-navy)" }}>
+                              {riskSimResult.simulated.overall.toFixed(1)}/100
+                            </strong>
+                          </div>
+                          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "6px" }}>
+                            <span>Change from Baseline:</span>
+                            <span
+                              className="delta-drop-pill"
+                              style={{
+                                background: riskSimResult.overall_delta >= 0 ? "#ecfdf5" : "#fee2e2",
+                                color: riskSimResult.overall_delta >= 0 ? "#059669" : "#991b1b",
+                                borderColor: riskSimResult.overall_delta >= 0 ? "rgba(5, 150, 105, 0.25)" : "rgba(153, 27, 27, 0.25)",
+                              }}
+                            >
+                              {riskSimResult.overall_delta >= 0 ? `-${riskSimResult.overall_delta.toFixed(1)} pts` : `+${Math.abs(riskSimResult.overall_delta).toFixed(1)} pts`} ({riskSimResult.impact_direction})
+                            </span>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Right: Charter Solver Sandbox */}
+                    <div className="sandbox-slider-card">
+                      <div className="section-title">
+                        <span className="eyebrow">Interactive HiGHS Solver Sandbox</span>
+                        <h4>Procurement Parameter Shift</h4>
+                        <small style={{ color: "var(--gov-muted)" }}>
+                          Simulate macro bunker price swings, port congestion shocks, and freight rate shifts.
+                        </small>
+                      </div>
+
+                      <div className="slider-row">
+                        <span className="slider-label">Bunker Price (%)</span>
+                        <input
+                          type="range"
+                          className="slider-input"
+                          min="-30"
+                          max="30"
+                          step="1"
+                          value={charterShifts.bunker_pct_change}
+                          onChange={(e) => {
+                            const updated = { ...charterShifts, bunker_pct_change: Number(e.target.value) };
+                            setCharterShifts(updated);
+                            void runCharterSimulation(updated);
+                          }}
+                        />
+                        <span className="slider-val">{charterShifts.bunker_pct_change > 0 ? `+${charterShifts.bunker_pct_change}%` : `${charterShifts.bunker_pct_change}%`}</span>
+                      </div>
+
+                      <div className="slider-row">
+                        <span className="slider-label">Congestion (Days)</span>
+                        <input
+                          type="range"
+                          className="slider-input"
+                          min="-4"
+                          max="4"
+                          step="0.5"
+                          value={charterShifts.congestion_days_delta}
+                          onChange={(e) => {
+                            const updated = { ...charterShifts, congestion_days_delta: Number(e.target.value) };
+                            setCharterShifts(updated);
+                            void runCharterSimulation(updated);
+                          }}
+                        />
+                        <span className="slider-val">{charterShifts.congestion_days_delta > 0 ? `+${charterShifts.congestion_days_delta}d` : `${charterShifts.congestion_days_delta}d`}</span>
+                      </div>
+
+                      <div className="slider-row">
+                        <span className="slider-label">Spot Rate (%)</span>
+                        <input
+                          type="range"
+                          className="slider-input"
+                          min="-30"
+                          max="30"
+                          step="1"
+                          value={charterShifts.spot_rate_pct_change}
+                          onChange={(e) => {
+                            const updated = { ...charterShifts, spot_rate_pct_change: Number(e.target.value) };
+                            setCharterShifts(updated);
+                            void runCharterSimulation(updated);
+                          }}
+                        />
+                        <span className="slider-val">{charterShifts.spot_rate_pct_change > 0 ? `+${charterShifts.spot_rate_pct_change}%` : `${charterShifts.spot_rate_pct_change}%`}</span>
+                      </div>
+
+                      {charterSimResult && (
+                        <div style={{ marginTop: "1rem", padding: "12px", background: "#f8fafc", borderRadius: "6px", border: "1px solid #e2e8f0" }}>
+                          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                            <span>Simulated Optimized Cost:</span>
+                            <strong style={{ fontSize: "16px", color: "var(--gov-navy)" }}>
+                              {money(charterSimResult.simulated.optimized_cost_usd)}
+                            </strong>
+                          </div>
+                          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "6px" }}>
+                            <span>Net Cost Delta:</span>
+                            <span
+                              className="savings-pill"
+                              style={{
+                                background: charterSimResult.saving_usd >= 0 ? "#ecfdf5" : "#fee2e2",
+                                color: charterSimResult.saving_usd >= 0 ? "#047857" : "#991b1b",
+                                borderColor: charterSimResult.saving_usd >= 0 ? "#a7f3d0" : "#fca5a5",
+                              }}
+                            >
+                              {charterSimResult.saving_usd >= 0 ? `Saves ${money(charterSimResult.saving_usd)}` : `Increases by ${money(Math.abs(charterSimResult.saving_usd))}`}
+                            </span>
+                          </div>
+                          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "6px" }}>
+                            <span>Contract Mix Shift:</span>
+                            <small style={{ fontWeight: 700, color: charterSimResult.mix_changed ? "#0284c7" : "#64748b" }}>
+                              {charterSimResult.mix_changed ? "Mix Re-allocated" : "Mix Unchanged (Cost Shift Only)"}
+                            </small>
+                          </div>
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </div>
               )}
@@ -1178,6 +1848,93 @@ function App() {
                       <p>{charterResult.fixing_window}</p>
                       <small>{charterResult.notes}</small>
                     </div>
+
+                    {/* Charter Cost Sensitivity & Counterfactuals (Layer 6) */}
+                    <div style={{ marginTop: "2rem", borderTop: "1px solid var(--gov-border)", paddingTop: "1.5rem" }}>
+                      <div className="section-title">
+                        <span className="eyebrow">Layer 6 Explainability · HiGHS LP Cost Sensitivity</span>
+                        <h4>Procurement Cost Sensitivity & Counterfactual Levers</h4>
+                        <small style={{ color: "var(--gov-muted)" }}>
+                          Evaluates procurement cost changes under realistic market shifts in bunker price, port congestion delay, and spot freight rate.
+                        </small>
+                      </div>
+
+                      {charterCfLoading && <p style={{ color: "var(--gov-muted)", marginTop: "0.5rem" }}>Running perturbation sensitivity analysis...</p>}
+                      {charterCfError && <ErrorPanel message={charterCfError} />}
+
+                      {!charterCfLoading && charterCfResult && (
+                        <div style={{ marginTop: "1rem" }}>
+                          <div className="cf-banner cf-banner-blue">
+                            <div className="cf-banner-badge">MAX SENSITIVITY: {charterCfResult.biggest_lever.replace("_", " ").toUpperCase()}</div>
+                            <div className="cf-banner-text">{charterCfResult.summary_insight}</div>
+                          </div>
+
+                          <div className="cf-sensitivity-grid" style={{ marginTop: "1.2rem" }}>
+                            {/* Bunker Sensitivity */}
+                            <div className="sensitivity-column">
+                              <div className="sens-header">
+                                <strong>Bunker Fuel Sensitivity</strong>
+                                <small>VLSFO Price Shocks</small>
+                              </div>
+                              <div className="sens-cards">
+                                {charterCfResult.cost_sensitivity
+                                  .filter((s) => s.lever === "bunker_price")
+                                  .map((s) => (
+                                    <div className="sens-card" key={s.change}>
+                                      <span className="sens-change">{s.change}</span>
+                                      <div className="sens-cost">{money(s.new_cost_usd)}</div>
+                                      <span className="savings-pill">Saves {money(s.saving_usd)}</span>
+                                    </div>
+                                  ))}
+                              </div>
+                            </div>
+
+                            {/* Congestion Sensitivity */}
+                            <div className="sensitivity-column">
+                              <div className="sens-header">
+                                <strong>Port Congestion Sensitivity</strong>
+                                <small>Wait Time Reduction</small>
+                              </div>
+                              <div className="sens-cards">
+                                {charterCfResult.cost_sensitivity
+                                  .filter((s) => s.lever === "congestion")
+                                  .map((s) => (
+                                    <div className="sens-card" key={s.change}>
+                                      <span className="sens-change">{s.change}</span>
+                                      <div className="sens-cost">{money(s.new_cost_usd)}</div>
+                                      <span className="savings-pill">Saves {money(s.saving_usd)}</span>
+                                    </div>
+                                  ))}
+                              </div>
+                            </div>
+
+                            {/* Spot Rate Sensitivity */}
+                            <div className="sensitivity-column">
+                              <div className="sens-header">
+                                <strong>Spot Freight Rate Sensitivity</strong>
+                                <small>Prompt Market Shifts</small>
+                              </div>
+                              <div className="sens-cards">
+                                {charterCfResult.cost_sensitivity
+                                  .filter((s) => s.lever === "spot_rate")
+                                  .map((s) => (
+                                    <div className="sens-card" key={s.change}>
+                                      <span className="sens-change">{s.change}</span>
+                                      <div className="sens-cost">{money(s.new_cost_usd)}</div>
+                                      <span className="savings-pill">Saves {money(s.saving_usd)}</span>
+                                    </div>
+                                  ))}
+                              </div>
+                            </div>
+                          </div>
+
+                          <div className="cf-note-card" style={{ marginTop: "1rem" }}>
+                            <strong>Design Rationale & Integrity Note:</strong>
+                            <p>{charterCfResult.note}</p>
+                          </div>
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </div>
               )}
@@ -1432,6 +2189,91 @@ function App() {
                         <small>{score >= 70 ? "High exposure" : score >= 45 ? "Moderate exposure" : "Lower exposure"}</small>
                       </div>
                     ))}
+                  </div>
+
+                  {/* Counterfactual Risk Explanations (Layer 6) */}
+                  <div style={{ marginTop: "2rem", borderTop: "1px solid var(--gov-border)", paddingTop: "1.5rem" }}>
+                    <div className="section-title">
+                      <span className="eyebrow">Layer 6 Explainability · Systematic Perturbation Search</span>
+                      <h4>Counterfactual Risk Levers & Decision Drivers</h4>
+                      <small style={{ color: "var(--gov-muted)" }}>
+                        Answers: <em>"What is the smallest realistic change that would flip or resolve this route risk?"</em>
+                      </small>
+                    </div>
+
+                    {riskCfLoading && <p style={{ color: "var(--gov-muted)", marginTop: "0.5rem" }}>Calculating smallest lever perturbations...</p>}
+                    {riskCfError && <ErrorPanel message={riskCfError} />}
+
+                    {!riskCfLoading && riskCfResult && (
+                      <div style={{ marginTop: "1rem" }}>
+                        <div className="cf-banner">
+                          <div className="cf-banner-badge">PRIMARY LEVER: {riskCfResult.biggest_lever.toUpperCase()}</div>
+                          <div className="cf-banner-text">{riskCfResult.summary_insight}</div>
+                        </div>
+
+                        <div className="table-wrap" style={{ marginTop: "1rem" }}>
+                          <table>
+                            <thead>
+                              <tr>
+                                <th>Rank</th>
+                                <th>Risk Factor Lever</th>
+                                <th>Current Score</th>
+                                <th>If Resolved (10.0 Floor)</th>
+                                <th>Overall Drop</th>
+                                <th>Impact Share</th>
+                                <th>Action</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {riskCfResult.counterfactuals.map((cf, idx) => (
+                                <tr key={cf.factor}>
+                                  <td><strong>#{idx + 1}</strong></td>
+                                  <td>
+                                    <span className={`factor-badge factor-${cf.factor}`}>
+                                      {cf.factor.toUpperCase()}
+                                    </span>
+                                  </td>
+                                  <td><strong>{cf.current_score.toFixed(1)}/100</strong></td>
+                                  <td>
+                                    <span style={{ color: "#0284c7", fontWeight: 700 }}>
+                                      {cf.if_resolved_overall_becomes.toFixed(1)}/100
+                                    </span>
+                                  </td>
+                                  <td>
+                                    <span className="delta-drop-pill">
+                                      -{cf.overall_drops_by.toFixed(1)} pts
+                                    </span>
+                                  </td>
+                                  <td>
+                                    <div className="progress-bar-cf">
+                                      <div
+                                        className="progress-fill-cf"
+                                        style={{
+                                          width: `${Math.min(100, Math.max(10, (cf.overall_drops_by / (riskCfResult.counterfactuals[0]?.overall_drops_by || 1)) * 100))}%`,
+                                        }}
+                                      />
+                                    </div>
+                                  </td>
+                                  <td>
+                                    <button
+                                      type="button"
+                                      className="small-action-btn"
+                                      onClick={() => {
+                                        setActiveTab("counterfactual");
+                                        setCfMode("sandbox");
+                                        setRiskOverrides((prev) => ({ ...prev, [cf.factor]: 10.0 }));
+                                      }}
+                                    >
+                                      Simulate Resolution →
+                                    </button>
+                                  </td>
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </>
               )}
@@ -1736,6 +2578,9 @@ function App() {
                   <AuditTimeline />
                 </>
               )}
+
+              {/* OPTIONAL testnet anchoring of the decision_events chain (needs internet) */}
+              <AnchorStatus />
             </section>
           </div>
         )}

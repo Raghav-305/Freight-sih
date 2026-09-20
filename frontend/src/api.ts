@@ -1,7 +1,7 @@
 // Thin typed client over the reference backend. One file, no framework
 // lock-in -- swap BASE_URL for an env var once Raghav wires real config.
 
-export const BASE_URL = (import.meta.env.VITE_API_BASE_URL ?? "").replace("localhost", "127.0.0.1").replace(/\/$/, "");
+export const BASE_URL = (import.meta.env.VITE_API_BASE_URL || "http://127.0.0.1:8000").replace("localhost", "127.0.0.1").replace(/\/$/, "");
 
 async function req<T>(path: string, init?: RequestInit): Promise<T> {
   const res = await fetch(`${BASE_URL}${path}`, {
@@ -55,3 +55,17 @@ export const reportUrl = (id: string, format: "pdf" | "xlsx") => `${BASE_URL}/ap
 
 // ---- Pillar 5: Command Center ----
 export const getCommandCenterSummary = () => req("/api/command-center/summary");
+
+// ---- Layer 6: Counterfactual Explanations & Sensitivity ----
+export const explainRisk = (body: unknown) =>
+  req("/api/counterfactual/risk", { method: "POST", body: JSON.stringify(body) });
+
+export const explainCharter = (body: unknown) =>
+  req("/api/counterfactual/charter", { method: "POST", body: JSON.stringify(body) });
+
+export const simulateRiskWhatIf = (body: unknown) =>
+  req("/api/counterfactual/risk/simulate", { method: "POST", body: JSON.stringify(body) });
+
+export const simulateCharterWhatIf = (body: unknown) =>
+  req("/api/counterfactual/charter/simulate", { method: "POST", body: JSON.stringify(body) });
+

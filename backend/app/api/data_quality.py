@@ -11,8 +11,8 @@ router = APIRouter(tags=["data-quality"])
 
 TARGET_DATASETS = [
     {"name": "Processed Model Features", "path": "data/processed/model_data.csv", "type": "model_features"},
-    {"name": "Port Master & Constraints", "path": "data/raw/ports/new_port_constraints.csv", "type": "reference"},
-    {"name": "Vessel Fleet Master", "path": "data/raw/ports/new_vessels.csv", "type": "reference"},
+    {"name": "Port Master & Constraints", "path": "data/raw/ports/new_port_constraints.csv", "data_alt": "data/raw/ports/port_constraints.csv", "type": "reference"},
+    {"name": "Vessel Fleet Master", "path": "data/raw/ports/new_vessels.csv", "data_alt": "data/raw/ports/vessels.csv", "type": "reference"},
     {"name": "Port Congestion Lookup", "path": "data/raw/congestion/monthly_lookup.csv", "type": "operational"},
     {"name": "Market Intelligence Features", "path": "data/features/market_intelligence/market_intelligence_latest.csv", "type": "intelligence"},
     {"name": "Vessel AIS Intelligence", "data_alt": "data/raw/vessel_intelligence/vessel_intelligence_daily.csv", "path": "data/raw/vessel_intelligence/vessel_intelligence_daily.csv", "type": "telemetry"},

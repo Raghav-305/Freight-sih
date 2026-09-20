@@ -11,3 +11,6 @@ scikit-learn==1.7.1
 xgboost==3.0.4
 joblib==1.5.1
 shap==0.48.0
+
+# Optional: external audit anchoring on Polygon Amoy testnet (needs internet + web3). See docs/AUDIT_ANCHORING.md
+web3>=7.0,<9

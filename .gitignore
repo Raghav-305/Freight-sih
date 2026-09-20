@@ -10,7 +10,7 @@
 *.p12
 
 # ----------------------------
-# Python runtime and tooling
+# Python runtime, caches, and tooling
 # ----------------------------
 __pycache__/
 *.py[cod]
@@ -30,105 +30,17 @@ htmlcov/
 venv/
 env/
 ENV/
+**/venv/
+**/.venv/
 
 # ----------------------------
 # Node / frontend build output
 # ----------------------------
 node_modules/
-frontend/node_modules/
+**/node_modules/
 frontend/dist/
 .vite/
 coverage/
-
-# ----------------------------
-# Databases and local state
-# ----------------------------
-*.db
-*.sqlite
-*.sqlite3
-*.log
-*.pid
-
-# ----------------------------
-# Project data folders
-# ----------------------------
-# Ignore all CSV data files
-*.csv
-**/*.csv
-
-# Ignore generated/raw large data by default
-/data/raw/**
-/data/clean/**
-/data/processed/**
-/data/features/**
-/data/fixtures/**
-/data/charter_strategy/**
-
-# Keep minimal repo-readable files
-!data/README.md
-!data/raw/.gitkeep
-!data/clean/.gitkeep
-!data/processed/.gitkeep
-!data/features/.gitkeep
-!data/fixtures/.gitkeep
-
-# ----------------------------
-# ML artifacts
-# ----------------------------
-ml/artifacts/**
-ml/evaluation/**
-ml/explainability/**
-ml/preprocessing/**
-ml/features/**
-ml/results/**
-ml/mlruns/
-
-!ml/evaluation/
-!ml/evaluation/README.md
-!ml/evaluation/**/*.py
-!ml/explainability/
-!ml/explainability/README.md
-!ml/explainability/**/*.py
-
-# Keep the model registry and minimal scaffolding docs
-!ml/registry/
-!ml/registry/model_registry.json
-!ml/registry/.gitkeep
-
-# Ignore large binaries commonly produced by ML work
-*.pkl
-*.joblib
-*.model
-*.bin
-*.onnx
-*.pt
-*.h5
-*.hdf5
-*.ckpt
-
-# Trained project models are committed for team handoff.
-!ml/models/
-!ml/models/**
-
-# ----------------------------
-# Jupyter / notebooks
-# ----------------------------
-*.ipynb
-!AI-FREIGHT/notebooks/*.ipynb
-!ml/notebooks/
-!ml/notebooks/**/*.ipynb
-
-# ----------------------------
-# Legacy / scratch / generated project files
-# ----------------------------
-AI-FREIGHT/venv/
-AI-FREIGHT/.ipynb_checkpoints/
-AI-FREIGHT/data/**
-AI-FREIGHT/models/**
-AI-FREIGHT/results/**
-AI-FREIGHT/notebooks/**
-AI-FREIGHT/*.py
-AI-FREIGHT/*.ipynb
 
 # ----------------------------
 # OS / editor folders
@@ -156,16 +68,12 @@ temp/
 *.bak
 *.orig
 *.rej
-
-# Keep useful repo docs visible
-!README.md
-!README_TO_FILL.md
-!docs/**
-!public/docs/**
+*.log
+*.pid
 
 # ----------------------------
-# Exclude all CSV files from git commits
+# Large files exceeding GitHub's 100MB file limit
+# (data/raw/vessel_intelligence/vessel_intelligence_daily.csv is ~324MB)
 # ----------------------------
-*.csv
-**/*.csv
-
+data/raw/vessel_intelligence/vessel_intelligence_daily.csv
+**/vessel_intelligence_daily.csv

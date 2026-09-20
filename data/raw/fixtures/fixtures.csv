@@ -1,0 +1,1513 @@
+Date,Vessel,DWT,Origin,Destination,Cargo,Quantity,Rate,Laycan,Contract type
+2022-09-17,Trade Venture,81076,Taboneo,Vizag,Coal,71929,10.58,2022-10-04/2022-10-08,Spot
+2025-08-02,Global Voyager,79306,Novorossiysk (Black Sea),Haldia,Coal,70171,20.31,2025-08-18/2025-08-22,Time Charter
+2021-10-22,Atlantic Pride,79658,Gladstone,Gangavaram,Coal,75763,17.36,2021-11-10/2021-11-13,Spot
+2022-09-17,Global Eagle,158451,Novorossiysk (Black Sea),Haldia,Coal,137465,22.7,2022-09-26/2022-10-01,COA
+2022-07-19,Blue Phoenix,178486,Novorossiysk (Black Sea),Haldia,Coal,153090,22.45,2022-08-07/2022-08-13,Time Charter
+2022-10-17,Cape Pride,178305,New Orleans,Gangavaram,Coal,154305,29.5,2022-10-24/2022-10-28,Spot
+2024-06-08,Atlantic Phoenix,168300,Samarinda,Vizag,Coal,143630,10.89,2024-06-18/2024-06-22,Time Charter
+2025-03-05,Atlantic Horizon,168170,Muara Pantai,Dhamra,Coal,148533,9.66,2025-03-26/2025-04-01,Spot
+2025-10-31,Golden Eagle,81443,Ust-Luga (Baltic),Dhamra,Coal,71604,20.9,2025-11-16/2025-11-23,Time Charter
+2023-10-12,Royal Pioneer,174856,Nacala,Gopalpur,Coal,165957,19.93,2023-11-02/2023-11-06,Time Charter
+2024-01-10,Royal Eagle,79177,Dalrymple Bay,Haldia,Coal,68940,16.29,2024-01-24/2024-01-30,Spot
+2024-04-09,Southern Glory,80815,Hampton Roads,Paradip,Coal,72119,29.99,2024-04-27/2024-04-30,Time Charter
+2023-01-15,Star Legacy,79196,Hampton Roads,Gangavaram,Coal,67796,36.37,2023-01-26/2023-01-31,Time Charter
+2024-07-08,Northern Eagle,76504,Dalrymple Bay,Gopalpur,Coal,70451,15.89,2024-07-28/2024-08-04,Spot
+2020-01-31,Silver Harmony,77699,Dalrymple Bay,Vizag,Coal,67972,16.43,2020-02-14/2020-02-18,Time Charter
+2021-03-26,Bay Discovery,164283,Vostochny (Far East),Gopalpur,Coal,155806,23.64,2021-04-16/2021-04-21,Spot
+2020-03-31,Blue Falcon,76129,Baltimore,Dhamra,Coal,69810,30.64,2020-04-18/2020-04-21,Spot
+2022-11-16,Southern Navigator,170854,Samarinda,Vizag,Coal,160470,9.63,2022-11-27/2022-12-04,Spot
+2020-04-30,Golden Glory,81575,Ust-Luga (Baltic),Vizag,Coal,78189,24.27,2020-05-09/2020-05-14,Spot
+2025-05-04,Pacific Endeavour,170381,Taboneo,Paradip,Coal,151379,11.89,2025-05-14/2025-05-19,Spot
+2021-12-21,Atlantic Discovery,170309,Muara Pantai,Vizag,Coal,147904,11.18,2022-01-10/2022-01-17,Spot
+2023-11-11,Atlantic Trader,78931,Ust-Luga (Baltic),Paradip,Coal,68447,24.82,2023-11-29/2023-12-03,Spot
+2023-04-15,Northern Horizon,161482,Baltimore,Gangavaram,Coal,139923,29.91,2023-04-22/2023-04-25,Time Charter
+2024-02-09,Western Progress,78179,Newcastle,Gopalpur,Coal,69695,16.66,2024-02-26/2024-03-01,Spot
+2025-01-04,Coral Venture,75093,Muara Pantai,Gangavaram,Coal,71681,10.73,2025-01-20/2025-01-23,Time Charter
+2022-02-19,Ocean Discovery,155557,Taboneo,Haldia,Coal,135395,10.13,2022-03-07/2022-03-12,COA
+2020-04-30,Western Endeavour,152743,Newcastle,Paradip,Coal,143488,16.58,2020-05-11/2020-05-14,Spot
+2024-11-05,Western Legacy,178108,Baltimore,Paradip,Coal,170968,33.12,2024-11-23/2024-11-29,Time Charter
+2021-10-22,Sea Legacy,76705,Baltimore,Gopalpur,Coal,72630,31.55,2021-11-07/2021-11-14,COA
+2025-04-04,Silver Harmony,162382,Hay Point,Haldia,Coal,138229,16.41,2025-04-11/2025-04-15,Spot
+2020-01-31,Star Endeavour,76098,Beira,Gopalpur,Coal,68753,22.38,2020-02-11/2020-02-14,Spot
+2020-08-28,Ocean Pioneer,80969,Samarinda,Dhamra,Coal,75690,9.49,2020-09-09/2020-09-12,Spot
+2021-02-24,Grand Navigator,79905,Novorossiysk (Black Sea),Gangavaram,Coal,77090,23.84,2021-03-12/2021-03-17,Spot
+2021-02-24,Southern Navigator,171917,Nacala,Dhamra,Coal,159509,19.77,2021-03-16/2021-03-23,Spot
+2021-11-21,Eastern Fortune,80495,New Orleans,Dhamra,Coal,72503,34.07,2021-12-11/2021-12-14,Spot
+2025-03-05,Pacific Eagle,80570,Taboneo,Haldia,Coal,77835,8.06,2025-03-18/2025-03-23,Spot
+2020-03-01,Cape Legacy,79124,Muara Pantai,Paradip,Coal,75053,12.55,2020-03-08/2020-03-13,Spot
+2024-11-05,Global Trader,168301,Muara Pantai,Gangavaram,Coal,148341,10.94,2024-11-15/2024-11-19,Spot
+2024-08-07,Royal Discovery,171434,Nacala,Vizag,Coal,166029,21.91,2024-08-19/2024-08-23,Spot
+2022-03-21,Grand Harmony,181632,Novorossiysk (Black Sea),Paradip,Coal,157974,21.54,2022-03-30/2022-04-02,Time Charter
+2024-02-09,Southern Voyager,159413,Vostochny (Far East),Dhamra,Coal,141137,22.51,2024-02-25/2024-03-01,Time Charter
+2021-03-26,Blue Legacy,173338,Taboneo,Dhamra,Coal,160614,10.79,2021-04-13/2021-04-17,Time Charter
+2025-06-03,Sea Phoenix,160316,Dalrymple Bay,Haldia,Coal,149512,14.47,2025-06-22/2025-06-26,Spot
+2021-12-21,Trade Discovery,181844,Taboneo,Haldia,Coal,158791,11.06,2021-12-28/2022-01-04,Spot
+2023-12-11,Silver Horizon,81002,Hampton Roads,Gangavaram,Coal,71318,37.34,2023-12-20/2023-12-26,Spot
+2025-01-04,Trade Harmony,173637,Ust-Luga (Baltic),Dhamra,Coal,156452,23.63,2025-01-22/2025-01-25,Spot
+2025-07-03,Crown Horizon,163956,Nacala,Paradip,Coal,156176,20.76,2025-07-19/2025-07-25,Spot
+2021-04-25,Cape Pride,164144,Gladstone,Vizag,Coal,156495,16.87,2021-05-11/2021-05-18,Spot
+2025-10-01,Golden Phoenix,75539,New Orleans,Vizag,Coal,65883,32.44,2025-10-09/2025-10-15,COA
+2024-12-05,Pacific Harmony,154379,Gladstone,Vizag,Coal,146775,15.39,2024-12-22/2024-12-25,Spot
+2020-01-31,Southern Trader,81095,Vostochny (Far East),Paradip,Coal,72129,22.78,2020-02-13/2020-02-19,Spot
+2024-11-05,Southern Horizon,165238,Samarinda,Vizag,Coal,146541,10.87,2024-11-16/2024-11-23,COA
+2020-05-30,Bay Discovery,76987,Vostochny (Far East),Haldia,Coal,74078,18.2,2020-06-19/2020-06-26,Spot
+2025-04-04,Royal Discovery,77645,Beira,Haldia,Coal,66333,22.2,2025-04-13/2025-04-17,COA
+2025-09-01,Southern Discovery,78194,New Orleans,Haldia,Coal,70332,30.16,2025-09-08/2025-09-15,Spot
+2021-01-25,Bay Phoenix,77349,Nacala,Paradip,Coal,72643,20.06,2021-02-13/2021-02-17,Spot
+2023-05-15,Star Harmony,77934,Hampton Roads,Gangavaram,Coal,73902,35.57,2023-05-28/2023-06-02,Spot
+2025-02-03,Southern Venture,175397,Baltimore,Paradip,Coal,165830,34.65,2025-02-23/2025-02-26,Spot
+2020-03-31,Eastern Phoenix,74574,Beira,Gopalpur,Coal,69193,18.81,2020-04-17/2020-04-23,Spot
+2023-08-13,Ocean Phoenix,164376,Beira,Gangavaram,Coal,156238,21.24,2023-09-03/2023-09-06,COA
+2024-09-06,Global Progress,177564,Novorossiysk (Black Sea),Paradip,Coal,154775,20.44,2024-09-14/2024-09-18,Spot
+2020-11-26,Golden Spirit,76500,Hampton Roads,Gangavaram,Coal,65973,35.82,2020-12-13/2020-12-19,Spot
+2024-07-08,Western Falcon,163079,Nacala,Haldia,Coal,152555,25.41,2024-07-27/2024-07-31,COA
+2023-01-15,Trade Voyager,173435,Hampton Roads,Haldia,Coal,155583,30.7,2023-01-24/2023-01-31,Spot
+2022-06-19,Trade Eagle,80946,Beira,Gangavaram,Coal,69081,18.8,2022-06-29/2022-07-03,COA
+2025-04-04,Pacific Phoenix,75104,Newcastle,Vizag,Coal,67339,16.69,2025-04-18/2025-04-23,Spot
+2025-06-03,Golden Eagle,80850,Hay Point,Gangavaram,Coal,73944,14.9,2025-06-14/2025-06-20,Spot
+2022-05-20,Bay Discovery,173588,Newcastle,Dhamra,Coal,149595,14.75,2022-06-04/2022-06-09,COA
+2020-07-29,Bay Harmony,78302,Taboneo,Gangavaram,Coal,67764,11.42,2020-08-06/2020-08-11,COA
+2023-08-13,Coral Harmony,166916,Gladstone,Vizag,Coal,143294,15.74,2023-08-25/2023-08-28,Spot
+2025-03-05,Royal Harmony,75995,Vostochny (Far East),Dhamra,Coal,71971,25.81,2025-03-24/2025-03-27,Time Charter
+2023-06-14,Cape Pioneer,81280,Newcastle,Paradip,Coal,76068,16.09,2023-06-25/2023-07-01,Time Charter
+2024-12-05,Eastern Eagle,179798,Ust-Luga (Baltic),Gangavaram,Coal,171229,27.75,2024-12-24/2024-12-28,Time Charter
+2022-03-21,Crown Phoenix,79504,Nacala,Gangavaram,Coal,69453,23.29,2022-04-01/2022-04-05,Time Charter
+2023-12-11,Coral Harmony,77040,Dalrymple Bay,Gangavaram,Coal,73174,15.29,2023-12-19/2023-12-22,Spot
+2023-04-15,Eastern Venture,76251,Taboneo,Paradip,Coal,67487,10.41,2023-05-06/2023-05-11,COA
+2022-10-17,Silver Venture,77682,Novorossiysk (Black Sea),Gangavaram,Coal,66595,22.77,2022-10-27/2022-11-02,Time Charter
+2025-05-04,Atlantic Horizon,154398,Nacala,Gangavaram,Coal,139609,20.16,2025-05-19/2025-05-25,Spot
+2021-08-23,Cape Pride,160061,Newcastle,Vizag,Coal,150210,15.28,2021-08-31/2021-09-03,Spot
+2024-09-06,Northern Horizon,156159,Nacala,Vizag,Coal,134807,22.58,2024-09-22/2024-09-29,Spot
+2021-12-21,Global Voyager,75693,Muara Pantai,Haldia,Coal,70571,8.95,2022-01-09/2022-01-16,Spot
+2021-03-26,Golden Legacy,175987,Samarinda,Gopalpur,Coal,150831,9.25,2021-04-13/2021-04-19,Spot
+2023-04-15,Cape Pride,76120,Nacala,Gangavaram,Coal,72980,17.65,2023-04-30/2023-05-06,Spot
+2025-03-05,Silver Spirit,179061,Taboneo,Haldia,Coal,154463,10.15,2025-03-21/2025-03-25,Spot
+2020-01-31,Western Endeavour,76490,Novorossiysk (Black Sea),Gopalpur,Coal,69153,22.85,2020-02-18/2020-02-22,Spot
+2021-09-22,Bay Falcon,80860,Vostochny (Far East),Paradip,Coal,77844,21.71,2021-10-03/2021-10-08,Time Charter
+2024-09-06,Cape Spirit,172140,Ust-Luga (Baltic),Gangavaram,Coal,160553,21.93,2024-09-13/2024-09-16,Spot
+2020-10-27,Southern Progress,179869,Novorossiysk (Black Sea),Gopalpur,Coal,171681,24.96,2020-11-12/2020-11-17,Spot
+2025-09-01,Global Endeavour,81501,Taboneo,Paradip,Coal,75816,11.98,2025-09-16/2025-09-20,Spot
+2025-08-02,Star Fortune,79132,Muara Pantai,Haldia,Coal,76679,10.64,2025-08-09/2025-08-14,Time Charter
+2023-02-14,Grand Endeavour,80897,Beira,Dhamra,Coal,78095,23.44,2023-03-07/2023-03-11,Spot
+2024-11-05,Ocean Voyager,77045,Beira,Gopalpur,Coal,72469,23.5,2024-11-19/2024-11-22,Spot
+2024-12-05,Golden Voyager,172157,Baltimore,Gopalpur,Coal,155276,33.4,2024-12-12/2024-12-17,Spot
+2025-05-04,Ocean Venture,79846,Taboneo,Vizag,Coal,75002,10.43,2025-05-20/2025-05-23,COA
+2024-04-09,Global Navigator,74888,Gladstone,Dhamra,Coal,69097,14.3,2024-04-25/2024-04-30,COA
+2020-03-01,Pacific Pioneer,172158,Taboneo,Dhamra,Coal,152306,10.69,2020-03-14/2020-03-20,Spot
+2023-02-14,Ocean Endeavour,150416,Gladstone,Gangavaram,Coal,130806,17.76,2023-03-01/2023-03-08,Spot
+2021-07-24,Northern Pride,75729,Dalrymple Bay,Dhamra,Coal,67848,14.75,2021-08-03/2021-08-06,Spot
+2024-06-08,Southern Legacy,181336,Beira,Dhamra,Coal,167214,22.77,2024-06-16/2024-06-23,Spot
+2024-07-08,Grand Venture,74691,Hay Point,Paradip,Coal,66235,18.44,2024-07-23/2024-07-26,Spot
+2024-04-09,Ocean Venture,161373,Beira,Dhamra,Coal,149618,19.85,2024-04-16/2024-04-23,Spot
+2023-07-14,Star Trader,176967,Samarinda,Gangavaram,Coal,164853,11.47,2023-07-28/2023-08-02,Spot
+2023-07-14,Golden Pride,155595,Beira,Dhamra,Coal,133147,20.22,2023-07-28/2023-08-04,Spot
+2024-06-08,Atlantic Horizon,180908,New Orleans,Paradip,Coal,162130,33.32,2024-06-15/2024-06-20,COA
+2023-09-12,Global Pride,79868,Gladstone,Paradip,Coal,75219,18.81,2023-09-23/2023-09-29,Spot
+2025-02-03,Sea Glory,166997,Vostochny (Far East),Dhamra,Coal,161843,20.88,2025-02-16/2025-02-23,Spot
+2024-07-08,Blue Horizon,79344,Hampton Roads,Paradip,Coal,76732,30.62,2024-07-20/2024-07-26,COA
+2025-09-01,Crown Trader,77264,New Orleans,Paradip,Coal,67579,34.2,2025-09-15/2025-09-19,Time Charter
+2023-08-13,Northern Pride,151746,Samarinda,Dhamra,Coal,139520,9.36,2023-08-25/2023-08-31,COA
+2025-05-04,Ocean Horizon,77910,Samarinda,Gangavaram,Coal,75043,8.06,2025-05-17/2025-05-20,Spot
+2021-05-25,Global Eagle,75640,Newcastle,Paradip,Coal,71314,16.16,2021-06-15/2021-06-20,COA
+2020-01-01,Northern Falcon,78316,Nacala,Gopalpur,Coal,68243,22.3,2020-01-17/2020-01-20,Time Charter
+2021-05-25,Royal Harmony,79440,Hampton Roads,Dhamra,Coal,75298,30.92,2021-06-14/2021-06-21,Spot
+2024-05-09,Bay Pioneer,161073,Ust-Luga (Baltic),Dhamra,Coal,154308,23.88,2024-05-26/2024-05-29,Spot
+2022-05-20,Sea Endeavour,159124,Ust-Luga (Baltic),Paradip,Coal,145111,23.5,2022-06-09/2022-06-16,Spot
+2024-08-07,Atlantic Falcon,78904,Samarinda,Gopalpur,Coal,70914,9.83,2024-08-26/2024-08-31,Spot
+2022-11-16,Cape Navigator,79141,Beira,Paradip,Coal,75950,21.39,2022-12-03/2022-12-06,Spot
+2020-07-29,Silver Horizon,78269,Taboneo,Dhamra,Coal,66853,12.02,2020-08-07/2020-08-11,Spot
+2024-05-09,Western Progress,75226,Samarinda,Haldia,Coal,70747,10.51,2024-05-23/2024-05-29,Spot
+2023-08-13,Western Phoenix,74110,New Orleans,Vizag,Coal,63062,29.97,2023-08-27/2023-09-01,Spot
+2020-06-29,Trade Venture,77877,Nacala,Dhamra,Coal,73942,19.85,2020-07-15/2020-07-21,Time Charter
+2023-01-15,Eastern Spirit,176304,Samarinda,Haldia,Coal,162997,11.18,2023-02-05/2023-02-12,Spot
+2020-04-30,Coral Progress,166760,Ust-Luga (Baltic),Gangavaram,Coal,150990,20.49,2020-05-21/2020-05-28,Time Charter
+2023-08-13,Cape Progress,174473,Taboneo,Vizag,Coal,153689,10.29,2023-09-02/2023-09-09,Spot
+2020-01-01,Atlantic Pioneer,155903,Ust-Luga (Baltic),Paradip,Coal,146190,21.37,2020-01-08/2020-01-11,Time Charter
+2023-03-16,Coral Legacy,150364,Novorossiysk (Black Sea),Gangavaram,Coal,144758,21.05,2023-04-02/2023-04-06,Spot
+2025-01-04,Silver Venture,77048,Beira,Gangavaram,Coal,70013,23.36,2025-01-22/2025-01-27,COA
+2020-09-27,Eastern Phoenix,80116,Hampton Roads,Dhamra,Coal,69457,31.59,2020-10-14/2020-10-19,Time Charter
+2025-10-01,Cape Discovery,179871,New Orleans,Dhamra,Coal,167063,36.96,2025-10-18/2025-10-25,Time Charter
+2021-07-24,Ocean Endeavour,77197,Samarinda,Gangavaram,Coal,70452,10.79,2021-08-03/2021-08-08,Spot
+2023-11-11,Western Legacy,77530,Ust-Luga (Baltic),Haldia,Coal,67541,21.56,2023-11-22/2023-11-28,Spot
+2023-01-15,Crown Fortune,155761,Novorossiysk (Black Sea),Paradip,Coal,150959,21.88,2023-01-31/2023-02-04,Time Charter
+2020-10-27,Royal Pride,178668,Baltimore,Vizag,Coal,160707,30.6,2020-11-09/2020-11-14,Spot
+2025-06-03,Southern Legacy,75190,Samarinda,Dhamra,Coal,67239,9.41,2025-06-21/2025-06-28,Time Charter
+2025-08-02,Ocean Progress,167031,Nacala,Haldia,Coal,155589,19.32,2025-08-22/2025-08-29,Spot
+2020-01-01,Star Progress,180662,Taboneo,Vizag,Coal,159778,11.62,2020-01-11/2020-01-16,Spot
+2022-08-18,Trade Venture,171802,New Orleans,Gopalpur,Coal,164776,36.71,2022-08-26/2022-08-29,Time Charter
+2024-11-05,Blue Harmony,157674,Ust-Luga (Baltic),Paradip,Coal,141565,21.14,2024-11-16/2024-11-22,Spot
+2022-01-20,Western Eagle,74780,Muara Pantai,Haldia,Coal,64851,9.89,2022-02-08/2022-02-13,COA
+2021-02-24,Star Progress,169989,Beira,Vizag,Coal,150539,20.85,2021-03-15/2021-03-18,Spot
+2020-01-31,Global Trader,79023,Vostochny (Far East),Vizag,Coal,68135,23.85,2020-02-15/2020-02-20,Spot
+2021-09-22,Sea Navigator,178223,New Orleans,Paradip,Coal,160198,33.78,2021-09-30/2021-10-07,Spot
+2025-05-04,Northern Voyager,169416,Hay Point,Haldia,Coal,148426,17.5,2025-05-23/2025-05-26,Spot
+2021-06-24,Atlantic Pride,75631,Samarinda,Haldia,Coal,69550,11.81,2021-07-08/2021-07-14,Spot
+2021-09-22,Golden Trader,76456,Gladstone,Gangavaram,Coal,66828,18.21,2021-10-07/2021-10-11,Spot
+2024-07-08,Eastern Discovery,168947,New Orleans,Dhamra,Coal,163177,28.3,2024-07-17/2024-07-20,Spot
+2024-09-06,Western Navigator,164577,Dalrymple Bay,Vizag,Coal,150760,14.71,2024-09-14/2024-09-18,Spot
+2022-04-20,Trade Endeavour,79838,Dalrymple Bay,Dhamra,Coal,70760,16.66,2022-05-05/2022-05-09,Spot
+2025-06-03,Royal Legacy,176521,Beira,Gangavaram,Coal,150954,22.58,2025-06-13/2025-06-17,Spot
+2020-07-29,Bay Trader,151523,Taboneo,Haldia,Coal,140288,11.54,2020-08-06/2020-08-13,Spot
+2025-02-03,Sea Discovery,74532,Beira,Paradip,Coal,63580,21.76,2025-02-24/2025-02-28,COA
+2025-02-03,Southern Falcon,180625,Beira,Vizag,Coal,153742,19.83,2025-02-22/2025-03-01,COA
+2024-07-08,Sea Endeavour,179985,Taboneo,Gopalpur,Coal,153561,10.18,2024-07-15/2024-07-22,COA
+2020-10-27,Sea Spirit,152261,Samarinda,Vizag,Coal,144408,8.95,2020-11-03/2020-11-06,Spot
+2020-06-29,Western Legacy,76732,Samarinda,Dhamra,Coal,72542,10.42,2020-07-09/2020-07-15,Spot
+2021-04-25,Golden Progress,74526,Hay Point,Dhamra,Coal,71792,15.71,2021-05-04/2021-05-07,COA
+2023-04-15,Southern Spirit,75604,Muara Pantai,Gopalpur,Coal,65046,12.81,2023-05-03/2023-05-10,Spot
+2025-10-01,Sea Spirit,174385,Ust-Luga (Baltic),Gangavaram,Coal,163898,22.37,2025-10-10/2025-10-16,Time Charter
+2020-10-27,Atlantic Voyager,178460,Ust-Luga (Baltic),Haldia,Coal,164979,20.9,2020-11-07/2020-11-14,Spot
+2022-02-19,Eastern Harmony,159053,Ust-Luga (Baltic),Gangavaram,Coal,149942,19.41,2022-03-07/2022-03-13,Time Charter
+2021-07-24,Global Eagle,75992,Baltimore,Dhamra,Coal,69482,34.16,2021-08-14/2021-08-17,Spot
+2020-08-28,Ocean Fortune,74834,New Orleans,Dhamra,Coal,69184,34.09,2020-09-04/2020-09-09,Spot
+2022-03-21,Crown Legacy,151411,Samarinda,Gangavaram,Coal,128713,9.66,2022-03-31/2022-04-04,COA
+2024-12-05,Crown Pride,77061,Gladstone,Haldia,Coal,66591,17.77,2024-12-25/2025-01-01,Spot
+2023-12-11,Global Legacy,77586,Nacala,Vizag,Coal,67525,21.48,2023-12-20/2023-12-24,Spot
+2022-06-19,Silver Falcon,179563,Nacala,Vizag,Coal,158831,17.19,2022-06-28/2022-07-04,Spot
+2025-06-03,Golden Harmony,75058,Taboneo,Haldia,Coal,70605,10.98,2025-06-16/2025-06-21,Time Charter
+2022-07-19,Atlantic Eagle,179795,Vostochny (Far East),Dhamra,Coal,172635,18.45,2022-08-08/2022-08-12,Spot
+2020-11-26,Bay Spirit,80760,Novorossiysk (Black Sea),Haldia,Coal,70740,23.95,2020-12-13/2020-12-20,Time Charter
+2020-09-27,Pacific Navigator,166175,Newcastle,Gopalpur,Coal,153431,17.14,2020-10-08/2020-10-12,COA
+2025-05-04,Crown Progress,75669,Beira,Haldia,Coal,66604,23.07,2025-05-20/2025-05-27,COA
+2022-04-20,Star Falcon,81473,Taboneo,Haldia,Coal,69600,10.52,2022-05-11/2022-05-16,Time Charter
+2021-10-22,Eastern Falcon,81708,Baltimore,Haldia,Coal,76010,28.71,2021-11-09/2021-11-14,Spot
+2024-04-09,Silver Progress,175877,Samarinda,Dhamra,Coal,165729,10.72,2024-04-27/2024-05-04,Time Charter
+2022-02-19,Pacific Horizon,78953,Taboneo,Haldia,Coal,70208,11.62,2022-03-04/2022-03-08,COA
+2022-06-19,Bay Discovery,175660,Beira,Paradip,Coal,165349,23.23,2022-07-09/2022-07-16,Spot
+2021-03-26,Grand Horizon,181803,Muara Pantai,Paradip,Coal,171705,10.65,2021-04-14/2021-04-21,Time Charter
+2021-09-22,Southern Fortune,160724,Hampton Roads,Gangavaram,Coal,150594,32.23,2021-10-07/2021-10-10,COA
+2020-12-26,Crown Falcon,76408,Vostochny (Far East),Gangavaram,Coal,71809,22.48,2021-01-09/2021-01-14,Spot
+2025-04-04,Crown Eagle,164544,Samarinda,Haldia,Coal,146713,10.22,2025-04-13/2025-04-19,COA
+2025-04-04,Ocean Harmony,80991,Muara Pantai,Dhamra,Coal,76901,10.82,2025-04-24/2025-04-28,Time Charter
+2020-03-01,Southern Falcon,165969,Muara Pantai,Vizag,Coal,151798,10.74,2020-03-17/2020-03-24,COA
+2020-01-31,Global Fortune,172155,Samarinda,Vizag,Coal,160585,10.26,2020-02-08/2020-02-14,Spot
+2022-01-20,Royal Horizon,77946,Baltimore,Gopalpur,Coal,75158,28.98,2022-02-06/2022-02-09,COA
+2020-03-01,Global Venture,79342,Samarinda,Dhamra,Coal,74811,11.91,2020-03-15/2020-03-18,COA
+2023-09-12,Bay Harmony,166522,Dalrymple Bay,Gangavaram,Coal,145400,17.29,2023-10-03/2023-10-06,COA
+2023-04-15,Coral Discovery,167864,New Orleans,Haldia,Coal,148115,36.82,2023-04-23/2023-04-29,Spot
+2023-04-15,Ocean Pride,77769,Nacala,Vizag,Coal,66342,18.25,2023-04-28/2023-05-03,Time Charter
+2020-11-26,Cape Harmony,164873,Taboneo,Gopalpur,Coal,149248,8.9,2020-12-06/2020-12-09,Spot
+2021-09-22,Star Trader,79020,Hampton Roads,Haldia,Coal,75741,38.73,2021-10-06/2021-10-11,Spot
+2023-05-15,Northern Endeavour,76232,Samarinda,Haldia,Coal,71212,11.69,2023-05-31/2023-06-07,Spot
+2020-12-26,Trade Venture,156589,New Orleans,Gangavaram,Coal,139492,35.55,2021-01-05/2021-01-09,COA
+2021-06-24,Cape Progress,163447,Samarinda,Dhamra,Coal,138958,10.06,2021-07-05/2021-07-09,Time Charter
+2020-01-31,Grand Discovery,80938,Taboneo,Paradip,Coal,75039,8.96,2020-02-10/2020-02-14,Spot
+2022-01-20,Royal Legacy,78554,Taboneo,Gopalpur,Coal,72536,10.02,2022-02-07/2022-02-11,Time Charter
+2020-08-28,Northern Falcon,164869,Newcastle,Vizag,Coal,149112,15.93,2020-09-17/2020-09-21,Spot
+2025-04-04,Cape Pioneer,158407,Beira,Gopalpur,Coal,148000,17.84,2025-04-19/2025-04-23,Spot
+2023-08-13,Royal Venture,80814,Ust-Luga (Baltic),Vizag,Coal,69773,24.8,2023-08-31/2023-09-06,Time Charter
+2020-11-26,Global Horizon,155698,Samarinda,Gangavaram,Coal,145866,11.12,2020-12-04/2020-12-09,Time Charter
+2021-01-25,Southern Trader,74804,Newcastle,Paradip,Coal,70640,17.91,2021-02-11/2021-02-17,COA
+2024-04-09,Crown Spirit,81451,Samarinda,Dhamra,Coal,78750,12.53,2024-04-18/2024-04-22,Spot
+2023-03-16,Ocean Pioneer,79703,Muara Pantai,Gopalpur,Coal,74233,11.7,2023-04-04/2023-04-07,Spot
+2020-04-30,Grand Pride,75465,Taboneo,Gopalpur,Coal,67892,11.06,2020-05-20/2020-05-27,Spot
+2024-08-07,Sea Endeavour,177162,Gladstone,Haldia,Coal,163212,15.42,2024-08-22/2024-08-26,Spot
+2023-08-13,Eastern Pride,155785,Nacala,Haldia,Coal,143966,25.16,2023-08-24/2023-08-31,Spot
+2020-08-28,Grand Legacy,80341,Ust-Luga (Baltic),Gangavaram,Coal,76564,23.06,2020-09-14/2020-09-21,Spot
+2024-12-05,Atlantic Horizon,175013,Vostochny (Far East),Haldia,Coal,167682,20.56,2024-12-19/2024-12-25,Spot
+2021-10-22,Northern Phoenix,77510,Nacala,Paradip,Coal,69492,19.58,2021-11-11/2021-11-14,COA
+2020-06-29,Bay Trader,165721,Newcastle,Gangavaram,Coal,143294,14.42,2020-07-11/2020-07-15,Spot
+2020-03-01,Trade Spirit,152677,Ust-Luga (Baltic),Gopalpur,Coal,129964,24.54,2020-03-10/2020-03-13,Spot
+2023-05-15,Global Pioneer,178485,Vostochny (Far East),Vizag,Coal,160496,20.06,2023-05-25/2023-05-29,Time Charter
+2025-06-03,Grand Eagle,80668,Ust-Luga (Baltic),Vizag,Coal,77262,22.57,2025-06-12/2025-06-17,Spot
+2023-08-13,Blue Venture,77522,Nacala,Vizag,Coal,71650,24.93,2023-08-27/2023-09-02,Spot
+2020-08-28,Pacific Progress,74575,Gladstone,Gangavaram,Coal,67231,17.29,2020-09-15/2020-09-19,Spot
+2020-05-30,Crown Horizon,79031,Taboneo,Gopalpur,Coal,75162,10.85,2020-06-09/2020-06-14,Spot
+2024-11-05,Global Harmony,177063,Beira,Vizag,Coal,160452,23.29,2024-11-19/2024-11-23,COA
+2023-09-12,Coral Falcon,152457,Hay Point,Gopalpur,Coal,147749,14.68,2023-09-22/2023-09-25,Spot
+2022-01-20,Cape Phoenix,161387,New Orleans,Gopalpur,Coal,142270,30.75,2022-02-01/2022-02-08,Time Charter
+2023-08-13,Cape Legacy,76717,Muara Pantai,Vizag,Coal,71935,9.59,2023-08-21/2023-08-28,Spot
+2025-05-04,Grand Eagle,74390,Beira,Paradip,Coal,65250,20.14,2025-05-24/2025-05-31,Spot
+2021-01-25,Southern Glory,75219,Hampton Roads,Gopalpur,Coal,66097,30.72,2021-02-02/2021-02-08,Time Charter
+2024-08-07,Grand Glory,81493,Beira,Gopalpur,Coal,73144,22.78,2024-08-19/2024-08-25,Spot
+2025-06-03,Ocean Falcon,173658,Nacala,Vizag,Coal,154627,20.94,2025-06-14/2025-06-20,Spot
+2020-06-29,Blue Navigator,161340,Dalrymple Bay,Gopalpur,Coal,144151,16.41,2020-07-11/2020-07-17,COA
+2023-03-16,Trade Horizon,80130,New Orleans,Dhamra,Coal,74414,26.59,2023-03-27/2023-03-30,Spot
+2024-09-06,Trade Legacy,81829,Muara Pantai,Vizag,Coal,78858,10.3,2024-09-18/2024-09-23,Spot
+2020-03-31,Global Phoenix,175107,Vostochny (Far East),Dhamra,Coal,167953,25.75,2020-04-16/2020-04-21,Time Charter
+2023-10-12,Coral Pioneer,168117,Ust-Luga (Baltic),Vizag,Coal,143128,20.01,2023-10-19/2023-10-26,Spot
+2021-01-25,Star Discovery,75056,Beira,Haldia,Coal,64341,24.0,2021-02-06/2021-02-11,Spot
+2020-01-31,Cape Harmony,151071,Nacala,Haldia,Coal,145017,20.64,2020-02-21/2020-02-28,Spot
+2022-07-19,Trade Endeavour,171248,Newcastle,Paradip,Coal,146513,17.02,2022-07-27/2022-08-02,Spot
+2022-03-21,Coral Fortune,169139,Ust-Luga (Baltic),Vizag,Coal,163321,25.13,2022-04-05/2022-04-08,Spot
+2025-10-01,Blue Voyager,156396,Muara Pantai,Dhamra,Coal,147866,12.58,2025-10-17/2025-10-23,Spot
+2022-10-17,Sea Trader,166360,New Orleans,Vizag,Coal,155378,32.34,2022-10-31/2022-11-04,Time Charter
+2025-04-04,Trade Legacy,177051,Samarinda,Gangavaram,Coal,157233,9.35,2025-04-16/2025-04-23,Time Charter
+2020-11-26,Trade Endeavour,166641,Ust-Luga (Baltic),Gopalpur,Coal,159244,19.92,2020-12-08/2020-12-14,Spot
+2020-12-26,Southern Progress,162980,Hay Point,Paradip,Coal,139311,17.05,2021-01-16/2021-01-22,Spot
+2022-10-17,Crown Eagle,152792,Hay Point,Gangavaram,Coal,133808,16.81,2022-10-28/2022-11-02,Spot
+2025-09-01,Western Glory,181056,Beira,Gangavaram,Coal,170273,17.34,2025-09-17/2025-09-24,Time Charter
+2023-09-12,Silver Pride,81095,Beira,Paradip,Coal,78027,19.33,2023-10-02/2023-10-09,Spot
+2024-07-08,Royal Discovery,74780,Hay Point,Gangavaram,Coal,70212,17.02,2024-07-28/2024-08-03,Spot
+2024-03-10,Golden Pioneer,79001,Samarinda,Haldia,Coal,68102,10.29,2024-03-22/2024-03-26,Spot
+2020-05-30,Atlantic Venture,80320,New Orleans,Dhamra,Coal,77116,36.92,2020-06-14/2020-06-19,Spot
+2024-03-10,Coral Legacy,167753,New Orleans,Vizag,Coal,148436,30.91,2024-03-29/2024-04-02,Spot
+2023-07-14,Western Horizon,155438,Novorossiysk (Black Sea),Vizag,Coal,140994,24.0,2023-08-04/2023-08-11,COA
+2024-03-10,Crown Harmony,176909,Dalrymple Bay,Paradip,Coal,159893,18.16,2024-03-28/2024-04-03,Spot
+2022-05-20,Trade Fortune,80336,Novorossiysk (Black Sea),Vizag,Coal,72129,26.06,2022-06-10/2022-06-15,Spot
+2021-08-23,Global Harmony,77198,Novorossiysk (Black Sea),Dhamra,Coal,73810,25.51,2021-09-11/2021-09-18,Spot
+2024-07-08,Bay Fortune,151862,Newcastle,Dhamra,Coal,134109,15.48,2024-07-29/2024-08-03,Time Charter
+2023-05-15,Silver Eagle,80762,Nacala,Haldia,Coal,74670,20.46,2023-06-01/2023-06-04,Spot
+2024-12-05,Eastern Venture,161382,Nacala,Gopalpur,Coal,142232,18.84,2024-12-21/2024-12-25,Spot
+2022-10-17,Sea Harmony,175678,Newcastle,Haldia,Coal,168793,17.77,2022-11-04/2022-11-08,Time Charter
+2025-01-04,Bay Fortune,155977,Gladstone,Vizag,Coal,146502,16.92,2025-01-20/2025-01-26,Spot
+2024-03-10,Silver Legacy,79363,Nacala,Haldia,Coal,70104,19.44,2024-03-24/2024-03-27,Spot
+2025-06-03,Southern Venture,168629,Novorossiysk (Black Sea),Gangavaram,Coal,149586,22.86,2025-06-18/2025-06-25,Spot
+2020-08-28,Bay Phoenix,80735,Taboneo,Gangavaram,Coal,73547,8.96,2020-09-16/2020-09-22,COA
+2020-01-31,Crown Voyager,79891,Nacala,Haldia,Coal,75301,18.48,2020-02-21/2020-02-25,Spot
+2020-12-26,Golden Eagle,81346,Hay Point,Paradip,Coal,75559,17.77,2021-01-15/2021-01-21,Spot
+2022-03-21,Silver Progress,161884,Taboneo,Dhamra,Coal,149618,10.32,2022-04-03/2022-04-08,Spot
+2023-12-11,Atlantic Eagle,76162,Hampton Roads,Gopalpur,Coal,65631,31.24,2023-12-24/2023-12-27,Spot
+2021-08-23,Star Legacy,168832,Hampton Roads,Gopalpur,Coal,151695,27.13,2021-09-02/2021-09-06,Spot
+2024-01-10,Sea Progress,171013,Novorossiysk (Black Sea),Paradip,Coal,152306,22.29,2024-01-27/2024-02-01,Spot
+2022-06-19,Southern Phoenix,78653,Beira,Dhamra,Coal,71183,22.1,2022-06-27/2022-07-01,Time Charter
+2021-03-26,Global Navigator,175346,Beira,Vizag,Coal,155231,20.0,2021-04-08/2021-04-12,Spot
+2021-10-22,Atlantic Endeavour,161480,Vostochny (Far East),Haldia,Coal,155252,23.52,2021-11-10/2021-11-14,Spot
+2024-04-09,Silver Spirit,81756,Novorossiysk (Black Sea),Vizag,Coal,75839,19.66,2024-04-24/2024-04-29,Time Charter
+2021-08-23,Southern Discovery,78511,Baltimore,Dhamra,Coal,69809,37.9,2021-09-09/2021-09-12,Spot
+2024-04-09,Royal Horizon,158246,Hampton Roads,Haldia,Coal,144797,31.25,2024-04-20/2024-04-25,Spot
+2025-10-31,Star Glory,165678,Gladstone,Haldia,Coal,148271,18.7,2025-11-13/2025-11-17,Spot
+2023-08-13,Atlantic Harmony,80426,Gladstone,Gopalpur,Coal,69564,14.21,2023-08-27/2023-08-31,Time Charter
+2023-03-16,Silver Pioneer,172657,Ust-Luga (Baltic),Paradip,Coal,151687,20.92,2023-03-26/2023-03-31,Spot
+2022-07-19,Grand Glory,78294,Vostochny (Far East),Gangavaram,Coal,75425,24.21,2022-08-08/2022-08-14,Spot
+2023-08-13,Ocean Harmony,170283,Muara Pantai,Paradip,Coal,160849,9.47,2023-08-25/2023-08-31,Time Charter
+2020-03-31,Northern Spirit,75321,Baltimore,Gangavaram,Coal,64787,31.99,2020-04-16/2020-04-21,Time Charter
+2025-10-31,Northern Spirit,167900,Vostochny (Far East),Gopalpur,Coal,151718,22.77,2025-11-14/2025-11-21,Spot
+2021-03-26,Northern Discovery,166317,Beira,Gangavaram,Coal,155445,22.9,2021-04-05/2021-04-09,Spot
+2020-06-29,Royal Glory,164404,New Orleans,Paradip,Coal,154971,32.48,2020-07-08/2020-07-12,Spot
+2024-04-09,Crown Endeavour,157550,Muara Pantai,Vizag,Coal,134222,11.46,2024-04-28/2024-05-05,COA
+2025-06-03,Bay Glory,174335,Newcastle,Gopalpur,Coal,157842,17.23,2025-06-11/2025-06-17,Spot
+2025-03-05,Star Venture,79081,Beira,Paradip,Coal,67741,21.66,2025-03-22/2025-03-29,Spot
+2022-05-20,Silver Horizon,76194,Hay Point,Paradip,Coal,67820,14.6,2022-06-09/2022-06-15,Spot
+2020-11-26,Northern Endeavour,76176,Samarinda,Vizag,Coal,69680,10.91,2020-12-06/2020-12-11,COA
+2024-09-06,Eastern Pioneer,78502,Nacala,Vizag,Coal,72768,19.9,2024-09-22/2024-09-27,COA
+2020-03-01,Bay Pride,81008,Ust-Luga (Baltic),Gangavaram,Coal,73261,22.62,2020-03-08/2020-03-15,Spot
+2024-07-08,Blue Navigator,81500,Beira,Paradip,Coal,77608,20.89,2024-07-19/2024-07-23,Spot
+2021-11-21,Atlantic Fortune,78744,New Orleans,Vizag,Coal,68659,32.36,2021-11-30/2021-12-03,COA
+2025-04-04,Star Fortune,77263,Dalrymple Bay,Gangavaram,Coal,73992,19.15,2025-04-12/2025-04-16,Spot
+2025-10-31,Coral Trader,77943,Novorossiysk (Black Sea),Gangavaram,Coal,73834,20.28,2025-11-10/2025-11-17,COA
+2025-10-31,Grand Venture,79471,Beira,Paradip,Coal,73374,20.82,2025-11-10/2025-11-13,Spot
+2021-02-24,Ocean Discovery,76064,Beira,Haldia,Coal,72826,18.6,2021-03-11/2021-03-16,Time Charter
+2020-11-26,Global Legacy,171874,Ust-Luga (Baltic),Vizag,Coal,151309,18.5,2020-12-16/2020-12-21,Spot
+2025-03-05,Bay Endeavour,166529,Nacala,Gopalpur,Coal,158694,21.53,2025-03-18/2025-03-23,Spot
+2023-11-11,Trade Pioneer,79424,Taboneo,Gopalpur,Coal,71360,10.76,2023-11-25/2023-11-29,Spot
+2024-05-09,Royal Pioneer,162072,Ust-Luga (Baltic),Gangavaram,Coal,147935,21.99,2024-05-24/2024-05-30,Spot
+2021-08-23,Star Venture,81888,Nacala,Gangavaram,Coal,69847,19.95,2021-09-12/2021-09-18,COA
+2024-09-06,Sea Venture,166357,Samarinda,Gopalpur,Coal,148103,8.91,2024-09-25/2024-10-02,Spot
+2021-12-21,Northern Horizon,81259,Samarinda,Vizag,Coal,71368,11.23,2022-01-09/2022-01-13,COA
+2024-07-08,Southern Pioneer,172763,Samarinda,Haldia,Coal,154850,11.17,2024-07-17/2024-07-21,COA
+2023-10-12,Grand Harmony,74960,Newcastle,Gopalpur,Coal,71809,16.98,2023-10-20/2023-10-23,Spot
+2021-01-25,Ocean Falcon,177981,Novorossiysk (Black Sea),Dhamra,Coal,151649,20.37,2021-02-08/2021-02-11,Time Charter
+2021-02-24,Bay Legacy,151456,Novorossiysk (Black Sea),Gopalpur,Coal,145372,23.5,2021-03-14/2021-03-18,Spot
+2022-05-20,Silver Spirit,165382,Ust-Luga (Baltic),Haldia,Coal,155608,22.84,2022-06-08/2022-06-12,Spot
+2020-06-29,Star Falcon,75640,Muara Pantai,Gangavaram,Coal,71848,10.55,2020-07-19/2020-07-25,Time Charter
+2022-03-21,Global Eagle,75198,Newcastle,Gangavaram,Coal,71424,18.28,2022-04-11/2022-04-18,Spot
+2023-06-14,Cape Glory,76016,New Orleans,Dhamra,Coal,73371,30.18,2023-07-05/2023-07-08,COA
+2023-09-12,Coral Venture,156682,Muara Pantai,Haldia,Coal,150601,13.21,2023-09-24/2023-09-27,Spot
+2024-05-09,Pacific Endeavour,175542,Muara Pantai,Gangavaram,Coal,161872,11.02,2024-05-24/2024-05-28,Spot
+2021-12-21,Golden Navigator,157159,Hay Point,Gangavaram,Coal,141404,18.35,2022-01-06/2022-01-12,Spot
+2023-06-14,Royal Pride,77990,Beira,Gopalpur,Coal,66417,22.7,2023-07-01/2023-07-06,Spot
+2024-01-10,Southern Voyager,175906,Hampton Roads,Gangavaram,Coal,167577,34.83,2024-01-20/2024-01-27,Time Charter
+2021-09-22,Bay Pioneer,171663,Newcastle,Dhamra,Coal,155871,15.91,2021-10-10/2021-10-13,Spot
+2020-03-01,Sea Endeavour,74432,Dalrymple Bay,Vizag,Coal,67396,16.22,2020-03-22/2020-03-27,Spot
+2021-07-24,Grand Pride,81351,Muara Pantai,Gopalpur,Coal,70631,8.31,2021-08-13/2021-08-18,Time Charter
+2021-03-26,Royal Venture,159693,Dalrymple Bay,Haldia,Coal,138802,16.94,2021-04-02/2021-04-06,Spot
+2020-03-31,Eastern Spirit,75933,Novorossiysk (Black Sea),Gangavaram,Coal,71905,22.04,2020-04-16/2020-04-21,Spot
+2021-03-26,Coral Legacy,160569,Dalrymple Bay,Gopalpur,Coal,141730,16.37,2021-04-10/2021-04-15,Spot
+2021-06-24,Golden Fortune,76434,Gladstone,Haldia,Coal,71014,13.8,2021-07-11/2021-07-18,COA
+2020-11-26,Trade Eagle,169730,Nacala,Vizag,Coal,156161,20.08,2020-12-11/2020-12-15,Spot
+2021-10-22,Northern Venture,80225,Taboneo,Gangavaram,Coal,68436,9.53,2021-11-09/2021-11-15,COA
+2024-03-10,Atlantic Spirit,154993,Dalrymple Bay,Gopalpur,Coal,135041,14.45,2024-03-24/2024-03-30,Time Charter
+2020-07-29,Eastern Navigator,179118,Gladstone,Gopalpur,Coal,152922,16.33,2020-08-09/2020-08-15,Time Charter
+2024-11-05,Crown Fortune,164372,Nacala,Haldia,Coal,141730,22.32,2024-11-20/2024-11-26,Time Charter
+2022-12-16,Sea Falcon,79218,Taboneo,Gopalpur,Coal,73343,11.54,2022-12-27/2022-12-31,Spot
+2020-06-29,Northern Fortune,159340,Ust-Luga (Baltic),Vizag,Coal,146157,23.58,2020-07-20/2020-07-27,Spot
+2023-06-14,Ocean Voyager,174347,Taboneo,Vizag,Coal,168562,11.61,2023-06-29/2023-07-03,Spot
+2022-08-18,Southern Horizon,178020,Vostochny (Far East),Gopalpur,Coal,152967,18.35,2022-08-27/2022-08-30,Spot
+2021-07-24,Cape Spirit,75018,Vostochny (Far East),Dhamra,Coal,68776,21.88,2021-08-08/2021-08-15,Spot
+2020-01-01,Trade Endeavour,168610,Novorossiysk (Black Sea),Gopalpur,Coal,153911,24.28,2020-01-20/2020-01-23,Spot
+2025-10-31,Cape Navigator,171088,New Orleans,Gangavaram,Coal,153938,33.42,2025-11-17/2025-11-21,Time Charter
+2021-04-25,Ocean Glory,81265,Hampton Roads,Gangavaram,Coal,71410,38.14,2021-05-12/2021-05-17,Spot
+2023-05-15,Global Pioneer,178951,Vostochny (Far East),Haldia,Coal,160675,21.89,2023-06-01/2023-06-06,COA
+2025-09-01,Royal Voyager,80929,Baltimore,Dhamra,Coal,70339,33.82,2025-09-08/2025-09-12,COA
+2023-11-11,Star Eagle,177822,Muara Pantai,Vizag,Coal,171926,9.23,2023-12-02/2023-12-07,Spot
+2020-06-29,Trade Navigator,168069,Beira,Haldia,Coal,150366,20.0,2020-07-10/2020-07-17,Spot
+2024-09-06,Western Glory,76687,Gladstone,Dhamra,Coal,67102,16.44,2024-09-17/2024-09-20,COA
+2021-05-25,Pacific Eagle,79016,Hay Point,Vizag,Coal,76260,15.23,2021-06-13/2021-06-19,Time Charter
+2025-10-01,Northern Pioneer,179956,Ust-Luga (Baltic),Gopalpur,Coal,167492,19.53,2025-10-15/2025-10-18,Spot
+2024-09-06,Trade Spirit,161476,Novorossiysk (Black Sea),Gopalpur,Coal,142523,22.47,2024-09-24/2024-09-27,Spot
+2021-06-24,Ocean Legacy,168973,Nacala,Gopalpur,Coal,149949,20.32,2021-07-12/2021-07-17,Spot
+2022-04-20,Atlantic Progress,76844,Novorossiysk (Black Sea),Paradip,Coal,74393,23.75,2022-04-30/2022-05-03,Spot
+2022-03-21,Crown Pride,75138,New Orleans,Haldia,Coal,66376,33.18,2022-04-09/2022-04-14,Spot
+2024-10-06,Western Progress,154752,Ust-Luga (Baltic),Paradip,Coal,141116,21.35,2024-10-17/2024-10-22,Time Charter
+2021-03-26,Star Glory,160230,Beira,Gopalpur,Coal,138506,23.33,2021-04-05/2021-04-08,Time Charter
+2025-09-01,Grand Falcon,165967,Taboneo,Vizag,Coal,145143,9.31,2025-09-12/2025-09-15,COA
+2023-09-12,Grand Voyager,151735,Muara Pantai,Dhamra,Coal,141788,8.22,2023-09-23/2023-09-30,Spot
+2021-10-22,Western Endeavour,160151,Samarinda,Paradip,Coal,142058,10.43,2021-11-12/2021-11-15,Spot
+2021-03-26,Golden Fortune,150654,Nacala,Paradip,Coal,144374,20.58,2021-04-09/2021-04-14,COA
+2020-01-01,Ocean Navigator,166646,Muara Pantai,Gangavaram,Coal,155433,11.83,2020-01-13/2020-01-19,COA
+2024-04-09,Western Pride,164818,Muara Pantai,Gangavaram,Coal,156370,8.24,2024-04-17/2024-04-22,Spot
+2023-12-11,Atlantic Navigator,158952,Beira,Dhamra,Coal,148745,20.86,2023-12-19/2023-12-22,Time Charter
+2022-08-18,Eastern Phoenix,78016,Newcastle,Gangavaram,Coal,72734,18.64,2022-08-26/2022-08-30,Time Charter
+2023-01-15,Star Horizon,78677,Ust-Luga (Baltic),Haldia,Coal,71511,21.5,2023-02-02/2023-02-06,Time Charter
+2024-09-06,Western Falcon,78418,Muara Pantai,Haldia,Coal,75330,13.01,2024-09-27/2024-10-01,Spot
+2024-11-05,Eastern Venture,164447,Vostochny (Far East),Gangavaram,Coal,155756,22.45,2024-11-22/2024-11-29,Spot
+2020-03-01,Sea Spirit,164188,Baltimore,Vizag,Coal,153930,36.74,2020-03-09/2020-03-14,Time Charter
+2025-03-05,Ocean Endeavour,180003,Gladstone,Dhamra,Coal,167316,17.79,2025-03-22/2025-03-25,Spot
+2020-03-31,Western Fortune,165981,Muara Pantai,Gopalpur,Coal,160647,10.23,2020-04-20/2020-04-24,Spot
+2025-09-01,Trade Venture,156973,Nacala,Gopalpur,Coal,151497,22.92,2025-09-18/2025-09-21,Spot
+2021-05-25,Trade Fortune,156020,Samarinda,Vizag,Coal,145205,9.51,2021-06-14/2021-06-17,Spot
+2024-01-10,Eastern Falcon,166083,Vostochny (Far East),Haldia,Coal,148344,21.12,2024-01-20/2024-01-23,COA
+2023-06-14,Grand Glory,177222,Beira,Haldia,Coal,166423,20.99,2023-07-05/2023-07-11,Time Charter
+2021-06-24,Northern Endeavour,152698,Beira,Paradip,Coal,144132,19.47,2021-07-12/2021-07-16,Spot
+2021-08-23,Royal Falcon,78555,Samarinda,Gangavaram,Coal,70285,9.52,2021-09-11/2021-09-18,Time Charter
+2025-10-01,Cape Eagle,76849,Gladstone,Gopalpur,Coal,71639,16.32,2025-10-21/2025-10-27,Time Charter
+2023-01-15,Southern Discovery,80223,New Orleans,Vizag,Coal,70877,34.09,2023-01-31/2023-02-06,COA
+2024-10-06,Coral Trader,77315,Gladstone,Dhamra,Coal,74804,13.65,2024-10-23/2024-10-29,Time Charter
+2024-12-05,Blue Venture,164107,Nacala,Vizag,Coal,140057,20.23,2024-12-23/2024-12-29,Spot
+2021-01-25,Blue Venture,159944,Newcastle,Paradip,Coal,145251,18.4,2021-02-09/2021-02-16,Spot
+2021-07-24,Northern Venture,74735,Ust-Luga (Baltic),Haldia,Coal,64282,22.66,2021-08-11/2021-08-14,Time Charter
+2021-07-24,Crown Trader,76063,Samarinda,Paradip,Coal,66305,12.07,2021-08-13/2021-08-18,Time Charter
+2021-05-25,Silver Voyager,170696,Dalrymple Bay,Gopalpur,Coal,146323,17.56,2021-06-01/2021-06-07,Spot
+2024-01-10,Coral Navigator,152090,Hay Point,Paradip,Coal,141170,16.28,2024-01-20/2024-01-27,Spot
+2025-02-03,Global Phoenix,76106,Newcastle,Paradip,Coal,72168,15.38,2025-02-15/2025-02-19,Time Charter
+2024-10-06,Trade Voyager,75900,Dalrymple Bay,Vizag,Coal,70233,19.25,2024-10-14/2024-10-19,Spot
+2021-05-25,Global Fortune,181888,Gladstone,Dhamra,Coal,159342,16.08,2021-06-15/2021-06-20,Spot
+2025-09-01,Northern Eagle,74353,Taboneo,Gopalpur,Coal,71942,11.51,2025-09-13/2025-09-19,Time Charter
+2024-08-07,Ocean Discovery,81899,New Orleans,Gangavaram,Coal,71156,32.36,2024-08-17/2024-08-23,Spot
+2023-12-11,Ocean Pride,80283,Hampton Roads,Dhamra,Coal,69429,37.0,2023-12-24/2023-12-30,Spot
+2023-08-13,Royal Venture,80746,Ust-Luga (Baltic),Gopalpur,Coal,73013,22.77,2023-09-03/2023-09-10,COA
+2022-03-21,Trade Falcon,79587,Gladstone,Vizag,Coal,76797,15.53,2022-03-31/2022-04-05,COA
+2023-08-13,Ocean Pioneer,81669,Nacala,Dhamra,Coal,73290,20.81,2023-08-24/2023-08-29,Spot
+2020-01-31,Cape Legacy,178219,Samarinda,Paradip,Coal,152670,10.34,2020-02-10/2020-02-13,COA
+2021-10-22,Coral Progress,160370,Baltimore,Gangavaram,Coal,148507,31.12,2021-11-10/2021-11-16,Spot
+2023-01-15,Crown Fortune,75150,Nacala,Haldia,Coal,70958,20.24,2023-01-28/2023-01-31,Time Charter
+2022-08-18,Trade Pioneer,79146,Taboneo,Haldia,Coal,75603,9.5,2022-09-06/2022-09-11,Time Charter
+2020-11-26,Cape Pioneer,173177,Beira,Haldia,Coal,147795,19.21,2020-12-12/2020-12-15,Time Charter
+2024-08-07,Bay Discovery,170338,Taboneo,Haldia,Coal,154663,9.87,2024-08-19/2024-08-25,COA
+2021-02-24,Blue Glory,150517,Muara Pantai,Gangavaram,Coal,140925,9.76,2021-03-07/2021-03-14,Time Charter
+2023-04-15,Star Endeavour,168670,Ust-Luga (Baltic),Dhamra,Coal,145068,20.8,2023-05-03/2023-05-10,Spot
+2022-03-21,Crown Phoenix,80198,Baltimore,Vizag,Coal,68889,33.87,2022-04-02/2022-04-08,Spot
+2020-09-27,Atlantic Endeavour,77779,Hay Point,Dhamra,Coal,67740,17.07,2020-10-11/2020-10-14,Spot
+2023-07-14,Royal Harmony,77403,Baltimore,Haldia,Coal,74108,34.4,2023-07-27/2023-08-02,Spot
+2022-01-20,Global Trader,160481,Vostochny (Far East),Dhamra,Coal,151573,22.97,2022-01-27/2022-02-03,Time Charter
+2021-03-26,Trade Navigator,81765,Newcastle,Paradip,Coal,70549,15.59,2021-04-07/2021-04-12,Spot
+2024-02-09,Royal Fortune,76128,New Orleans,Haldia,Coal,73078,34.08,2024-02-20/2024-02-27,Spot
+2021-02-24,Sea Falcon,74126,Baltimore,Gopalpur,Coal,65601,32.32,2021-03-13/2021-03-16,Spot
+2020-08-28,Pacific Navigator,74697,Hay Point,Vizag,Coal,70284,16.64,2020-09-11/2020-09-16,Spot
+2023-02-14,Sea Legacy,75258,New Orleans,Gopalpur,Coal,64781,28.25,2023-02-24/2023-03-02,COA
+2021-06-24,Pacific Pride,175223,Nacala,Dhamra,Coal,169946,18.9,2021-07-05/2021-07-08,COA
+2024-10-06,Royal Venture,158459,Dalrymple Bay,Haldia,Coal,137248,16.82,2024-10-20/2024-10-25,Time Charter
+2023-02-14,Ocean Venture,80128,Muara Pantai,Dhamra,Coal,74888,10.11,2023-02-21/2023-02-24,Spot
+2020-08-28,Cape Horizon,77761,Nacala,Haldia,Coal,68902,17.82,2020-09-09/2020-09-14,Time Charter
+2023-10-12,Crown Horizon,76194,Gladstone,Paradip,Coal,69704,15.44,2023-10-25/2023-10-28,Spot
+2022-03-21,Coral Venture,161925,Baltimore,Dhamra,Coal,139331,36.06,2022-03-31/2022-04-04,COA
+2025-07-03,Star Discovery,180255,Nacala,Vizag,Coal,170754,20.46,2025-07-15/2025-07-20,Time Charter
+2024-11-05,Sea Discovery,163084,Nacala,Gangavaram,Coal,145922,22.77,2024-11-22/2024-11-25,Time Charter
+2025-10-31,Golden Phoenix,157485,Vostochny (Far East),Haldia,Coal,136509,24.47,2025-11-08/2025-11-13,Spot
+2023-11-11,Cape Progress,153411,Ust-Luga (Baltic),Gangavaram,Coal,142750,21.95,2023-11-19/2023-11-22,Spot
+2022-07-19,Coral Venture,175589,Samarinda,Haldia,Coal,162385,10.37,2022-07-28/2022-08-01,Spot
+2020-03-01,Royal Pioneer,77755,Beira,Dhamra,Coal,68193,21.94,2020-03-20/2020-03-25,COA
+2020-01-01,Star Spirit,176677,New Orleans,Gopalpur,Coal,155930,29.09,2020-01-21/2020-01-24,Spot
+2020-04-30,Pacific Trader,76490,Novorossiysk (Black Sea),Dhamra,Coal,69310,20.7,2020-05-19/2020-05-26,COA
+2024-11-05,Silver Pioneer,158488,Hay Point,Dhamra,Coal,145824,16.74,2024-11-13/2024-11-18,Spot
+2020-07-29,Eastern Navigator,154367,Vostochny (Far East),Vizag,Coal,135990,25.58,2020-08-18/2020-08-22,COA
+2023-05-15,Sea Voyager,152708,Baltimore,Gopalpur,Coal,132481,29.91,2023-05-30/2023-06-02,Spot
+2022-09-17,Crown Discovery,77482,Novorossiysk (Black Sea),Gopalpur,Coal,70568,23.71,2022-09-26/2022-10-02,Spot
+2025-10-31,Blue Pride,75828,Hampton Roads,Paradip,Coal,64968,31.99,2025-11-07/2025-11-12,Time Charter
+2021-08-23,Western Navigator,80789,Novorossiysk (Black Sea),Gopalpur,Coal,73504,21.27,2021-08-31/2021-09-04,COA
+2023-10-12,Blue Legacy,78455,Gladstone,Vizag,Coal,72705,17.46,2023-11-02/2023-11-09,Spot
+2024-01-10,Northern Voyager,172215,New Orleans,Gopalpur,Coal,165224,30.17,2024-01-19/2024-01-22,Time Charter
+2021-12-21,Silver Venture,156695,Taboneo,Gangavaram,Coal,136756,8.83,2021-12-28/2021-12-31,Spot
+2025-09-01,Sea Horizon,154069,Muara Pantai,Gangavaram,Coal,134046,13.12,2025-09-14/2025-09-20,COA
+2022-06-19,Ocean Eagle,166096,New Orleans,Gopalpur,Coal,155315,33.24,2022-07-05/2022-07-08,Spot
+2023-12-11,Eastern Voyager,77147,Nacala,Gopalpur,Coal,71713,19.66,2023-12-23/2023-12-27,Spot
+2021-06-24,Royal Endeavour,80566,Beira,Gangavaram,Coal,69404,21.07,2021-07-12/2021-07-17,Spot
+2025-05-04,Eastern Endeavour,152513,Ust-Luga (Baltic),Dhamra,Coal,134170,21.31,2025-05-23/2025-05-28,Spot
+2021-03-26,Sea Pioneer,180970,Newcastle,Vizag,Coal,158679,14.39,2021-04-06/2021-04-12,Spot
+2020-05-30,Bay Discovery,175856,Taboneo,Gangavaram,Coal,169475,8.41,2020-06-13/2020-06-19,Spot
+2025-02-03,Southern Pride,78102,Taboneo,Paradip,Coal,75689,10.46,2025-02-23/2025-02-28,Spot
+2022-04-20,Grand Pioneer,74088,Nacala,Haldia,Coal,68866,19.68,2022-05-07/2022-05-10,Time Charter
+2024-07-08,Royal Glory,168204,Nacala,Paradip,Coal,150448,21.19,2024-07-29/2024-08-02,Spot
+2024-12-05,Grand Venture,79967,Dalrymple Bay,Paradip,Coal,68344,17.38,2024-12-23/2024-12-30,Spot
+2024-03-10,Trade Trader,78372,Novorossiysk (Black Sea),Haldia,Coal,70078,23.91,2024-03-22/2024-03-29,Time Charter
+2024-08-07,Royal Fortune,169695,Muara Pantai,Dhamra,Coal,152878,12.07,2024-08-19/2024-08-25,COA
+2022-06-19,Coral Fortune,75380,Baltimore,Gangavaram,Coal,71046,33.33,2022-07-07/2022-07-12,Spot
+2025-07-03,Star Horizon,77353,Baltimore,Dhamra,Coal,71879,29.03,2025-07-20/2025-07-23,Time Charter
+2024-03-10,Silver Pioneer,79732,Newcastle,Paradip,Coal,73018,15.09,2024-03-29/2024-04-01,Time Charter
+2024-09-06,Silver Spirit,81400,Baltimore,Haldia,Coal,71890,34.92,2024-09-23/2024-09-27,COA
+2021-10-22,Trade Progress,152213,Hampton Roads,Gopalpur,Coal,136673,29.26,2021-11-12/2021-11-15,Spot
+2021-11-21,Crown Fortune,165538,Taboneo,Paradip,Coal,149841,10.7,2021-11-28/2021-12-02,COA
+2020-09-27,Silver Trader,80778,Nacala,Paradip,Coal,72356,19.15,2020-10-09/2020-10-12,Time Charter
+2025-06-03,Coral Eagle,78926,Newcastle,Haldia,Coal,71771,17.65,2025-06-11/2025-06-17,Spot
+2023-11-11,Golden Discovery,78296,Taboneo,Gangavaram,Coal,69394,10.53,2023-11-28/2023-12-03,Spot
+2021-03-26,Bay Trader,75581,Nacala,Gangavaram,Coal,67861,21.73,2021-04-12/2021-04-19,Time Charter
+2022-01-20,Western Phoenix,79735,Samarinda,Gangavaram,Coal,72524,9.83,2022-02-03/2022-02-07,Spot
+2025-06-03,Pacific Trader,154223,Baltimore,Gangavaram,Coal,140939,31.74,2025-06-17/2025-06-24,Spot
+2022-12-16,Silver Horizon,79347,Hampton Roads,Vizag,Coal,76745,31.85,2022-12-26/2023-01-02,Time Charter
+2020-08-28,Trade Voyager,76963,Taboneo,Gopalpur,Coal,70528,13.43,2020-09-15/2020-09-19,Spot
+2023-02-14,Bay Glory,75795,Nacala,Gopalpur,Coal,69676,24.22,2023-02-22/2023-02-25,Spot
+2025-07-03,Star Fortune,79977,Nacala,Paradip,Coal,76322,22.75,2025-07-22/2025-07-28,COA
+2021-04-25,Cape Phoenix,177913,Novorossiysk (Black Sea),Gopalpur,Coal,160813,24.71,2021-05-14/2021-05-18,Time Charter
+2020-01-31,Eastern Pride,181727,Novorossiysk (Black Sea),Dhamra,Coal,172411,24.26,2020-02-21/2020-02-24,Spot
+2025-07-03,Royal Horizon,81764,Gladstone,Gopalpur,Coal,73265,16.1,2025-07-19/2025-07-26,Time Charter
+2024-02-09,Golden Navigator,77046,Hampton Roads,Paradip,Coal,72259,33.65,2024-02-25/2024-02-29,Spot
+2025-02-03,Southern Fortune,162117,Gladstone,Haldia,Coal,147176,16.27,2025-02-15/2025-02-19,Spot
+2024-03-10,Cape Spirit,151942,Hampton Roads,Gopalpur,Coal,133088,33.74,2024-03-27/2024-04-01,Spot
+2020-06-29,Royal Progress,153187,Nacala,Dhamra,Coal,141027,18.28,2020-07-14/2020-07-21,Spot
+2024-04-09,Bay Venture,74670,Muara Pantai,Paradip,Coal,67026,10.37,2024-04-29/2024-05-03,Time Charter
+2023-06-14,Coral Phoenix,81790,Hay Point,Haldia,Coal,79332,14.79,2023-06-29/2023-07-04,COA
+2021-10-22,Cape Pride,74342,Taboneo,Gopalpur,Coal,67647,11.84,2021-11-07/2021-11-10,COA
+2025-09-01,Cape Voyager,154438,Vostochny (Far East),Haldia,Coal,141605,22.17,2025-09-17/2025-09-20,Spot
+2021-10-22,Sea Voyager,158344,Baltimore,Vizag,Coal,145004,30.97,2021-10-29/2021-11-04,Spot
+2022-04-20,Silver Pride,171935,Muara Pantai,Vizag,Coal,150683,10.93,2022-05-04/2022-05-10,Time Charter
+2023-06-14,Sea Glory,75067,New Orleans,Paradip,Coal,69227,30.65,2023-07-05/2023-07-12,Time Charter
+2020-08-28,Southern Spirit,174143,Samarinda,Gangavaram,Coal,151477,9.29,2020-09-10/2020-09-17,Spot
+2025-04-04,Cape Spirit,158071,Vostochny (Far East),Haldia,Coal,148645,22.06,2025-04-14/2025-04-18,Spot
+2020-12-26,Trade Progress,166722,Gladstone,Gopalpur,Coal,146185,16.52,2021-01-10/2021-01-14,Time Charter
+2024-02-09,Western Phoenix,74541,New Orleans,Gangavaram,Coal,65482,33.45,2024-02-17/2024-02-21,Spot
+2021-04-25,Ocean Trader,79900,Taboneo,Paradip,Coal,75288,10.05,2021-05-14/2021-05-17,Time Charter
+2022-11-16,Eastern Progress,75032,Vostochny (Far East),Dhamra,Coal,66498,20.98,2022-12-07/2022-12-10,Spot
+2022-01-20,Sea Horizon,171908,Samarinda,Haldia,Coal,151407,9.26,2022-02-10/2022-02-14,Spot
+2022-12-16,Crown Horizon,74629,Newcastle,Dhamra,Coal,69979,16.69,2023-01-05/2023-01-10,Spot
+2023-07-14,Ocean Phoenix,78495,Hay Point,Paradip,Coal,73176,15.57,2023-07-21/2023-07-28,Spot
+2024-10-06,Silver Eagle,179734,Samarinda,Dhamra,Coal,159529,11.74,2024-10-19/2024-10-26,Spot
+2024-01-10,Atlantic Endeavour,167297,Nacala,Gopalpur,Coal,159001,26.12,2024-01-17/2024-01-21,COA
+2020-08-28,Star Phoenix,173466,Newcastle,Paradip,Coal,164567,17.26,2020-09-09/2020-09-12,Spot
+2023-03-16,Ocean Harmony,177007,Nacala,Gopalpur,Coal,162964,20.96,2023-03-26/2023-04-01,Spot
+2021-02-24,Golden Discovery,160186,Samarinda,Gopalpur,Coal,140904,11.37,2021-03-03/2021-03-10,Time Charter
+2024-06-08,Blue Voyager,77076,Taboneo,Gangavaram,Coal,66335,9.91,2024-06-20/2024-06-24,Spot
+2022-11-16,Global Venture,78049,Beira,Gangavaram,Coal,70370,21.09,2022-11-23/2022-11-26,Time Charter
+2025-05-04,Blue Endeavour,165819,Ust-Luga (Baltic),Haldia,Coal,154757,21.52,2025-05-23/2025-05-29,Spot
+2024-10-06,Grand Venture,78235,Muara Pantai,Vizag,Coal,67129,9.67,2024-10-17/2024-10-24,Time Charter
+2022-06-19,Northern Endeavour,79799,Hay Point,Paradip,Coal,69455,15.75,2022-07-10/2022-07-15,COA
+2025-02-03,Western Discovery,76661,Nacala,Dhamra,Coal,68797,17.55,2025-02-16/2025-02-22,Spot
+2024-11-05,Sea Phoenix,151329,Hampton Roads,Vizag,Coal,130438,32.14,2024-11-13/2024-11-17,Spot
+2021-07-24,Northern Falcon,158246,Nacala,Paradip,Coal,146946,21.23,2021-08-03/2021-08-06,COA
+2021-01-25,Eastern Discovery,176303,Ust-Luga (Baltic),Vizag,Coal,160722,21.75,2021-02-12/2021-02-16,Spot
+2022-10-17,Crown Voyager,155715,Hampton Roads,Gopalpur,Coal,141280,33.08,2022-10-31/2022-11-06,Spot
+2021-09-22,Sea Legacy,157984,Vostochny (Far East),Haldia,Coal,143482,24.59,2021-10-02/2021-10-08,Time Charter
+2022-03-21,Global Pride,79262,Ust-Luga (Baltic),Paradip,Coal,72176,24.11,2022-04-04/2022-04-09,Time Charter
+2021-04-25,Sea Glory,161064,New Orleans,Vizag,Coal,143859,29.14,2021-05-09/2021-05-12,Spot
+2021-09-22,Cape Phoenix,75035,Ust-Luga (Baltic),Dhamra,Coal,66197,22.98,2021-10-04/2021-10-09,Time Charter
+2021-03-26,Global Discovery,169208,Ust-Luga (Baltic),Gangavaram,Coal,147530,25.1,2021-04-04/2021-04-09,Spot
+2021-09-22,Global Fortune,77151,Beira,Gopalpur,Coal,66578,22.02,2021-10-10/2021-10-14,Spot
+2020-12-26,Atlantic Harmony,77968,Dalrymple Bay,Haldia,Coal,71693,14.62,2021-01-02/2021-01-09,COA
+2024-07-08,Global Pride,80825,Nacala,Vizag,Coal,77051,23.19,2024-07-23/2024-07-30,COA
+2020-10-27,Western Harmony,177858,Samarinda,Haldia,Coal,152135,10.58,2020-11-15/2020-11-22,Time Charter
+2022-06-19,Coral Pride,178643,Novorossiysk (Black Sea),Dhamra,Coal,172147,22.22,2022-07-01/2022-07-07,Spot
+2024-07-08,Atlantic Harmony,153975,Nacala,Gopalpur,Coal,148829,22.95,2024-07-29/2024-08-02,Spot
+2021-06-24,Cape Fortune,81479,Ust-Luga (Baltic),Gopalpur,Coal,76622,25.57,2021-07-01/2021-07-08,COA
+2025-04-04,Northern Glory,76075,Newcastle,Paradip,Coal,73103,16.41,2025-04-22/2025-04-28,Spot
+2020-05-30,Crown Harmony,81949,Baltimore,Gopalpur,Coal,75908,30.59,2020-06-08/2020-06-11,Spot
+2023-12-11,Sea Progress,76782,Gladstone,Paradip,Coal,67658,14.79,2023-12-18/2023-12-25,Spot
+2023-06-14,Global Discovery,157425,Beira,Vizag,Coal,151079,21.24,2023-07-03/2023-07-09,Spot
+2020-04-30,Eastern Horizon,78957,Beira,Dhamra,Coal,67504,21.13,2020-05-16/2020-05-23,Spot
+2025-07-03,Atlantic Falcon,78544,Beira,Haldia,Coal,70885,22.23,2025-07-23/2025-07-28,Spot
+2021-12-21,Ocean Trader,181256,Muara Pantai,Dhamra,Coal,167007,10.43,2022-01-10/2022-01-17,COA
+2023-02-14,Western Spirit,179154,Nacala,Dhamra,Coal,161421,20.83,2023-03-05/2023-03-08,Spot
+2023-01-15,Golden Discovery,77502,Muara Pantai,Haldia,Coal,72366,10.36,2023-01-27/2023-02-02,Time Charter
+2025-07-03,Coral Eagle,76747,Ust-Luga (Baltic),Paradip,Coal,70739,23.26,2025-07-22/2025-07-25,Spot
+2022-03-21,Sea Venture,175601,Beira,Haldia,Coal,166579,17.74,2022-04-04/2022-04-07,Time Charter
+2025-10-01,Southern Spirit,180742,Beira,Gangavaram,Coal,153767,21.83,2025-10-17/2025-10-22,Spot
+2022-06-19,Crown Pioneer,78815,Muara Pantai,Paradip,Coal,75515,10.26,2022-06-26/2022-06-30,Spot
+2020-11-26,Cape Fortune,176370,Newcastle,Paradip,Coal,160356,15.14,2020-12-17/2020-12-20,Time Charter
+2025-07-03,Trade Discovery,79417,Newcastle,Dhamra,Coal,71842,19.0,2025-07-17/2025-07-22,Time Charter
+2023-01-15,Southern Discovery,76334,Beira,Gangavaram,Coal,67432,23.85,2023-01-25/2023-02-01,Spot
+2025-02-03,Sea Pioneer,151912,Muara Pantai,Haldia,Coal,135011,11.12,2025-02-14/2025-02-21,Spot
+2024-04-09,Atlantic Discovery,78953,Nacala,Haldia,Coal,70956,21.95,2024-04-18/2024-04-25,Spot
+2024-12-05,Golden Falcon,157814,Hampton Roads,Dhamra,Coal,145391,32.43,2024-12-24/2024-12-31,Time Charter
+2021-10-22,Grand Trader,75408,Samarinda,Dhamra,Coal,71994,8.75,2021-11-03/2021-11-09,Spot
+2024-06-08,Cape Progress,81466,Muara Pantai,Paradip,Coal,70986,9.82,2024-06-20/2024-06-25,COA
+2020-01-31,Northern Legacy,81762,Nacala,Gangavaram,Coal,78571,23.25,2020-02-17/2020-02-20,Spot
+2022-12-16,Blue Navigator,81818,Ust-Luga (Baltic),Vizag,Coal,74016,25.37,2022-12-25/2022-12-28,Time Charter
+2020-06-29,Grand Falcon,75290,Hampton Roads,Gangavaram,Coal,69634,31.79,2020-07-15/2020-07-20,Spot
+2023-02-14,Star Trader,161301,Beira,Gangavaram,Coal,146644,20.6,2023-02-27/2023-03-06,Spot
+2021-12-21,Star Falcon,79287,Baltimore,Gangavaram,Coal,75217,27.53,2022-01-04/2022-01-09,Time Charter
+2021-08-23,Royal Voyager,74153,Muara Pantai,Paradip,Coal,63319,11.01,2021-08-30/2021-09-03,Time Charter
+2021-01-25,Grand Progress,162582,Vostochny (Far East),Gopalpur,Coal,143432,22.01,2021-02-06/2021-02-09,Spot
+2022-02-19,Coral Spirit,166806,Hay Point,Dhamra,Coal,157634,15.1,2022-03-08/2022-03-14,Spot
+2022-07-19,Pacific Venture,79416,Baltimore,Vizag,Coal,73131,34.69,2022-08-09/2022-08-12,Time Charter
+2021-01-25,Golden Falcon,75876,Dalrymple Bay,Vizag,Coal,71821,15.26,2021-02-04/2021-02-08,Spot
+2020-08-28,Star Harmony,79709,Nacala,Gangavaram,Coal,77224,18.33,2020-09-04/2020-09-11,Spot
+2021-03-26,Blue Harmony,158440,New Orleans,Vizag,Coal,140504,37.67,2021-04-10/2021-04-17,Spot
+2022-11-16,Silver Navigator,78742,Beira,Dhamra,Coal,72281,23.01,2022-11-30/2022-12-03,Spot
+2021-12-21,Western Harmony,150262,Dalrymple Bay,Dhamra,Coal,132132,16.33,2022-01-02/2022-01-09,COA
+2025-09-01,Trade Harmony,175163,Hampton Roads,Gangavaram,Coal,163371,31.2,2025-09-18/2025-09-21,COA
+2023-05-15,Atlantic Phoenix,173288,Gladstone,Dhamra,Coal,155642,16.76,2023-06-01/2023-06-06,Spot
+2022-07-19,Eastern Progress,157546,Novorossiysk (Black Sea),Vizag,Coal,143247,23.37,2022-08-04/2022-08-10,Time Charter
+2020-11-26,Golden Voyager,80671,Hay Point,Gopalpur,Coal,77781,16.86,2020-12-08/2020-12-11,Spot
+2021-06-24,Western Venture,171108,Samarinda,Haldia,Coal,154005,12.86,2021-07-03/2021-07-06,COA
+2025-09-01,Global Glory,76771,Beira,Gangavaram,Coal,70225,18.48,2025-09-12/2025-09-15,Spot
+2021-11-21,Trade Horizon,173048,Ust-Luga (Baltic),Gangavaram,Coal,163267,28.56,2021-12-09/2021-12-14,COA
+2023-07-14,Silver Spirit,166912,Newcastle,Dhamra,Coal,159985,17.55,2023-08-04/2023-08-09,Time Charter
+2020-01-01,Star Eagle,175242,Hampton Roads,Dhamra,Coal,162691,33.77,2020-01-14/2020-01-21,Spot
+2021-10-22,Crown Progress,173902,Baltimore,Paradip,Coal,151728,29.78,2021-11-03/2021-11-09,Spot
+2022-02-19,Crown Navigator,160032,New Orleans,Paradip,Coal,144383,30.05,2022-03-01/2022-03-04,COA
+2021-06-24,Grand Endeavour,75167,New Orleans,Paradip,Coal,71461,31.28,2021-07-14/2021-07-18,COA
+2025-10-31,Bay Falcon,80416,Beira,Haldia,Coal,76733,20.52,2025-11-17/2025-11-21,Time Charter
+2020-03-01,Star Spirit,179404,Samarinda,Gopalpur,Coal,168787,9.62,2020-03-12/2020-03-19,Time Charter
+2020-01-31,Trade Glory,161513,Samarinda,Dhamra,Coal,155360,11.29,2020-02-07/2020-02-11,Spot
+2022-10-17,Trade Navigator,153407,Vostochny (Far East),Gangavaram,Coal,148457,24.5,2022-10-30/2022-11-02,Spot
+2023-01-15,Golden Falcon,80276,Hampton Roads,Haldia,Coal,77847,37.0,2023-01-22/2023-01-28,Spot
+2021-03-26,Grand Glory,175655,Novorossiysk (Black Sea),Paradip,Coal,159921,24.58,2021-04-05/2021-04-10,Spot
+2024-07-08,Blue Legacy,154000,Newcastle,Haldia,Coal,143773,19.36,2024-07-19/2024-07-23,COA
+2022-05-20,Crown Progress,168076,Beira,Paradip,Coal,153494,22.66,2022-06-01/2022-06-08,Time Charter
+2022-01-20,Pacific Spirit,153320,Baltimore,Gangavaram,Coal,135853,34.96,2022-02-07/2022-02-11,Spot
+2021-01-25,Coral Progress,75191,Newcastle,Dhamra,Coal,64006,16.15,2021-02-01/2021-02-05,Spot
+2024-05-09,Western Endeavour,78866,Beira,Paradip,Coal,72088,23.53,2024-05-29/2024-06-03,Spot
+2020-03-31,Northern Eagle,171249,Hampton Roads,Vizag,Coal,162814,29.97,2020-04-21/2020-04-25,Spot
+2023-04-15,Coral Voyager,160698,Beira,Gopalpur,Coal,154616,22.46,2023-05-02/2023-05-09,Spot
+2022-05-20,Star Harmony,169321,Muara Pantai,Vizag,Coal,155877,8.59,2022-06-02/2022-06-05,Spot
+2024-02-09,Crown Eagle,180255,Taboneo,Haldia,Coal,167827,10.25,2024-02-22/2024-02-29,COA
+2020-03-01,Eastern Falcon,181412,Newcastle,Paradip,Coal,161237,16.62,2020-03-22/2020-03-26,Time Charter
+2025-10-31,Royal Harmony,80087,Nacala,Gopalpur,Coal,77033,20.88,2025-11-17/2025-11-24,Spot
+2023-05-15,Ocean Pioneer,81888,Ust-Luga (Baltic),Gangavaram,Coal,73282,22.49,2023-05-31/2023-06-03,Spot
+2020-03-31,Silver Glory,75269,Muara Pantai,Gopalpur,Coal,65622,9.97,2020-04-09/2020-04-15,COA
+2024-04-09,Crown Legacy,74619,Nacala,Gangavaram,Coal,69420,19.15,2024-04-26/2024-05-01,Spot
+2022-08-18,Ocean Legacy,80432,Nacala,Gopalpur,Coal,72378,19.23,2022-09-03/2022-09-08,Spot
+2021-12-21,Royal Endeavour,170126,Taboneo,Paradip,Coal,156714,10.0,2021-12-28/2022-01-04,Spot
+2021-04-25,Atlantic Progress,150783,Hay Point,Paradip,Coal,141290,15.19,2021-05-08/2021-05-13,Time Charter
+2021-05-25,Trade Trader,153929,Samarinda,Gangavaram,Coal,138445,10.32,2021-06-08/2021-06-14,COA
+2020-01-31,Ocean Legacy,164595,Nacala,Dhamra,Coal,153312,19.01,2020-02-09/2020-02-15,Time Charter
+2023-01-15,Sea Progress,161801,Dalrymple Bay,Vizag,Coal,142026,15.88,2023-01-26/2023-01-31,COA
+2022-01-20,Crown Pioneer,168949,Taboneo,Gangavaram,Coal,149252,9.02,2022-01-31/2022-02-06,Spot
+2022-08-18,Coral Endeavour,167418,Dalrymple Bay,Gopalpur,Coal,142770,16.18,2022-09-05/2022-09-08,COA
+2022-07-19,Eastern Endeavour,77044,Newcastle,Vizag,Coal,70683,17.8,2022-08-06/2022-08-10,Time Charter
+2025-04-04,Blue Eagle,74739,Beira,Vizag,Coal,69226,23.37,2025-04-11/2025-04-15,COA
+2023-04-15,Blue Legacy,75728,Gladstone,Vizag,Coal,73230,13.67,2023-05-01/2023-05-06,Spot
+2025-10-31,Pacific Glory,151080,Ust-Luga (Baltic),Dhamra,Coal,135927,21.06,2025-11-17/2025-11-23,Time Charter
+2021-03-26,Coral Horizon,81268,Taboneo,Gopalpur,Coal,70042,10.68,2021-04-15/2021-04-18,Spot
+2025-09-01,Royal Progress,80825,Baltimore,Gangavaram,Coal,75571,28.73,2025-09-11/2025-09-16,Spot
+2023-03-16,Western Fortune,74709,Samarinda,Dhamra,Coal,65140,10.71,2023-03-25/2023-04-01,Time Charter
+2020-11-26,Grand Voyager,178434,Nacala,Gopalpur,Coal,171422,22.52,2020-12-15/2020-12-21,Spot
+2025-05-04,Pacific Endeavour,79781,Vostochny (Far East),Vizag,Coal,70323,20.29,2025-05-11/2025-05-17,Spot
+2024-02-09,Golden Legacy,78568,Nacala,Haldia,Coal,68279,20.99,2024-02-16/2024-02-22,Time Charter
+2023-03-16,Star Phoenix,160900,Newcastle,Paradip,Coal,139919,16.73,2023-03-24/2023-03-29,Spot
+2022-09-17,Golden Endeavour,77634,Novorossiysk (Black Sea),Gangavaram,Coal,66851,25.88,2022-10-04/2022-10-11,Spot
+2025-10-31,Ocean Legacy,158438,Baltimore,Haldia,Coal,141165,26.64,2025-11-09/2025-11-16,Time Charter
+2025-10-01,Northern Pioneer,81744,Baltimore,Paradip,Coal,75601,32.38,2025-10-09/2025-10-15,Spot
+2020-09-27,Golden Falcon,169322,Nacala,Vizag,Coal,149275,18.62,2020-10-18/2020-10-25,Spot
+2022-02-19,Atlantic Horizon,75852,Novorossiysk (Black Sea),Gopalpur,Coal,69753,19.98,2022-03-11/2022-03-14,Time Charter
+2022-03-21,Sea Endeavour,81521,Nacala,Vizag,Coal,73329,19.72,2022-04-08/2022-04-11,Spot
+2024-11-05,Pacific Navigator,177701,Novorossiysk (Black Sea),Haldia,Coal,155879,23.93,2024-11-25/2024-11-28,Spot
+2024-04-09,Sea Voyager,158449,Nacala,Gopalpur,Coal,147315,21.83,2024-04-24/2024-04-29,Spot
+2024-08-07,Crown Eagle,76269,Samarinda,Haldia,Coal,71179,9.5,2024-08-19/2024-08-22,Time Charter
+2024-01-10,Silver Pride,74293,Novorossiysk (Black Sea),Paradip,Coal,68015,22.61,2024-01-30/2024-02-06,Spot
+2020-01-31,Western Progress,164176,Beira,Gangavaram,Coal,157253,21.82,2020-02-20/2020-02-25,Spot
+2021-03-26,Atlantic Phoenix,152644,Ust-Luga (Baltic),Haldia,Coal,132522,19.88,2021-04-08/2021-04-11,Time Charter
+2023-02-14,Silver Harmony,79631,Nacala,Paradip,Coal,70840,20.94,2023-03-02/2023-03-06,Spot
+2024-04-09,Bay Fortune,81124,Hay Point,Paradip,Coal,72305,18.11,2024-04-30/2024-05-03,Spot
+2021-02-24,Pacific Fortune,177327,Nacala,Gopalpur,Coal,157665,18.22,2021-03-16/2021-03-20,Time Charter
+2021-04-25,Atlantic Legacy,161150,Newcastle,Haldia,Coal,149109,19.53,2021-05-16/2021-05-22,COA
+2021-12-21,Global Spirit,165817,Hampton Roads,Haldia,Coal,145494,29.55,2022-01-09/2022-01-14,Time Charter
+2024-07-08,Eastern Venture,77794,Novorossiysk (Black Sea),Dhamra,Coal,67055,20.51,2024-07-23/2024-07-30,COA
+2024-06-08,Star Navigator,171806,Hay Point,Paradip,Coal,160942,16.04,2024-06-25/2024-07-01,Spot
+2022-12-16,Western Fortune,172370,New Orleans,Gangavaram,Coal,152449,26.46,2022-12-24/2022-12-27,Spot
+2023-09-12,Grand Falcon,180692,Nacala,Gangavaram,Coal,153591,20.79,2023-09-24/2023-09-29,Spot
+2025-02-03,Global Falcon,169048,Newcastle,Paradip,Coal,162233,16.66,2025-02-21/2025-02-24,COA
+2025-01-04,Golden Navigator,151243,Muara Pantai,Haldia,Coal,128689,8.9,2025-01-15/2025-01-21,Spot
+2022-01-20,Grand Venture,150863,Baltimore,Paradip,Coal,144310,31.53,2022-01-30/2022-02-04,Spot
+2021-04-25,Global Horizon,181878,New Orleans,Gangavaram,Coal,167666,36.65,2021-05-16/2021-05-23,Spot
+2023-07-14,Global Voyager,81268,Baltimore,Paradip,Coal,73693,29.84,2023-07-24/2023-07-31,Spot
+2021-08-23,Sea Discovery,160785,Gladstone,Paradip,Coal,142217,15.96,2021-09-02/2021-09-05,Time Charter
+2021-08-23,Grand Legacy,78117,Beira,Gopalpur,Coal,75454,22.6,2021-09-04/2021-09-11,Spot
+2020-08-28,Coral Horizon,78273,Muara Pantai,Paradip,Coal,70494,9.42,2020-09-10/2020-09-13,Spot
+2023-08-13,Sea Progress,78959,Ust-Luga (Baltic),Gangavaram,Coal,67130,23.72,2023-08-22/2023-08-26,COA
+2023-02-14,Sea Venture,78130,Muara Pantai,Vizag,Coal,75726,11.64,2023-02-24/2023-02-27,COA
+2021-07-24,Bay Legacy,163728,Baltimore,Gangavaram,Coal,150328,36.68,2021-08-04/2021-08-11,Spot
+2023-02-14,Eastern Trader,79269,Vostochny (Far East),Paradip,Coal,68462,21.28,2023-03-05/2023-03-12,COA
+2024-09-06,Bay Trader,173052,Nacala,Gopalpur,Coal,164467,22.91,2024-09-14/2024-09-18,Spot
+2020-01-31,Royal Endeavour,76429,Nacala,Vizag,Coal,68599,19.86,2020-02-19/2020-02-26,Spot
+2023-09-12,Blue Endeavour,74782,Muara Pantai,Gangavaram,Coal,71911,11.19,2023-09-20/2023-09-25,Spot
+2020-01-01,Southern Venture,173428,Baltimore,Paradip,Coal,165420,30.09,2020-01-17/2020-01-23,Time Charter
+2025-10-31,Star Pride,75714,Hampton Roads,Haldia,Coal,64462,29.19,2025-11-08/2025-11-12,COA
+2020-03-31,Cape Voyager,178387,Hampton Roads,Dhamra,Coal,168463,35.65,2020-04-14/2020-04-20,Time Charter
+2024-02-09,Global Legacy,162895,Vostochny (Far East),Paradip,Coal,140799,27.38,2024-02-20/2024-02-25,Spot
+2024-01-10,Eastern Trader,79179,Baltimore,Haldia,Coal,76032,32.25,2024-01-21/2024-01-27,Time Charter
+2022-05-20,Grand Fortune,171325,Gladstone,Vizag,Coal,154392,14.19,2022-06-02/2022-06-09,Spot
+2020-05-30,Atlantic Harmony,162565,Beira,Gangavaram,Coal,157183,20.98,2020-06-17/2020-06-23,COA
+2021-06-24,Southern Horizon,165803,Vostochny (Far East),Paradip,Coal,154829,24.33,2021-07-15/2021-07-22,Spot
+2020-01-31,Trade Navigator,79561,Dalrymple Bay,Dhamra,Coal,70485,15.96,2020-02-07/2020-02-13,Time Charter
+2024-08-07,Northern Legacy,174974,Baltimore,Gangavaram,Coal,164004,31.27,2024-08-28/2024-09-02,Spot
+2020-05-30,Crown Fortune,78267,Muara Pantai,Haldia,Coal,74212,8.19,2020-06-12/2020-06-15,Time Charter
+2023-05-15,Bay Harmony,76796,New Orleans,Paradip,Coal,70034,28.26,2023-05-31/2023-06-05,Spot
+2024-03-10,Global Horizon,79577,Baltimore,Vizag,Coal,74356,30.47,2024-03-19/2024-03-23,Time Charter
+2023-03-16,Royal Trader,155417,Ust-Luga (Baltic),Dhamra,Coal,144023,21.8,2023-03-30/2023-04-05,Spot
+2020-03-01,Atlantic Phoenix,75389,Ust-Luga (Baltic),Haldia,Coal,66193,21.59,2020-03-21/2020-03-28,Time Charter
+2023-07-14,Global Discovery,79233,Taboneo,Haldia,Coal,73345,9.81,2023-07-21/2023-07-25,Spot
+2025-03-05,Crown Harmony,79551,Baltimore,Gangavaram,Coal,73391,32.17,2025-03-25/2025-03-31,Spot
+2021-10-22,Star Phoenix,151927,Muara Pantai,Gangavaram,Coal,144309,9.64,2021-10-30/2021-11-05,Spot
+2020-04-30,Silver Horizon,165038,Taboneo,Dhamra,Coal,148578,9.56,2020-05-14/2020-05-17,Spot
+2022-03-21,Star Discovery,176165,Baltimore,Haldia,Coal,154119,35.41,2022-03-31/2022-04-05,Time Charter
+2024-09-06,Grand Falcon,160493,Samarinda,Vizag,Coal,152184,10.37,2024-09-20/2024-09-24,Spot
+2021-07-24,Bay Phoenix,177155,Newcastle,Gopalpur,Coal,161925,15.67,2021-08-13/2021-08-20,Spot
+2022-05-20,Sea Trader,74748,Beira,Gopalpur,Coal,66339,18.19,2022-06-05/2022-06-10,Spot
+2020-06-29,Global Progress,156454,Beira,Vizag,Coal,138918,18.42,2020-07-07/2020-07-13,Time Charter
+2024-10-06,Golden Eagle,78816,Taboneo,Dhamra,Coal,67506,10.05,2024-10-25/2024-10-30,Time Charter
+2022-11-16,Golden Fortune,80914,Muara Pantai,Haldia,Coal,71336,12.01,2022-12-05/2022-12-09,Time Charter
+2024-01-10,Silver Venture,171249,Samarinda,Haldia,Coal,146326,13.16,2024-01-31/2024-02-03,COA
+2020-04-30,Northern Falcon,156189,Vostochny (Far East),Gopalpur,Coal,145898,24.03,2020-05-16/2020-05-23,Spot
+2022-04-20,Royal Pride,167944,Ust-Luga (Baltic),Gopalpur,Coal,162034,23.83,2022-04-30/2022-05-04,Spot
+2022-03-21,Grand Legacy,77564,Samarinda,Haldia,Coal,72894,10.39,2022-03-28/2022-04-04,Time Charter
+2020-11-26,Bay Legacy,151870,Hay Point,Gopalpur,Coal,144049,17.62,2020-12-09/2020-12-13,Time Charter
+2021-07-24,Golden Pioneer,170981,Ust-Luga (Baltic),Paradip,Coal,155450,18.89,2021-08-13/2021-08-20,Spot
+2022-08-18,Northern Legacy,177496,Baltimore,Gangavaram,Coal,170035,29.01,2022-08-27/2022-08-30,Time Charter
+2025-03-05,Royal Eagle,77311,Nacala,Vizag,Coal,70884,20.6,2025-03-17/2025-03-23,Spot
+2021-12-21,Ocean Pioneer,75691,Muara Pantai,Gopalpur,Coal,72186,11.07,2021-12-28/2022-01-01,Time Charter
+2020-06-29,Pacific Endeavour,159414,Taboneo,Vizag,Coal,145458,10.05,2020-07-13/2020-07-19,Spot
+2024-08-07,Atlantic Eagle,74168,Gladstone,Vizag,Coal,67026,17.59,2024-08-15/2024-08-22,Spot
+2024-01-10,Eastern Pride,74562,Hampton Roads,Gopalpur,Coal,66460,29.04,2024-01-18/2024-01-24,Spot
+2021-12-21,Golden Eagle,169484,Baltimore,Gangavaram,Coal,157768,28.37,2022-01-10/2022-01-13,Spot
+2020-05-30,Cape Phoenix,81662,Newcastle,Gangavaram,Coal,70962,16.74,2020-06-09/2020-06-13,Time Charter
+2022-01-20,Golden Spirit,79226,Beira,Dhamra,Coal,73459,20.15,2022-02-10/2022-02-15,Time Charter
+2022-10-17,Coral Legacy,74168,Muara Pantai,Vizag,Coal,70729,11.35,2022-10-27/2022-10-31,COA
+2023-06-14,Trade Discovery,77532,Muara Pantai,Gopalpur,Coal,68709,8.93,2023-06-24/2023-07-01,Spot
+2024-09-06,Northern Pioneer,173203,Gladstone,Gangavaram,Coal,165252,17.02,2024-09-15/2024-09-21,Spot
+2024-11-05,Trade Pride,176335,Ust-Luga (Baltic),Vizag,Coal,151453,19.63,2024-11-20/2024-11-23,Spot
+2023-05-15,Western Horizon,154874,Nacala,Dhamra,Coal,140195,20.53,2023-05-29/2023-06-05,Spot
+2023-03-16,Grand Venture,76777,Vostochny (Far East),Dhamra,Coal,67333,19.99,2023-03-23/2023-03-26,COA
+2024-05-09,Golden Harmony,178442,Ust-Luga (Baltic),Paradip,Coal,156153,26.62,2024-05-23/2024-05-26,Spot
+2021-02-24,Grand Navigator,172212,Taboneo,Vizag,Coal,150063,9.83,2021-03-06/2021-03-12,Spot
+2025-02-03,Eastern Phoenix,153563,Baltimore,Haldia,Coal,144293,34.82,2025-02-17/2025-02-20,Spot
+2020-09-27,Trade Legacy,80409,Gladstone,Haldia,Coal,73675,19.2,2020-10-15/2020-10-22,Time Charter
+2020-07-29,Western Eagle,156747,Baltimore,Vizag,Coal,144831,36.05,2020-08-17/2020-08-21,COA
+2021-02-24,Star Progress,170639,Newcastle,Paradip,Coal,147053,16.94,2021-03-16/2021-03-20,Spot
+2020-03-31,Golden Pride,76700,Ust-Luga (Baltic),Gopalpur,Coal,74046,22.91,2020-04-09/2020-04-14,Time Charter
+2020-05-30,Crown Voyager,74021,Ust-Luga (Baltic),Gangavaram,Coal,64123,23.33,2020-06-17/2020-06-20,COA
+2024-07-08,Golden Eagle,78616,Muara Pantai,Haldia,Coal,74896,11.67,2024-07-18/2024-07-22,Time Charter
+2022-09-17,Atlantic Harmony,76093,Taboneo,Paradip,Coal,70626,11.69,2022-10-04/2022-10-09,Spot
+2021-06-24,Western Pride,151092,Ust-Luga (Baltic),Vizag,Coal,143581,22.04,2021-07-07/2021-07-11,Spot
+2025-10-31,Grand Horizon,79451,Gladstone,Gangavaram,Coal,74681,15.45,2025-11-15/2025-11-18,Time Charter
+2022-08-18,Southern Navigator,80680,Taboneo,Gopalpur,Coal,76763,9.33,2022-08-26/2022-09-01,Spot
+2021-11-21,Royal Endeavour,77406,Gladstone,Gopalpur,Coal,67267,16.09,2021-12-02/2021-12-08,Spot
+2021-09-22,Crown Progress,78422,Baltimore,Dhamra,Coal,74182,34.9,2021-09-30/2021-10-04,COA
+2024-09-06,Royal Fortune,171286,Nacala,Paradip,Coal,159586,24.28,2024-09-23/2024-09-28,Spot
+2020-10-27,Southern Phoenix,77297,Beira,Haldia,Coal,74029,17.45,2020-11-15/2020-11-20,Spot
+2022-02-19,Western Pride,76601,Muara Pantai,Dhamra,Coal,66179,8.38,2022-02-27/2022-03-04,COA
+2022-02-19,Grand Falcon,80765,New Orleans,Paradip,Coal,69602,31.19,2022-03-09/2022-03-13,Spot
+2021-05-25,Global Navigator,76381,Taboneo,Gangavaram,Coal,72640,13.15,2021-06-14/2021-06-21,Spot
+2022-08-18,Western Navigator,169059,Dalrymple Bay,Vizag,Coal,159944,13.13,2022-08-26/2022-08-30,Spot
+2024-08-07,Silver Discovery,79663,Taboneo,Dhamra,Coal,71563,11.6,2024-08-19/2024-08-23,Spot
+2023-08-13,Grand Pioneer,81733,New Orleans,Dhamra,Coal,75156,33.99,2023-09-03/2023-09-10,Spot
+2021-03-26,Northern Voyager,174035,Muara Pantai,Vizag,Coal,163119,11.92,2021-04-10/2021-04-16,Spot
+2023-07-14,Northern Horizon,76827,Dalrymple Bay,Vizag,Coal,71360,13.45,2023-07-27/2023-08-03,COA
+2020-06-29,Bay Endeavour,158830,Baltimore,Gangavaram,Coal,152600,30.21,2020-07-14/2020-07-17,Time Charter
+2021-10-22,Blue Voyager,158238,Gladstone,Haldia,Coal,145303,15.19,2021-10-29/2021-11-05,Time Charter
+2023-05-15,Silver Progress,163161,Muara Pantai,Vizag,Coal,153687,8.46,2023-05-23/2023-05-27,Spot
+2024-11-05,Northern Navigator,166446,Dalrymple Bay,Haldia,Coal,157542,18.76,2024-11-25/2024-11-28,Time Charter
+2024-10-06,Star Discovery,81286,Baltimore,Gopalpur,Coal,71550,37.53,2024-10-25/2024-10-30,Time Charter
+2021-08-23,Bay Glory,150166,Samarinda,Dhamra,Coal,139728,10.55,2021-09-09/2021-09-15,Time Charter
+2022-04-20,Sea Falcon,79563,Ust-Luga (Baltic),Dhamra,Coal,76875,19.57,2022-05-06/2022-05-12,Spot
+2024-09-06,Global Pride,74916,Hampton Roads,Gangavaram,Coal,64790,34.07,2024-09-15/2024-09-20,COA
+2021-07-24,Coral Endeavour,174659,New Orleans,Dhamra,Coal,165572,33.5,2021-07-31/2021-08-07,Spot
+2020-01-31,Ocean Harmony,155038,Muara Pantai,Gangavaram,Coal,136891,12.1,2020-02-14/2020-02-18,Time Charter
+2025-10-31,Star Harmony,74562,Newcastle,Haldia,Coal,70307,17.67,2025-11-20/2025-11-24,Spot
+2022-01-20,Star Pride,78690,Beira,Gangavaram,Coal,70743,19.26,2022-01-29/2022-02-01,Spot
+2024-08-07,Global Discovery,172066,New Orleans,Haldia,Coal,151935,35.65,2024-08-26/2024-09-02,Spot
+2022-09-17,Atlantic Glory,171592,Beira,Gopalpur,Coal,156359,23.06,2022-09-24/2022-10-01,Time Charter
+2020-03-01,Northern Voyager,150817,Dalrymple Bay,Gopalpur,Coal,142049,16.94,2020-03-21/2020-03-25,Time Charter
+2023-05-15,Trade Trader,79316,Gladstone,Vizag,Coal,73051,14.9,2023-05-26/2023-05-29,Spot
+2020-07-29,Cape Endeavour,79578,Nacala,Vizag,Coal,72290,19.65,2020-08-09/2020-08-16,COA
+2021-08-23,Ocean Progress,75996,Hay Point,Haldia,Coal,65809,16.3,2021-09-07/2021-09-10,Time Charter
+2023-04-15,Cape Legacy,179786,Muara Pantai,Dhamra,Coal,157332,10.08,2023-05-05/2023-05-10,Spot
+2025-09-01,Golden Horizon,175735,Taboneo,Dhamra,Coal,160761,10.72,2025-09-13/2025-09-20,Spot
+2020-05-30,Trade Harmony,167467,Muara Pantai,Haldia,Coal,142393,9.96,2020-06-08/2020-06-12,Time Charter
+2022-09-17,Atlantic Trader,162930,Ust-Luga (Baltic),Dhamra,Coal,140225,18.69,2022-10-03/2022-10-06,Spot
+2024-04-09,Coral Falcon,77488,Vostochny (Far East),Gangavaram,Coal,67452,23.09,2024-04-30/2024-05-07,Spot
+2025-09-01,Bay Legacy,76267,Vostochny (Far East),Gopalpur,Coal,72541,22.28,2025-09-18/2025-09-22,Time Charter
+2020-04-30,Northern Phoenix,166989,New Orleans,Dhamra,Coal,148611,30.41,2020-05-15/2020-05-20,Spot
+2020-07-29,Western Glory,75116,Baltimore,Gopalpur,Coal,64359,36.68,2020-08-15/2020-08-18,COA
+2021-01-25,Crown Venture,78604,New Orleans,Dhamra,Coal,69681,32.57,2021-02-02/2021-02-07,Spot
+2024-04-09,Cape Pioneer,168957,Newcastle,Gopalpur,Coal,153738,18.78,2024-04-23/2024-04-26,Spot
+2024-08-07,Western Legacy,153753,Hampton Roads,Vizag,Coal,134981,39.39,2024-08-28/2024-09-04,COA
+2025-06-03,Silver Pioneer,157018,Vostochny (Far East),Dhamra,Coal,145982,20.92,2025-06-15/2025-06-19,Spot
+2023-07-14,Atlantic Eagle,79483,Nacala,Gangavaram,Coal,70349,20.95,2023-07-21/2023-07-26,Spot
+2021-08-23,Coral Discovery,162896,New Orleans,Paradip,Coal,152749,27.89,2021-09-09/2021-09-16,Spot
+2022-04-20,Eastern Horizon,156522,Hay Point,Haldia,Coal,148921,15.09,2022-04-27/2022-04-30,Time Charter
+2023-11-11,Southern Progress,76366,Nacala,Dhamra,Coal,66006,22.86,2023-11-23/2023-11-30,Spot
+2021-01-25,Golden Endeavour,161211,Hay Point,Dhamra,Coal,139222,17.18,2021-02-15/2021-02-20,Spot
+2025-01-04,Global Eagle,171692,Muara Pantai,Gopalpur,Coal,160699,11.62,2025-01-19/2025-01-26,Spot
+2025-01-04,Global Phoenix,79532,Vostochny (Far East),Dhamra,Coal,73143,20.69,2025-01-17/2025-01-21,Spot
+2020-07-29,Eastern Progress,177498,Ust-Luga (Baltic),Dhamra,Coal,166771,23.13,2020-08-10/2020-08-14,Spot
+2024-01-10,Blue Glory,165589,Muara Pantai,Vizag,Coal,156624,9.79,2024-01-22/2024-01-26,Spot
+2025-08-02,Ocean Legacy,174632,New Orleans,Dhamra,Coal,157965,30.74,2025-08-20/2025-08-25,Spot
+2021-07-24,Grand Venture,170603,Taboneo,Dhamra,Coal,156410,11.3,2021-08-03/2021-08-08,Time Charter
+2023-03-16,Crown Endeavour,159907,Muara Pantai,Vizag,Coal,144101,10.6,2023-03-30/2023-04-04,Spot
+2023-07-14,Eastern Spirit,155912,Samarinda,Paradip,Coal,135687,11.15,2023-07-25/2023-07-30,Spot
+2022-04-20,Golden Discovery,157538,Taboneo,Gopalpur,Coal,148758,11.2,2022-05-04/2022-05-10,Spot
+2025-09-01,Grand Falcon,74668,Novorossiysk (Black Sea),Paradip,Coal,67792,21.63,2025-09-12/2025-09-19,Time Charter
+2025-03-05,Golden Phoenix,77302,Newcastle,Gopalpur,Coal,71439,18.75,2025-03-19/2025-03-22,Spot
+2024-03-10,Northern Legacy,81440,New Orleans,Gangavaram,Coal,69463,31.65,2024-03-31/2024-04-03,Spot
+2023-02-14,Royal Pioneer,153648,New Orleans,Paradip,Coal,135976,35.89,2023-03-05/2023-03-08,Time Charter
+2020-10-27,Star Harmony,77365,Nacala,Gopalpur,Coal,73111,18.31,2020-11-11/2020-11-17,COA
+2020-03-31,Silver Legacy,77630,Beira,Haldia,Coal,73157,20.55,2020-04-16/2020-04-20,COA
+2021-09-22,Sea Eagle,76583,Beira,Vizag,Coal,70874,21.53,2021-10-13/2021-10-17,Spot
+2025-06-03,Eastern Harmony,170285,Taboneo,Gopalpur,Coal,145853,13.12,2025-06-15/2025-06-21,Time Charter
+2023-08-13,Blue Voyager,77908,Samarinda,Dhamra,Coal,69592,12.35,2023-08-21/2023-08-26,Spot
+2022-03-21,Crown Navigator,152066,Hay Point,Dhamra,Coal,146598,18.21,2022-04-02/2022-04-05,Spot
+2022-01-20,Crown Voyager,80743,Ust-Luga (Baltic),Gangavaram,Coal,77630,21.69,2022-02-02/2022-02-09,Spot
+2020-06-29,Atlantic Endeavour,77304,Newcastle,Gopalpur,Coal,73005,15.12,2020-07-07/2020-07-12,Spot
+2021-12-21,Blue Legacy,172077,Vostochny (Far East),Haldia,Coal,147174,22.78,2021-12-30/2022-01-03,Spot
+2021-05-25,Global Falcon,166077,Novorossiysk (Black Sea),Gangavaram,Coal,147606,19.14,2021-06-06/2021-06-09,Spot
+2022-06-19,Global Spirit,79505,Muara Pantai,Gangavaram,Coal,70207,7.92,2022-07-05/2022-07-08,Spot
+2024-11-05,Golden Endeavour,81542,Vostochny (Far East),Gangavaram,Coal,70115,23.25,2024-11-24/2024-11-28,Time Charter
+2024-04-09,Southern Navigator,77403,Ust-Luga (Baltic),Paradip,Coal,74424,23.22,2024-04-16/2024-04-23,Spot
+2021-03-26,Ocean Progress,77864,Ust-Luga (Baltic),Haldia,Coal,74355,27.57,2021-04-11/2021-04-15,Spot
+2024-01-10,Grand Pride,75306,Hampton Roads,Gangavaram,Coal,67756,33.97,2024-01-23/2024-01-26,Spot
+2022-05-20,Bay Glory,77813,Hampton Roads,Haldia,Coal,69121,32.24,2022-06-09/2022-06-16,Spot
+2021-12-21,Northern Discovery,172471,Beira,Vizag,Coal,155287,20.8,2021-12-29/2022-01-05,Spot
+2020-08-28,Global Falcon,170939,Baltimore,Vizag,Coal,146301,30.0,2020-09-08/2020-09-12,Spot
+2022-10-17,Silver Spirit,76293,Samarinda,Paradip,Coal,64908,10.1,2022-10-26/2022-10-30,Spot
+2022-06-19,Global Spirit,170196,Beira,Gopalpur,Coal,145083,19.97,2022-06-29/2022-07-03,Spot
+2024-02-09,Southern Horizon,154987,Taboneo,Gopalpur,Coal,140019,10.56,2024-03-01/2024-03-06,Spot
+2022-01-20,Southern Trader,175176,Novorossiysk (Black Sea),Haldia,Coal,153014,24.63,2022-02-03/2022-02-06,COA
+2023-05-15,Pacific Pioneer,166597,Gladstone,Gopalpur,Coal,146129,17.46,2023-05-24/2023-05-27,COA
+2020-01-01,Coral Venture,78115,New Orleans,Vizag,Coal,72283,38.77,2020-01-09/2020-01-14,Spot
+2023-06-14,Atlantic Eagle,180127,Taboneo,Paradip,Coal,172540,10.5,2023-06-30/2023-07-07,Time Charter
+2020-11-26,Royal Harmony,80876,Muara Pantai,Haldia,Coal,69774,11.71,2020-12-06/2020-12-09,COA
+2020-01-31,Crown Navigator,163087,Gladstone,Vizag,Coal,141286,18.91,2020-02-09/2020-02-13,Spot
+2020-09-27,Trade Legacy,166420,Novorossiysk (Black Sea),Gopalpur,Coal,153028,26.11,2020-10-12/2020-10-18,COA
+2021-11-21,Royal Horizon,171294,Baltimore,Gangavaram,Coal,147334,31.08,2021-12-04/2021-12-09,Spot
+2020-04-30,Silver Navigator,164756,New Orleans,Paradip,Coal,143354,33.56,2020-05-09/2020-05-13,Spot
+2024-06-08,Eastern Progress,78939,Beira,Dhamra,Coal,72172,21.69,2024-06-29/2024-07-02,Spot
+2023-11-11,Golden Venture,173788,Hampton Roads,Gangavaram,Coal,158282,30.26,2023-11-26/2023-12-02,Time Charter
+2023-12-11,Trade Endeavour,81852,Novorossiysk (Black Sea),Vizag,Coal,78165,20.71,2023-12-29/2024-01-02,Time Charter
+2024-02-09,Global Trader,75557,Samarinda,Dhamra,Coal,71603,8.79,2024-02-29/2024-03-05,Spot
+2022-02-19,Golden Pride,162989,Novorossiysk (Black Sea),Gopalpur,Coal,153451,26.01,2022-03-02/2022-03-07,COA
+2024-05-09,Silver Horizon,179390,Gladstone,Dhamra,Coal,166780,15.32,2024-05-24/2024-05-30,COA
+2024-07-08,Global Voyager,79167,New Orleans,Haldia,Coal,72096,30.4,2024-07-16/2024-07-21,Time Charter
+2021-04-25,Southern Phoenix,152449,Nacala,Paradip,Coal,141814,23.13,2021-05-10/2021-05-14,Spot
+2024-08-07,Pacific Horizon,169250,Baltimore,Paradip,Coal,156981,31.57,2024-08-21/2024-08-27,Spot
+2020-12-26,Ocean Fortune,77745,Novorossiysk (Black Sea),Dhamra,Coal,66768,21.42,2021-01-03/2021-01-07,Spot
+2024-09-06,Ocean Horizon,172109,Samarinda,Paradip,Coal,150751,12.19,2024-09-17/2024-09-24,Spot
+2021-02-24,Royal Pioneer,78191,Newcastle,Paradip,Coal,71765,14.3,2021-03-07/2021-03-10,Spot
+2024-05-09,Trade Falcon,163770,Nacala,Gangavaram,Coal,158469,20.47,2024-05-21/2024-05-24,Spot
+2021-12-21,Atlantic Spirit,180632,Novorossiysk (Black Sea),Vizag,Coal,155335,21.53,2021-12-31/2022-01-06,Spot
+2020-10-27,Bay Voyager,81382,Taboneo,Gangavaram,Coal,77001,10.56,2020-11-17/2020-11-22,Time Charter
+2021-03-26,Northern Horizon,172674,Hay Point,Dhamra,Coal,150428,18.74,2021-04-11/2021-04-16,COA
+2020-03-01,Golden Phoenix,170002,New Orleans,Gopalpur,Coal,163727,33.94,2020-03-13/2020-03-16,Spot
+2020-12-26,Coral Horizon,74715,New Orleans,Dhamra,Coal,65354,32.9,2021-01-16/2021-01-19,Spot
+2023-02-14,Coral Fortune,181426,Ust-Luga (Baltic),Dhamra,Coal,164107,23.35,2023-02-24/2023-03-03,Time Charter
+2021-07-24,Royal Voyager,77189,Hay Point,Haldia,Coal,70617,14.75,2021-08-05/2021-08-11,COA
+2023-09-12,Silver Pioneer,75822,Novorossiysk (Black Sea),Paradip,Coal,71482,24.92,2023-09-20/2023-09-26,COA
+2024-10-06,Bay Phoenix,159931,Nacala,Gopalpur,Coal,154011,23.71,2024-10-14/2024-10-19,Spot
+2023-01-15,Cape Phoenix,163680,Taboneo,Dhamra,Coal,158102,12.04,2023-01-23/2023-01-27,COA
+2023-12-11,Global Horizon,76815,Beira,Haldia,Coal,74007,18.02,2024-01-01/2024-01-07,COA
+2021-06-24,Silver Legacy,78871,Hampton Roads,Dhamra,Coal,70951,36.43,2021-07-05/2021-07-09,COA
+2024-11-05,Northern Discovery,76597,Muara Pantai,Gangavaram,Coal,66145,10.51,2024-11-24/2024-12-01,Spot
+2024-12-05,Crown Phoenix,77028,Samarinda,Haldia,Coal,68252,7.81,2024-12-25/2024-12-30,Spot
+2025-04-04,Atlantic Falcon,160488,Baltimore,Dhamra,Coal,144397,32.31,2025-04-18/2025-04-21,COA
+2021-08-23,Silver Endeavour,78447,Hay Point,Gangavaram,Coal,75245,16.91,2021-09-12/2021-09-16,COA
+2023-06-14,Silver Spirit,154670,Beira,Gangavaram,Coal,133078,22.17,2023-06-21/2023-06-25,COA
+2022-04-20,Western Pride,76253,Novorossiysk (Black Sea),Gopalpur,Coal,69259,21.8,2022-05-06/2022-05-12,Time Charter
+2023-04-15,Trade Pride,79291,Hay Point,Gangavaram,Coal,76899,15.21,2023-05-04/2023-05-08,Time Charter
+2020-04-30,Grand Eagle,76978,Hay Point,Paradip,Coal,71545,17.46,2020-05-09/2020-05-15,Time Charter
+2021-11-21,Grand Legacy,74011,Hampton Roads,Paradip,Coal,69737,36.29,2021-12-03/2021-12-06,Spot
+2021-05-25,Pacific Endeavour,155412,Vostochny (Far East),Dhamra,Coal,133533,23.79,2021-06-12/2021-06-19,COA
+2025-09-01,Trade Horizon,81702,Newcastle,Paradip,Coal,74436,15.48,2025-09-21/2025-09-26,COA
+2024-10-06,Coral Voyager,77136,Beira,Haldia,Coal,67156,19.1,2024-10-23/2024-10-28,Spot
+2020-04-30,Ocean Falcon,79586,Beira,Vizag,Coal,74702,23.14,2020-05-11/2020-05-15,Spot
+2023-04-15,Global Falcon,81900,Baltimore,Vizag,Coal,74478,35.2,2023-04-23/2023-04-29,Spot
+2023-10-12,Bay Horizon,162234,Hay Point,Gangavaram,Coal,155864,15.94,2023-10-26/2023-11-02,COA
+2022-04-20,Pacific Horizon,80038,Beira,Paradip,Coal,75127,19.19,2022-04-27/2022-05-04,Spot
+2022-10-17,Grand Navigator,152940,Beira,Gopalpur,Coal,131591,22.87,2022-10-26/2022-11-01,COA
+2023-12-11,Star Falcon,174335,Muara Pantai,Gopalpur,Coal,165119,10.31,2024-01-01/2024-01-04,Spot
+2023-04-15,Global Voyager,165147,Beira,Haldia,Coal,140864,20.53,2023-04-27/2023-04-30,Time Charter
+2023-01-15,Atlantic Phoenix,74262,Dalrymple Bay,Gangavaram,Coal,69366,18.66,2023-01-31/2023-02-06,Spot
+2025-10-01,Crown Legacy,78598,Beira,Haldia,Coal,67844,18.19,2025-10-14/2025-10-19,Spot
+2025-07-03,Cape Eagle,81221,Dalrymple Bay,Gangavaram,Coal,69114,16.48,2025-07-18/2025-07-21,COA
+2020-03-31,Southern Harmony,159141,Ust-Luga (Baltic),Haldia,Coal,147308,23.55,2020-04-16/2020-04-23,Spot
+2024-05-09,Sea Discovery,150402,Hay Point,Haldia,Coal,128724,15.61,2024-05-20/2024-05-25,Spot
+2020-01-01,Silver Phoenix,75558,Muara Pantai,Dhamra,Coal,69905,10.36,2020-01-14/2020-01-17,Time Charter
+2022-05-20,Sea Venture,74631,Ust-Luga (Baltic),Gangavaram,Coal,70815,24.24,2022-06-09/2022-06-16,Spot
+2023-06-14,Golden Voyager,176578,Ust-Luga (Baltic),Gopalpur,Coal,150368,23.31,2023-07-03/2023-07-06,Spot
+2025-04-04,Global Horizon,76427,Nacala,Gangavaram,Coal,72310,18.26,2025-04-21/2025-04-25,Spot
+2023-10-12,Cape Navigator,177562,Nacala,Gangavaram,Coal,168302,22.14,2023-11-01/2023-11-08,Spot
+2024-05-09,Sea Glory,162498,Dalrymple Bay,Vizag,Coal,146863,17.0,2024-05-27/2024-06-03,Spot
+2024-08-07,Southern Pioneer,74291,Dalrymple Bay,Paradip,Coal,71912,15.96,2024-08-26/2024-08-29,Spot
+2022-09-17,Cape Horizon,74022,Nacala,Haldia,Coal,71080,22.61,2022-10-04/2022-10-08,Time Charter
+2025-02-03,Sea Horizon,150409,Nacala,Gopalpur,Coal,132110,21.99,2025-02-16/2025-02-22,Spot
+2025-05-04,Eastern Fortune,76153,Novorossiysk (Black Sea),Gopalpur,Coal,66277,20.28,2025-05-19/2025-05-22,Time Charter
+2021-01-25,Royal Horizon,179875,Hampton Roads,Paradip,Coal,153075,29.12,2021-02-09/2021-02-15,COA
+2020-03-01,Blue Harmony,154619,Dalrymple Bay,Vizag,Coal,142436,14.62,2020-03-17/2020-03-22,COA
+2022-09-17,Pacific Falcon,165795,Hampton Roads,Haldia,Coal,142015,30.05,2022-09-27/2022-10-02,Spot
+2023-03-16,Sea Spirit,153325,New Orleans,Gopalpur,Coal,148376,33.72,2023-03-30/2023-04-06,Spot
+2023-08-13,Royal Pride,164078,Nacala,Paradip,Coal,146042,20.29,2023-08-29/2023-09-03,Time Charter
+2023-04-15,Silver Voyager,79675,Nacala,Dhamra,Coal,76836,21.83,2023-04-30/2023-05-04,Spot
+2022-06-19,Trade Eagle,172768,Muara Pantai,Gopalpur,Coal,157347,10.03,2022-07-01/2022-07-04,Spot
+2020-03-31,Western Trader,81718,Ust-Luga (Baltic),Dhamra,Coal,75459,20.99,2020-04-17/2020-04-21,Spot
+2020-06-29,Western Falcon,76270,Nacala,Haldia,Coal,67741,22.44,2020-07-20/2020-07-26,Time Charter
+2025-08-02,Crown Pride,80086,Hay Point,Vizag,Coal,69770,17.23,2025-08-12/2025-08-19,Spot
+2021-11-21,Sea Spirit,74419,Taboneo,Vizag,Coal,71683,10.96,2021-12-11/2021-12-18,Spot
+2020-03-31,Northern Fortune,165574,Muara Pantai,Haldia,Coal,156905,8.56,2020-04-14/2020-04-17,Spot
+2025-01-04,Sea Horizon,155763,Baltimore,Paradip,Coal,150875,31.6,2025-01-16/2025-01-23,Spot
+2025-08-02,Cape Spirit,179814,Samarinda,Paradip,Coal,156732,9.87,2025-08-11/2025-08-15,Spot
+2025-10-31,Royal Pioneer,74829,Hampton Roads,Vizag,Coal,69445,35.23,2025-11-16/2025-11-23,COA
+2021-01-25,Northern Trader,80551,Vostochny (Far East),Vizag,Coal,69237,23.65,2021-02-04/2021-02-09,COA
+2021-05-25,Star Horizon,77907,Hay Point,Gangavaram,Coal,73002,19.47,2021-06-15/2021-06-22,Time Charter
+2022-03-21,Global Trader,79743,New Orleans,Gangavaram,Coal,74841,32.56,2022-04-02/2022-04-06,COA
+2024-03-10,Coral Progress,74960,Vostochny (Far East),Gopalpur,Coal,72008,21.9,2024-03-29/2024-04-04,COA
+2020-03-31,Crown Harmony,75998,Baltimore,Paradip,Coal,69557,32.85,2020-04-09/2020-04-13,Time Charter
+2020-08-28,Star Glory,76343,Hay Point,Paradip,Coal,70617,17.61,2020-09-17/2020-09-20,Spot
+2020-08-28,Star Legacy,76809,Gladstone,Gopalpur,Coal,71392,13.35,2020-09-15/2020-09-21,Spot
+2025-09-01,Global Eagle,163315,Vostochny (Far East),Dhamra,Coal,149008,23.75,2025-09-20/2025-09-26,Spot
+2020-10-27,Crown Harmony,75196,New Orleans,Vizag,Coal,64680,34.83,2020-11-09/2020-11-16,Spot
+2022-10-17,Sea Legacy,78034,Dalrymple Bay,Dhamra,Coal,73171,16.95,2022-11-07/2022-11-13,COA
+2025-05-04,Atlantic Spirit,165110,Muara Pantai,Gangavaram,Coal,148652,9.57,2025-05-19/2025-05-22,Spot
+2025-01-04,Grand Harmony,79634,New Orleans,Dhamra,Coal,71683,32.87,2025-01-13/2025-01-17,Spot
+2020-04-30,Crown Phoenix,154951,New Orleans,Gopalpur,Coal,132280,32.13,2020-05-19/2020-05-24,Spot
+2025-09-01,Silver Discovery,81966,Muara Pantai,Haldia,Coal,78831,11.31,2025-09-09/2025-09-14,Spot
+2023-01-15,Southern Endeavour,75636,Samarinda,Dhamra,Coal,70989,10.33,2023-01-30/2023-02-05,COA
+2020-01-01,Global Pride,78828,Gladstone,Dhamra,Coal,74666,17.52,2020-01-22/2020-01-26,Spot
+2020-04-30,Pacific Progress,75302,Newcastle,Dhamra,Coal,68847,17.88,2020-05-21/2020-05-26,COA
+2020-11-26,Ocean Pioneer,157404,Hampton Roads,Paradip,Coal,136302,29.7,2020-12-17/2020-12-24,Spot
+2025-01-04,Western Legacy,160647,Nacala,Gangavaram,Coal,142468,22.29,2025-01-21/2025-01-28,COA
+2021-02-24,Global Pride,80556,Vostochny (Far East),Gopalpur,Coal,72288,20.02,2021-03-03/2021-03-07,Time Charter
+2022-04-20,Western Phoenix,81380,Newcastle,Paradip,Coal,70240,17.12,2022-05-07/2022-05-13,Time Charter
+2023-02-14,Global Harmony,163249,Dalrymple Bay,Vizag,Coal,153082,16.58,2023-03-01/2023-03-06,Spot
+2022-10-17,Ocean Discovery,74896,New Orleans,Haldia,Coal,63748,29.1,2022-11-07/2022-11-11,Spot
+2022-07-19,Golden Navigator,166152,Samarinda,Gangavaram,Coal,155058,11.49,2022-08-05/2022-08-12,Spot
+2020-11-26,Pacific Endeavour,81168,Novorossiysk (Black Sea),Dhamra,Coal,69345,24.45,2020-12-10/2020-12-17,Time Charter
+2021-03-26,Silver Eagle,74354,Baltimore,Vizag,Coal,66690,32.68,2021-04-13/2021-04-16,Spot
+2025-05-04,Star Glory,78529,Samarinda,Dhamra,Coal,70945,9.64,2025-05-17/2025-05-23,Spot
+2020-06-29,Southern Spirit,162841,Baltimore,Gopalpur,Coal,151920,31.3,2020-07-16/2020-07-21,Spot
+2023-08-13,Atlantic Phoenix,75965,Novorossiysk (Black Sea),Haldia,Coal,67618,23.55,2023-08-22/2023-08-25,Spot
+2023-01-15,Trade Voyager,80213,New Orleans,Gopalpur,Coal,70935,34.47,2023-01-24/2023-01-27,Spot
+2021-05-25,Pacific Voyager,75603,Ust-Luga (Baltic),Paradip,Coal,70663,24.87,2021-06-13/2021-06-17,Time Charter
+2023-12-11,Atlantic Glory,74961,Nacala,Gangavaram,Coal,64907,18.63,2023-12-31/2024-01-07,Spot
+2022-04-20,Golden Pioneer,174996,Nacala,Haldia,Coal,161803,21.43,2022-05-10/2022-05-16,Time Charter
+2024-11-05,Cape Harmony,76432,Hampton Roads,Haldia,Coal,66086,33.43,2024-11-12/2024-11-18,Spot
+2024-06-08,Southern Fortune,181965,Vostochny (Far East),Gangavaram,Coal,173521,22.75,2024-06-22/2024-06-28,Spot
+2024-02-09,Northern Pioneer,168152,Muara Pantai,Gangavaram,Coal,144711,12.16,2024-02-18/2024-02-24,Spot
+2024-06-08,Ocean Voyager,80302,Samarinda,Gopalpur,Coal,71303,12.03,2024-06-20/2024-06-26,Spot
+2021-07-24,Crown Phoenix,76123,Taboneo,Vizag,Coal,70378,9.0,2021-08-06/2021-08-11,Time Charter
+2020-01-01,Coral Glory,159843,Hampton Roads,Vizag,Coal,138558,32.05,2020-01-11/2020-01-14,Spot
+2020-05-30,Trade Venture,167345,Gladstone,Gangavaram,Coal,147470,17.87,2020-06-19/2020-06-22,Spot
+2021-05-25,Western Eagle,168160,Vostochny (Far East),Vizag,Coal,160076,19.16,2021-06-04/2021-06-07,COA
+2023-04-15,Global Fortune,151947,Vostochny (Far East),Gopalpur,Coal,136306,23.19,2023-04-24/2023-04-29,Spot
+2024-04-09,Eastern Trader,170764,Nacala,Gangavaram,Coal,164229,20.74,2024-04-16/2024-04-20,Spot
+2024-11-05,Trade Progress,80935,Gladstone,Dhamra,Coal,77141,19.36,2024-11-21/2024-11-28,Spot
+2025-06-03,Global Venture,168615,Dalrymple Bay,Paradip,Coal,158519,14.77,2025-06-20/2025-06-27,COA
+2024-10-06,Royal Fortune,74434,Samarinda,Gopalpur,Coal,70202,11.66,2024-10-24/2024-10-31,COA
+2022-11-16,Cape Falcon,177180,New Orleans,Haldia,Coal,169338,37.17,2022-11-24/2022-12-01,COA
+2025-09-01,Crown Progress,173265,Muara Pantai,Paradip,Coal,167258,10.65,2025-09-22/2025-09-29,Spot
+2022-09-17,Royal Pioneer,151364,Ust-Luga (Baltic),Vizag,Coal,137614,22.71,2022-09-30/2022-10-06,Time Charter
+2023-02-14,Royal Trader,81947,Gladstone,Gopalpur,Coal,77040,16.19,2023-03-01/2023-03-06,COA
+2024-11-05,Royal Horizon,74126,Newcastle,Gangavaram,Coal,70818,15.63,2024-11-17/2024-11-22,Time Charter
+2021-11-21,Southern Pioneer,179776,Baltimore,Dhamra,Coal,162003,29.82,2021-12-04/2021-12-08,Spot
+2024-08-07,Trade Legacy,77324,New Orleans,Paradip,Coal,67901,28.47,2024-08-26/2024-09-02,Spot
+2025-09-01,Silver Harmony,160036,Nacala,Vizag,Coal,153586,21.29,2025-09-13/2025-09-17,Spot
+2023-11-11,Southern Pioneer,79701,Hampton Roads,Haldia,Coal,69529,35.15,2023-12-02/2023-12-06,Spot
+2023-01-15,Atlantic Falcon,152536,Samarinda,Vizag,Coal,142465,10.61,2023-01-26/2023-01-30,Spot
+2025-01-04,Ocean Venture,181973,Samarinda,Dhamra,Coal,164156,9.41,2025-01-16/2025-01-20,Spot
+2023-03-16,Trade Horizon,161196,Samarinda,Gangavaram,Coal,145204,9.94,2023-04-04/2023-04-11,COA
+2025-01-04,Pacific Discovery,168660,Samarinda,Paradip,Coal,150496,10.96,2025-01-18/2025-01-22,Time Charter
+2023-02-14,Ocean Legacy,178149,Vostochny (Far East),Gopalpur,Coal,161751,26.71,2023-02-27/2023-03-05,COA
+2024-01-10,Golden Progress,81150,Nacala,Dhamra,Coal,78593,19.99,2024-01-31/2024-02-03,COA
+2020-12-26,Golden Endeavour,80145,Hay Point,Vizag,Coal,72708,14.66,2021-01-12/2021-01-16,Spot
+2021-11-21,Pacific Fortune,80879,Muara Pantai,Paradip,Coal,76055,8.91,2021-12-01/2021-12-06,Spot
+2021-09-22,Coral Navigator,163855,Samarinda,Gopalpur,Coal,152238,9.85,2021-10-01/2021-10-06,Time Charter
+2025-10-31,Southern Voyager,178698,Muara Pantai,Vizag,Coal,160120,12.12,2025-11-19/2025-11-22,Spot
+2025-08-02,Global Voyager,154127,Baltimore,Gangavaram,Coal,137578,31.69,2025-08-11/2025-08-15,Spot
+2022-03-21,Trade Pride,160928,New Orleans,Gopalpur,Coal,147224,34.18,2022-04-11/2022-04-17,COA
+2022-12-16,Cape Progress,176583,Ust-Luga (Baltic),Dhamra,Coal,151967,19.77,2022-12-29/2023-01-04,COA
+2024-09-06,Northern Horizon,77330,Novorossiysk (Black Sea),Haldia,Coal,71664,25.45,2024-09-14/2024-09-19,Time Charter
+2021-06-24,Global Navigator,170524,New Orleans,Dhamra,Coal,147851,30.99,2021-07-05/2021-07-09,Spot
+2022-09-17,Cape Falcon,162873,Hampton Roads,Gopalpur,Coal,141603,33.56,2022-09-29/2022-10-05,COA
+2021-10-22,Grand Voyager,170086,Nacala,Vizag,Coal,148635,20.74,2021-11-09/2021-11-15,Time Charter
+2024-06-08,Cape Phoenix,75356,Beira,Vizag,Coal,69697,22.36,2024-06-21/2024-06-28,Spot
+2022-08-18,Atlantic Legacy,160288,Hay Point,Dhamra,Coal,144038,15.32,2022-09-06/2022-09-10,Spot
+2023-05-15,Southern Voyager,172864,Nacala,Paradip,Coal,150448,23.76,2023-06-04/2023-06-10,Time Charter
+2021-06-24,Bay Fortune,156827,Taboneo,Vizag,Coal,140174,10.41,2021-07-11/2021-07-16,Spot
+2023-06-14,Silver Voyager,78105,Beira,Vizag,Coal,68519,19.35,2023-06-21/2023-06-26,Spot
+2023-11-11,Eastern Voyager,75385,Gladstone,Paradip,Coal,68451,16.33,2023-11-18/2023-11-21,Spot
+2024-03-10,Coral Fortune,74012,Novorossiysk (Black Sea),Gangavaram,Coal,67129,28.28,2024-03-25/2024-03-28,Spot
+2025-10-01,Blue Navigator,75880,Baltimore,Gangavaram,Coal,69203,34.55,2025-10-13/2025-10-18,Spot
+2021-06-24,Grand Spirit,153583,Gladstone,Gangavaram,Coal,140945,17.9,2021-07-11/2021-07-18,COA
+2022-10-17,Grand Horizon,160907,Taboneo,Dhamra,Coal,137514,10.34,2022-11-03/2022-11-10,Spot
+2022-12-16,Blue Fortune,81387,Baltimore,Dhamra,Coal,76483,30.16,2022-12-31/2023-01-06,Spot
+2023-09-12,Silver Fortune,79843,Dalrymple Bay,Gangavaram,Coal,75583,18.52,2023-09-22/2023-09-28,Spot
+2024-03-10,Trade Horizon,152313,Nacala,Haldia,Coal,145893,21.2,2024-03-22/2024-03-25,COA
+2021-04-25,Eastern Glory,76575,Taboneo,Vizag,Coal,71731,10.37,2021-05-09/2021-05-16,Spot
+2020-10-27,Star Endeavour,77819,Hampton Roads,Haldia,Coal,66158,28.42,2020-11-04/2020-11-11,Time Charter
+2022-04-20,Star Pioneer,154839,Muara Pantai,Haldia,Coal,134667,9.06,2022-05-05/2022-05-10,Spot
+2023-12-11,Western Falcon,76988,Vostochny (Far East),Gopalpur,Coal,68255,24.15,2023-12-31/2024-01-07,Time Charter
+2025-05-04,Coral Endeavour,176257,New Orleans,Gopalpur,Coal,164711,32.25,2025-05-13/2025-05-16,COA
+2025-07-03,Coral Glory,167053,Taboneo,Paradip,Coal,150817,9.65,2025-07-17/2025-07-21,Spot
+2024-08-07,Cape Progress,164920,Beira,Haldia,Coal,143734,17.62,2024-08-16/2024-08-23,COA
+2020-06-29,Global Progress,76983,Nacala,Paradip,Coal,71954,20.56,2020-07-08/2020-07-15,Spot
+2023-02-14,Atlantic Glory,152191,Nacala,Haldia,Coal,132721,20.05,2023-03-07/2023-03-10,COA
+2022-12-16,Southern Venture,81274,Taboneo,Gangavaram,Coal,76052,10.98,2023-01-05/2023-01-11,Spot
+2024-08-07,Silver Pride,80035,Novorossiysk (Black Sea),Dhamra,Coal,75877,24.25,2024-08-22/2024-08-26,Spot
+2023-08-13,Silver Discovery,179213,Taboneo,Gangavaram,Coal,168072,10.92,2023-09-01/2023-09-08,Spot
+2021-06-24,Trade Fortune,79911,Baltimore,Vizag,Coal,74458,34.99,2021-07-12/2021-07-16,Spot
+2024-06-08,Pacific Phoenix,155488,Newcastle,Vizag,Coal,146745,14.78,2024-06-16/2024-06-22,Spot
+2020-05-30,Global Harmony,151945,Dalrymple Bay,Gopalpur,Coal,129835,14.13,2020-06-16/2020-06-19,Spot
+2020-05-30,Northern Legacy,181420,New Orleans,Paradip,Coal,172808,28.77,2020-06-19/2020-06-22,Time Charter
+2020-03-01,Coral Spirit,150295,Beira,Gangavaram,Coal,144730,18.31,2020-03-22/2020-03-28,Spot
+2021-04-25,Coral Eagle,151162,Taboneo,Paradip,Coal,139773,12.61,2021-05-08/2021-05-12,COA
+2025-06-03,Cape Phoenix,163266,Taboneo,Dhamra,Coal,156986,12.2,2025-06-23/2025-06-27,Spot
+2023-10-12,Eastern Legacy,74035,Nacala,Paradip,Coal,71234,21.67,2023-10-25/2023-10-28,COA
+2022-05-20,Northern Spirit,160208,Baltimore,Gangavaram,Coal,146760,29.76,2022-06-06/2022-06-12,Spot
+2022-08-18,Atlantic Fortune,81723,Beira,Gangavaram,Coal,78086,20.46,2022-08-29/2022-09-03,Spot
+2020-03-01,Atlantic Endeavour,79492,New Orleans,Paradip,Coal,75894,29.12,2020-03-14/2020-03-19,Time Charter
+2024-05-09,Western Navigator,162415,Hampton Roads,Gangavaram,Coal,142664,37.98,2024-05-24/2024-05-31,Spot
+2020-12-26,Southern Legacy,75385,Beira,Paradip,Coal,69432,24.29,2021-01-02/2021-01-06,Time Charter
+2023-02-14,Global Pioneer,155571,Newcastle,Dhamra,Coal,140500,14.11,2023-03-07/2023-03-11,Time Charter
+2024-07-08,Sea Discovery,158621,Dalrymple Bay,Vizag,Coal,140855,16.51,2024-07-22/2024-07-27,Time Charter
+2025-01-04,Sea Legacy,74408,Baltimore,Haldia,Coal,64848,35.0,2025-01-24/2025-01-31,Spot
+2021-07-24,Silver Navigator,81514,Baltimore,Haldia,Coal,74240,33.63,2021-07-31/2021-08-04,Time Charter
+2020-01-01,Royal Falcon,77962,Novorossiysk (Black Sea),Paradip,Coal,68064,20.23,2020-01-18/2020-01-23,COA
+2020-10-27,Pacific Discovery,81159,Beira,Paradip,Coal,74833,22.79,2020-11-09/2020-11-12,Spot
+2023-12-11,Silver Phoenix,80891,New Orleans,Vizag,Coal,74713,34.54,2023-12-30/2024-01-06,Spot
+2023-02-14,Coral Voyager,171617,Samarinda,Gopalpur,Coal,155546,9.88,2023-03-06/2023-03-13,Spot
+2021-07-24,Silver Pioneer,169601,Ust-Luga (Baltic),Vizag,Coal,145237,21.7,2021-08-08/2021-08-15,Spot
+2025-10-01,Ocean Legacy,78761,Samarinda,Vizag,Coal,70507,9.45,2025-10-11/2025-10-16,Spot
+2022-01-20,Royal Endeavour,80998,Baltimore,Haldia,Coal,76265,33.02,2022-01-27/2022-02-03,COA
+2022-01-20,Cape Voyager,75631,Hay Point,Dhamra,Coal,70178,16.75,2022-02-08/2022-02-15,Spot
+2025-02-03,Eastern Harmony,178948,Hampton Roads,Gangavaram,Coal,153406,36.21,2025-02-10/2025-02-13,Spot
+2020-11-26,Bay Fortune,178530,Novorossiysk (Black Sea),Haldia,Coal,163532,19.56,2020-12-13/2020-12-18,Spot
+2023-10-12,Trade Pride,166218,Novorossiysk (Black Sea),Dhamra,Coal,152431,23.0,2023-10-26/2023-10-29,Spot
+2023-11-11,Ocean Horizon,180943,Hay Point,Gopalpur,Coal,155808,17.83,2023-11-18/2023-11-22,Spot
+2023-02-14,Western Horizon,77519,Muara Pantai,Haldia,Coal,66784,10.45,2023-03-07/2023-03-10,Spot
+2025-03-05,Grand Horizon,77068,Vostochny (Far East),Haldia,Coal,71772,22.06,2025-03-26/2025-03-29,Spot
+2025-10-31,Sea Progress,78653,Taboneo,Vizag,Coal,73714,9.33,2025-11-13/2025-11-16,Spot
+2022-06-19,Ocean Voyager,160306,Hampton Roads,Dhamra,Coal,144701,32.22,2022-07-03/2022-07-09,Spot
+2021-11-21,Coral Fortune,81939,Beira,Paradip,Coal,76961,25.06,2021-12-08/2021-12-15,Spot
+2025-02-03,Atlantic Endeavour,177186,Ust-Luga (Baltic),Gopalpur,Coal,168945,22.03,2025-02-11/2025-02-18,COA
+2020-01-31,Eastern Navigator,75586,Dalrymple Bay,Paradip,Coal,72950,17.9,2020-02-19/2020-02-24,Time Charter
+2024-12-05,Coral Legacy,171307,Muara Pantai,Vizag,Coal,162165,10.72,2024-12-17/2024-12-20,COA
+2025-03-05,Royal Trader,79572,Dalrymple Bay,Dhamra,Coal,76737,16.15,2025-03-14/2025-03-19,Spot
+2023-07-14,Sea Spirit,163654,Nacala,Haldia,Coal,141028,18.33,2023-08-02/2023-08-06,Spot
+2022-06-19,Western Phoenix,81664,Taboneo,Dhamra,Coal,78270,12.69,2022-07-02/2022-07-08,Time Charter
+2021-01-25,Pacific Horizon,155195,Hay Point,Haldia,Coal,132512,19.75,2021-02-12/2021-02-15,Time Charter
+2025-10-01,Crown Navigator,177957,Taboneo,Paradip,Coal,159982,10.92,2025-10-09/2025-10-14,Spot
+2024-06-08,Golden Harmony,76679,Beira,Gangavaram,Coal,72221,19.41,2024-06-21/2024-06-24,Spot
+2023-04-15,Royal Harmony,178084,Hay Point,Gangavaram,Coal,169434,19.2,2023-04-24/2023-04-27,Spot
+2025-04-04,Western Falcon,152651,Baltimore,Paradip,Coal,134484,33.71,2025-04-11/2025-04-18,Time Charter
+2021-08-23,Ocean Fortune,162356,Muara Pantai,Gopalpur,Coal,147425,12.44,2021-09-11/2021-09-17,Spot
+2023-11-11,Southern Horizon,178439,Nacala,Dhamra,Coal,161540,19.71,2023-11-29/2023-12-02,Time Charter
+2022-09-17,Southern Progress,80130,Dalrymple Bay,Gangavaram,Coal,70434,17.1,2022-10-04/2022-10-08,COA
+2021-02-24,Blue Endeavour,162674,Baltimore,Vizag,Coal,153531,37.34,2021-03-06/2021-03-09,Spot
+2024-12-05,Star Phoenix,166752,Newcastle,Haldia,Coal,154146,16.27,2024-12-23/2024-12-27,Spot
+2020-08-28,Silver Voyager,170095,Nacala,Haldia,Coal,159073,20.96,2020-09-07/2020-09-14,Spot
+2020-03-31,Sea Pride,81181,Vostochny (Far East),Haldia,Coal,69964,22.41,2020-04-10/2020-04-14,Spot
+2024-04-09,Star Horizon,173775,Hampton Roads,Gangavaram,Coal,165605,29.49,2024-04-21/2024-04-26,Spot
+2020-12-26,Trade Endeavour,74235,Hampton Roads,Vizag,Coal,66875,34.21,2021-01-05/2021-01-12,Time Charter
+2021-11-21,Trade Navigator,74894,Novorossiysk (Black Sea),Gangavaram,Coal,69372,24.66,2021-11-29/2021-12-06,Spot
+2023-03-16,Blue Navigator,164153,Gladstone,Dhamra,Coal,140633,17.12,2023-03-24/2023-03-31,Spot
+2021-06-24,Eastern Eagle,177778,Baltimore,Gangavaram,Coal,158074,35.63,2021-07-08/2021-07-12,Spot
+2020-08-28,Golden Progress,180369,Hampton Roads,Haldia,Coal,159414,34.33,2020-09-13/2020-09-20,Spot
+2021-01-25,Western Spirit,77026,Vostochny (Far East),Gangavaram,Coal,68091,23.14,2021-02-06/2021-02-12,Time Charter
+2021-04-25,Northern Trader,81853,Ust-Luga (Baltic),Dhamra,Coal,72660,24.9,2021-05-15/2021-05-21,Spot
+2020-07-29,Star Trader,160783,Nacala,Gopalpur,Coal,152916,22.6,2020-08-10/2020-08-13,Spot
+2022-06-19,Royal Phoenix,164047,Ust-Luga (Baltic),Haldia,Coal,155678,19.84,2022-06-27/2022-07-03,Time Charter
+2023-11-11,Cape Navigator,175609,Baltimore,Haldia,Coal,157341,35.82,2023-11-20/2023-11-24,Time Charter
+2020-07-29,Star Harmony,169320,Muara Pantai,Dhamra,Coal,152489,10.76,2020-08-11/2020-08-18,Time Charter
+2023-04-15,Royal Legacy,78951,Hampton Roads,Haldia,Coal,74699,36.74,2023-04-27/2023-05-04,Spot
+2020-01-01,Global Venture,150049,Vostochny (Far East),Vizag,Coal,129500,20.58,2020-01-18/2020-01-25,Spot
+2022-05-20,Grand Glory,76862,Dalrymple Bay,Haldia,Coal,69883,17.14,2022-06-06/2022-06-12,Time Charter
+2025-06-03,Star Horizon,167729,Dalrymple Bay,Vizag,Coal,143066,15.47,2025-06-13/2025-06-16,Spot
+2025-08-02,Crown Pride,79007,Baltimore,Vizag,Coal,74456,34.94,2025-08-09/2025-08-12,Time Charter
+2020-04-30,Crown Glory,76093,Hay Point,Haldia,Coal,71360,16.09,2020-05-10/2020-05-16,COA
+2023-10-12,Golden Discovery,76871,Muara Pantai,Dhamra,Coal,65430,9.58,2023-10-21/2023-10-26,Spot
+2021-05-25,Atlantic Progress,74458,Nacala,Paradip,Coal,69903,19.61,2021-06-10/2021-06-15,Time Charter
+2023-05-15,Crown Endeavour,77644,Hay Point,Haldia,Coal,69463,18.4,2023-06-04/2023-06-07,COA
+2022-08-18,Southern Legacy,164359,Taboneo,Vizag,Coal,141426,8.56,2022-08-25/2022-08-28,COA
+2020-12-26,Ocean Phoenix,171997,Nacala,Paradip,Coal,163799,17.94,2021-01-08/2021-01-12,COA
+2024-01-10,Trade Venture,80597,Muara Pantai,Gangavaram,Coal,69853,9.45,2024-01-17/2024-01-23,COA
+2022-09-17,Atlantic Progress,75852,Vostochny (Far East),Vizag,Coal,70479,21.11,2022-10-01/2022-10-06,COA
+2023-09-12,Atlantic Falcon,76796,Vostochny (Far East),Haldia,Coal,72253,21.44,2023-09-21/2023-09-24,Time Charter
+2021-11-21,Pacific Spirit,176977,Beira,Gopalpur,Coal,160496,22.09,2021-12-08/2021-12-13,Spot
+2022-08-18,Royal Spirit,76999,Dalrymple Bay,Dhamra,Coal,67007,13.95,2022-08-27/2022-09-02,COA
+2023-11-11,Global Progress,79498,Muara Pantai,Paradip,Coal,73370,10.99,2023-11-28/2023-12-01,Time Charter
+2022-09-17,Western Glory,153346,Taboneo,Gangavaram,Coal,148259,8.58,2022-10-03/2022-10-07,Spot
+2023-03-16,Eastern Pioneer,80184,Beira,Paradip,Coal,75876,23.37,2023-03-28/2023-04-03,Time Charter
+2021-07-24,Sea Navigator,153998,Gladstone,Gangavaram,Coal,144314,16.32,2021-08-10/2021-08-15,Time Charter
+2023-06-14,Sea Pride,164868,Nacala,Gopalpur,Coal,158001,21.07,2023-06-24/2023-06-28,COA
+2023-08-13,Blue Endeavour,164696,Beira,Gopalpur,Coal,149489,22.83,2023-08-23/2023-08-27,Spot
+2023-05-15,Grand Trader,78090,Nacala,Vizag,Coal,68892,20.97,2023-05-27/2023-06-02,COA
+2023-05-15,Silver Navigator,81482,Hampton Roads,Haldia,Coal,71374,36.77,2023-05-25/2023-05-29,COA
+2025-06-03,Star Navigator,76575,Novorossiysk (Black Sea),Dhamra,Coal,65130,23.29,2025-06-13/2025-06-18,Spot
+2022-10-17,Royal Pioneer,76444,Vostochny (Far East),Paradip,Coal,70590,20.23,2022-11-03/2022-11-06,COA
+2025-05-04,Silver Progress,173180,Hampton Roads,Paradip,Coal,148659,31.62,2025-05-11/2025-05-14,Time Charter
+2022-12-16,Trade Venture,174389,Novorossiysk (Black Sea),Haldia,Coal,167087,20.78,2023-01-02/2023-01-06,Time Charter
+2021-12-21,Blue Pride,161282,Hampton Roads,Vizag,Coal,148152,33.36,2022-01-04/2022-01-07,Time Charter
+2022-01-20,Atlantic Spirit,161910,New Orleans,Vizag,Coal,138976,39.77,2022-01-28/2022-01-31,COA
+2024-05-09,Sea Voyager,152522,Muara Pantai,Haldia,Coal,139412,10.43,2024-05-29/2024-06-04,Time Charter
+2025-06-03,Northern Venture,75350,Hampton Roads,Haldia,Coal,71046,38.61,2025-06-18/2025-06-24,Time Charter
+2021-12-21,Northern Glory,74525,Samarinda,Gangavaram,Coal,68170,12.16,2022-01-11/2022-01-15,Spot
+2025-07-03,Atlantic Horizon,173926,Muara Pantai,Gopalpur,Coal,163767,8.84,2025-07-19/2025-07-22,Spot
+2025-04-04,Royal Fortune,168555,Novorossiysk (Black Sea),Vizag,Coal,147812,24.72,2025-04-14/2025-04-17,Spot
+2022-09-17,Coral Discovery,153891,Dalrymple Bay,Haldia,Coal,134409,17.29,2022-09-24/2022-09-28,Spot
+2025-01-04,Bay Eagle,159679,New Orleans,Gopalpur,Coal,153029,30.82,2025-01-22/2025-01-28,Spot
+2023-09-12,Crown Progress,166841,Taboneo,Paradip,Coal,160040,11.56,2023-09-22/2023-09-26,Spot
+2020-11-26,Blue Discovery,80414,Nacala,Gopalpur,Coal,71853,20.84,2020-12-16/2020-12-19,Time Charter
+2024-04-09,Trade Eagle,77282,Samarinda,Gopalpur,Coal,68031,9.93,2024-04-18/2024-04-22,Spot
+2025-01-04,Coral Phoenix,78888,Dalrymple Bay,Vizag,Coal,68458,16.84,2025-01-16/2025-01-22,Spot
+2021-08-23,Star Trader,154318,Muara Pantai,Haldia,Coal,143181,9.7,2021-09-11/2021-09-16,Spot
+2025-06-03,Silver Navigator,79904,Baltimore,Paradip,Coal,75326,35.12,2025-06-12/2025-06-17,Time Charter
+2022-04-20,Sea Navigator,75586,Newcastle,Gangavaram,Coal,70130,17.0,2022-05-10/2022-05-15,Time Charter
+2022-10-17,Royal Phoenix,168998,Novorossiysk (Black Sea),Paradip,Coal,159135,20.03,2022-11-02/2022-11-09,Time Charter
+2021-01-25,Northern Voyager,79159,Hampton Roads,Vizag,Coal,70481,35.08,2021-02-12/2021-02-18,Spot
+2021-08-23,Golden Voyager,178793,Samarinda,Gangavaram,Coal,152456,9.81,2021-09-10/2021-09-16,Spot
+2022-06-19,Sea Legacy,74015,Newcastle,Dhamra,Coal,69865,15.15,2022-07-10/2022-07-17,COA
+2022-05-20,Bay Voyager,81271,Hampton Roads,Paradip,Coal,73951,28.35,2022-06-04/2022-06-10,Spot
+2021-02-24,Trade Venture,173292,Hampton Roads,Dhamra,Coal,156584,33.95,2021-03-16/2021-03-23,Spot
+2024-09-06,Bay Eagle,166286,New Orleans,Gangavaram,Coal,159123,36.43,2024-09-18/2024-09-22,COA
+2023-01-15,Silver Pioneer,180450,Hampton Roads,Vizag,Coal,162615,35.05,2023-01-25/2023-01-30,Time Charter
+2024-12-05,Western Falcon,76862,Baltimore,Paradip,Coal,66326,33.67,2024-12-25/2024-12-29,Time Charter
+2025-07-03,Crown Phoenix,172700,New Orleans,Dhamra,Coal,164872,30.55,2025-07-18/2025-07-21,COA
+2021-02-24,Bay Discovery,74888,New Orleans,Gangavaram,Coal,70528,32.24,2021-03-16/2021-03-23,Spot
+2022-08-18,Bay Falcon,79731,Hay Point,Paradip,Coal,75965,16.98,2022-09-02/2022-09-05,Spot
+2024-02-09,Grand Pioneer,155496,Beira,Gangavaram,Coal,148550,19.41,2024-02-18/2024-02-22,COA
+2023-05-15,Grand Progress,162059,Gladstone,Paradip,Coal,152444,18.89,2023-06-04/2023-06-09,Time Charter
+2020-11-26,Western Pioneer,74737,New Orleans,Paradip,Coal,69739,36.36,2020-12-03/2020-12-10,Time Charter
+2021-07-24,Coral Phoenix,181659,Dalrymple Bay,Haldia,Coal,157874,16.71,2021-08-04/2021-08-10,Time Charter
+2025-04-04,Golden Glory,78860,Baltimore,Dhamra,Coal,74409,29.53,2025-04-18/2025-04-25,Spot
+2022-12-16,Northern Eagle,76978,Hay Point,Paradip,Coal,66116,14.63,2023-01-01/2023-01-05,Time Charter
+2023-12-11,Sea Venture,75962,Hay Point,Dhamra,Coal,65918,16.29,2023-12-31/2024-01-07,Spot
+2025-07-03,Southern Spirit,166949,Dalrymple Bay,Vizag,Coal,153613,15.26,2025-07-23/2025-07-28,COA
+2023-12-11,Coral Trader,81921,Muara Pantai,Dhamra,Coal,72323,11.02,2023-12-25/2024-01-01,Spot
+2025-03-05,Cape Navigator,77658,Taboneo,Gopalpur,Coal,69955,9.86,2025-03-17/2025-03-23,Spot
+2021-03-26,Bay Discovery,165102,Beira,Haldia,Coal,148978,20.81,2021-04-16/2021-04-22,Spot
+2022-02-19,Southern Eagle,74872,Novorossiysk (Black Sea),Vizag,Coal,64336,19.7,2022-03-01/2022-03-08,Spot
+2020-01-31,Blue Pioneer,170827,Gladstone,Haldia,Coal,150514,14.11,2020-02-14/2020-02-18,Spot
+2025-08-02,Blue Glory,74879,Dalrymple Bay,Paradip,Coal,70338,19.91,2025-08-09/2025-08-16,Spot
+2021-12-21,Blue Trader,80602,Vostochny (Far East),Haldia,Coal,73851,21.44,2022-01-09/2022-01-16,Spot
+2025-01-04,Crown Harmony,78203,Vostochny (Far East),Haldia,Coal,70930,23.12,2025-01-23/2025-01-26,Spot
+2022-03-21,Southern Discovery,75222,Samarinda,Gangavaram,Coal,70183,11.48,2022-04-02/2022-04-08,COA
+2025-01-04,Pacific Harmony,169073,Gladstone,Paradip,Coal,161408,15.35,2025-01-17/2025-01-24,Spot
+2020-03-01,Trade Navigator,76443,Baltimore,Haldia,Coal,67313,36.25,2020-03-10/2020-03-16,Time Charter
+2024-08-07,Trade Endeavour,78262,Beira,Dhamra,Coal,67370,24.58,2024-08-17/2024-08-23,Spot
+2025-01-04,Grand Fortune,77226,Muara Pantai,Gopalpur,Coal,67192,13.12,2025-01-20/2025-01-23,Spot
+2023-12-11,Golden Pioneer,156649,Muara Pantai,Paradip,Coal,136018,9.82,2023-12-25/2023-12-29,Time Charter
+2022-08-18,Crown Progress,78436,Beira,Dhamra,Coal,68971,20.68,2022-09-02/2022-09-07,Spot
+2021-09-22,Pacific Horizon,79957,Hay Point,Vizag,Coal,69779,17.31,2021-10-04/2021-10-11,Spot
+2025-10-01,Blue Fortune,150507,Ust-Luga (Baltic),Dhamra,Coal,129012,23.96,2025-10-09/2025-10-15,Time Charter
+2021-01-25,Western Navigator,162462,New Orleans,Haldia,Coal,151430,34.03,2021-02-09/2021-02-16,COA
+2025-02-03,Crown Pride,76134,Taboneo,Gangavaram,Coal,66586,11.02,2025-02-10/2025-02-14,COA
+2021-11-21,Royal Progress,80695,Gladstone,Paradip,Coal,75472,17.6,2021-11-28/2021-12-02,Time Charter
+2020-07-29,Silver Spirit,171374,Taboneo,Gopalpur,Coal,151393,9.31,2020-08-14/2020-08-19,Spot
+2020-09-27,Silver Pioneer,151065,Muara Pantai,Paradip,Coal,138945,9.47,2020-10-16/2020-10-20,Time Charter
+2020-05-30,Golden Progress,76728,Nacala,Gangavaram,Coal,65813,23.96,2020-06-12/2020-06-17,Spot
+2020-12-26,Bay Trader,179204,Nacala,Gopalpur,Coal,167486,23.41,2021-01-08/2021-01-15,Time Charter
+2023-10-12,Western Falcon,171125,Hampton Roads,Gopalpur,Coal,148683,32.85,2023-10-19/2023-10-26,Spot
+2020-12-26,Global Falcon,153089,Novorossiysk (Black Sea),Dhamra,Coal,142903,23.99,2021-01-13/2021-01-17,Spot
+2022-06-19,Royal Discovery,81034,Hampton Roads,Paradip,Coal,69267,33.3,2022-07-02/2022-07-05,Time Charter
+2025-06-03,Golden Pioneer,177192,Samarinda,Gangavaram,Coal,171780,9.18,2025-06-14/2025-06-17,Spot
+2025-10-01,Western Phoenix,150394,Nacala,Paradip,Coal,139384,17.84,2025-10-14/2025-10-19,Spot
+2023-02-14,Southern Legacy,76781,Vostochny (Far East),Gopalpur,Coal,72439,19.52,2023-03-04/2023-03-07,Spot
+2022-04-20,Bay Trader,74157,Muara Pantai,Dhamra,Coal,65717,11.97,2022-05-04/2022-05-08,Spot
+2020-10-27,Northern Pioneer,80312,Samarinda,Vizag,Coal,74993,9.36,2020-11-03/2020-11-07,Spot
+2020-01-01,Global Harmony,75874,Dalrymple Bay,Vizag,Coal,73202,16.03,2020-01-19/2020-01-25,COA
+2020-12-26,Pacific Spirit,76439,Nacala,Gopalpur,Coal,65702,23.61,2021-01-12/2021-01-17,Spot
+2021-04-25,Silver Progress,79959,Novorossiysk (Black Sea),Gangavaram,Coal,72075,21.59,2021-05-07/2021-05-13,COA
+2021-12-21,Royal Harmony,165102,Hay Point,Vizag,Coal,140810,17.79,2022-01-07/2022-01-12,Spot
+2020-03-01,Sea Progress,78626,Taboneo,Gangavaram,Coal,76081,9.33,2020-03-17/2020-03-20,Spot
+2025-03-05,Global Progress,76467,Newcastle,Gangavaram,Coal,69938,17.34,2025-03-24/2025-03-28,Spot
+2023-06-14,Ocean Spirit,80688,Beira,Haldia,Coal,73571,20.96,2023-07-02/2023-07-05,COA
+2023-02-14,Blue Venture,80824,Gladstone,Vizag,Coal,72147,15.32,2023-03-02/2023-03-05,Spot
+2024-05-09,Western Pride,76653,Novorossiysk (Black Sea),Paradip,Coal,71514,22.99,2024-05-17/2024-05-20,Spot
+2022-07-19,Silver Pride,76328,Nacala,Gopalpur,Coal,71977,22.57,2022-07-29/2022-08-05,Spot
+2022-09-17,Bay Harmony,163491,Beira,Gangavaram,Coal,146405,17.81,2022-10-07/2022-10-13,Time Charter
+2025-01-04,Trade Spirit,165007,Beira,Haldia,Coal,158301,23.71,2025-01-13/2025-01-19,Time Charter
+2020-07-29,Star Falcon,79196,Gladstone,Dhamra,Coal,74948,16.72,2020-08-18/2020-08-24,COA
+2023-12-11,Crown Falcon,160394,Ust-Luga (Baltic),Vizag,Coal,151327,25.87,2023-12-24/2023-12-31,Spot
+2022-08-18,Royal Navigator,150111,Samarinda,Gopalpur,Coal,140208,9.47,2022-09-06/2022-09-11,Spot
+2024-05-09,Grand Trader,80655,Vostochny (Far East),Gopalpur,Coal,73598,24.7,2024-05-28/2024-05-31,Spot
+2023-09-12,Cape Progress,78015,Dalrymple Bay,Dhamra,Coal,70121,16.17,2023-09-23/2023-09-28,Spot
+2024-07-08,Golden Navigator,80310,Hay Point,Haldia,Coal,69066,15.43,2024-07-25/2024-07-30,Time Charter
+2025-01-04,Atlantic Harmony,178952,New Orleans,Gangavaram,Coal,162299,35.06,2025-01-19/2025-01-24,COA
+2021-08-23,Star Eagle,181618,Hampton Roads,Gangavaram,Coal,166777,33.5,2021-09-02/2021-09-07,COA
+2021-07-24,Trade Falcon,79513,Hampton Roads,Gangavaram,Coal,74333,35.82,2021-08-14/2021-08-19,Spot
+2020-04-30,Pacific Phoenix,74983,Samarinda,Gangavaram,Coal,68244,9.64,2020-05-10/2020-05-13,Spot
+2024-03-10,Eastern Spirit,78211,Newcastle,Gangavaram,Coal,72852,17.45,2024-03-26/2024-03-30,Spot
+2022-03-21,Atlantic Horizon,181942,Samarinda,Gopalpur,Coal,159473,10.81,2022-04-08/2022-04-12,COA
+2021-06-24,Eastern Eagle,177697,Vostochny (Far East),Dhamra,Coal,170807,18.76,2021-07-15/2021-07-21,Spot
+2020-01-31,Silver Pride,81983,Samarinda,Dhamra,Coal,75272,9.8,2020-02-07/2020-02-11,Spot
+2020-01-01,Sea Endeavour,81695,Vostochny (Far East),Gopalpur,Coal,79184,22.05,2020-01-19/2020-01-24,Spot
+2024-05-09,Crown Horizon,78785,Baltimore,Haldia,Coal,68919,34.16,2024-05-30/2024-06-04,COA
+2022-06-19,Royal Fortune,179707,Baltimore,Paradip,Coal,154804,30.76,2022-07-09/2022-07-15,Spot
+2021-05-25,Golden Endeavour,163568,Samarinda,Gopalpur,Coal,154574,9.58,2021-06-11/2021-06-15,Spot
+2020-08-28,Atlantic Discovery,78779,Beira,Dhamra,Coal,70168,23.57,2020-09-17/2020-09-24,COA
+2020-08-28,Ocean Voyager,81456,Vostochny (Far East),Paradip,Coal,78493,22.04,2020-09-12/2020-09-15,Spot
+2024-05-09,Bay Fortune,166790,Muara Pantai,Gopalpur,Coal,151053,12.57,2024-05-17/2024-05-23,Time Charter
+2025-09-01,Eastern Legacy,75051,Samarinda,Dhamra,Coal,71380,11.22,2025-09-19/2025-09-25,COA
+2024-07-08,Trade Voyager,159445,Taboneo,Paradip,Coal,139298,11.58,2024-07-23/2024-07-29,Time Charter
+2021-06-24,Eastern Endeavour,81429,Novorossiysk (Black Sea),Haldia,Coal,74907,21.33,2021-07-14/2021-07-18,Time Charter
+2022-07-19,Silver Trader,78068,New Orleans,Dhamra,Coal,68187,29.66,2022-08-03/2022-08-06,Spot
+2020-05-30,Southern Legacy,79443,Vostochny (Far East),Gopalpur,Coal,75166,20.36,2020-06-18/2020-06-23,Spot
+2022-05-20,Western Navigator,79745,Nacala,Paradip,Coal,76284,22.34,2022-06-01/2022-06-06,Spot
+2020-01-01,Southern Phoenix,176694,Samarinda,Gopalpur,Coal,161816,8.81,2020-01-13/2020-01-19,Spot
+2025-06-03,Blue Harmony,174229,Nacala,Paradip,Coal,159843,20.01,2025-06-15/2025-06-18,Spot
+2021-07-24,Crown Eagle,177452,Muara Pantai,Haldia,Coal,165306,10.6,2021-08-12/2021-08-18,Spot
+2023-07-14,Cape Glory,78340,Ust-Luga (Baltic),Dhamra,Coal,69707,23.2,2023-07-21/2023-07-26,Time Charter
+2023-06-14,Sea Trader,165650,Vostochny (Far East),Gangavaram,Coal,147431,20.61,2023-07-02/2023-07-07,Spot
+2020-09-27,Royal Eagle,76094,Novorossiysk (Black Sea),Dhamra,Coal,65277,22.72,2020-10-14/2020-10-18,COA
+2022-07-19,Grand Progress,78022,Vostochny (Far East),Paradip,Coal,74516,23.4,2022-08-04/2022-08-10,Time Charter
+2022-05-20,Blue Discovery,76038,Samarinda,Gopalpur,Coal,70824,13.15,2022-05-27/2022-06-03,Spot
+2024-02-09,Cape Pride,167947,Nacala,Dhamra,Coal,148946,19.83,2024-02-24/2024-03-01,Spot
+2022-12-16,Cape Fortune,75156,Taboneo,Vizag,Coal,72032,9.2,2023-01-04/2023-01-10,Time Charter
+2024-08-07,Atlantic Eagle,74388,Newcastle,Gopalpur,Coal,69938,15.27,2024-08-15/2024-08-18,Time Charter
+2020-05-30,Ocean Horizon,166623,Novorossiysk (Black Sea),Gopalpur,Coal,160543,19.43,2020-06-14/2020-06-19,Spot
+2025-02-03,Silver Discovery,175492,Vostochny (Far East),Haldia,Coal,165309,22.81,2025-02-10/2025-02-15,Spot
+2020-03-01,Atlantic Legacy,159676,Newcastle,Haldia,Coal,147317,18.39,2020-03-12/2020-03-15,Spot
+2020-03-01,Blue Glory,80835,Baltimore,Vizag,Coal,77458,33.51,2020-03-21/2020-03-26,Time Charter
+2022-02-19,Trade Navigator,177185,Novorossiysk (Black Sea),Paradip,Coal,171338,21.14,2022-03-10/2022-03-13,Spot
+2025-06-03,Atlantic Spirit,74574,Gladstone,Vizag,Coal,68717,14.87,2025-06-14/2025-06-17,Time Charter
+2023-08-13,Southern Phoenix,171793,Beira,Vizag,Coal,158925,18.3,2023-08-24/2023-08-28,Spot
+2023-06-14,Blue Spirit,157340,Baltimore,Vizag,Coal,146861,29.69,2023-07-04/2023-07-07,Spot
+2023-02-14,Coral Harmony,80961,Ust-Luga (Baltic),Dhamra,Coal,76985,18.3,2023-02-24/2023-03-03,Time Charter
+2021-08-23,Silver Voyager,174115,Newcastle,Dhamra,Coal,152880,13.79,2021-09-09/2021-09-14,Spot
+2021-01-25,Royal Discovery,76892,Vostochny (Far East),Dhamra,Coal,70829,24.35,2021-02-08/2021-02-12,COA
+2023-12-11,Pacific Horizon,157699,Muara Pantai,Haldia,Coal,144844,9.41,2023-12-19/2023-12-23,Time Charter
+2021-02-24,Southern Pioneer,76054,Muara Pantai,Dhamra,Coal,71661,12.03,2021-03-04/2021-03-09,Spot
+2020-03-31,Silver Legacy,76415,Dalrymple Bay,Gopalpur,Coal,72716,15.26,2020-04-13/2020-04-20,Time Charter
+2023-02-14,Global Spirit,162509,New Orleans,Gangavaram,Coal,148518,34.16,2023-02-23/2023-02-26,Time Charter
+2024-07-08,Northern Discovery,77473,Vostochny (Far East),Vizag,Coal,73187,24.25,2024-07-19/2024-07-24,Spot
+2025-10-31,Trade Trader,155945,Vostochny (Far East),Gangavaram,Coal,148900,22.21,2025-11-11/2025-11-14,Time Charter
+2020-01-31,Pacific Legacy,167816,Gladstone,Paradip,Coal,156148,17.04,2020-02-18/2020-02-22,Spot
+2021-09-22,Coral Venture,80913,Vostochny (Far East),Vizag,Coal,77547,20.84,2021-10-13/2021-10-20,Spot
+2023-10-12,Western Horizon,81303,Novorossiysk (Black Sea),Paradip,Coal,76210,22.94,2023-10-26/2023-11-02,COA
+2021-10-22,Atlantic Legacy,80415,Hay Point,Vizag,Coal,77275,16.03,2021-11-04/2021-11-08,Spot
+2021-06-24,Western Spirit,80400,Samarinda,Gopalpur,Coal,77887,10.71,2021-07-09/2021-07-13,Spot
+2021-03-26,Crown Falcon,179565,Vostochny (Far East),Vizag,Coal,157463,20.43,2021-04-07/2021-04-12,COA
+2024-04-09,Northern Discovery,81533,Hampton Roads,Haldia,Coal,77593,32.17,2024-04-27/2024-05-04,COA
+2020-03-31,Eastern Harmony,167601,Vostochny (Far East),Vizag,Coal,161809,20.43,2020-04-18/2020-04-22,Time Charter
+2024-08-07,Trade Horizon,177181,Taboneo,Gopalpur,Coal,169381,8.05,2024-08-17/2024-08-21,COA
+2024-03-10,Northern Glory,161714,Novorossiysk (Black Sea),Paradip,Coal,156604,23.98,2024-03-27/2024-04-01,COA
+2022-08-18,Star Glory,81438,Vostochny (Far East),Haldia,Coal,78783,21.44,2022-09-04/2022-09-11,COA
+2020-09-27,Eastern Eagle,78028,Hampton Roads,Vizag,Coal,67551,37.05,2020-10-09/2020-10-14,Spot
+2025-04-04,Ocean Legacy,162510,Beira,Haldia,Coal,149591,22.13,2025-04-22/2025-04-28,Spot
+2021-08-23,Golden Falcon,81769,Newcastle,Gopalpur,Coal,78145,15.07,2021-09-13/2021-09-18,Spot
+2024-10-06,Blue Spirit,154815,Muara Pantai,Haldia,Coal,144212,10.72,2024-10-19/2024-10-26,Time Charter
+2025-08-02,Sea Fortune,178949,Nacala,Gopalpur,Coal,172552,21.49,2025-08-09/2025-08-13,Spot
+2022-04-20,Coral Eagle,77513,Nacala,Dhamra,Coal,67437,20.03,2022-05-08/2022-05-11,Spot
+2023-01-15,Atlantic Navigator,80040,Ust-Luga (Baltic),Gangavaram,Coal,75463,20.49,2023-01-22/2023-01-25,Spot
+2023-11-11,Global Endeavour,74995,Ust-Luga (Baltic),Gangavaram,Coal,68851,20.91,2023-11-27/2023-12-04,Spot
+2022-07-19,Blue Horizon,173186,Hampton Roads,Paradip,Coal,157931,29.45,2022-07-27/2022-08-01,Spot
+2021-08-23,Coral Spirit,170322,Beira,Dhamra,Coal,149916,22.97,2021-09-04/2021-09-09,COA
+2024-02-09,Southern Venture,75146,Muara Pantai,Gopalpur,Coal,64437,10.93,2024-02-28/2024-03-05,Spot
+2023-11-11,Royal Eagle,159478,Hampton Roads,Gopalpur,Coal,143712,33.31,2023-11-26/2023-12-03,Spot
+2022-06-19,Southern Spirit,157192,Gladstone,Gangavaram,Coal,142207,19.05,2022-07-03/2022-07-10,Spot
+2023-03-16,Cape Falcon,75212,Baltimore,Haldia,Coal,65683,34.53,2023-03-27/2023-04-02,Time Charter
+2024-06-08,Northern Fortune,166290,Hampton Roads,Vizag,Coal,146339,30.44,2024-06-15/2024-06-21,Spot
+2024-10-06,Eastern Falcon,74838,Nacala,Gopalpur,Coal,66588,17.63,2024-10-25/2024-10-30,COA
+2020-07-29,Ocean Horizon,181748,Hampton Roads,Gopalpur,Coal,160672,31.21,2020-08-10/2020-08-16,Time Charter
+2024-06-08,Southern Discovery,160225,Vostochny (Far East),Gopalpur,Coal,146526,23.0,2024-06-24/2024-06-28,Time Charter
+2020-10-27,Bay Discovery,79170,Gladstone,Vizag,Coal,72799,18.36,2020-11-07/2020-11-11,COA
+2024-06-08,Star Venture,76230,Beira,Haldia,Coal,65372,20.37,2024-06-21/2024-06-27,Spot
+2021-12-21,Western Spirit,151975,Baltimore,Gopalpur,Coal,133842,32.11,2021-12-28/2022-01-04,COA
+2020-10-27,Cape Voyager,76513,Muara Pantai,Gopalpur,Coal,69560,9.49,2020-11-07/2020-11-11,Spot
+2025-10-01,Southern Eagle,174306,Hay Point,Gangavaram,Coal,164693,17.13,2025-10-12/2025-10-17,Spot
+2022-01-20,Golden Endeavour,171554,Vostochny (Far East),Gopalpur,Coal,161920,20.24,2022-02-09/2022-02-16,Spot
+2021-11-21,Blue Spirit,150262,Dalrymple Bay,Haldia,Coal,139421,17.36,2021-12-01/2021-12-07,Spot
+2020-11-26,Golden Glory,77953,Muara Pantai,Gangavaram,Coal,73408,10.6,2020-12-08/2020-12-13,Time Charter
+2022-05-20,Silver Endeavour,80302,Nacala,Gangavaram,Coal,74554,18.42,2022-06-01/2022-06-05,Spot
+2024-04-09,Star Navigator,164541,Nacala,Haldia,Coal,147030,18.51,2024-04-17/2024-04-21,COA
+2020-05-30,Ocean Venture,76212,Ust-Luga (Baltic),Dhamra,Coal,70065,25.92,2020-06-09/2020-06-14,Time Charter
+2022-04-20,Royal Phoenix,165897,Hampton Roads,Paradip,Coal,151543,32.08,2022-05-10/2022-05-15,Spot
+2025-02-03,Silver Pioneer,77653,Hay Point,Haldia,Coal,72099,15.8,2025-02-24/2025-02-28,Spot
+2023-09-12,Grand Horizon,77502,Novorossiysk (Black Sea),Vizag,Coal,67932,23.08,2023-10-03/2023-10-06,Spot
+2022-05-20,Eastern Navigator,75548,Ust-Luga (Baltic),Haldia,Coal,72269,20.34,2022-06-10/2022-06-16,Spot
+2020-01-31,Royal Progress,173905,New Orleans,Vizag,Coal,155119,29.87,2020-02-19/2020-02-24,Spot
+2022-03-21,Northern Navigator,78724,Muara Pantai,Vizag,Coal,67990,11.95,2022-04-04/2022-04-07,Spot
+2022-05-20,Coral Phoenix,154962,Novorossiysk (Black Sea),Gangavaram,Coal,137686,23.18,2022-06-08/2022-06-12,Spot
+2024-10-06,Silver Phoenix,74500,Hampton Roads,Dhamra,Coal,70240,29.51,2024-10-19/2024-10-22,Spot
+2023-04-15,Eastern Horizon,75402,Beira,Paradip,Coal,65260,17.56,2023-04-24/2023-05-01,Time Charter
+2023-02-14,Eastern Navigator,77598,Beira,Gangavaram,Coal,68562,22.45,2023-02-25/2023-03-02,COA
+2022-10-17,Star Legacy,169383,Nacala,Dhamra,Coal,144505,22.89,2022-10-25/2022-10-30,Spot
+2021-05-25,Golden Discovery,80747,Baltimore,Haldia,Coal,74571,32.73,2021-06-08/2021-06-14,COA
+2022-04-20,Bay Endeavour,179500,Muara Pantai,Gangavaram,Coal,157914,12.53,2022-05-05/2022-05-09,Time Charter
+2024-01-10,Global Endeavour,77744,Novorossiysk (Black Sea),Gopalpur,Coal,71109,24.62,2024-01-28/2024-02-04,COA
+2021-10-22,Star Progress,164240,Beira,Gopalpur,Coal,149927,20.38,2021-11-04/2021-11-11,Spot
+2021-03-26,Grand Trader,81227,Nacala,Vizag,Coal,69225,23.23,2021-04-16/2021-04-20,COA
+2020-11-26,Silver Navigator,79332,Dalrymple Bay,Gangavaram,Coal,71853,17.48,2020-12-07/2020-12-12,Time Charter
+2020-12-26,Western Horizon,165144,Taboneo,Vizag,Coal,140534,11.62,2021-01-13/2021-01-16,Time Charter
+2025-01-04,Atlantic Harmony,176814,Novorossiysk (Black Sea),Paradip,Coal,158833,23.77,2025-01-13/2025-01-16,Time Charter
+2025-02-03,Global Pioneer,79520,Taboneo,Gopalpur,Coal,74272,10.19,2025-02-10/2025-02-13,COA
+2025-03-05,Cape Pride,167873,New Orleans,Gopalpur,Coal,157466,30.98,2025-03-19/2025-03-22,Time Charter
+2022-01-20,Eastern Progress,155030,Beira,Gangavaram,Coal,132186,21.87,2022-02-08/2022-02-13,Spot
+2023-03-16,Global Pride,157763,Novorossiysk (Black Sea),Haldia,Coal,143720,21.07,2023-03-30/2023-04-04,Spot
+2025-06-03,Sea Progress,178610,Vostochny (Far East),Gopalpur,Coal,152595,22.9,2025-06-17/2025-06-23,COA
+2021-07-24,Western Pride,162407,New Orleans,Paradip,Coal,153515,30.68,2021-08-01/2021-08-04,Spot
+2022-07-19,Eastern Legacy,74670,Vostochny (Far East),Vizag,Coal,65766,19.74,2022-08-05/2022-08-12,Spot
+2025-08-02,Golden Glory,165217,Ust-Luga (Baltic),Vizag,Coal,142759,22.72,2025-08-11/2025-08-17,Time Charter
+2023-03-16,Global Pioneer,80738,Hampton Roads,Gangavaram,Coal,71129,31.48,2023-03-27/2023-03-30,Spot
+2025-06-03,Western Voyager,152420,Ust-Luga (Baltic),Vizag,Coal,146578,19.72,2025-06-10/2025-06-14,Time Charter
+2024-05-09,Northern Progress,75877,Gladstone,Haldia,Coal,72572,17.03,2024-05-16/2024-05-20,Spot
+2024-11-05,Sea Progress,161569,Taboneo,Gopalpur,Coal,143158,8.4,2024-11-25/2024-12-02,Spot
+2021-02-24,Southern Legacy,161794,Hay Point,Gangavaram,Coal,146659,14.8,2021-03-10/2021-03-15,COA
+2025-02-03,Sea Legacy,79584,New Orleans,Paradip,Coal,68183,37.19,2025-02-13/2025-02-17,Spot
+2023-08-13,Northern Eagle,81821,Newcastle,Gangavaram,Coal,73242,17.87,2023-08-24/2023-08-27,Spot
+2020-05-30,Sea Harmony,79922,Nacala,Dhamra,Coal,74423,20.56,2020-06-15/2020-06-22,COA
+2025-02-03,Coral Glory,161162,Dalrymple Bay,Dhamra,Coal,144650,17.19,2025-02-22/2025-02-28,Time Charter
+2024-05-09,Golden Spirit,76323,Hay Point,Gangavaram,Coal,73780,16.08,2024-05-26/2024-05-31,Spot
+2021-08-23,Blue Fortune,76961,Ust-Luga (Baltic),Haldia,Coal,68811,24.01,2021-08-30/2021-09-06,COA
+2023-02-14,Royal Harmony,77574,Nacala,Haldia,Coal,74368,22.14,2023-02-21/2023-02-27,Spot
+2020-08-28,Silver Legacy,181508,Taboneo,Vizag,Coal,173090,9.98,2020-09-18/2020-09-25,Time Charter
+2020-10-27,Bay Voyager,181656,Samarinda,Gopalpur,Coal,163299,9.69,2020-11-14/2020-11-20,Time Charter
+2024-07-08,Trade Endeavour,76106,Nacala,Dhamra,Coal,68618,19.06,2024-07-15/2024-07-18,COA
+2025-10-01,Blue Pioneer,81620,Nacala,Gangavaram,Coal,71584,23.17,2025-10-18/2025-10-25,COA
+2025-08-02,Silver Pride,81048,Ust-Luga (Baltic),Gangavaram,Coal,76548,17.32,2025-08-22/2025-08-29,COA
+2025-01-04,Cape Falcon,167684,Beira,Gopalpur,Coal,149795,25.7,2025-01-22/2025-01-25,Spot
+2025-10-01,Star Glory,81483,Gladstone,Gangavaram,Coal,71182,18.91,2025-10-17/2025-10-23,COA
+2022-05-20,Global Spirit,81721,Newcastle,Dhamra,Coal,77331,17.71,2022-06-03/2022-06-06,Spot
+2020-06-29,Eastern Fortune,162964,Nacala,Gopalpur,Coal,147709,19.93,2020-07-07/2020-07-10,Spot
+2025-08-02,Western Falcon,170941,Dalrymple Bay,Dhamra,Coal,146156,17.37,2025-08-22/2025-08-25,Spot
+2020-05-30,Trade Horizon,171835,Novorossiysk (Black Sea),Paradip,Coal,157376,22.64,2020-06-18/2020-06-25,COA
+2022-11-16,Crown Horizon,79138,Vostochny (Far East),Paradip,Coal,76188,24.01,2022-11-24/2022-11-27,COA
+2022-04-20,Grand Legacy,166427,Dalrymple Bay,Vizag,Coal,155254,15.97,2022-05-04/2022-05-07,Time Charter
+2020-11-26,Sea Pride,151568,Dalrymple Bay,Dhamra,Coal,145393,17.07,2020-12-09/2020-12-12,COA
+2024-03-10,Blue Spirit,79294,Beira,Gangavaram,Coal,74019,20.09,2024-03-17/2024-03-20,Spot
+2025-01-04,Blue Legacy,78336,Newcastle,Dhamra,Coal,68182,15.34,2025-01-19/2025-01-24,Spot
+2020-04-30,Pacific Falcon,76541,Beira,Haldia,Coal,66940,18.84,2020-05-11/2020-05-15,Spot
+2022-08-18,Golden Spirit,150087,Newcastle,Gangavaram,Coal,128181,16.02,2022-08-30/2022-09-04,Spot
+2025-08-02,Western Legacy,173304,Newcastle,Vizag,Coal,164404,16.11,2025-08-13/2025-08-17,Spot
+2024-10-06,Blue Horizon,75440,Taboneo,Gangavaram,Coal,66899,11.09,2024-10-22/2024-10-25,Time Charter
+2022-03-21,Southern Horizon,168291,Nacala,Gangavaram,Coal,151925,21.18,2022-04-01/2022-04-07,Time Charter
+2024-05-09,Bay Phoenix,175721,Hampton Roads,Dhamra,Coal,159920,31.91,2024-05-26/2024-05-29,Spot
+2025-03-05,Star Fortune,176926,Dalrymple Bay,Vizag,Coal,164130,15.95,2025-03-21/2025-03-24,Time Charter
+2022-02-19,Royal Harmony,81223,Samarinda,Gopalpur,Coal,72008,11.99,2022-03-03/2022-03-07,Spot
+2025-02-03,Coral Spirit,168589,Samarinda,Vizag,Coal,149496,10.29,2025-02-11/2025-02-17,Spot
+2022-06-19,Eastern Endeavour,179769,Muara Pantai,Paradip,Coal,169732,11.87,2022-06-26/2022-06-29,COA
+2024-02-09,Silver Horizon,154362,Nacala,Vizag,Coal,132439,21.06,2024-02-27/2024-03-02,Spot
+2020-07-29,Cape Spirit,79035,Hampton Roads,Paradip,Coal,75454,34.96,2020-08-19/2020-08-23,Spot
+2022-02-19,Northern Pioneer,170763,Hampton Roads,Haldia,Coal,147881,34.56,2022-03-03/2022-03-07,Spot
+2021-05-25,Grand Fortune,155941,Novorossiysk (Black Sea),Paradip,Coal,135576,21.92,2021-06-06/2021-06-12,Spot
+2021-05-25,Royal Fortune,79357,Samarinda,Gopalpur,Coal,69198,11.24,2021-06-10/2021-06-15,COA
+2023-08-13,Global Progress,77497,Beira,Gangavaram,Coal,68564,18.47,2023-09-02/2023-09-09,Spot
+2024-06-08,Golden Endeavour,150172,New Orleans,Haldia,Coal,144306,28.74,2024-06-21/2024-06-28,Spot
+2024-10-06,Eastern Legacy,163579,Newcastle,Gangavaram,Coal,150489,17.87,2024-10-24/2024-10-31,Spot
+2023-01-15,Western Phoenix,180782,Gladstone,Gopalpur,Coal,154707,13.5,2023-02-05/2023-02-10,Spot
+2020-06-29,Blue Glory,151452,Hay Point,Dhamra,Coal,141034,15.62,2020-07-15/2020-07-21,Time Charter
+2021-12-21,Trade Harmony,164509,Nacala,Paradip,Coal,140470,18.13,2022-01-01/2022-01-05,Time Charter
+2022-06-19,Bay Falcon,168240,Novorossiysk (Black Sea),Gopalpur,Coal,144301,21.34,2022-07-06/2022-07-12,Spot
+2025-08-02,Northern Legacy,78974,Nacala,Dhamra,Coal,73399,19.1,2025-08-18/2025-08-24,Spot
+2024-05-09,Northern Spirit,78154,Ust-Luga (Baltic),Haldia,Coal,74886,24.26,2024-05-18/2024-05-25,Spot
+2022-10-17,Sea Trader,74501,Ust-Luga (Baltic),Gopalpur,Coal,69968,23.34,2022-11-01/2022-11-08,Spot
+2024-02-09,Southern Glory,76637,Ust-Luga (Baltic),Gopalpur,Coal,72723,27.13,2024-02-24/2024-02-29,Spot
+2023-01-15,Blue Discovery,174598,Baltimore,Paradip,Coal,168512,34.46,2023-01-26/2023-02-02,Spot
+2021-12-21,Sea Harmony,162673,Gladstone,Paradip,Coal,142067,16.0,2021-12-31/2022-01-04,Time Charter
+2020-03-01,Northern Discovery,151995,Beira,Vizag,Coal,136679,18.4,2020-03-13/2020-03-17,Spot
+2021-06-24,Northern Horizon,78697,Baltimore,Gopalpur,Coal,73280,30.49,2021-07-12/2021-07-18,COA
+2022-11-16,Trade Harmony,171634,Newcastle,Vizag,Coal,163680,15.04,2022-12-07/2022-12-10,Spot
+2023-08-13,Western Spirit,80686,Beira,Haldia,Coal,78105,19.37,2023-08-31/2023-09-03,Time Charter
+2022-07-19,Golden Eagle,75508,Beira,Gangavaram,Coal,72096,20.66,2022-08-07/2022-08-14,Spot
+2023-05-15,Cape Horizon,77314,Newcastle,Gangavaram,Coal,69502,15.39,2023-05-26/2023-05-29,COA
+2023-03-16,Sea Horizon,76219,Muara Pantai,Vizag,Coal,73210,11.52,2023-03-23/2023-03-30,COA
+2024-10-06,Trade Trader,74695,Ust-Luga (Baltic),Gopalpur,Coal,67478,21.01,2024-10-15/2024-10-20,Time Charter
+2021-07-24,Sea Navigator,168872,Novorossiysk (Black Sea),Gangavaram,Coal,156710,21.96,2021-08-12/2021-08-16,Spot
+2023-04-15,Grand Glory,173723,Beira,Paradip,Coal,153939,20.28,2023-05-03/2023-05-06,COA
+2022-11-16,Royal Harmony,74629,Hampton Roads,Gangavaram,Coal,64159,31.89,2022-12-02/2022-12-06,Spot
+2021-03-26,Eastern Pioneer,168092,Gladstone,Paradip,Coal,145808,17.28,2021-04-16/2021-04-20,COA
+2021-04-25,Blue Navigator,80516,Samarinda,Gopalpur,Coal,71083,11.14,2021-05-15/2021-05-19,Time Charter
+2022-03-21,Ocean Venture,155406,Gladstone,Haldia,Coal,139913,15.48,2022-03-30/2022-04-06,Spot
+2020-11-26,Pacific Discovery,74498,Nacala,Gangavaram,Coal,71343,18.99,2020-12-06/2020-12-13,Spot
+2020-06-29,Royal Horizon,162564,Hay Point,Haldia,Coal,145862,14.63,2020-07-11/2020-07-16,Spot
+2020-03-31,Western Pride,159038,Hampton Roads,Gangavaram,Coal,136401,31.53,2020-04-21/2020-04-28,COA
+2022-12-16,Golden Harmony,151003,Samarinda,Haldia,Coal,140183,8.66,2023-01-03/2023-01-07,Spot
+2024-10-06,Ocean Trader,81894,Dalrymple Bay,Haldia,Coal,79213,19.13,2024-10-23/2024-10-29,COA
+2021-11-21,Global Horizon,78822,Vostochny (Far East),Haldia,Coal,74395,25.72,2021-12-11/2021-12-16,Spot
+2024-08-07,Northern Horizon,176155,Hay Point,Vizag,Coal,150055,15.58,2024-08-22/2024-08-29,Spot
+2024-06-08,Cape Trader,75061,Dalrymple Bay,Gopalpur,Coal,72441,17.12,2024-06-17/2024-06-20,Spot
+2020-04-30,Global Harmony,80305,Vostochny (Far East),Gangavaram,Coal,71536,24.31,2020-05-20/2020-05-27,Spot
+2020-06-29,Crown Eagle,81488,Novorossiysk (Black Sea),Gangavaram,Coal,75831,19.94,2020-07-19/2020-07-24,Time Charter
+2021-02-24,Western Navigator,157212,Gladstone,Haldia,Coal,136930,15.41,2021-03-05/2021-03-10,Spot
+2023-09-12,Pacific Venture,75656,Hampton Roads,Dhamra,Coal,65817,29.39,2023-09-24/2023-10-01,Time Charter
+2021-08-23,Coral Fortune,168511,Ust-Luga (Baltic),Dhamra,Coal,145935,20.48,2021-09-10/2021-09-15,COA
+2022-03-21,Golden Endeavour,81853,Hay Point,Paradip,Coal,78320,16.49,2022-04-01/2022-04-08,Spot
+2021-11-21,Eastern Progress,74929,Ust-Luga (Baltic),Dhamra,Coal,65831,23.84,2021-12-01/2021-12-07,Spot
+2020-08-28,Blue Horizon,156319,Hay Point,Dhamra,Coal,149020,14.71,2020-09-06/2020-09-11,Time Charter
+2022-01-20,Star Falcon,79980,Beira,Gopalpur,Coal,69547,21.74,2022-02-04/2022-02-07,COA
+2024-08-07,Grand Phoenix,178149,Samarinda,Gangavaram,Coal,155177,10.41,2024-08-28/2024-09-01,COA
+2025-10-31,Southern Legacy,167284,Gladstone,Dhamra,Coal,157064,18.49,2025-11-14/2025-11-18,Spot
+2023-10-12,Crown Navigator,79284,Ust-Luga (Baltic),Haldia,Coal,73640,22.15,2023-10-31/2023-11-07,Spot
+2025-04-04,Blue Navigator,81624,New Orleans,Gopalpur,Coal,79080,30.03,2025-04-13/2025-04-20,Spot
+2024-02-09,Grand Voyager,80333,Muara Pantai,Haldia,Coal,74745,11.47,2024-02-16/2024-02-22,Spot
+2024-06-08,Western Endeavour,161948,Beira,Vizag,Coal,144305,22.16,2024-06-16/2024-06-19,COA
+2021-11-21,Sea Phoenix,173444,Beira,Vizag,Coal,154389,21.25,2021-12-03/2021-12-07,Spot
+2024-07-08,Royal Voyager,162841,Hampton Roads,Haldia,Coal,144447,31.08,2024-07-23/2024-07-30,Spot
+2021-09-22,Star Spirit,77979,Dalrymple Bay,Gopalpur,Coal,75584,14.44,2021-10-02/2021-10-05,Spot
+2020-10-27,Ocean Voyager,74109,Vostochny (Far East),Dhamra,Coal,65198,18.22,2020-11-16/2020-11-23,Spot
+2024-05-09,Sea Progress,81218,Newcastle,Vizag,Coal,76867,16.75,2024-05-27/2024-06-02,Spot
+2022-10-17,Blue Fortune,170035,Beira,Gangavaram,Coal,154714,22.54,2022-10-27/2022-11-01,COA
+2022-10-17,Trade Voyager,155942,Dalrymple Bay,Dhamra,Coal,143824,16.87,2022-10-28/2022-11-03,Time Charter
+2024-03-10,Pacific Trader,161283,New Orleans,Haldia,Coal,144113,32.66,2024-03-20/2024-03-25,Spot
+2024-07-08,Grand Glory,170919,Baltimore,Paradip,Coal,147954,29.7,2024-07-18/2024-07-25,Spot
+2025-09-01,Global Phoenix,159781,Nacala,Dhamra,Coal,151885,22.83,2025-09-15/2025-09-19,Spot
+2025-09-01,Northern Harmony,77687,Novorossiysk (Black Sea),Haldia,Coal,68977,18.0,2025-09-08/2025-09-11,Time Charter
+2021-10-22,Blue Discovery,78932,Beira,Gangavaram,Coal,72544,20.43,2021-11-02/2021-11-08,Spot
+2022-10-17,Northern Harmony,151847,Vostochny (Far East),Gopalpur,Coal,136170,21.45,2022-10-28/2022-10-31,Spot
+2023-12-11,Star Horizon,77406,Ust-Luga (Baltic),Dhamra,Coal,72928,21.91,2023-12-20/2023-12-26,Spot
+2025-07-03,Pacific Legacy,157590,Vostochny (Far East),Gopalpur,Coal,136698,22.18,2025-07-14/2025-07-19,Spot
+2022-01-20,Pacific Venture,166151,Hampton Roads,Haldia,Coal,156601,33.19,2022-01-29/2022-02-02,Time Charter
+2023-10-12,Royal Trader,74584,Baltimore,Haldia,Coal,64846,31.68,2023-11-02/2023-11-09,Spot
+2024-04-09,Trade Venture,171773,Novorossiysk (Black Sea),Paradip,Coal,161017,23.33,2024-04-18/2024-04-23,COA
+2020-09-27,Global Glory,171678,Taboneo,Gopalpur,Coal,159822,9.19,2020-10-13/2020-10-20,Spot
+2025-06-03,Cape Phoenix,74995,Baltimore,Gopalpur,Coal,64532,37.19,2025-06-13/2025-06-16,Spot
+2020-11-26,Eastern Endeavour,173859,New Orleans,Haldia,Coal,148578,32.72,2020-12-17/2020-12-20,Spot
+2021-12-21,Grand Progress,78240,Novorossiysk (Black Sea),Dhamra,Coal,73590,21.6,2022-01-08/2022-01-15,Spot
+2021-09-22,Coral Trader,160479,Dalrymple Bay,Paradip,Coal,146679,14.11,2021-10-09/2021-10-15,Time Charter
+2021-06-24,Silver Endeavour,77122,Novorossiysk (Black Sea),Gangavaram,Coal,73049,19.02,2021-07-13/2021-07-19,COA
+2025-10-01,Southern Endeavour,76189,Vostochny (Far East),Paradip,Coal,67704,22.9,2025-10-15/2025-10-20,COA
+2022-11-16,Grand Legacy,79701,Nacala,Haldia,Coal,76418,20.97,2022-11-23/2022-11-30,Spot
+2025-08-02,Blue Trader,77603,Taboneo,Vizag,Coal,71545,10.73,2025-08-18/2025-08-24,COA
+2025-08-02,Star Navigator,155313,Gladstone,Haldia,Coal,148047,15.52,2025-08-22/2025-08-26,Spot
+2023-04-15,Global Navigator,151967,Novorossiysk (Black Sea),Haldia,Coal,136366,27.31,2023-04-26/2023-05-02,Spot
+2023-01-15,Crown Pride,76811,Samarinda,Gangavaram,Coal,67485,11.67,2023-02-03/2023-02-08,COA
+2020-10-27,Silver Venture,153790,Newcastle,Vizag,Coal,145932,14.36,2020-11-15/2020-11-21,Spot
+2020-01-01,Cape Harmony,153879,Nacala,Gangavaram,Coal,139692,19.62,2020-01-17/2020-01-20,Spot
+2022-06-19,Atlantic Spirit,75738,Beira,Vizag,Coal,67689,21.87,2022-06-28/2022-07-04,Spot
+2021-04-25,Golden Discovery,80077,New Orleans,Gopalpur,Coal,77443,35.36,2021-05-11/2021-05-14,Spot
+2022-12-16,Golden Navigator,165383,Vostochny (Far East),Vizag,Coal,149128,21.8,2022-12-29/2023-01-02,Time Charter
+2023-03-16,Bay Pioneer,179852,Beira,Paradip,Coal,166227,19.94,2023-03-23/2023-03-27,COA
+2021-05-25,Royal Discovery,168303,Hampton Roads,Gangavaram,Coal,147388,32.68,2021-06-07/2021-06-11,Time Charter
+2022-09-17,Bay Falcon,180386,Beira,Haldia,Coal,160296,19.84,2022-10-08/2022-10-12,Spot
+2022-03-21,Sea Falcon,74647,Vostochny (Far East),Dhamra,Coal,65840,20.28,2022-04-07/2022-04-12,Spot
+2021-10-22,Coral Pride,76383,Baltimore,Vizag,Coal,73313,33.4,2021-11-02/2021-11-06,COA
+2022-04-20,Sea Fortune,78179,Taboneo,Vizag,Coal,67280,8.72,2022-04-30/2022-05-03,Spot
+2020-12-26,Northern Voyager,172289,Ust-Luga (Baltic),Gopalpur,Coal,164132,20.6,2021-01-04/2021-01-10,Spot
+2022-11-16,Crown Glory,153385,Samarinda,Paradip,Coal,140639,9.03,2022-12-02/2022-12-07,Spot
+2020-09-27,Trade Endeavour,167391,Nacala,Dhamra,Coal,153648,21.75,2020-10-15/2020-10-22,Spot
+2024-04-09,Atlantic Harmony,75189,Dalrymple Bay,Haldia,Coal,69787,16.4,2024-04-17/2024-04-23,Spot
+2021-12-21,Southern Progress,79071,Beira,Haldia,Coal,74225,21.69,2022-01-03/2022-01-07,Spot
+2021-10-22,Bay Falcon,158334,Muara Pantai,Vizag,Coal,142158,12.05,2021-10-29/2021-11-04,Spot
+2023-06-14,Blue Discovery,78389,Samarinda,Paradip,Coal,75564,9.71,2023-06-28/2023-07-04,Spot
+2022-02-19,Cape Venture,173316,Nacala,Gopalpur,Coal,159409,22.99,2022-03-08/2022-03-13,Spot
+2021-04-25,Global Harmony,177990,Nacala,Vizag,Coal,158997,20.98,2021-05-10/2021-05-17,Spot
+2020-03-01,Sea Horizon,81751,Novorossiysk (Black Sea),Vizag,Coal,74442,21.08,2020-03-16/2020-03-23,Spot
+2021-10-22,Global Falcon,180093,Gladstone,Dhamra,Coal,157148,14.18,2021-11-06/2021-11-13,COA
+2025-09-01,Blue Navigator,77669,Hampton Roads,Vizag,Coal,68413,27.79,2025-09-19/2025-09-24,Spot
+2025-01-04,Sea Pioneer,158173,Hay Point,Dhamra,Coal,144078,16.18,2025-01-14/2025-01-17,Spot
+2021-02-24,Pacific Pioneer,180807,Gladstone,Dhamra,Coal,168729,15.32,2021-03-08/2021-03-13,Spot
+2025-08-02,Blue Horizon,174851,Beira,Vizag,Coal,157847,19.09,2025-08-14/2025-08-18,Spot
+2024-02-09,Southern Endeavour,81440,Taboneo,Vizag,Coal,75356,12.31,2024-02-17/2024-02-22,Spot
+2025-04-04,Sea Pioneer,77447,Muara Pantai,Paradip,Coal,71357,12.09,2025-04-12/2025-04-15,Spot
+2024-12-05,Eastern Harmony,80943,Novorossiysk (Black Sea),Paradip,Coal,70071,22.1,2024-12-22/2024-12-29,Time Charter
+2023-11-11,Western Falcon,151074,Gladstone,Dhamra,Coal,143933,15.89,2023-11-24/2023-11-30,Spot
+2024-12-05,Ocean Legacy,81688,Hay Point,Gangavaram,Coal,71816,15.2,2024-12-22/2024-12-27,Spot
+2021-01-25,Grand Harmony,176489,Samarinda,Vizag,Coal,169688,10.54,2021-02-04/2021-02-11,Time Charter
+2023-03-16,Western Navigator,164808,Beira,Gangavaram,Coal,143423,20.75,2023-04-06/2023-04-10,Spot
+2024-12-05,Cape Harmony,150665,Samarinda,Haldia,Coal,142394,10.59,2024-12-23/2024-12-29,Time Charter
+2021-04-25,Trade Discovery,157389,Nacala,Gopalpur,Coal,147468,18.34,2021-05-11/2021-05-15,COA
+2020-11-26,Sea Eagle,76252,Nacala,Haldia,Coal,67362,21.66,2020-12-15/2020-12-18,COA
+2020-05-30,Grand Fortune,150405,Baltimore,Dhamra,Coal,139831,28.8,2020-06-16/2020-06-22,COA
+2021-04-25,Bay Falcon,168032,Muara Pantai,Haldia,Coal,153386,10.08,2021-05-16/2021-05-22,Spot
+2024-09-06,Atlantic Discovery,153961,Hay Point,Haldia,Coal,142607,15.93,2024-09-18/2024-09-25,Spot
+2023-04-15,Western Fortune,159765,Samarinda,Gopalpur,Coal,147651,10.44,2023-05-01/2023-05-07,Spot
+2025-10-31,Bay Trader,180164,Hay Point,Gopalpur,Coal,173016,14.68,2025-11-20/2025-11-25,Time Charter
+2021-01-25,Trade Spirit,79998,Muara Pantai,Gopalpur,Coal,75449,9.95,2021-02-03/2021-02-07,Time Charter
+2020-09-27,Bay Legacy,172468,Dalrymple Bay,Dhamra,Coal,158756,14.58,2020-10-05/2020-10-08,Spot
+2020-01-01,Coral Endeavour,166208,Ust-Luga (Baltic),Gangavaram,Coal,146173,24.25,2020-01-15/2020-01-19,Spot
+2024-03-10,Eastern Voyager,161963,Beira,Dhamra,Coal,141434,23.08,2024-03-30/2024-04-03,Spot
+2021-03-26,Pacific Venture,77391,Nacala,Dhamra,Coal,74379,19.25,2021-04-13/2021-04-19,Spot
+2023-02-14,Southern Phoenix,160700,Novorossiysk (Black Sea),Vizag,Coal,141963,23.16,2023-03-02/2023-03-08,COA
+2024-07-08,Western Discovery,75324,Vostochny (Far East),Gopalpur,Coal,68242,23.5,2024-07-29/2024-08-03,Spot
+2022-03-21,Royal Horizon,74072,Vostochny (Far East),Gopalpur,Coal,68090,23.09,2022-04-07/2022-04-13,Spot
+2022-12-16,Coral Harmony,78948,Beira,Gopalpur,Coal,74089,20.02,2023-01-06/2023-01-13,Time Charter
+2024-08-07,Atlantic Voyager,180267,Vostochny (Far East),Haldia,Coal,163785,19.8,2024-08-21/2024-08-26,Spot
+2024-02-09,Grand Venture,173313,Newcastle,Gangavaram,Coal,155647,15.66,2024-02-29/2024-03-06,Time Charter
+2024-04-09,Cape Horizon,78746,Baltimore,Vizag,Coal,73492,35.77,2024-04-20/2024-04-25,Spot
+2025-05-04,Star Falcon,178593,Dalrymple Bay,Gopalpur,Coal,166920,16.09,2025-05-24/2025-05-30,Spot
+2021-10-22,Coral Trader,76474,Vostochny (Far East),Gopalpur,Coal,72853,23.41,2021-11-06/2021-11-09,COA
+2025-05-04,Pacific Pioneer,161366,Newcastle,Vizag,Coal,139440,19.74,2025-05-14/2025-05-17,Spot
+2024-09-06,Royal Trader,152533,Novorossiysk (Black Sea),Haldia,Coal,131732,21.04,2024-09-15/2024-09-18,Spot
+2022-08-18,Sea Trader,77317,Samarinda,Gangavaram,Coal,69416,10.3,2022-09-01/2022-09-05,Spot
+2024-10-06,Global Fortune,77525,Nacala,Vizag,Coal,67567,21.08,2024-10-17/2024-10-22,Time Charter
+2022-09-17,Royal Discovery,167072,Samarinda,Vizag,Coal,162046,8.52,2022-09-26/2022-09-30,Time Charter
+2023-11-11,Ocean Navigator,79683,Novorossiysk (Black Sea),Gopalpur,Coal,70037,23.25,2023-11-18/2023-11-21,Spot
+2020-03-31,Ocean Fortune,178494,Taboneo,Dhamra,Coal,169223,12.57,2020-04-18/2020-04-22,Spot
+2024-12-05,Western Venture,180743,New Orleans,Gangavaram,Coal,169721,29.01,2024-12-17/2024-12-23,Spot
+2020-06-29,Pacific Horizon,170445,Taboneo,Dhamra,Coal,152316,10.6,2020-07-15/2020-07-19,Spot
+2024-06-08,Silver Navigator,180037,Vostochny (Far East),Paradip,Coal,162593,24.16,2024-06-24/2024-06-28,Spot
+2023-07-14,Southern Trader,79823,Novorossiysk (Black Sea),Gopalpur,Coal,67996,24.47,2023-07-24/2023-07-30,Spot
+2024-05-09,Atlantic Pioneer,75448,Taboneo,Gangavaram,Coal,67124,11.05,2024-05-28/2024-06-03,Time Charter
+2024-07-08,Bay Phoenix,78471,Baltimore,Dhamra,Coal,72364,30.9,2024-07-17/2024-07-20,Spot
+2021-01-25,Bay Fortune,152001,Nacala,Vizag,Coal,133049,21.45,2021-02-04/2021-02-10,Time Charter
+2022-03-21,Star Discovery,165696,Nacala,Dhamra,Coal,146240,17.21,2022-04-06/2022-04-09,Spot
+2021-01-25,Atlantic Fortune,80578,Gladstone,Gangavaram,Coal,69580,16.9,2021-02-08/2021-02-13,Spot
+2021-08-23,Cape Venture,180008,Newcastle,Gangavaram,Coal,164951,16.0,2021-09-11/2021-09-17,COA
+2022-05-20,Blue Spirit,173687,Muara Pantai,Gopalpur,Coal,161049,10.47,2022-06-10/2022-06-14,Spot
+2023-08-13,Eastern Venture,78462,Samarinda,Gangavaram,Coal,70120,10.18,2023-09-02/2023-09-07,Spot
+2020-05-30,Star Progress,77109,Beira,Vizag,Coal,67021,22.87,2020-06-14/2020-06-19,COA
+2020-04-30,Cape Progress,163418,Beira,Gopalpur,Coal,142523,18.22,2020-05-11/2020-05-16,COA
+2020-07-29,Golden Discovery,79464,Gladstone,Gangavaram,Coal,68133,16.98,2020-08-15/2020-08-22,Spot
+2024-08-07,Royal Venture,80259,Beira,Paradip,Coal,76396,23.16,2024-08-17/2024-08-24,Spot
+2022-05-20,Coral Endeavour,169925,Newcastle,Haldia,Coal,156067,15.39,2022-06-02/2022-06-08,Time Charter
+2023-01-15,Western Eagle,79649,Nacala,Gopalpur,Coal,72612,19.56,2023-02-01/2023-02-04,Spot
+2023-10-12,Atlantic Navigator,79571,Hampton Roads,Gangavaram,Coal,68500,35.13,2023-10-25/2023-10-28,Spot
+2025-03-05,Ocean Trader,76977,New Orleans,Dhamra,Coal,68812,34.74,2025-03-19/2025-03-24,COA
+2023-10-12,Blue Legacy,80406,Nacala,Vizag,Coal,68945,23.39,2023-10-30/2023-11-05,COA
+2022-11-16,Western Eagle,177328,Muara Pantai,Gangavaram,Coal,160516,11.43,2022-12-01/2022-12-06,COA
+2022-09-17,Golden Pioneer,158550,Hampton Roads,Paradip,Coal,148050,34.67,2022-09-30/2022-10-04,Time Charter
+2024-02-09,Western Harmony,151576,Hay Point,Vizag,Coal,130432,17.36,2024-02-21/2024-02-24,Spot
+2025-03-05,Grand Pride,176108,Vostochny (Far East),Haldia,Coal,152341,27.08,2025-03-15/2025-03-21,Spot
+2025-10-01,Grand Fortune,177539,Muara Pantai,Vizag,Coal,154339,10.15,2025-10-14/2025-10-21,COA
+2022-07-19,Coral Legacy,163826,Beira,Gopalpur,Coal,143032,17.77,2022-07-29/2022-08-02,COA
+2021-03-26,Coral Harmony,76360,Novorossiysk (Black Sea),Paradip,Coal,70413,25.82,2021-04-08/2021-04-11,Spot
+2021-10-22,Trade Pioneer,178541,Novorossiysk (Black Sea),Gangavaram,Coal,169764,23.75,2021-11-02/2021-11-08,Spot
+2021-05-25,Crown Harmony,79416,Baltimore,Gangavaram,Coal,67684,37.16,2021-06-02/2021-06-09,Spot
+2024-04-09,Pacific Fortune,77534,New Orleans,Dhamra,Coal,66470,32.75,2024-04-23/2024-04-27,COA
+2025-01-04,Silver Discovery,178119,Ust-Luga (Baltic),Haldia,Coal,161569,23.24,2025-01-17/2025-01-20,Time Charter
+2023-04-15,Southern Venture,77649,Gladstone,Dhamra,Coal,71852,14.72,2023-04-23/2023-04-30,Spot
+2020-04-30,Northern Navigator,169033,Samarinda,Paradip,Coal,159200,11.08,2020-05-13/2020-05-18,Spot
+2024-05-09,Global Discovery,180175,Ust-Luga (Baltic),Vizag,Coal,157136,24.05,2024-05-22/2024-05-29,COA
+2021-02-24,Southern Endeavour,76206,Newcastle,Haldia,Coal,70280,16.34,2021-03-17/2021-03-21,Spot
+2022-02-19,Golden Horizon,172578,Taboneo,Paradip,Coal,164795,10.31,2022-02-26/2022-03-01,Spot
+2023-11-11,Blue Progress,155657,Dalrymple Bay,Haldia,Coal,133964,16.91,2023-11-30/2023-12-03,Time Charter
+2022-11-16,Royal Fortune,150415,Beira,Gangavaram,Coal,138061,22.99,2022-11-30/2022-12-07,Spot
+2021-07-24,Sea Eagle,155361,Hay Point,Vizag,Coal,143506,14.09,2021-08-12/2021-08-17,Spot
+2023-02-14,Ocean Harmony,154322,Novorossiysk (Black Sea),Gangavaram,Coal,145941,20.9,2023-02-25/2023-03-04,COA
+2022-05-20,Star Legacy,77868,Beira,Dhamra,Coal,67623,17.41,2022-06-06/2022-06-10,Spot
+2025-06-03,Northern Pride,76446,Vostochny (Far East),Gangavaram,Coal,68464,23.24,2025-06-20/2025-06-25,COA
+2024-01-10,Crown Discovery,158240,Vostochny (Far East),Vizag,Coal,151726,21.45,2024-01-27/2024-02-03,Spot
+2024-11-05,Atlantic Eagle,172822,Beira,Gopalpur,Coal,159465,21.15,2024-11-16/2024-11-19,Spot
+2021-08-23,Star Navigator,180247,Muara Pantai,Paradip,Coal,161244,11.9,2021-09-03/2021-09-09,Spot
+2021-12-21,Pacific Venture,180358,Newcastle,Gopalpur,Coal,167138,16.03,2022-01-11/2022-01-16,Spot
+2025-04-04,Pacific Falcon,79941,Baltimore,Haldia,Coal,70211,28.47,2025-04-14/2025-04-18,Time Charter
+2021-07-24,Global Discovery,165169,Samarinda,Vizag,Coal,146790,11.49,2021-08-13/2021-08-17,Time Charter
+2023-10-12,Ocean Progress,76808,Dalrymple Bay,Gangavaram,Coal,67066,13.88,2023-10-31/2023-11-03,Spot
+2022-04-20,Blue Spirit,178188,Vostochny (Far East),Gangavaram,Coal,163741,23.2,2022-04-28/2022-05-01,Spot
+2024-10-06,Blue Horizon,167100,Hampton Roads,Gopalpur,Coal,147805,31.3,2024-10-16/2024-10-22,COA
+2020-01-01,Bay Fortune,77555,Taboneo,Gangavaram,Coal,70121,12.19,2020-01-10/2020-01-16,Spot
+2021-09-22,Coral Venture,163548,Hampton Roads,Haldia,Coal,143008,31.08,2021-10-08/2021-10-13,COA
+2020-05-30,Eastern Harmony,165746,Ust-Luga (Baltic),Haldia,Coal,154072,20.48,2020-06-20/2020-06-26,Spot
+2024-11-05,Pacific Pride,78956,Gladstone,Gopalpur,Coal,69356,16.83,2024-11-14/2024-11-17,Spot
+2024-06-08,Atlantic Glory,164083,Muara Pantai,Gangavaram,Coal,156887,11.05,2024-06-18/2024-06-24,Spot
+2023-09-12,Pacific Pioneer,81856,New Orleans,Paradip,Coal,74722,31.93,2023-10-01/2023-10-07,Time Charter
+2025-10-01,Grand Discovery,150580,Taboneo,Gangavaram,Coal,132568,8.95,2025-10-17/2025-10-20,Time Charter
+2024-10-06,Atlantic Spirit,170019,Hay Point,Paradip,Coal,150698,15.5,2024-10-25/2024-11-01,COA
+2021-01-25,Trade Voyager,173973,Baltimore,Gopalpur,Coal,165852,32.37,2021-02-11/2021-02-14,Spot
+2022-08-18,Blue Legacy,74131,Beira,Vizag,Coal,68737,20.83,2022-09-03/2022-09-10,COA
+2020-10-27,Blue Fortune,180398,Baltimore,Gangavaram,Coal,161187,36.27,2020-11-08/2020-11-15,Spot
+2022-12-16,Star Discovery,164152,Newcastle,Gangavaram,Coal,156920,18.68,2023-01-06/2023-01-09,Spot
+2024-12-05,Western Harmony,75085,New Orleans,Gopalpur,Coal,68518,31.42,2024-12-13/2024-12-18,Spot
+2023-11-11,Cape Progress,180739,Beira,Vizag,Coal,162341,19.08,2023-11-20/2023-11-26,Spot
+2025-03-05,Ocean Voyager,151653,Nacala,Gangavaram,Coal,145877,20.47,2025-03-17/2025-03-23,COA
+2024-11-05,Eastern Endeavour,179543,Baltimore,Dhamra,Coal,173781,27.83,2024-11-17/2024-11-22,Spot
+2021-11-21,Global Horizon,159367,Ust-Luga (Baltic),Haldia,Coal,140576,25.11,2021-12-08/2021-12-13,Spot
+2023-07-14,Coral Legacy,167851,Samarinda,Gopalpur,Coal,151764,10.18,2023-07-21/2023-07-28,Spot
+2023-07-14,Bay Venture,76723,Samarinda,Gopalpur,Coal,71922,9.91,2023-07-21/2023-07-28,Spot
+2020-12-26,Bay Navigator,154679,Newcastle,Haldia,Coal,148030,17.86,2021-01-16/2021-01-22,Time Charter
+2023-11-11,Trade Pioneer,171693,Newcastle,Gangavaram,Coal,164048,16.45,2023-11-25/2023-11-28,Spot
+2020-01-31,Golden Navigator,155286,Dalrymple Bay,Dhamra,Coal,145123,15.47,2020-02-07/2020-02-11,Time Charter
+2023-09-12,Atlantic Phoenix,176213,New Orleans,Paradip,Coal,156505,34.02,2023-09-25/2023-09-28,Spot
+2023-01-15,Bay Pride,179730,Muara Pantai,Gopalpur,Coal,167626,10.42,2023-02-03/2023-02-09,Time Charter
+2020-08-28,Global Legacy,74851,Nacala,Paradip,Coal,71143,20.05,2020-09-11/2020-09-16,Spot
+2023-10-12,Royal Endeavour,167454,Muara Pantai,Dhamra,Coal,150906,12.55,2023-10-23/2023-10-27,Spot
+2020-01-01,Western Legacy,80378,Hampton Roads,Gopalpur,Coal,72277,28.21,2020-01-11/2020-01-14,Time Charter
+2020-03-31,Trade Pioneer,76830,Vostochny (Far East),Vizag,Coal,65586,20.98,2020-04-20/2020-04-24,Spot
+2022-07-19,Trade Harmony,171912,Samarinda,Dhamra,Coal,150598,11.5,2022-07-28/2022-08-02,COA
+2025-06-03,Silver Venture,79124,Gladstone,Dhamra,Coal,69992,17.93,2025-06-23/2025-06-26,Spot
+2023-08-13,Western Pride,76940,Nacala,Gopalpur,Coal,68176,22.06,2023-08-25/2023-08-29,Time Charter
+2025-01-04,Coral Eagle,77276,Taboneo,Paradip,Coal,70312,9.23,2025-01-15/2025-01-21,Spot
+2023-10-12,Blue Navigator,181265,Samarinda,Gangavaram,Coal,165100,10.2,2023-10-28/2023-11-03,Spot
+2020-06-29,Coral Phoenix,81444,Ust-Luga (Baltic),Gopalpur,Coal,73659,22.92,2020-07-06/2020-07-10,Spot
+2021-09-22,Golden Voyager,175990,Vostochny (Far East),Paradip,Coal,152368,21.47,2021-09-29/2021-10-05,Spot
+2023-05-15,Trade Phoenix,79195,Hay Point,Paradip,Coal,76817,17.67,2023-06-03/2023-06-08,Spot
+2025-07-03,Eastern Phoenix,179479,Taboneo,Vizag,Coal,153729,10.16,2025-07-20/2025-07-25,Time Charter
+2024-10-06,Royal Voyager,172112,Muara Pantai,Gangavaram,Coal,157509,11.81,2024-10-27/2024-10-31,Spot

@@ -75,6 +75,15 @@ def _match_route(df: pd.DataFrame, origin: str, destination: str, vessel_class: 
             df["destination_port"].map(_normalize).eq(destination_key)
             & df["vessel_class"].map(_normalize).eq(vessel_key)
         ]
+    if matched.empty:
+        matched = df[
+            df["origin"].map(_normalize).eq(origin_key)
+            & df["destination_port"].map(_normalize).eq(destination_key)
+        ]
+    if matched.empty:
+        matched = df[df["destination_port"].map(_normalize).eq(destination_key)]
+    if matched.empty:
+        matched = df
     return matched.sort_values("date")
 
 

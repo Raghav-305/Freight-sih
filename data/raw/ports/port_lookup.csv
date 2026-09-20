@@ -1,0 +1,7 @@
+port_id,discharge_rate,max_draft,has_tidal_restriction,berth_count,port_code
+DHA,2899,18.5,0,2,0
+GAN,2246,16.5,0,1,1
+GOP,1801,14.0,0,1,2
+HAL,1567,12.5,1,1,3
+PAR,2514,17.0,0,2,4
+VIZ,2150,15.5,0,2,5

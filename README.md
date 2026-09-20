@@ -981,3 +981,24 @@ Before handing the system to users:
 - [ ] Human-review disclaimer is present
 - [ ] Audit logging is enabled before production#   F r e i g h t - s i h  
  
+
+
+---
+
+## Optional: External Blockchain Anchoring (Polygon Amoy testnet)
+
+Makes the local audit hash chain **externally verifiable**: a Merkle root of new audit events is written to the Polygon Amoy testnet, and the transaction hash is stored locally and shown in the CVC Governance tab (with a PolygonScan link and an **Anchor now** button).
+
+> **Scope:** anchoring covers **only the hash-chained `decision_events`** (Pillar 3 decision timeline). It does **not** cover the legacy `AuditLogRecord` table (the "Immutable Audit Trail" table served by `/audit/logs`), which is not hash-chained and is not anchored.
+
+**Why it is optional:** the platform is designed to run fully offline. This is the only feature that needs internet, and nothing else depends on it. With no key, no `web3`, or no connection, everything else works unchanged and the UI shows "Not anchored / offline".
+
+**Quick start**
+
+1. `pip install -r backend/requirements.txt`
+2. Create a throwaway wallet: `python -c "from eth_account import Account; a=Account.create(); print(a.address); print(a.key.hex())"`
+3. Get free test POL for that address at https://faucet.polygon.technology/ (select *Polygon Amoy*). The faucet is rate-limited, so do this a day before a demo.
+4. Put `AMOY_PRIVATE_KEY=0x...` in `.env` (git-ignored). Optional: `AMOY_RPC_URL`, `ANCHOR_INTERVAL_MINUTES` (0 = manual button only).
+5. Open **CVC Governance** and click **Anchor now**.
+
+Endpoints: `GET /audit/anchor-status`, `POST /audit/anchor`, `GET /audit/anchor/{id}/verify`. Full details and the demo script: [`docs/AUDIT_ANCHORING.md`](docs/AUDIT_ANCHORING.md).

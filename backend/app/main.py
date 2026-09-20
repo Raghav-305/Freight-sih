@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from backend.app.api.audit import router as audit_router
+from backend.app.api.anchoring import router as anchoring_router  # optional, testnet anchoring
 from backend.app.api.charter import router as charter_router
 from backend.app.api.data_quality import router as data_quality_router
 from backend.app.api.forecast import router as forecast_router
@@ -19,6 +20,7 @@ from backend.app.api.eligibility import router as eligibility_router
 from backend.app.api.map import router as map_router
 from backend.app.api.scenarios import router as scenarios_router
 from backend.app.api.freight_database import router as freight_database_router
+from backend.app.api.counterfactual import router as counterfactual_router
 
 app = FastAPI(
     title="Freight Chartering Intelligence API",
@@ -39,6 +41,7 @@ app.include_router(forecast_router)
 app.include_router(charter_router)
 app.include_router(data_quality_router)
 app.include_router(audit_router)
+app.include_router(anchoring_router)
 app.include_router(market_router)
 app.include_router(models_router)
 app.include_router(opportunity_router)
@@ -51,3 +54,4 @@ app.include_router(eligibility_router)
 app.include_router(map_router)
 app.include_router(scenarios_router)
 app.include_router(freight_database_router)
+app.include_router(counterfactual_router)
