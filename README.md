@@ -950,7 +950,7 @@ loads it, performs preprocessing + inference, and FastAPI exposes the result.
 
 **Do not change the frontend just because the model changes.** Keep the API response contract stable.
 
-The supplied architecture was specifically designed so that real ML models can be dropped into `ml/models/...`, exposed through inference/FastAPI, and connected by changing API configuration rather than rebuilding the frontend. fileciteturn1file4L369-L409
+The supplied architecture was specifically designed so that real ML models can be dropped into `ml/models/...`, exposed through inference/FastAPI, and connected by changing API configuration rather than rebuilding the frontend. fileciteturn1file4L369-L409
 
 ---
 
@@ -979,26 +979,28 @@ Before handing the system to users:
 - [ ] Dataset version recorded
 - [ ] Backtests pass
 - [ ] Human-review disclaimer is present
-- [ ] Audit logging is enabled before production#   F r e i g h t - s i h  
- 
-
+- [ ] Audit logging is enabled before production
 
 ---
 
-## Optional: External Blockchain Anchoring (Polygon Amoy testnet)
+## 🌟 Newly Added Capabilities & Architecture Extensions
 
-Makes the local audit hash chain **externally verifiable**: a Merkle root of new audit events is written to the Polygon Amoy testnet, and the transaction hash is stored locally and shown in the CVC Governance tab (with a PolygonScan link and an **Anchor now** button).
+For complete architectural details, mathematical formulations, API payloads, and demo walk-throughs, see:
+👉 **[NEW_FEATURES_README.md](NEW_FEATURES_README.md)**
 
-> **Scope:** anchoring covers **only the hash-chained `decision_events`** (Pillar 3 decision timeline). It does **not** cover the legacy `AuditLogRecord` table (the "Immutable Audit Trail" table served by `/audit/logs`), which is not hash-chained and is not anchored.
+### 1. External Blockchain Audit Anchoring (Polygon Amoy Testnet)
+Makes the local SHA-256 audit hash chain **externally verifiable**:
+- **Mechanism**: Aggregates unanchored `decision_events` into a 32-byte Merkle root, anchoring it via a 0-value transaction on the Polygon Amoy testnet (`Chain ID: 80002`).
+- **Air-Gap First**: 100% offline-compatible. Core procurement and forecasting workflows never wait on or require network access. If offline, events queue locally and the UI shows `"Not anchored / offline"`.
+- **CVC Governance Tab**: Features live status badges, unanchored count, an **"Anchor now"** button, and direct Amoy PolygonScan block explorer links.
+- **Endpoints**: `GET /api/audit/anchor-status`, `POST /api/audit/anchor`, `GET /api/audit/anchor/{id}/verify`. Full details: [`docs/AUDIT_ANCHORING.md`](docs/AUDIT_ANCHORING.md).
 
-**Why it is optional:** the platform is designed to run fully offline. This is the only feature that needs internet, and nothing else depends on it. With no key, no `web3`, or no connection, everything else works unchanged and the UI shows "Not anchored / offline".
+### 2. Counterfactual Explanations & Sensitivity Hub (Layer 6 Explainability)
+Fills the *"Why This? Explainability"* slot in the decision architecture:
+- **Systematic Perturbation Search**: Answers *"What is the smallest operational or market change that flips a decision or de-risks a route?"*
+- **Route Risk Engine Explainer**: Nudges each of the 6 risk dimensions (market, port, weather, geopolitical, supply, contract) to baseline floor ($10.0$) and ranks levers by composite risk reduction.
+- **Charter LP Cost Sensitivity**: Sweeps bunker price shifts, port congestion waiting days, and spot rate changes through the HiGHS Linear Programming optimizer to compute exact capital savings (`saving_usd`) and detect contract allocation mix shifts.
+- **Interactive Sandbox**: Provides dynamic dials/sliders for real-time what-if scenario testing.
+- **UI & Navigation**: Dedicated **Layer 6: Counterfactuals** tab with cross-links from the Risk Intelligence Page.
+- **Endpoints**: `POST /api/counterfactual/risk`, `POST /api/counterfactual/charter`, `POST /api/counterfactual/risk/simulate`, `POST /api/counterfactual/charter/simulate`.
 
-**Quick start**
-
-1. `pip install -r backend/requirements.txt`
-2. Create a throwaway wallet: `python -c "from eth_account import Account; a=Account.create(); print(a.address); print(a.key.hex())"`
-3. Get free test POL for that address at https://faucet.polygon.technology/ (select *Polygon Amoy*). The faucet is rate-limited, so do this a day before a demo.
-4. Put `AMOY_PRIVATE_KEY=0x...` in `.env` (git-ignored). Optional: `AMOY_RPC_URL`, `ANCHOR_INTERVAL_MINUTES` (0 = manual button only).
-5. Open **CVC Governance** and click **Anchor now**.
-
-Endpoints: `GET /audit/anchor-status`, `POST /audit/anchor`, `GET /audit/anchor/{id}/verify`. Full details and the demo script: [`docs/AUDIT_ANCHORING.md`](docs/AUDIT_ANCHORING.md).
