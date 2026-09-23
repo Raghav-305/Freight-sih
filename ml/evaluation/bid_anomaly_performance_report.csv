@@ -1,0 +1,5 @@
+split,source,precision,recall,f1,balanced_accuracy,roc_auc,pr_auc,flagged_count,n_rows,n_positive
+train,model,1.0,1.0,1.0,1.0,1.0,1.0,155,5739,155
+train,naive_baseline,0.3222,1.0,0.4874,0.9708,0.9708,0.3222,481,5739,155
+test,model,1.0,1.0,1.0,1.0,1.0,1.0,34,1424,34
+test,naive_baseline,0.2656,1.0,0.4198,0.9662,0.9662,0.2656,128,1424,34

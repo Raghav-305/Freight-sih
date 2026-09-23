@@ -1,0 +1,37 @@
+{
+  "model_name": "bid_anomaly_detection",
+  "model_version": "bid_anomaly_detection_v1",
+  "model_type": "XGBoost (XGBClassifier)",
+  "training_date": "2026-09-21",
+  "dataset_version": "bid_tender_records_synthetic_v1",
+  "feature_version": "v1",
+  "target": "synthetic_anomaly_ground_truth",
+  "problem_type": "binary_classification",
+  "class_balance": {
+    "positive_rate_pct": 1.45,
+    "note": "Rare-event classification -- scale_pos_weight used during training to correct for imbalance. Precision/Recall/F1/Balanced Accuracy/PR-AUC are the metrics that matter here, not plain accuracy."
+  },
+  "split_method": "grouped_stratified_by_tender_id",
+  "split_note": "Split by tender_id, not by row, since a single tender has multiple broker bids. Stratified so the rare positive class isn't concentrated on one side. NOT a chronological split -- this isn't a forecast-the-future problem the way the freight rate model is.",
+  "data_source": "Synthetic data (bid_tender_records_synthetic.csv), provided by teammate. No real confirmed-collusion dataset exists for freight/maritime chartering specifically -- this is a proof-of-concept demonstrating the detection technique, not a claim of real detected corruption.",
+  "test_metrics": {
+    "precision": 0.6651,
+    "recall": 0.8742,
+    "f1": 0.7554,
+    "balanced_accuracy": 0.9339,
+    "roc_auc": 0.9962,
+    "pr_auc": 0.9073
+  },
+  "naive_baseline_comparison": {
+    "description": "Naive baseline = flag every bid that breaches the fair-value band, no ML at all.",
+    "naive_precision": 0.1715,
+    "naive_recall": 1.0,
+    "naive_flagged_count": 927,
+    "model_flagged_count": 209,
+    "note": "Model catches 87% of anomalies (vs naive's 100%) while flagging ~91% fewer bids for human review (209 vs 927)."
+  },
+  "references": [
+    "Garcia Rodriguez et al. (2022), 'Collusion detection in public procurement auctions with machine learning algorithms', Automation in Construction",
+    "CCI (India) Diagnostic Toolkit for Public Procurement"
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "train": {
+    "model": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "balanced_accuracy": 1.0,
+      "roc_auc": 1.0,
+      "pr_auc": 1.0,
+      "flagged_count": 155,
+      "n_rows": 5739,
+      "n_positive": 155
+    },
+    "naive_baseline": {
+      "precision": 0.3222,
+      "recall": 1.0,
+      "f1": 0.4874,
+      "balanced_accuracy": 0.9708,
+      "roc_auc": 0.9708,
+      "pr_auc": 0.3222,
+      "flagged_count": 481,
+      "n_rows": 5739,
+      "n_positive": 155
+    }
+  },
+  "test": {
+    "model": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "balanced_accuracy": 1.0,
+      "roc_auc": 1.0,
+      "pr_auc": 1.0,
+      "flagged_count": 34,
+      "n_rows": 1424,
+      "n_positive": 34
+    },
+    "naive_baseline": {
+      "precision": 0.2656,
+      "recall": 1.0,
+      "f1": 0.4198,
+      "balanced_accuracy": 0.9662,
+      "roc_auc": 0.9662,
+      "pr_auc": 0.2656,
+      "flagged_count": 128,
+      "n_rows": 1424,
+      "n_positive": 34
+    }
+  }
+}

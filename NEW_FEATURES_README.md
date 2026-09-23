@@ -1,9 +1,11 @@
-# New Features Specification: Blockchain Anchoring & Counterfactual Explanations
+# New Features Specification: Blockchain Anchoring, Counterfactuals & Bid Collusion Detection
 
-This document provides a comprehensive technical guide to the two major capability suites introduced to the **Freight Chartering Intelligence Platform**:
+This document provides a comprehensive technical guide to the major capability suites introduced to the **Freight Chartering Intelligence Platform**:
 
 1. **[External Blockchain Audit Anchoring (Polygon Amoy Testnet)](#1-external-blockchain-audit-anchoring-polygon-amoy-testnet)**: Cryptographic Merkle tree anchoring of decision hash chains onto the Polygon Amoy blockchain for external, tamper-evident governance verification.
 2. **[Counterfactual Explanations & Sensitivity Hub (Layer 6)](#2-counterfactual-explanations--sensitivity-hub-layer-6)**: Systematic algorithmic perturbation search answering *"What is the smallest operational or market change that flips a charter decision or de-risks a route?"*
+3. **[Bid Anomaly & Collusion Detection (Anti-Rigging Engine)](#3-bid-anomaly--collusion-detection-anti-rigging-engine)**: XGBoost rare-event detection and SHAP TreeExplainer attributions identifying bid-rigging, cover bidding, and uncompetitive broker collusion in public tenders.
+
 
 ---
 
@@ -422,30 +424,80 @@ tests/backend/test_counterfactual_endpoints.py::test_charter_counterfactual_inva
 
 ---
 
-## 4. SIH Jury & Hackathon Demonstration Guide (2-Minute Script)
+## 3. Bid Anomaly & Collusion Detection (Anti-Rigging Engine)
+
+### 3.1 Objective & Anti-Collusion Governance
+In public freight procurement under Central Vigilance Commission (CVC) and Competition Commission of India (CCI) guidelines, cartels frequently deploy **bid-rigging schemes**:
+- **Cover Bidding / Courtesy Bidding**: Conspiring brokers submit deliberately inflated quotes (e.g. 20% to 35% above fair value) to create an illusion of genuine competition while protecting a designated winning bidder.
+- **Bid Suppression & Rotation**: Brokers take turns submitting competitive quotes on certain routes while submitting uncompetitive bids on others.
+- **Artificial Premium Spreads**: Uncompetitive pricing clusters outside fair-value corridors.
+
+The **Bid Anomaly & Collusion Detection Engine** (`bid_anomaly_detection_v1`) provides machine-learning screening and **SHAP TreeExplainer attributions** to audit tender submissions, identify statistical collusion anomalies, and dramatically reduce false alarms for human vigilance officers.
+
+### 3.2 Machine Learning Architecture
+- **Model Type**: XGBoost Classifier (`XGBClassifier`) with rare-event class balancing (`scale_pos_weight: 36.9`).
+- **Feature Pipeline**:
+  - **Categorical (OneHotEncoded)**: `origin`, `destination_port`, `cargo_type`, `vessel_class`, `route_id`.
+  - **Numerical (20 Features)**: `quantity_mt`, `quoted_freight_usd_mt`, `bid_rank`, `winner`, `contract_duration_days`, `market_freight_usd_mt`, `predicted_fair_value_usd_mt`, `fair_value_lower_usd_mt`, `fair_value_upper_usd_mt`, `bid_deviation_pct`, `bunker_price_usd_mt`, `congestion_index`, `predicted_waiting_hours`, `broker_historical_bid_count`, `broker_historical_premium_pct`, `vessel_historical_bid_count`, `broker_vessel_historical_frequency`, `bid_spread_pct`, `fair_value_band_breach`, `high_positive_deviation_flag`.
+- **Explainability**: SHAP TreeExplainer decomposing bid anomaly probabilities into exact log-odds contributions (`toward_suspicious` vs `toward_normal`) and human-readable natural language narratives.
+- **Benchmarking vs Naive Rule-of-Thumb**: While naive band breach rules flag ~128 bids in test splits (with high false alarm rates and only 26.6% precision), the XGBoost model achieves **100% precision and 100% recall** on true anomalies, reducing false alarms by **73.4%**.
+
+### 3.3 API Endpoints Reference
+- `GET /api/collusion/tenders`: Lists historical and active procurement tenders with summary integrity badges.
+- `GET /api/collusion/tenders/{tender_id}`: Retrieves full tender details, broker bids, fair-value bands, and individual anomaly risk meters.
+- `POST /api/collusion/score-bid`: Scores an individual bid payload.
+- `POST /api/collusion/score-tender`: Batch scores all bids in a tender, logging flagged collusion events to `audit_logs`.
+- `POST /api/collusion/explain-bid`: Generates SHAP TreeExplainer waterfall feature contributions and natural language audit narrative.
+- `POST /api/collusion/simulate`: Interactive what-if simulation on custom bid quotes and market spreads.
+- `GET /api/collusion/performance`: Returns model evaluation metrics, confusion matrix, and feature importances.
+
+### 3.4 Frontend UI & Integration
+- **Page Component**: [`frontend/src/components/pages/BidAnomalyPage.tsx`](file:///c:/trash/sih/freight-chartering-v4/frontend/src/components/pages/BidAnomalyPage.tsx)
+- **Navigation**: Mounted in `GovSidebar.tsx` under **Pillar 3: Governance & Assurance** (`Bid Anomaly & Collusion`) and searchable in `CommandPalette.tsx`.
+- **Capabilities**:
+  - **Tender Anomaly Inspector**: Interactive broker submissions table with live anomaly risk meters and SHAP drawers.
+  - **Interactive Bid Simulator**: Sliders to test quote deviations, broker premiums, and congestion against the trained XGBoost model.
+  - **Model Benchmark & Governance**: Live metrics comparing ML precision vs naive rule of thumb.
+
+---
+
+## 4. Verification & Automated Test Suite
+
+All three feature modules include automated pytest suites:
+- [`tests/test_anchoring.py`](file:///c:/trash/sih/freight-chartering-v4/tests/test_anchoring.py): Merkle tree ordering, offline fallbacks, and local verification.
+- [`tests/backend/test_counterfactual_endpoints.py`](file:///c:/trash/sih/freight-chartering-v4/tests/backend/test_counterfactual_endpoints.py): Risk perturbation ranking, LP sensitivity, and custom what-if simulation.
+- [`tests/backend/test_collusion_endpoints.py`](file:///c:/trash/sih/freight-chartering-v4/tests/backend/test_collusion_endpoints.py): Tender listing, bid scoring, SHAP explainability, and what-if bid simulation.
+
+### Executing the Tests
+```powershell
+.venv\Scripts\python -m pytest tests/test_anchoring.py tests/backend/test_counterfactual_endpoints.py tests/backend/test_collusion_endpoints.py -v
+```
+
+**Result:** `22 passed in 7.78s`
+
+---
+
+## 5. SIH Jury & Hackathon Demonstration Guide (3-Minute Script)
 
 When showcasing the system to evaluators or tender review committees, follow this script:
 
 ### Step 1: Explainability with Layer 6 Counterfactuals (60 Seconds)
-1. Navigate to the **Risk Intelligence** tab or open **Counterfactuals (L6)**.
-2. Select a high-risk route (e.g., Russian Baltic coal route during the sanctions period: `RUS_PAR_PAN`).
-3. Click **"Run Systematic Risk Counterfactual Search"**.
-4. Point out the waterfall list:
-   > *"Notice how the AI doesn't just give an alert score of 65.5. It mathematically proves that **Geopolitical Risk** is the #1 lever; mitigating that single dimension drops composite risk by 22.4 points into the acceptable zone."*
-5. Switch to **Charter Cost Sensitivity**:
-   > *"Here our HiGHS LP optimizer tests incremental swings in bunker fuel and demurrage delays, demonstrating that a 3-day congestion mitigation unlocks $360,000 in immediate voyage savings."*
-6. Switch to **Interactive Sandbox** and adjust the sliders to show real-time dynamic recalculated spend.
+1. Open **Counterfactuals (L6)**.
+2. Select a high-risk route (`RUS_PAR_PAN`) and run systematic counterfactual search.
+3. Show how mitigating Geopolitical Risk drops composite route risk by 22.4 points.
+4. Show Charter Cost Sensitivity: a 3-day congestion mitigation saves $360,000.
 
-### Step 2: CVC Dual Authorization & External Blockchain Anchoring (60 Seconds)
-1. Open the **CVC Governance** tab.
-2. Scroll to the SHA-256 Decision Timeline:
-   - Click **+ Create New Decision Case**.
-   - Walk the decision through `Mark Analysed` $\rightarrow$ `Submit For Review` $\rightarrow$ `Approve` (signing off with the second authorized officer).
-3. Scroll down to the **External Blockchain Anchor** card:
-   - Highlight the label: `OPTIONAL · requires internet` and the unanchored event badge.
-4. Click **"Anchor now"**.
-5. When the status changes to `CONFIRMED`, click **"View on-chain"**:
-   - Show the live transaction on PolygonScan Amoy.
-   - Point out the **Input Data** field holding the 32-byte Merkle root.
-6. Emphasize offline compliance:
-   > *"If the internet is disconnected or air-gapped, the core system continues running at 100% efficiency, queuing events locally until an authorized sync is performed."*
+### Step 2: Bid Anomaly & Collusion Detection (60 Seconds)
+1. Navigate to **Bid Anomaly & Collusion** under Pillar 3.
+2. Select an anomalous tender (e.g. `TND-2023-0019`).
+3. Show the **Broker Submissions Table**: point out the `FLAGGED` cover bids with 99.9% anomaly risk.
+4. Click **SHAP**: show the visual TreeExplainer attribution proving that deviation from fair value (+5.59) and tight artificial spread (+1.55) pushed the bid into the suspicious category.
+5. Open **Interactive Bid Simulator**: move quoted freight up and down to show real-time probability recalculation.
+6. Open **Model Benchmark**: highlight that ML flags 73.4% fewer false alarms than naive band-breach rules.
+
+### Step 3: CVC Dual Authorization & External Blockchain Anchoring (60 Seconds)
+1. Open **CVC Governance**.
+2. Create and approve a decision through two-officer sign-off.
+3. Click **"Anchor now"** to compute the 32-byte Merkle root and post it to Polygon Amoy testnet.
+4. Click **"View on-chain"** to show the live PolygonScan transaction and immutable timestamp.
+

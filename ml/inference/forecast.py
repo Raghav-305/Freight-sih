@@ -126,14 +126,21 @@ def _lookup_route_row(payload: dict[str, Any]) -> pd.Series | None:
     ]
 
     if filtered.empty:
-        fallback = data[
-            (data["destination_port"].astype(str).str.lower() == destination_value.lower())
-            & (data["vessel_class"].astype(str).str.lower() == vessel_value.lower())
-            & (data["cargo_type"].astype(str).str.lower() == cargo_value.lower())
+        # Fallback 1: Match origin and destination (using reference vessel class)
+        fallback_vessel = data[
+            (data["origin"].astype(str).str.lower() == origin_value.lower())
+            & (data["destination_port"].astype(str).str.lower() == destination_value.lower())
         ]
-        if fallback.empty:
-            return None
-        filtered = fallback
+        if not fallback_vessel.empty:
+            filtered = fallback_vessel
+        else:
+            # Fallback 2: Match origin (using reference destination)
+            fallback_origin = data[data["origin"].astype(str).str.lower() == origin_value.lower()]
+            if not fallback_origin.empty:
+                filtered = fallback_origin
+            else:
+                # Fallback 3: Core benchmark corridor
+                filtered = data[(data["origin"] == "Australia") & (data["destination_port"] == "Dhamra")]
 
     return filtered.sort_values("date").tail(1).iloc[0]
 

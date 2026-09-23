@@ -69,3 +69,39 @@ export const simulateRiskWhatIf = (body: unknown) =>
 export const simulateCharterWhatIf = (body: unknown) =>
   req("/api/counterfactual/charter/simulate", { method: "POST", body: JSON.stringify(body) });
 
+// ---- Pillar 3 Extension: Bid Anomaly & Collusion Detection ----
+export const getCollusionTenders = (limit = 50, status?: string) => {
+  const query = status ? `?limit=${limit}&status=${encodeURIComponent(status)}` : `?limit=${limit}`;
+  return req(`/api/collusion/tenders${query}`);
+};
+
+export const getCollusionTender = (tenderId: string, threshold = 0.5) =>
+  req(`/api/collusion/tenders/${encodeURIComponent(tenderId)}?threshold=${threshold}`);
+
+export const scoreBid = (body: unknown) =>
+  req("/api/collusion/score-bid", { method: "POST", body: JSON.stringify(body) });
+
+export const scoreTender = (body: unknown) =>
+  req("/api/collusion/score-tender", { method: "POST", body: JSON.stringify(body) });
+
+export const explainBidAnomaly = (body: unknown) =>
+  req("/api/collusion/explain-bid", { method: "POST", body: JSON.stringify(body) });
+
+export const simulateBidAnomaly = (body: unknown) =>
+  req("/api/collusion/simulate", { method: "POST", body: JSON.stringify(body) });
+
+export const getCollusionPerformance = () =>
+  req("/api/collusion/performance");
+
+// ---- Pillar 3 Extension: BIMCO Charterparty Contract Studio ----
+export const getCharterpartyTemplates = () =>
+  req("/api/charterparty/templates");
+
+export const generateCharterparty = (body: unknown) =>
+  req("/api/charterparty/generate", { method: "POST", body: JSON.stringify(body) });
+
+export const validateCharterparty = (body: unknown) =>
+  req("/api/charterparty/validate", { method: "POST", body: JSON.stringify(body) });
+
+
+

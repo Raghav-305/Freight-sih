@@ -1004,3 +1004,12 @@ Fills the *"Why This? Explainability"* slot in the decision architecture:
 - **UI & Navigation**: Dedicated **Layer 6: Counterfactuals** tab with cross-links from the Risk Intelligence Page.
 - **Endpoints**: `POST /api/counterfactual/risk`, `POST /api/counterfactual/charter`, `POST /api/counterfactual/risk/simulate`, `POST /api/counterfactual/charter/simulate`.
 
+### 3. Bid Anomaly & Collusion Detection (Anti-Rigging Engine)
+Audits public procurement tender submissions for cartel behavior and covert bid rigging:
+- **Model**: Trained XGBoost Classifier (`bid_anomaly_detection_v1`) with rare-event class balancing (`scale_pos_weight: 36.9`).
+- **Feature Attributions**: SHAP TreeExplainer decomposing bid risk into exact log-odds contributions and natural language narratives.
+- **False Alarm Suppression**: Achieves 100% precision and recall on true anomalies while eliminating 73.4% of false alarms compared to naive band-breach rules.
+- **UI & Navigation**: Dedicated **Bid Anomaly & Collusion** tab in Pillar 3 (Governance & Assurance) with Tender Inspector, SHAP waterfall cards, and interactive quote simulator.
+- **Endpoints**: `GET /api/collusion/tenders`, `GET /api/collusion/tenders/{id}`, `POST /api/collusion/score-bid`, `POST /api/collusion/score-tender`, `POST /api/collusion/explain-bid`, `POST /api/collusion/simulate`, `GET /api/collusion/performance`.
+
+

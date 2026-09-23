@@ -11,7 +11,7 @@ Every response carries `assumptions` and `warnings` explicitly.
 """
 from __future__ import annotations
 
-from backend.app.schemas.scenarios import BlendRequest, ScenarioRequest, SensitivityRequest
+from backend.app.schemas.scenarios import BlendRequest, ScenarioRequest, SensitivityRequest, TceCalculationRequest
 
 KCAL_PER_KG_TO_GJ_PER_TONNE = 0.004184
 COST_FIELDS = ("commodity", "freight", "insurance", "port", "handling", "inland", "other")
@@ -164,3 +164,46 @@ def sensitivity_grid(req: SensitivityRequest) -> dict:
         "warnings": [] if req.scenario.gcv_kcal_per_kg else ["GCV not supplied: GCV sensitivity rows omitted."],
         "model_or_formula_version": "economics-v1",
     }
+
+
+def calculate_voyage_tce(req: TceCalculationRequest) -> dict:
+    """Calculate Time Charter Equivalent (TCE in $/day), bunker consumption, and IMO CII carbon footprint."""
+    speed = req.vessel_speed_knots
+    laden_days = req.sea_distance_nm / (speed * 24.0) if speed > 0 else 0.0
+    ballast_days = laden_days * req.ballast_ratio
+    port_days = req.loading_days + req.discharge_days + req.waiting_days
+    total_days = laden_days + ballast_days + port_days
+
+    steaming_fuel = (laden_days + ballast_days) * req.sea_fuel_consumption_mt_day
+    port_fuel = port_days * req.port_fuel_consumption_mt_day
+    total_fuel = steaming_fuel + port_fuel
+    total_bunker_cost = total_fuel * req.bunker_price_usd_mt
+
+    gross_revenue = req.freight_rate_usd_mt * req.cargo_quantity_mt
+    total_voyage_expenses = total_bunker_cost + req.port_costs_usd + req.canal_tolls_usd
+    net_profit = gross_revenue - total_voyage_expenses
+    tce = net_profit / total_days if total_days > 0 else 0.0
+
+    # IMO 2020 Carbon Factor: Cf = 3.114 MT CO2 per MT VLSFO
+    total_co2_mt = total_fuel * 3.114
+    transport_work = req.cargo_quantity_mt * req.sea_distance_nm
+    cii = (total_co2_mt * 1_000_000.0) / transport_work if transport_work > 0 else 0.0
+    carbon_cost = total_co2_mt * 85.0
+
+    return {
+        "gross_freight_revenue_usd": round(gross_revenue, 2),
+        "total_voyage_days": round(total_days, 2),
+        "laden_steaming_days": round(laden_days, 2),
+        "ballast_steaming_days": round(ballast_days, 2),
+        "total_port_days": round(port_days, 2),
+        "total_fuel_consumed_mt": round(total_fuel, 2),
+        "total_bunker_cost_usd": round(total_bunker_cost, 2),
+        "total_voyage_expenses_usd": round(total_voyage_expenses, 2),
+        "net_voyage_profit_usd": round(net_profit, 2),
+        "tce_usd_day": round(tce, 2),
+        "total_co2_emissions_mt": round(total_co2_mt, 2),
+        "cii_grams_co2_per_mt_nm": round(cii, 3),
+        "carbon_cost_usd_est": round(carbon_cost, 2),
+        "model_version": "tce-cii-v1",
+    }
+

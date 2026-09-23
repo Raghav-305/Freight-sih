@@ -12,11 +12,13 @@ import {
   MapPin,
   CheckCircle2,
   ShieldCheck,
+  ShieldAlert,
   Cpu,
   GitBranch,
   ChevronDown,
   ChevronRight,
   Check,
+  FileText,
 } from "lucide-react";
 
 export type PageTab =
@@ -32,7 +34,10 @@ export type PageTab =
   | "quality"
   | "governance"
   | "models"
-  | "counterfactual";
+  | "counterfactual"
+  | "collusion"
+  | "contract";
+
 
 interface PillarGroup {
   id: string;
@@ -119,6 +124,8 @@ export const GovSidebar: React.FC<GovSidebarProps> = ({
         { id: "quality", label: "Data Quality (ISO 8000)", icon: <CheckCircle2 size={15} /> },
         { id: "models", label: "Model Registry", icon: <Cpu size={15} /> },
         { id: "counterfactual", label: "Counterfactuals (L6)", icon: <GitBranch size={15} /> },
+        { id: "collusion", label: "Bid Anomaly & Collusion", icon: <ShieldAlert size={15} /> },
+        { id: "contract", label: "Charterparty Studio", icon: <FileText size={15} /> },
       ],
     },
   ];

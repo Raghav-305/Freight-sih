@@ -80,3 +80,31 @@ class PortReference(Base):
     berth_count = Column(Integer, default=4)
     discharge_rate_mt_hr = Column(Float, default=3000.0)
     has_tidal_restriction = Column(Boolean, default=False)
+
+
+class TenderBidRecord(Base):
+    """Tender procurement bids with collusion and anomaly scoring."""
+    __tablename__ = "tender_bids"
+
+    id = Column(Integer, primary_key=True, index=True, autoincrement=True)
+    tender_id = Column(String(64), nullable=False, index=True)
+    tender_date = Column(String(32), nullable=False)
+    broker_id = Column(String(64), nullable=False, index=True)
+    origin = Column(String(64), nullable=False)
+    destination_port = Column(String(32), nullable=False)
+    cargo_type = Column(String(64), default="Coal")
+    vessel_class = Column(String(32), default="Panamax")
+    route_id = Column(String(64), nullable=False)
+    quantity_mt = Column(Float, nullable=False)
+    quoted_freight_usd_mt = Column(Float, nullable=False)
+    market_freight_usd_mt = Column(Float, nullable=False)
+    predicted_fair_value_usd_mt = Column(Float, nullable=False)
+    bid_deviation_pct = Column(Float, nullable=False)
+    bid_rank = Column(Integer, default=1)
+    winner = Column(Integer, default=0)
+    fair_value_band_breach = Column(Integer, default=0)
+    anomaly_probability = Column(Float, nullable=True)
+    flagged = Column(Boolean, default=False)
+    details_json = Column(JSON, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+

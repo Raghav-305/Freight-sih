@@ -30,6 +30,8 @@ const COMMAND_ITEMS: CommandItem[] = [
   { id: "quality", title: "Data Quality (ISO 8000)", pillar: "Governance", description: "Pipeline lineage, completeness, and data freshness metrics" },
   { id: "models", title: "Model Registry", pillar: "Governance", description: "Registered ML model versions, training dates, and artifacts" },
   { id: "counterfactual", title: "Counterfactuals (Layer 6)", pillar: "Governance", description: "Sensitivity search and parameter perturbation analysis" },
+  { id: "collusion", title: "Bid Anomaly & Collusion Detection", pillar: "Governance", description: "Anti-rigging screening, broker collusion risk, and SHAP explainability" },
+  { id: "contract", title: "Charterparty Studio (BIMCO Legal Engine)", pillar: "Governance", description: "BIMCO GENCON 1994 & NYPE 2015 automated contract drafting and CVC protective riders" },
 ];
 
 export const CommandPalette: React.FC<CommandPaletteProps> = ({

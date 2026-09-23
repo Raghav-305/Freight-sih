@@ -3,7 +3,14 @@ Pillar 1 -- Policy & Landed Cost Economics API routes.
 """
 from fastapi import APIRouter
 
-from backend.app.schemas.scenarios import BlendRequest, ScenarioCompareRequest, ScenarioRequest, SensitivityRequest
+from backend.app.schemas.scenarios import (
+    BlendRequest,
+    ScenarioCompareRequest,
+    ScenarioRequest,
+    SensitivityRequest,
+    TceCalculationRequest,
+    TceCalculationResponse,
+)
 from backend.app.services import economics
 
 router = APIRouter(tags=["pillar-1-economics"])
@@ -31,3 +38,10 @@ def sensitivity(req: SensitivityRequest):
 @router.post("/api/blends/evaluate")
 def blend(req: BlendRequest):
     return economics.evaluate_blend(req)
+
+
+@router.post("/scenarios/tce", response_model=TceCalculationResponse)
+@router.post("/api/scenarios/tce", response_model=TceCalculationResponse)
+def calculate_tce(req: TceCalculationRequest):
+    return economics.calculate_voyage_tce(req)
+

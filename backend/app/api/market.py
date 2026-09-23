@@ -9,6 +9,8 @@ router = APIRouter(tags=["market"])
 
 @router.get("/market", response_model=MarketIntelligenceResponse)
 @router.get("/api/market", response_model=MarketIntelligenceResponse)
+@router.get("/market/intelligence", response_model=MarketIntelligenceResponse)
+@router.get("/api/market/intelligence", response_model=MarketIntelligenceResponse)
 def get_market_intelligence(
     origin: str = Query(default="Australia"),
     destination: str = Query(default="Dhamra"),

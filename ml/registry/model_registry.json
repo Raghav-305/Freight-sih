@@ -56,6 +56,18 @@
       "metadata": "fos_metadata.json",
       "artifact_format": "pickle",
       "status": "active"
+    },
+    {
+      "model_version": "bid_anomaly_detection_v1",
+      "family": "collusion_detection",
+      "algorithm": "xgboost",
+      "relative_path": "collusion_detection/bid_anomaly_detection_v1",
+      "artifact": "model.pkl",
+      "feature_schema": "feature_schema.json",
+      "metadata": "metadata.json",
+      "artifact_format": "pickle",
+      "status": "active"
     }
   ]
 }
+

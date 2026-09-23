@@ -1,0 +1,42 @@
+feature,importance
+fair_value_band_breach,0.53020525
+bid_deviation_pct,0.35287178
+high_positive_deviation_flag,0.05556233
+quoted_freight_usd_mt,0.009772219
+winner,0.009348312
+bid_rank,0.009306545
+bid_spread_pct,0.008871059
+bunker_price_usd_mt,0.008442328
+broker_historical_premium_pct,0.005377955
+predicted_fair_value_usd_mt,0.004676769
+predicted_waiting_hours,0.0014005831
+market_freight_usd_mt,0.0011348703
+congestion_index,0.0009967168
+fair_value_lower_usd_mt,0.000859504
+quantity_mt,0.00064286357
+contract_duration_days,0.00026649013
+vessel_historical_bid_count,0.00012629713
+broker_historical_bid_count,8.626679e-05
+origin_Richards Bay,5.1887113e-05
+destination_port_DHA,0.0
+origin_Taboneo,0.0
+origin_Novorossiysk,0.0
+origin_New Orleans,0.0
+origin_Hay Point,0.0
+origin_Gladstone,0.0
+destination_port_HAL,0.0
+destination_port_GAN,0.0
+route_id_SAF_DHA_CAP,0.0
+route_id_USA_PAR_CAP,0.0
+route_id_IND_VIZ_PAN,0.0
+route_id_RUS_HAL_PAN,0.0
+route_id_AUS_GAN_CAP,0.0
+route_id_AUS_PAR_PAN,0.0
+cargo_type_Thermal Coal,0.0
+cargo_type_Coking Coal,0.0
+destination_port_VIZ,0.0
+destination_port_PAR,0.0
+vessel_class_Capesize,0.0
+vessel_class_Panamax,0.0
+fair_value_upper_usd_mt,0.0
+broker_vessel_historical_frequency,0.0

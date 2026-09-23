@@ -21,11 +21,13 @@ from backend.app.api.map import router as map_router
 from backend.app.api.scenarios import router as scenarios_router
 from backend.app.api.freight_database import router as freight_database_router
 from backend.app.api.counterfactual import router as counterfactual_router
+from backend.app.api.collusion import router as collusion_router
+from backend.app.api.charterparty import router as charterparty_router
 
 app = FastAPI(
     title="Freight Chartering Intelligence API",
     version="0.2.0",
-    description="Local FastAPI boundary for forecasting, portfolio optimization, risk, port constraints, data quality, and CVC governance.",
+    description="Local FastAPI boundary for forecasting, portfolio optimization, risk, port constraints, data quality, CVC governance, bid anomaly detection, and BIMCO charterparty contract drafting.",
 )
 
 app.add_middleware(
@@ -55,3 +57,7 @@ app.include_router(map_router)
 app.include_router(scenarios_router)
 app.include_router(freight_database_router)
 app.include_router(counterfactual_router)
+app.include_router(collusion_router)
+app.include_router(charterparty_router)
+
+

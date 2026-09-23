@@ -99,10 +99,10 @@ export const ExecutiveOverviewPage: React.FC<ExecutiveOverviewPageProps> = ({
     { term: "Bullish / neutral / bearish probabilities", explanation: "How confident the assessment is in each direction. Look at the spread as well as the leader." },
     { term: "Bunker pressure", explanation: "Whether fuel cost (VLSFO) is adding to procurement risk and landed cost burden." },
     { term: "Bunker and coal prices", explanation: "Reference benchmark prices that directly affect voyage and delivered energy costs." },
-    { term: "FFA curve", explanation: "Forward freight agreement prices for future periods, showing what financial derivative markets expect." },
-    { term: "Coal imports", explanation: "Summary of monthly import volume on the route, indicating demand intensity." },
-    { term: "Market events", explanation: "Active market, weather or geopolitical alerts that may disrupt shipping or port turnaround." },
-    { term: "Fixture history", explanation: "Number of past fixtures and their average rate, useful as an empirical reality check." },
+    { term: "FFA Curve", explanation: "Forward freight agreement prices for future periods, showing what financial derivative markets expect." },
+    { term: "Coal Imports", explanation: "Summary of monthly import volume on the route, indicating demand intensity." },
+    { term: "Market Events", explanation: "Active market, weather or geopolitical alerts that may disrupt shipping or port turnaround." },
+    { term: "Fixture History", explanation: "Number of past fixtures and their average rate, useful as an empirical reality check." },
   ];
 
   // Critical cautions

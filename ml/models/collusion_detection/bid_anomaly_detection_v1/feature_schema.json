@@ -1,0 +1,133 @@
+{
+  "model_version": "bid_anomaly_detection_v1",
+  "categorical_features": [
+    {
+      "name": "origin",
+      "type": "categorical",
+      "required": true
+    },
+    {
+      "name": "destination_port",
+      "type": "categorical",
+      "required": true
+    },
+    {
+      "name": "cargo_type",
+      "type": "categorical",
+      "required": true
+    },
+    {
+      "name": "vessel_class",
+      "type": "categorical",
+      "required": true
+    },
+    {
+      "name": "route_id",
+      "type": "categorical",
+      "required": true
+    }
+  ],
+  "numerical_features": [
+    {
+      "name": "quantity_mt",
+      "type": "number",
+      "required": true
+    },
+    {
+      "name": "quoted_freight_usd_mt",
+      "type": "number",
+      "required": true
+    },
+    {
+      "name": "bid_rank",
+      "type": "number",
+      "required": true
+    },
+    {
+      "name": "winner",
+      "type": "number",
+      "required": true
+    },
+    {
+      "name": "contract_duration_days",
+      "type": "number",
+      "required": true
+    },
+    {
+      "name": "market_freight_usd_mt",
+      "type": "number",
+      "required": true
+    },
+    {
+      "name": "predicted_fair_value_usd_mt",
+      "type": "number",
+      "required": true
+    },
+    {
+      "name": "fair_value_lower_usd_mt",
+      "type": "number",
+      "required": true
+    },
+    {
+      "name": "fair_value_upper_usd_mt",
+      "type": "number",
+      "required": true
+    },
+    {
+      "name": "bid_deviation_pct",
+      "type": "number",
+      "required": true
+    },
+    {
+      "name": "bunker_price_usd_mt",
+      "type": "number",
+      "required": true
+    },
+    {
+      "name": "congestion_index",
+      "type": "number",
+      "required": true
+    },
+    {
+      "name": "predicted_waiting_hours",
+      "type": "number",
+      "required": true
+    },
+    {
+      "name": "broker_historical_bid_count",
+      "type": "number",
+      "required": true
+    },
+    {
+      "name": "broker_historical_premium_pct",
+      "type": "number",
+      "required": true
+    },
+    {
+      "name": "vessel_historical_bid_count",
+      "type": "number",
+      "required": true
+    },
+    {
+      "name": "broker_vessel_historical_frequency",
+      "type": "number",
+      "required": true
+    },
+    {
+      "name": "bid_spread_pct",
+      "type": "number",
+      "required": true
+    },
+    {
+      "name": "fair_value_band_breach",
+      "type": "number",
+      "required": true
+    },
+    {
+      "name": "high_positive_deviation_flag",
+      "type": "number",
+      "required": true
+    }
+  ],
+  "notes": "Several numerical features (predicted_fair_value_usd_mt, fair_value_lower/upper_usd_mt, bid_deviation_pct, broker_historical_premium_pct, broker_vessel_historical_frequency, bid_spread_pct, fair_value_band_breach, high_positive_deviation_flag) are ENGINEERED, not raw user input -- they come from the fair-value forecasting model and broker/vessel history lookups, not something a caller fills in directly. This module consumes them as already-computed inputs; it does not compute them itself."
+}

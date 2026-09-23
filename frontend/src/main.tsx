@@ -31,6 +31,8 @@ import { DataQualityPage } from "./components/pages/DataQualityPage";
 import { CvcGovernancePage } from "./components/pages/CvcGovernancePage";
 import { ModelRegistryPage } from "./components/pages/ModelRegistryPage";
 import { CounterfactualPage } from "./components/pages/CounterfactualPage";
+import { BidAnomalyPage } from "./components/pages/BidAnomalyPage";
+import { CharterpartyStudioPage } from "./components/pages/CharterpartyStudioPage";
 import { PillarType } from "./components/ui/PageHero";
 
 type ForecastBand = {
@@ -328,7 +330,9 @@ type TabKey =
   | "quality"
   | "governance"
   | "models"
-  | "counterfactual";
+  | "counterfactual"
+  | "collusion"
+  | "contract";
 
 function App() {
   const todayStr = new Date().toISOString().slice(0, 10);
@@ -379,6 +383,8 @@ function App() {
       case "quality":
       case "models":
       case "counterfactual":
+      case "collusion":
+      case "contract":
         return "Governance";
       case "overview":
       default:
@@ -401,6 +407,8 @@ function App() {
       case "quality": return "Data Quality (ISO 8000)";
       case "models": return "Model Registry";
       case "counterfactual": return "Counterfactuals (Layer 6)";
+      case "collusion": return "Bid Anomaly & Collusion";
+      case "contract": return "Charterparty Studio";
       default: return tab;
     }
   }
@@ -1139,6 +1147,12 @@ function App() {
                 charterSimLoading={charterSimLoading}
               />
             )}
+
+            {/* TAB 14: BID ANOMALY & COLLUSION DETECTION */}
+            {activeTab === "collusion" && <BidAnomalyPage />}
+
+            {/* TAB 15: BIMCO CHARTERPARTY STUDIO */}
+            {activeTab === "contract" && <CharterpartyStudioPage />}
 
             {/* Footer Health Strip */}
             <section className="health-strip" style={{ marginTop: "32px" }}>
