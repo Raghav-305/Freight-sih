@@ -1,11 +1,12 @@
-# New Features Specification: Blockchain Anchoring, Counterfactuals & Bid Collusion Detection
+# New Features Specification: Platform Expansion & Sovereign Marine Architecture
 
 This document provides a comprehensive technical guide to the major capability suites introduced to the **Freight Chartering Intelligence Platform**:
 
 1. **[External Blockchain Audit Anchoring (Polygon Amoy Testnet)](#1-external-blockchain-audit-anchoring-polygon-amoy-testnet)**: Cryptographic Merkle tree anchoring of decision hash chains onto the Polygon Amoy blockchain for external, tamper-evident governance verification.
 2. **[Counterfactual Explanations & Sensitivity Hub (Layer 6)](#2-counterfactual-explanations--sensitivity-hub-layer-6)**: Systematic algorithmic perturbation search answering *"What is the smallest operational or market change that flips a charter decision or de-risks a route?"*
 3. **[Bid Anomaly & Collusion Detection (Anti-Rigging Engine)](#3-bid-anomaly--collusion-detection-anti-rigging-engine)**: XGBoost rare-event detection and SHAP TreeExplainer attributions identifying bid-rigging, cover bidding, and uncompetitive broker collusion in public tenders.
-
+4. **[Automated Legal Charterparty Drafting & Verification Studio](#4-automated-legal-charterparty-drafting--verification-studio)**: BIMCO GENCON 1994 & NYPE 2015 compiler with 7 sovereign risk riders and real-time CVC / GFR Rule 144 compliance verification.
+5. **[All 16 Indian Ports Marine Engineering Constraints & Dual-Engine Congestion Architecture](#5-all-16-indian-ports-marine-engineering-constraints--dual-engine-congestion-architecture)**: Full coverage across all 12 Major Port Authorities of India + 4 private terminals, real physical draft/LOA/DWT limits, and dual ML vs. operational baseline routing.
 
 ---
 
@@ -14,23 +15,37 @@ This document provides a comprehensive technical guide to the major capability s
 ```mermaid
 flowchart TD
     subgraph Layer1to5["Core Intelligence & Optimization Layers"]
-        A[Cargo & Route Tender Specs] --> B[ML Freight Rate Forecasting\nXGBoost / LightGBM]
-        A --> C[Route Risk Assessment Engine\n6 Risk Dimensions]
+        A[Cargo & Route Tender Specs] --> P[All 16 Ports Marine Engineering\nDraft, LOA, DWT Physics Check]
+        P --> B[ML Freight Rate Forecasting\nXGBoost Multi-Horizon]
+        P --> C[Route Risk Assessment Engine\n6 Risk Dimensions]
         B & C --> D[Charter Strategy Optimizer\nHiGHS Linear Programming]
     end
 
-    subgraph Layer6["Layer 6: Explainability & What-If Hub (New Feature 2)"]
+    subgraph AntiRigging["Anti-Collusion & Integrity Engine (Feature 3)"]
+        A --> T[Broker Tender Quotes]
+        B --> T
+        T --> U[Bid Anomaly Detector\nCalibrated XGBoost Model]
+        U --> V[SHAP TreeExplainer Attribution\nCover-Bidding Detection]
+    end
+
+    subgraph Layer6["Layer 6: Explainability & What-If Hub (Feature 2)"]
         C --> E[Risk Counterfactual Engine\nSystematic Factor Perturbation]
         D --> F[Charter Cost Sensitivity Engine\nBunker, Congestion, Spot Shifts]
         E & F --> G[Interactive What-If Sandbox\nReal-Time Dynamic Simulation]
     end
 
+    subgraph Contracts["Legal Contract Studio (Feature 4)"]
+        D & V --> CS[BIMCO Contract Studio\nGENCON 1994 & NYPE 2015]
+        CS --> CR[7 Sovereign Protective Riders\nWar Risk, Piracy, Fuel Escalation]
+        CR --> CV[CVC & GFR Rule 144 Audit\nMandatory Indian Arbitration Seat]
+    end
+
     subgraph Governance["Dual-Officer CVC Governance (Pillar 3)"]
-        D & G --> H[Decision Timeline Event Chain\nSHA-256 Chained decision_events]
+        CV & G --> H[Decision Timeline Event Chain\nSHA-256 Chained decision_events]
         H --> I[Dual Officer Authorization\nReviewer 1 & Reviewer 2 Sign-off]
     end
 
-    subgraph Blockchain["External Blockchain Anchoring (New Feature 1)"]
+    subgraph Blockchain["External Blockchain Anchoring (Feature 1)"]
         H --> J[Batch Unanchored Events]
         J --> K[Compute 32-Byte Merkle Root]
         K --> L[0-Value Transaction on Polygon Amoy\nChain ID 80002]
@@ -461,43 +476,165 @@ The **Bid Anomaly & Collusion Detection Engine** (`bid_anomaly_detection_v1`) pr
 
 ---
 
-## 4. Verification & Automated Test Suite
+---
 
-All three feature modules include automated pytest suites:
-- [`tests/test_anchoring.py`](file:///c:/trash/sih/freight-chartering-v4/tests/test_anchoring.py): Merkle tree ordering, offline fallbacks, and local verification.
-- [`tests/backend/test_counterfactual_endpoints.py`](file:///c:/trash/sih/freight-chartering-v4/tests/backend/test_counterfactual_endpoints.py): Risk perturbation ranking, LP sensitivity, and custom what-if simulation.
-- [`tests/backend/test_collusion_endpoints.py`](file:///c:/trash/sih/freight-chartering-v4/tests/backend/test_collusion_endpoints.py): Tender listing, bid scoring, SHAP explainability, and what-if bid simulation.
+## 4. Automated Legal Charterparty Drafting & Verification Studio
 
-### Executing the Tests
-```powershell
-.venv\Scripts\python -m pytest tests/test_anchoring.py tests/backend/test_counterfactual_endpoints.py tests/backend/test_collusion_endpoints.py -v
-```
+### 4.1 Objective & Sovereign Procurement Scope
+In Indian public sector maritime freight chartering (Coal India Limited, NTPC, SAIL, IOCL), executing final maritime contracts has historically been a fragmented, manual process. Commercial fixtures negotiated on spot markets or COAs must be translated into standardized **BIMCO (Baltic and International Maritime Council)** charterparties. 
 
-**Result:** `22 passed in 7.78s`
+Two critical vulnerabilities consistently arise in manual drafting:
+1. **Omission of Critical Protective Riders**: Shipowners frequently omit fuel price risk-sharing (bunker escalation) or war risk rerouting clauses, exposing PSUs to millions of dollars in unbudgeted demurrage and fuel surcharges.
+2. **Foreign Jurisdiction & Arbitration Traps**: Foreign shipowners routinely insert foreign governing law clauses (e.g. *English Law, LMAA London Arbitration*), forcing Indian PSUs into high-cost overseas arbitration, which explicitly violates **Central Vigilance Commission (CVC)** guidelines and **General Financial Rules (GFR 2017) Rule 144**.
+
+The **Charterparty Drafting & Verification Studio** (`POST /api/charterparty/generate` and `POST /api/charterparty/validate`) automates the compilation of standard BIMCO agreements and runs real-time statutory audits against sovereign procurement rules.
+
+### 4.2 Standard Maritime Contracts Supported
+- **BIMCO GENCON 1994 (Voyage Charterparty)**:
+  - **Part I (Box Layout)**: 18 structured parameters including Charterer, Owner/Broker, Vessel Name, IMO Number, Flag, Loading/Discharging Ports, Cargo Description, Laytime Hours, Demurrage/Despatch Rates, and Governing Law/Arbitration.
+  - **Part II (Standard Clauses)**: 14 classic maritime clauses covering Owners' Responsibility, Deviation, Laytime, Demurrage, Lien, and General Average.
+  - **Part III (Sovereign & Protective Riders)**: Indian public sector protective rider clauses appended to safeguard the charterer.
+- **BIMCO NYPE 2015 (New York Produce Exchange Time Charterparty)**:
+  - Covers delivery/redelivery ranges, daily hire rates, off-hire operational events (drydocking, mechanical breakdown, speed deficiency), bunker fuel specifications at delivery, and performance speed/consumption warranties.
+
+### 4.3 7 Sovereign & Maritime Protective Rider Clauses
+Users can toggle 7 specialized protective clauses specifically engineered for bulk import corridors:
+1. **BIMCO CONWARTIME 2004**: War risks, safe transit instructions, and charterer liability shielding for high-risk maritime zones (Red Sea, Gulf of Aden, Bab-el-Mandeb, Persian Gulf).
+2. **BIMCO Piracy Clause 2013**: Armed security personnel embarkation protocols, rerouting rights, and 50-50 cost sharing of additional war-risk insurance premiums.
+3. **Bunker Price Escalation / De-escalation Clause**: Mathematical fuel risk-sharing benchmarked against Singapore / Fujairah VLSFO prices, capping charterer fuel variance risk.
+4. **IMO Carbon Intensity Indicator (CII) & FuelEU Operations Clause**: Regulates vessel speed adjustments to balance carbon emissions ratings with delivery timelines.
+5. **BIMCO Cyber Security Clause 2019**: Mandates 12-hour notification protocol if shipboard or broker IT systems suffer cybersecurity breaches.
+6. **BIMCO Sanctions Clause for Voyage and Time Charters**: Immediate termination and indemnification rights if counterparties or flags fall under OFAC, EU, or UN sanctions.
+7. **Monsoon / Port Congestion Force Majeure & Demurrage Relief Clause**: Shields charterers from demurrage accumulation during non-working monsoon swells and port authority congestions exceeding 7 days.
+
+### 4.4 CVC & GFR Rule 144 Real-Time Compliance Audit
+The backend validator (`POST /api/charterparty/validate`) audits draft contracts against sovereign legal mandates:
+- **Mandatory Indian Arbitration Seat**: Enforces that arbitration must be governed by Indian Law and seated in New Delhi, Mumbai, or Kolkata under the *Arbitration and Conciliation Act, 1996*. Foreign arbitration clauses (LMAA London, SMA New York) are automatically flagged as non-compliant traps.
+- **CVC Integrity Pact**: Requires inclusion of the CVC Anti-Bribery Covenant and Independent External Monitor (IEM) review protocol.
+- **Public Tender Reference Check**: Verifies valid PSU procurement tender reference identifiers as required by GFR 2017 Rule 144.
+- **Protective Rider Sufficiency**: Verifies inclusion of war-risk and bunker escalation clauses for volatile import origins.
+
+### 4.5 API Endpoints Reference
+- `GET /api/charterparty/templates`: Returns summary of available BIMCO templates, standard clause counts, and supported riders.
+- `POST /api/charterparty/generate`: Compiles structured box inputs and rider toggles into a legally structured Markdown contract.
+- `POST /api/charterparty/validate`: Audits contract parameters against CVC, GFR Rule 144, and arbitration standards, returning a compliance score (0-100), passed checks, failed checks, and recommended amendments.
+
+### 4.6 Frontend UI Integration
+- **Page Component**: [`frontend/src/components/pages/CharterpartyStudioPage.tsx`](file:///c:/trash/sih/freight-chartering-v4/frontend/src/components/pages/CharterpartyStudioPage.tsx)
+- **Navigation**: Mounted in `GovSidebar.tsx` under **Pillar 3: Governance & Assurance** (`Charterparty Studio`) and available in `CommandPalette.tsx`.
+- **Key UI Capabilities**:
+  - **Procurement Presets**: One-click configuration for major Indian bulk charterers (**Coal India Limited**, **NTPC Power**, **SAIL Steel**, **IOCL Crude**).
+  - **Interactive Rider Switchboard**: Toggles for all 7 protective rider clauses with live CVC mandatory tags.
+  - **Live Contract Document Viewer**: Full compiled contract preview with tabbed browsing across Part I Box Summary, Part II Standard Clauses, and Part III Protective Riders.
+  - **Real-Time CVC Compliance Card**: Live audit scorecard showing pass/fail status for arbitration jurisdiction, anti-bribery covenants, and tender reference validity.
+  - **Exporting**: Instant export to Markdown (`.md`) or formatted print view.
 
 ---
 
-## 5. SIH Jury & Hackathon Demonstration Guide (3-Minute Script)
+## 5. All 16 Indian Ports Marine Engineering Constraints & Dual-Engine Congestion Architecture
 
-When showcasing the system to evaluators or tender review committees, follow this script:
+### 5.1 Full Maritime Gateway Coverage
+The port database in [`backend/app/api/ports.py`](file:///c:/trash/sih/freight-chartering-v4/backend/app/api/ports.py) covers all **12 Major Port Authorities of India** governed by the *Major Port Authorities Act, 2021* plus 4 top private bulk terminals (16 ports total):
 
-### Step 1: Explainability with Layer 6 Counterfactuals (60 Seconds)
-1. Open **Counterfactuals (L6)**.
-2. Select a high-risk route (`RUS_PAR_PAN`) and run systematic counterfactual search.
-3. Show how mitigating Geopolitical Risk drops composite route risk by 22.4 points.
-4. Show Charter Cost Sensitivity: a 3-day congestion mitigation saves $360,000.
+```
+EAST COAST (Bay of Bengal):
+  ├── Paradip Port Authority (PPA) — LOA 260m, Beam 45m, Draft 14.5m, Max DWT 100k
+  ├── Dhamra Port (DPCL) — LOA 300m, Beam 50m, Draft 18.0m, Max DWT 100k (Deep-water Capesize)
+  ├── Haldia Dock Complex (SMP Kolkata) — LOA 230m, Beam 32.5m, Draft 11.5m (Tidal riverine)
+  ├── Visakhapatnam Port Authority (VPA) — LOA 280m, Beam 45m, Draft 14.5m, Max DWT 100k
+  ├── Kamarajar Port (Ennore) — LOA 300m, Beam 50m, Draft 16.0m, Max DWT 150k
+  ├── Chennai Port Authority — LOA 250m, Beam 38m, Draft 13.5m, Max DWT 80k
+  ├── V.O. Chidambaranar Port (Tuticorin) — LOA 245m, Beam 35m, Draft 12.8m, Max DWT 75k
+  ├── Gangavaram Port (Private) — LOA 290m, Beam 48m, Draft 16.5m, Max DWT 95k
+  ├── Gopalpur Port (Private) — LOA 230m, Beam 32m, Draft 12.5m, Max DWT 70k
+  └── Krishnapatnam Port (Private) — LOA 300m, Beam 50m, Draft 17.0m, Max DWT 150k
 
-### Step 2: Bid Anomaly & Collusion Detection (60 Seconds)
+WEST COAST (Arabian Sea):
+  ├── Cochin Port Authority — LOA 230m, Beam 32.5m, Draft 11.5m, Max DWT 65k
+  ├── New Mangalore Port Authority — LOA 260m, Beam 40m, Draft 14.0m, Max DWT 90k
+  ├── Mormugao Port Authority — LOA 250m, Beam 38m, Draft 13.0m, Max DWT 80k
+  ├── Mumbai Port Authority (MbPA) — LOA 240m, Beam 35m, Draft 12.0m, Max DWT 75k
+  ├── Deendayal Port Authority (Kandla) — LOA 255m, Beam 42m, Draft 13.0m, Max DWT 85k
+  └── Jaigarh Port (Private) — LOA 290m, Beam 45m, Draft 16.0m, Max DWT 120k
+```
+
+### 5.2 Real Marine Physics Verification
+Vessel berthing feasibility is evaluated against real physical limits:
+- **Maximum Draft Limit**: Evaluates loaded draft against channel and berth water depth. For example, a Capesize bulk carrier ($17.8\,\text{m}$ draft) is **rejected** at Haldia ($11.5\,\text{m}$ limit), while a fully laden Panamax ($14.2\,\text{m}$ draft) is **approved** at Dhamra ($18.0\,\text{m}$ depth).
+- **LOA & Beam Limits**: Prevents vessel overhang at narrow bulk berths.
+- **Deadweight (DWT) Capacity**: Prevents berthing of super-heavy vessels at non-reinforced jetties.
+- **Queue Tolerance**: Flags berths where current operational wait exceeds 9 days.
+
+### 5.3 Dual-Engine Congestion Architecture
+To address machine learning inference across newly expanded ports without historical telemetry:
+- **Core ML Ports (Paradip, Dhamra, Haldia, Vizag, Gangavaram, Gopalpur)**: Handled dynamically by the pre-trained `congestion_sih_v1` XGBoost ML model (`model_version: "congestion_sih_v1 (XGBoost ML)"`).
+- **Expanded Indian Ports (Chennai, Ennore, Tuticorin, Cochin, Mangalore, Mormugao, Mumbai Port, Kandla, etc.)**: The system automatically executes a safe fallback to verified **Port Authority Operational Baselines** (`model_version: "port_authority_operational_baseline"`).
+- **Zero-Crash Guarantee**: Prevents out-of-vocabulary crashes or unhandled runtime exceptions, delivering 100% predictive uptime across all Indian ports.
+- **Alias Normalization**: Transparently handles Indian maritime name variations (`Visakhapatnam` $\rightarrow$ `Vizag`, `Ennore` $\rightarrow$ `Kamarajar (Ennore)`, `Mumbai` $\rightarrow$ `Mumbai Port`, `Tuticorin` $\rightarrow$ `V.O. Chidambaranar (Tuticorin)`, `Kandla` $\rightarrow$ `Deendayal (Kandla)`).
+
+---
+
+## 6. Verification & Automated Full-Platform Test Suite (154 Tests Passing)
+
+The entire platform includes an exhaustive automated test suite covering all machine learning models, optimization engines, physical constraints, and governance verification:
+
+- [`tests/test_full_project_models_sweep.py`](file:///c:/trash/sih/freight-chartering-v4/tests/test_full_project_models_sweep.py): **73 tests** sweeping all 13 ML and algorithmic domains (quantiles, SHAP, What-If shocks, all 16 ports, Haldia draft violation, market regime, vessel vetting, FOS horizons, 6-pillar risk scoring, HiGHS LP, TCE/CII, BIMCO/CVC audit, ISO 8000 data health, and Merkle tree avalanche effect).
+- [`tests/backend/test_charterparty_endpoints.py`](file:///c:/trash/sih/freight-chartering-v4/tests/backend/test_charterparty_endpoints.py): **5 tests** verifying BIMCO GENCON/NYPE compilation, 7 protective riders, and CVC anti-bribery validation.
+- [`tests/backend/test_collusion_endpoints.py`](file:///c:/trash/sih/freight-chartering-v4/tests/backend/test_collusion_endpoints.py): **6 tests** verifying tender listing, XGBoost collusion scoring, SHAP waterfall explanation, and simulation.
+- [`tests/test_anchoring.py`](file:///c:/trash/sih/freight-chartering-v4/tests/test_anchoring.py): **9 tests** verifying Merkle root determinism, offline fallback, and tampering detection.
+- [`tests/backend/test_counterfactual_endpoints.py`](file:///c:/trash/sih/freight-chartering-v4/tests/backend/test_counterfactual_endpoints.py): **7 tests** verifying risk perturbation search and LP sensitivity.
+- **Baseline Modules**: **54 tests** covering economics, vessel eligibility, audit logging, decision lifecycles, report generation, and data quality.
+
+### Executing the Full Platform Test Suite
+```powershell
+.venv\Scripts\python -m pytest tests -v
+```
+
+**Verification Output:**
+```
+====================== 154 passed, 29 warnings in 26.01s ======================
+```
+**Success Rate:** **100% (154 passed, 0 failures)**.
+
+---
+
+## 7. SIH Jury & Hackathon Demonstration Guide (Expanded 5-Step Script)
+
+When presenting to evaluators, hackathon juries, or procurement review committees, follow this battle-tested 5-step demonstration flow:
+
+### Step 1: Explainability with Layer 6 Counterfactuals (40 Seconds)
+1. Open **Counterfactuals (L6)** from the sidebar.
+2. Select a high-risk corridor (`RUS_PAR_PAN`) and click **Run Systematic Counterfactual Search**.
+3. Highlight the minimum actionable perturbation: *"Mitigating Geopolitical Risk by securing non-sanctioned insurance reduces composite route risk by 22.4 points and moves the route from UNVIABLE to VIABLE."*
+4. Toggle **Charter Cost Sensitivity**: demonstrate that reducing discharge port wait by 3 days saves \$360,000 in demurrage.
+
+### Step 2: Bid Anomaly & Collusion Detection (45 Seconds)
 1. Navigate to **Bid Anomaly & Collusion** under Pillar 3.
 2. Select an anomalous tender (e.g. `TND-2023-0019`).
-3. Show the **Broker Submissions Table**: point out the `FLAGGED` cover bids with 99.9% anomaly risk.
-4. Click **SHAP**: show the visual TreeExplainer attribution proving that deviation from fair value (+5.59) and tight artificial spread (+1.55) pushed the bid into the suspicious category.
-5. Open **Interactive Bid Simulator**: move quoted freight up and down to show real-time probability recalculation.
-6. Open **Model Benchmark**: highlight that ML flags 73.4% fewer false alarms than naive band-breach rules.
+3. Show the **Broker Submissions Table**: point out the `FLAGGED` cover bid with 99.9% anomaly probability.
+4. Click **SHAP**: show the visual TreeExplainer attribution proving that deviation from fair value (+5.59) and tight artificial cartel spread (+1.55) pushed the quote into the suspicious category.
+5. Highlight the **Model Benchmark**: our calibrated model eliminates 73.4% of false alarms compared to naive band-breach rules.
 
-### Step 3: CVC Dual Authorization & External Blockchain Anchoring (60 Seconds)
+### Step 3: Marine Engineering Physics & All 16 Indian Ports (40 Seconds)
+1. Navigate to **Ports & Congestion**.
+2. Select **Haldia Dock Complex** and submit a **Capesize vessel** (17.8m draft).
+3. Show the immediate physical rejection: *"Draft constraint failed: vessel draft (17.8m) exceeds Haldia riverine limit (11.5m)."*
+4. Switch to **Dhamra Port** (18.0m draft): the Panamax is approved with zero wait queue.
+5. Highlight the **Dual-Engine Architecture**: Core ports run the trained ML regressor; all 10 expanded major ports seamlessly utilize verified Port Authority operational baselines with zero crashes.
+
+### Step 4: BIMCO Charterparty Studio & CVC Compliance Audit (45 Seconds)
+1. Navigate to **Charterparty Studio** under Pillar 3.
+2. Click the **Coal India Limited (CIL)** preset to auto-populate contract terms.
+3. Review the **7 Sovereign Protective Riders**: show that CONWARTIME (war risk) and Bunker Escalation are enabled.
+4. Intentionally set arbitration to *"English Law, LMAA London Arbitration"*:
+   - Click **Validate Agreement**.
+   - Show the red CVC alert: *"Foreign arbitration trap detected! Indian Public Procurement mandates Indian Law and ACA 1996 arbitration seated in India."*
+5. Reset to Indian arbitration: show the compliance score jump to 100% and view the full compiled BIMCO GENCON Markdown agreement.
+
+### Step 5: CVC Dual Authorization & External Polygon Blockchain Anchoring (30 Seconds)
 1. Open **CVC Governance**.
-2. Create and approve a decision through two-officer sign-off.
-3. Click **"Anchor now"** to compute the 32-byte Merkle root and post it to Polygon Amoy testnet.
-4. Click **"View on-chain"** to show the live PolygonScan transaction and immutable timestamp.
+2. Authorize a pending charter decision through the two-officer sign-off workflow (`Officer 1: Prepared`, `Officer 2: Approved`).
+3. Click **"Anchor now"** in the Blockchain Anchor card.
+4. Watch the system aggregate all unanchored decisions into a 32-byte Merkle root and post it to the **Polygon Amoy Testnet** (`chainId: 80002`).
+5. Click **"View on-chain"** to open PolygonScan and prove that the decision hash is immutably timestamped on the public blockchain.
 
