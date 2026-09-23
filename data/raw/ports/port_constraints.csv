@@ -1,7 +1,17 @@
 constraint_id,port_id,max_draft,max_loa,max_beam,max_dwt,berth_length,berth_count,loading_rate,discharge_rate,effective_from,effective_to,source,confidence,has_tidal_restriction
-CNS0001,DHA,18.5,296,41,112321,355,2,3188,2899,2020-01-01,,Synthetic - modeled on typical Indian coal terminal characteristics,Medium,0
-CNS0002,PAR,17.0,272,37,103214,326,2,2765,2514,2020-01-01,,Synthetic - modeled on typical Indian coal terminal characteristics,Medium,0
-CNS0003,VIZ,15.5,248,34,94107,298,2,2365,2150,2020-01-01,,Synthetic - modeled on typical Indian coal terminal characteristics,Medium,0
-CNS0004,GAN,16.5,264,36,100178,158,1,2470,2246,2020-01-01,,Synthetic - modeled on typical Indian coal terminal characteristics,Medium,0
-CNS0005,GOP,14.0,224,31,85000,134,1,1981,1801,2020-01-01,,Synthetic - modeled on typical Indian coal terminal characteristics,Medium,0
-CNS0006,HAL,12.5,200,28,75892,120,1,1723,1567,2020-01-01,,Synthetic - modeled on typical Indian coal terminal characteristics,Medium,1
+CNS0001,DHA,18.0,280,45,100000,300,2,3000,2800,2020-01-01,,Major Port Master & DPCL,High,0
+CNS0002,PAR,14.5,300,46,85000,280,2,2500,2300,2020-01-01,,Paradip Port Authority,High,0
+CNS0003,VIZ,14.5,240,40,65000,250,2,2000,1900,2020-01-01,,Visakhapatnam Port Authority,High,0
+CNS0004,GAN,15.5,275,43,95000,270,1,2800,2600,2020-01-01,,Gangavaram Port Authority,High,0
+CNS0005,GOP,14.0,250,40,70000,260,1,2200,2000,2020-01-01,,Gopalpur Port Authority,High,0
+CNS0006,HAL,12.5,230,38,60000,240,1,1800,1600,2020-01-01,,SMP Kolkata Haldia Dock,High,1
+CNS0007,ENR,16.0,260,43,85000,280,2,2600,2400,2021-01-01,,Kamarajar Port Limited,High,0
+CNS0008,CHN,14.0,250,40,75000,260,2,2200,2000,2021-01-01,,Chennai Port Authority,High,0
+CNS0009,TUT,14.2,245,38,75000,250,2,2100,1900,2021-01-01,,V.O. Chidambaranar Port Authority,High,0
+CNS0010,COC,13.5,230,36,60000,240,1,1800,1600,2021-01-01,,Cochin Port Authority,High,0
+CNS0011,NMP,14.5,260,42,80000,270,2,2400,2200,2021-01-01,,New Mangalore Port Authority,High,0
+CNS0012,MOR,14.0,250,40,75000,260,2,2300,2100,2021-01-01,,Mormugao Port Authority,High,0
+CNS0013,BOM,14.0,260,42,80000,270,2,2200,2000,2021-01-01,,Mumbai Port Authority,High,0
+CNS0014,IXY,13.5,255,40,75000,260,2,2100,1900,2021-01-01,,Deendayal Port Authority,High,1
+CNS0015,KRI,18.0,300,48,180000,320,3,3500,3200,2021-01-01,,Krishnapatnam Port Co,High,0
+CNS0016,JAI,18.5,310,50,200000,330,3,3800,3500,2021-01-01,,Jaigarh Port JSW,High,0

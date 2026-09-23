@@ -5,3 +5,13 @@ INGPL,Gopalpur,India,Bulk Berth,Coal,250,40,14.0,70000,260,2200,Grab Unloaders,N
 INHLD,Haldia,India,Berth 2,Coal,230,38,12.5,60000,240,1800,Conveyor,tidal restrictions,panamax limited,Sagarmala Master Plan,2026-08-01,2026-08-01,2026-12-31,0,0,0,0,0,0,0,4800.0,8740,10,0,1,100.0,1
 INPRD,Paradip,India,Coal Berth 1,Coal,300,46,14.5,85000,280,2500,Grab Unloaders,None,None,Paradip Port Authority,2026-08-01,2026-08-01,2026-12-31,0,0,0,0,0,0,1,5862.068965517241,13800,-20,0,0,100.0,1
 INVIZ,Vizag,India,EQ1,Coal,240,40,14.5,65000,250,2000,Conveyor,None,None,Vizag Port Authority,2026-08-01,2026-08-01,2026-12-31,0,0,0,0,0,0,0,4482.758620689655,9600,10,0,0,100.0,1
+INENR,Kamarajar (Ennore),India,Coal Berth 1,Coal,260,43,16.0,85000,280,2600,Conveyor,None,None,Kamarajar Port Limited,2026-08-01,2026-08-01,2026-12-31,0,0,0,0,0,0,0,5312.5,11180,20,0,0,100.0,1
+INMAA,Chennai,India,JD Berth 2,Coal,250,40,14.0,75000,260,2200,Grab Unloaders,None,None,Chennai Port Authority,2026-08-01,2026-08-01,2026-12-31,0,0,0,0,0,0,0,5357.1,10000,10,0,0,100.0,1
+INTUT,V.O. Chidambaranar (Tuticorin),India,Coal Berth 2,Coal,245,38,14.2,75000,250,2100,Conveyor,None,None,VOC Port Authority,2026-08-01,2026-08-01,2026-12-31,0,0,0,0,0,0,0,5281.7,9310,5,0,0,100.0,1
+INCOK,Cochin,India,Q9 Berth,Coal,230,36,13.5,60000,240,1800,Grab Unloaders,None,None,Cochin Port Authority,2026-08-01,2026-08-01,2026-12-31,0,0,0,0,0,0,0,4444.4,8280,10,0,0,100.0,1
+INNML,New Mangalore,India,Berth 8,Coal,260,42,14.5,80000,270,2400,Conveyor,None,None,New Mangalore Port Authority,2026-08-01,2026-08-01,2026-12-31,0,0,0,0,0,0,0,5517.2,10920,10,0,0,100.0,1
+INMRM,Mormugao,India,Berth 7,Coal,250,40,14.0,75000,260,2300,Grab Unloaders,None,None,Mormugao Port Authority,2026-08-01,2026-08-01,2026-12-31,0,0,0,0,0,0,0,5357.1,10000,10,0,0,100.0,1
+INBOM,Mumbai Port,India,OCT 2,Coal,260,42,14.0,80000,270,2200,Conveyor,None,None,Mumbai Port Authority,2026-08-01,2026-08-01,2026-12-31,0,0,0,0,0,0,0,5714.3,10920,10,0,0,100.0,1
+INIXY,Deendayal (Kandla),India,Berth 11,Coal,255,40,13.5,75000,260,2100,Grab Unloaders,tidal restrictions,None,Deendayal Port Authority,2026-08-01,2026-08-01,2026-12-31,0,0,0,0,0,0,0,5555.6,10200,5,1,0,100.0,1
+INKRI,Krishnapatnam,India,Berth 1,Coal,300,48,18.0,180000,320,3500,Ship Loader,None,capesize capable,Krishnapatnam Port Co,2026-08-01,2026-08-01,2026-12-31,0,0,0,0,0,0,0,10000.0,14400,20,0,1,100.0,1
+INJAI,Jaigarh,India,Berth 2,Coal,310,50,18.5,200000,330,3800,Ship Loader,None,capesize capable,Jaigarh Port JSW,2026-08-01,2026-08-01,2026-12-31,0,0,0,0,0,0,0,10810.8,15500,20,0,1,100.0,1
