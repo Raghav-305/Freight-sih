@@ -21,6 +21,7 @@ import {
 } from "lucide-react";
 import { FreshnessBadge } from "./FreshnessBadge";
 import { RiskLegend } from "./RiskLegend";
+import { type LiveVesselRecord } from "../api";
 
 // Ports database for East Coast + key origin terminals
 const PORTS_DATA = [
@@ -180,6 +181,17 @@ export interface GisVessel {
   kalman_status: string;
   rightship_rating: string;
   highlighted?: boolean;
+  is_spoofed?: boolean;
+}
+
+export interface MapCanvasProps {
+  vessels?: LiveVesselRecord[];
+  isSpoofed?: boolean;
+  onSimulateSpoof?: () => void;
+  onResetFleet?: () => void;
+  actionLoading?: boolean;
+  selectedMmsi?: number | null;
+  onSelectVessel?: (vessel: GisVessel | null) => void;
 }
 
 const FLEET_DATA: GisVessel[] = [
@@ -281,7 +293,7 @@ const FLEET_DATA: GisVessel[] = [
   },
 ];
 
-export function MapCanvas() {
+export function MapCanvas(props: MapCanvasProps = {}) {
   // Map View State (pan & zoom)
   const [view, setView] = useState({ x: 0, y: 0, scale: 1 });
   const dragRef = useRef<{ x: number; y: number; viewX: number; viewY: number } | null>(null);
@@ -306,6 +318,78 @@ export function MapCanvas() {
   const [selectedChokepoint, setSelectedChokepoint] = useState<any | null>(null);
   const [hoveredCorridor, setHoveredCorridor] = useState<any | null>(null);
   const [selectedPort, setSelectedPort] = useState<any | null>(null);
+
+  // Local spoofing toggle fallback for standalone operation
+  const [internalSpoofed, setInternalSpoofed] = useState(false);
+  const isSpoofedActive = props.isSpoofed ?? internalSpoofed;
+
+  const handleSimulateSpoof = () => {
+    if (props.onSimulateSpoof) {
+      props.onSimulateSpoof();
+    } else {
+      setInternalSpoofed(true);
+    }
+  };
+
+  const handleResetFleet = () => {
+    if (props.onResetFleet) {
+      props.onResetFleet();
+    } else {
+      setInternalSpoofed(false);
+    }
+    if (selectedVessel?.mmsi === 419001234) {
+      const orig = FLEET_DATA.find((v) => v.mmsi === 419001234);
+      if (orig) setSelectedVessel(orig);
+    }
+  };
+
+  // Active fleet merged with live telemetry and spoof injection
+  const activeFleet = useMemo<GisVessel[]>(() => {
+    return FLEET_DATA.map((base) => {
+      const live = (props.vessels || []).find((lv) => lv.mmsi === base.mmsi);
+      const isBharat = base.mmsi === 419001234;
+
+      if (isBharat && isSpoofedActive) {
+        return {
+          ...base,
+          lat: 17.55,
+          lon: 85.65,
+          sog_kn: 104.2,
+          kalman_status: "🚨 KINEMATIC VIOLATION · Implied Speed >100 kn over 126.2 km",
+          rightship_rating: "⚠️ DG SHIPPING SECURITY ALERT · Potential Sanctions Evasion",
+          highlighted: true,
+          is_spoofed: true,
+        };
+      }
+
+      if (live) {
+        const isLiveSpoofed = Boolean(live.alerts && live.alerts.length > 0);
+        return {
+          ...base,
+          lat: live.raw_lat,
+          lon: live.raw_lon,
+          sog_kn: live.sog,
+          cog_deg: live.cog,
+          kalman_status: isLiveSpoofed
+            ? "🚨 SPOOFING_IMPOSSIBLE_SPEED_JUMP"
+            : base.kalman_status,
+          is_spoofed: isLiveSpoofed,
+        };
+      }
+
+      return base;
+    });
+  }, [props.vessels, isSpoofedActive]);
+
+  // When spoofing activates, automatically select M/V Bharat Pride to show the violation drawer
+  useEffect(() => {
+    if (isSpoofedActive) {
+      const bharat = activeFleet.find((v) => v.mmsi === 419001234);
+      if (bharat) {
+        setSelectedVessel(bharat);
+      }
+    }
+  }, [isSpoofedActive]);
 
   // D3 Projection for Indian Ocean Basin
   const projection = useMemo(() => {
@@ -334,7 +418,16 @@ export function MapCanvas() {
   };
 
   const selectMahaAnand = () => {
-    const vessel = FLEET_DATA.find((v) => v.name.includes("MAHA ANAND"));
+    const vessel = activeFleet.find((v) => v.name.includes("MAHA ANAND"));
+    if (vessel) {
+      setSelectedVessel(vessel);
+      setSelectedChokepoint(null);
+      setSelectedPort(null);
+    }
+  };
+
+  const selectBharatPride = () => {
+    const vessel = activeFleet.find((v) => v.mmsi === 419001234);
     if (vessel) {
       setSelectedVessel(vessel);
       setSelectedChokepoint(null);
@@ -362,8 +455,9 @@ export function MapCanvas() {
         background: "#0c1726",
         borderRadius: "8px",
         overflow: "hidden",
-        border: "1px solid #1f293d",
-        boxShadow: "0 8px 24px rgba(0, 0, 0, 0.4)",
+        border: isSpoofedActive ? "2px solid #ef4444" : "1px solid #1f293d",
+        boxShadow: isSpoofedActive ? "0 0 25px rgba(239, 68, 68, 0.35)" : "0 8px 24px rgba(0, 0, 0, 0.4)",
+        transition: "border 0.3s ease, box-shadow 0.3s ease",
       }}
     >
       {/* 1. SCRIPT ACTION BUTTONS & CHOKEPOINT TOGGLE STRIP */}
@@ -375,12 +469,13 @@ export function MapCanvas() {
           flexWrap: "wrap",
           gap: "10px",
           padding: "10px 14px",
-          background: "#111f36",
-          borderBottom: "1px solid #233554",
+          background: isSpoofedActive ? "#1e1414" : "#111f36",
+          borderBottom: isSpoofedActive ? "1px solid #7f1d1d" : "1px solid #233554",
           fontSize: "12px",
           color: "#e2e8f0",
           zIndex: 10,
           position: "relative",
+          transition: "background 0.3s ease",
         }}
       >
         <div style={{ display: "flex", alignItems: "center", gap: "8px", flexWrap: "wrap" }}>
@@ -391,6 +486,7 @@ export function MapCanvas() {
 
           {/* SCRIPT BUTTON 1: [Click chokepoint toggle] */}
           <button
+            type="button"
             onClick={toggleAllChokepoints}
             className="gov-btn"
             style={{
@@ -413,6 +509,7 @@ export function MapCanvas() {
 
           {/* SCRIPT BUTTON 2: [Enable Malacca Strait] */}
           <button
+            type="button"
             onClick={() => toggleChokepointId("malacca")}
             className="gov-btn"
             style={{
@@ -435,6 +532,7 @@ export function MapCanvas() {
 
           {/* SCRIPT BUTTON 3: [Enable Bab-el-Mandeb] */}
           <button
+            type="button"
             onClick={() => toggleChokepointId("babelmandeb")}
             className="gov-btn"
             style={{
@@ -457,6 +555,7 @@ export function MapCanvas() {
 
           {/* SCRIPT BUTTON 4: [Click on M/V Maha Anand] */}
           <button
+            type="button"
             onClick={selectMahaAnand}
             className="gov-btn"
             style={{
@@ -476,11 +575,86 @@ export function MapCanvas() {
             <Ship size={14} />
             Click M/V Maha Anand (Bay of Bengal)
           </button>
+
+          {/* SCRIPT BUTTON 5: [Test Spoofing Jump] */}
+          <button
+            type="button"
+            onClick={handleSimulateSpoof}
+            disabled={props.actionLoading}
+            className="gov-btn"
+            style={{
+              background: isSpoofedActive ? "#991b1b" : "#b91c1c",
+              color: "#ffffff",
+              border: `1px solid ${isSpoofedActive ? "#ef4444" : "#dc2626"}`,
+              padding: "5px 12px",
+              fontSize: "12px",
+              fontWeight: 700,
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "6px",
+              cursor: "pointer",
+              boxShadow: isSpoofedActive ? "0 0 10px rgba(239, 68, 68, 0.6)" : "0 2px 6px rgba(185, 28, 28, 0.4)",
+            }}
+            title="Inject an instantaneous 126km coordinate jump on M/V BHARAT PRIDE to test 4D Kalman spoofing detection"
+          >
+            <ShieldAlert size={14} />
+            {isSpoofedActive ? "⚠️ 126km Spoof Jump Active" : "Test Spoofing Jump"}
+          </button>
+
+          {/* SCRIPT BUTTON 6: [Reset Fleet] */}
+          {isSpoofedActive && (
+            <button
+              type="button"
+              onClick={handleResetFleet}
+              disabled={props.actionLoading}
+              className="gov-btn gov-btn-secondary"
+              style={{
+                padding: "5px 11px",
+                fontSize: "12px",
+                fontWeight: 600,
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "5px",
+                cursor: "pointer",
+                background: "#1e293b",
+                color: "#e2e8f0",
+                border: "1px solid #475569",
+              }}
+              title="Reset fleet positions and clear kinematic alarms"
+            >
+              <RotateCcw size={13} />
+              Reset Fleet
+            </button>
+          )}
+
+          {/* SCRIPT BUTTON 7: [Click M/V Bharat Pride] */}
+          <button
+            type="button"
+            onClick={selectBharatPride}
+            className="gov-btn"
+            style={{
+              background: isSpoofedActive ? "#7f1d1d" : "#1e293b",
+              color: "#ffffff",
+              border: `1px solid ${isSpoofedActive ? "#ef4444" : "#475569"}`,
+              padding: "5px 11px",
+              fontSize: "12px",
+              fontWeight: 600,
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "6px",
+              cursor: "pointer",
+            }}
+            title="Inspect M/V BHARAT PRIDE transponder fix and kinematic audit"
+          >
+            <AlertTriangle size={13} style={{ color: isSpoofedActive ? "#fca5a5" : "#94a3b8" }} />
+            {isSpoofedActive ? "🚨 Inspect Flagged Bharat Pride" : "Inspect M/V Bharat Pride"}
+          </button>
         </div>
 
         {/* Zoom & Pan View Controls */}
         <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
           <button
+            type="button"
             onClick={zoomIn}
             className="gov-btn gov-btn-secondary"
             style={{ padding: "4px 8px", fontSize: "11px", display: "inline-flex", alignItems: "center" }}
@@ -489,6 +663,7 @@ export function MapCanvas() {
             <ZoomIn size={14} />
           </button>
           <button
+            type="button"
             onClick={zoomOut}
             className="gov-btn gov-btn-secondary"
             style={{ padding: "4px 8px", fontSize: "11px", display: "inline-flex", alignItems: "center" }}
@@ -497,6 +672,7 @@ export function MapCanvas() {
             <ZoomOut size={14} />
           </button>
           <button
+            type="button"
             onClick={resetView}
             className="gov-btn gov-btn-secondary"
             style={{ padding: "4px 8px", fontSize: "11px", display: "inline-flex", alignItems: "center", gap: "4px" }}
@@ -753,13 +929,99 @@ export function MapCanvas() {
                 );
               })}
 
+            {/* LAYER: IMPOSSIBLE TRANSIT JUMP (SPOOFING ANOMALY VECTOR) */}
+            {showVessels && isSpoofedActive && (() => {
+              const origPt = projection([85.2, 16.5]);
+              const jumpedPt = projection([85.65, 17.55]);
+              if (!origPt || !jumpedPt) return null;
+              const midX = (origPt[0] + jumpedPt[0]) / 2;
+              const midY = (origPt[1] + jumpedPt[1]) / 2;
+              return (
+                <g key="spoofing-transit-jump-layer">
+                  {/* Legitimate Last Known Fix Ghost Marker */}
+                  <circle
+                    cx={origPt[0]}
+                    cy={origPt[1]}
+                    r="8"
+                    fill="rgba(56, 189, 248, 0.2)"
+                    stroke="#38bdf8"
+                    strokeWidth="1.5"
+                    strokeDasharray="3 3"
+                  />
+                  <circle cx={origPt[0]} cy={origPt[1]} r="3" fill="#38bdf8" />
+                  <text
+                    x={origPt[0] - 10}
+                    y={origPt[1] + 16}
+                    textAnchor="end"
+                    fill="#38bdf8"
+                    fontSize="9"
+                    fontWeight="bold"
+                    style={{ paintOrder: "stroke", stroke: "#081325", strokeWidth: "3px" }}
+                  >
+                    📍 Last Valid Fix (16.50°N, 85.20°E)
+                  </text>
+
+                  {/* Impossible 126.2km Teleportation Vector Line */}
+                  <line
+                    x1={origPt[0]}
+                    y1={origPt[1]}
+                    x2={jumpedPt[0]}
+                    y2={jumpedPt[1]}
+                    stroke="#ef4444"
+                    strokeWidth="3"
+                    strokeDasharray="6 4"
+                    filter="url(#glow-red)"
+                  />
+
+                  {/* Pulsing Target Halo */}
+                  <circle
+                    cx={jumpedPt[0]}
+                    cy={jumpedPt[1]}
+                    r="26"
+                    fill="none"
+                    stroke="#ef4444"
+                    strokeWidth="2"
+                    strokeDasharray="4 4"
+                    opacity="0.8"
+                  />
+
+                  {/* Floating Tactical Label on Jump Vector */}
+                  <g transform={`translate(${midX}, ${midY})`}>
+                    <rect
+                      x="-115"
+                      y="-12"
+                      width="230"
+                      height="24"
+                      rx="4"
+                      fill="#7f1d1d"
+                      stroke="#ef4444"
+                      strokeWidth="1.5"
+                      filter="url(#glow-red)"
+                    />
+                    <text
+                      y="4"
+                      textAnchor="middle"
+                      fill="#ffffff"
+                      fontSize="10"
+                      fontWeight="bold"
+                      letterSpacing="0.3px"
+                    >
+                      🚨 126.2 km IMPOSSIBLE JUMP (&gt;100 kn)
+                    </text>
+                  </g>
+                </g>
+              );
+            })()}
+
             {/* LAYER: ACTIVE BULK CARRIER FLEET (LIVE SHIPS) */}
             {showVessels &&
-              FLEET_DATA.map((vessel) => {
+              activeFleet.map((vessel) => {
                 const pt = projection([vessel.lon, vessel.lat]);
                 if (!pt) return null;
 
                 const isMahaAnand = vessel.name.includes("MAHA ANAND");
+                const isBharatPride = vessel.name.includes("BHARAT PRIDE");
+                const isSpoofedVessel = vessel.is_spoofed || (isBharatPride && isSpoofedActive);
                 const isSelected = selectedVessel?.mmsi === vessel.mmsi;
 
                 return (
@@ -775,35 +1037,36 @@ export function MapCanvas() {
                   >
                     {/* Live Kinematic Beacon Ring */}
                     <circle
-                      r={isMahaAnand ? "16" : "12"}
-                      fill="none"
-                      stroke={isMahaAnand ? "#10b981" : "#38bdf8"}
-                      strokeWidth="1.5"
-                      opacity="0.8"
+                      r={isSpoofedVessel ? "22" : isMahaAnand ? "16" : "12"}
+                      fill={isSpoofedVessel ? "rgba(239, 68, 68, 0.2)" : "none"}
+                      stroke={isSpoofedVessel ? "#ef4444" : isMahaAnand ? "#10b981" : "#38bdf8"}
+                      strokeWidth={isSpoofedVessel ? "2" : "1.5"}
+                      strokeDasharray={isSpoofedVessel ? "4 4" : undefined}
+                      opacity={isSpoofedVessel ? "0.95" : "0.8"}
                     />
                     <circle
-                      r={isMahaAnand ? "24" : "18"}
+                      r={isSpoofedVessel ? "32" : isMahaAnand ? "24" : "18"}
                       fill="none"
-                      stroke={isMahaAnand ? "#10b981" : "#38bdf8"}
+                      stroke={isSpoofedVessel ? "#dc2626" : isMahaAnand ? "#10b981" : "#38bdf8"}
                       strokeWidth="1"
                       strokeDasharray="3 3"
-                      opacity="0.4"
+                      opacity={isSpoofedVessel ? "0.6" : "0.4"}
                     />
 
                     {/* Ship Vector Icon & Heading Arrow */}
                     <circle
-                      r={isMahaAnand ? "9" : "7"}
-                      fill={isMahaAnand ? "#059669" : "#0284c7"}
+                      r={isSpoofedVessel ? "10" : isMahaAnand ? "9" : "7"}
+                      fill={isSpoofedVessel ? "#b91c1c" : isMahaAnand ? "#059669" : "#0284c7"}
                       stroke="#ffffff"
                       strokeWidth="2"
                     />
 
                     {/* Label */}
                     <text
-                      y={isMahaAnand ? "24" : "18"}
+                      y={isSpoofedVessel ? "26" : isMahaAnand ? "24" : "18"}
                       textAnchor="middle"
-                      fill={isMahaAnand ? "#a7f3d0" : "#e0f2fe"}
-                      fontSize={isMahaAnand ? "11" : "9"}
+                      fill={isSpoofedVessel ? "#fca5a5" : isMahaAnand ? "#a7f3d0" : "#e0f2fe"}
+                      fontSize={isSpoofedVessel ? "11" : isMahaAnand ? "11" : "9"}
                       fontWeight="bold"
                       style={{
                         paintOrder: "stroke",
@@ -811,26 +1074,73 @@ export function MapCanvas() {
                         strokeWidth: "3px",
                       }}
                     >
-                      🚢 {vessel.name}
+                      {isSpoofedVessel ? "🚨 " : "🚢 "}{vessel.name}{isSpoofedVessel ? " [SPOOFING ALERT]" : ""}
                     </text>
                     <text
-                      y={isMahaAnand ? "35" : "27"}
+                      y={isSpoofedVessel ? "38" : isMahaAnand ? "35" : "27"}
                       textAnchor="middle"
-                      fill="#94a3b8"
+                      fill={isSpoofedVessel ? "#ef4444" : "#94a3b8"}
                       fontSize="8"
+                      fontWeight={isSpoofedVessel ? "bold" : "normal"}
                       style={{
                         paintOrder: "stroke",
                         stroke: "#0b1220",
                         strokeWidth: "2px",
                       }}
                     >
-                      {vessel.sog_kn} kn · Draft {vessel.draft_m}m
+                      {vessel.sog_kn} kn {isSpoofedVessel ? "· IMPOSSIBLE SPEED (>100 kn)" : `· Draft ${vessel.draft_m}m`}
                     </text>
                   </g>
                 );
               })}
           </g>
         </svg>
+
+        {/* SPOOFING ANOMALY TOP FLOATING ALERT BANNER */}
+        {isSpoofedActive && (
+          <div
+            style={{
+              position: "absolute",
+              top: 10,
+              left: "50%",
+              transform: "translateX(-50%)",
+              background: "rgba(127, 29, 29, 0.95)",
+              border: "1px solid #ef4444",
+              borderRadius: "6px",
+              padding: "7px 14px",
+              color: "#ffffff",
+              fontSize: "12px",
+              fontWeight: 600,
+              zIndex: 9,
+              display: "flex",
+              alignItems: "center",
+              gap: "10px",
+              boxShadow: "0 4px 16px rgba(0,0,0,0.6)",
+              backdropFilter: "blur(4px)",
+            }}
+          >
+            <ShieldAlert size={16} style={{ color: "#fca5a5" }} />
+            <span>
+              <strong>KINEMATIC ANOMALY:</strong> M/V BHARAT PRIDE jumped 126.2 km (&gt;100 kn). 4D Kalman filter flagged <code>SPOOFING_IMPOSSIBLE_SPEED_JUMP</code>.
+            </span>
+            <button
+              type="button"
+              onClick={handleResetFleet}
+              style={{
+                background: "#ffffff",
+                color: "#991b1b",
+                border: "none",
+                borderRadius: "4px",
+                padding: "3px 8px",
+                fontSize: "11px",
+                fontWeight: 700,
+                cursor: "pointer",
+              }}
+            >
+              Reset Fleet
+            </button>
+          </div>
+        )}
 
         {/* 3. LAYER BADGES & FRESHNESS STRIP OVERLAY */}
         <div
@@ -999,132 +1309,167 @@ export function MapCanvas() {
         )}
 
         {/* 7. SCRIPT REQUIRED: VESSEL DETAILS DRAWER / MODAL FOR M/V MAHA ANAND */}
-        {selectedVessel && (
-          <div
-            style={{
-              position: "absolute",
-              top: 12,
-              right: 12,
-              width: "350px",
-              background: "#0f172a",
-              border: "2px solid #10b981",
-              borderRadius: "8px",
-              padding: "14px 16px",
-              color: "#e2e8f0",
-              zIndex: 9,
-              boxShadow: "0 10px 30px rgba(0, 0, 0, 0.8)",
-            }}
-          >
+        {selectedVessel && (() => {
+          const isBharatPride = selectedVessel.name.includes("BHARAT PRIDE");
+          const isVesselSpoofed = selectedVessel.is_spoofed || (isBharatPride && isSpoofedActive);
+
+          return (
             <div
               style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "flex-start",
-                borderBottom: "1px solid #1e293b",
-                paddingBottom: "8px",
-                marginBottom: "10px",
+                position: "absolute",
+                top: 12,
+                right: 12,
+                width: "360px",
+                background: "#0f172a",
+                border: `2px solid ${isVesselSpoofed ? "#ef4444" : "#10b981"}`,
+                borderRadius: "8px",
+                padding: "14px 16px",
+                color: "#e2e8f0",
+                zIndex: 9,
+                boxShadow: isVesselSpoofed ? "0 0 25px rgba(239, 68, 68, 0.5)" : "0 10px 30px rgba(0, 0, 0, 0.8)",
               }}
             >
-              <div>
-                <span
-                  style={{
-                    background: "rgba(16, 185, 129, 0.15)",
-                    color: "#34d399",
-                    fontSize: "10px",
-                    fontWeight: 700,
-                    padding: "2px 6px",
-                    borderRadius: "3px",
-                    display: "inline-block",
-                    marginBottom: "4px",
-                  }}
-                >
-                  ACTIVE BULK CARRIER &middot; BAY OF BENGAL
-                </span>
-                <h4 style={{ margin: 0, fontSize: "16px", color: "#ffffff", display: "flex", alignItems: "center", gap: "6px" }}>
-                  <Ship size={18} style={{ color: "#34d399" }} />
-                  {selectedVessel.name}
-                </h4>
-              </div>
-              <button
-                onClick={() => setSelectedVessel(null)}
+              <div
                 style={{
-                  background: "transparent",
-                  border: "none",
-                  color: "#94a3b8",
-                  cursor: "pointer",
-                  padding: "2px",
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "flex-start",
+                  borderBottom: `1px solid ${isVesselSpoofed ? "#7f1d1d" : "#1e293b"}`,
+                  paddingBottom: "8px",
+                  marginBottom: "10px",
                 }}
               >
-                <X size={18} />
-              </button>
+                <div>
+                  <span
+                    style={{
+                      background: isVesselSpoofed ? "rgba(239, 68, 68, 0.2)" : "rgba(16, 185, 129, 0.15)",
+                      color: isVesselSpoofed ? "#fca5a5" : "#34d399",
+                      fontSize: "10px",
+                      fontWeight: 700,
+                      padding: "2px 6px",
+                      borderRadius: "3px",
+                      display: "inline-block",
+                      marginBottom: "4px",
+                      border: isVesselSpoofed ? "1px solid #ef4444" : "none",
+                    }}
+                  >
+                    {isVesselSpoofed ? "🚨 SATELLITE KINEMATIC VIOLATION · BAY OF BENGAL" : "ACTIVE BULK CARRIER · BAY OF BENGAL"}
+                  </span>
+                  <h4 style={{ margin: 0, fontSize: "16px", color: "#ffffff", display: "flex", alignItems: "center", gap: "6px" }}>
+                    <Ship size={18} style={{ color: isVesselSpoofed ? "#ef4444" : "#34d399" }} />
+                    {selectedVessel.name}
+                  </h4>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setSelectedVessel(null)}
+                  style={{
+                    background: "transparent",
+                    border: "none",
+                    color: "#94a3b8",
+                    cursor: "pointer",
+                    padding: "2px",
+                  }}
+                >
+                  <X size={18} />
+                </button>
+              </div>
+
+              {/* Operational Specs Grid */}
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "1fr 1fr",
+                  gap: "8px",
+                  fontSize: "11px",
+                  marginBottom: "10px",
+                }}
+              >
+                <div style={{ background: "#1e293b", padding: "6px 8px", borderRadius: "4px" }}>
+                  <span style={{ color: "#94a3b8", display: "block" }}>IMO Number</span>
+                  <strong style={{ color: "#ffffff", fontSize: "12px" }}>IMO {selectedVessel.imo}</strong>
+                </div>
+
+                <div style={{ background: "#1e293b", padding: "6px 8px", borderRadius: "4px" }}>
+                  <span style={{ color: "#94a3b8", display: "block" }}>Flag & Registry</span>
+                  <strong style={{ color: "#ffffff", fontSize: "12px" }}>{selectedVessel.flag} 🇮🇳</strong>
+                </div>
+
+                <div style={{ background: isVesselSpoofed ? "#450a0a" : "#1e293b", border: isVesselSpoofed ? "1px solid #dc2626" : "none", padding: "6px 8px", borderRadius: "4px" }}>
+                  <span style={{ color: isVesselSpoofed ? "#fca5a5" : "#94a3b8", display: "block" }}>Current Speed</span>
+                  <strong style={{ color: isVesselSpoofed ? "#f87171" : "#38bdf8", fontSize: "12px" }}>
+                    {selectedVessel.sog_kn} knots {isVesselSpoofed ? "🚨" : ""}
+                  </strong>
+                </div>
+
+                <div style={{ background: "#1e293b", padding: "6px 8px", borderRadius: "4px" }}>
+                  <span style={{ color: "#94a3b8", display: "block" }}>Loaded Draft</span>
+                  <strong style={{ color: "#facc15", fontSize: "12px" }}>{selectedVessel.draft_m} meters</strong>
+                </div>
+
+                <div style={{ background: "#1e293b", padding: "6px 8px", borderRadius: "4px", gridColumn: "1 / -1" }}>
+                  <span style={{ color: "#94a3b8", display: "block" }}>Estimated Arrival (ETA)</span>
+                  <strong style={{ color: "#34d399", fontSize: "12px" }}>
+                    {selectedVessel.eta} @ {selectedVessel.destination}
+                  </strong>
+                </div>
+
+                <div style={{ background: "#1e293b", padding: "6px 8px", borderRadius: "4px", gridColumn: "1 / -1" }}>
+                  <span style={{ color: "#94a3b8", display: "block" }}>Cargo & Corridor</span>
+                  <span style={{ color: "#e2e8f0" }}>{selectedVessel.cargo}</span>
+                </div>
+              </div>
+
+              {/* Vetting & Kinematics */}
+              <div
+                style={{
+                  borderTop: "1px solid #1e293b",
+                  paddingTop: "8px",
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "6px",
+                  fontSize: "10px",
+                  color: "#94a3b8",
+                }}
+              >
+                <div style={{ display: "flex", alignItems: "center", gap: "5px" }}>
+                  <CheckCircle2 size={13} style={{ color: isVesselSpoofed ? "#ef4444" : "#10b981" }} />
+                  <span>RightShip Vetting: <strong style={{ color: isVesselSpoofed ? "#fca5a5" : "#ffffff" }}>{selectedVessel.rightship_rating}</strong></span>
+                </div>
+                <div style={{ display: "flex", alignItems: "center", gap: "5px" }}>
+                  <Radio size={13} style={{ color: isVesselSpoofed ? "#ef4444" : "#38bdf8" }} />
+                  <span>Kinematic Validation: <strong style={{ color: isVesselSpoofed ? "#fca5a5" : "#38bdf8" }}>{selectedVessel.kalman_status}</strong></span>
+                </div>
+
+                {isVesselSpoofed && (
+                  <button
+                    type="button"
+                    onClick={handleResetFleet}
+                    className="gov-btn"
+                    style={{
+                      width: "100%",
+                      marginTop: "8px",
+                      background: "#b91c1c",
+                      color: "#ffffff",
+                      border: "1px solid #ef4444",
+                      fontSize: "11px",
+                      fontWeight: 600,
+                      padding: "6px 10px",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      gap: "6px",
+                      cursor: "pointer",
+                    }}
+                  >
+                    <RotateCcw size={13} />
+                    Clear Spoof Alarm & Reset Coordinates
+                  </button>
+                )}
+              </div>
             </div>
-
-            {/* Operational Specs Grid (Script items: IMO, flag, speed, draft, estimated arrival) */}
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "1fr 1fr",
-                gap: "8px",
-                fontSize: "11px",
-                marginBottom: "10px",
-              }}
-            >
-              <div style={{ background: "#1e293b", padding: "6px 8px", borderRadius: "4px" }}>
-                <span style={{ color: "#94a3b8", display: "block" }}>IMO Number</span>
-                <strong style={{ color: "#ffffff", fontSize: "12px" }}>IMO {selectedVessel.imo}</strong>
-              </div>
-
-              <div style={{ background: "#1e293b", padding: "6px 8px", borderRadius: "4px" }}>
-                <span style={{ color: "#94a3b8", display: "block" }}>Flag & Registry</span>
-                <strong style={{ color: "#ffffff", fontSize: "12px" }}>{selectedVessel.flag} 🇮🇳</strong>
-              </div>
-
-              <div style={{ background: "#1e293b", padding: "6px 8px", borderRadius: "4px" }}>
-                <span style={{ color: "#94a3b8", display: "block" }}>Current Speed</span>
-                <strong style={{ color: "#38bdf8", fontSize: "12px" }}>{selectedVessel.sog_kn} knots</strong>
-              </div>
-
-              <div style={{ background: "#1e293b", padding: "6px 8px", borderRadius: "4px" }}>
-                <span style={{ color: "#94a3b8", display: "block" }}>Loaded Draft</span>
-                <strong style={{ color: "#facc15", fontSize: "12px" }}>{selectedVessel.draft_m} meters</strong>
-              </div>
-
-              <div style={{ background: "#1e293b", padding: "6px 8px", borderRadius: "4px", gridColumn: "1 / -1" }}>
-                <span style={{ color: "#94a3b8", display: "block" }}>Estimated Arrival (ETA)</span>
-                <strong style={{ color: "#34d399", fontSize: "12px" }}>
-                  {selectedVessel.eta} @ {selectedVessel.destination}
-                </strong>
-              </div>
-
-              <div style={{ background: "#1e293b", padding: "6px 8px", borderRadius: "4px", gridColumn: "1 / -1" }}>
-                <span style={{ color: "#94a3b8", display: "block" }}>Cargo & Corridor</span>
-                <span style={{ color: "#e2e8f0" }}>{selectedVessel.cargo}</span>
-              </div>
-            </div>
-
-            {/* Vetting & Kinematics */}
-            <div
-              style={{
-                borderTop: "1px solid #1e293b",
-                paddingTop: "8px",
-                display: "flex",
-                flexDirection: "column",
-                gap: "4px",
-                fontSize: "10px",
-                color: "#94a3b8",
-              }}
-            >
-              <div style={{ display: "flex", alignItems: "center", gap: "5px" }}>
-                <CheckCircle2 size={13} style={{ color: "#10b981" }} />
-                <span>RightShip Vetting: <strong style={{ color: "#ffffff" }}>{selectedVessel.rightship_rating}</strong></span>
-              </div>
-              <div style={{ display: "flex", alignItems: "center", gap: "5px" }}>
-                <Radio size={13} style={{ color: "#38bdf8" }} />
-                <span>Kinematic Validation: <strong style={{ color: "#38bdf8" }}>{selectedVessel.kalman_status}</strong></span>
-              </div>
-            </div>
-          </div>
-        )}
+          );
+        })()}
 
         {/* 8. MAP CONTROLS & RISK LEGEND */}
         <div

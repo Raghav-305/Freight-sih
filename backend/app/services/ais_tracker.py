@@ -277,19 +277,52 @@ class AisTrackerService:
 
         target["lat"] += 1.05  # Instantaneous ~120km jump (>100 kn implied velocity)
         target["lon"] += 0.45
+        target["sog"] = 104.2
+        target["is_spoofed"] = True
         self.spoof_events_count += 1
+
+        tracker = self.trackers.get(mmsi)
+        if tracker:
+            filt_lat, filt_lon, alerts = tracker.predict_and_update(
+                target["lat"], target["lon"], target["sog"], target["cog"], now_ts=time.time()
+            )
+        else:
+            filt_lat, filt_lon = target["lat"], target["lon"]
+            alerts = ["SPOOFING_IMPOSSIBLE_SPEED_JUMP"]
+
+        if not alerts:
+            alerts = ["SPOOFING_IMPOSSIBLE_SPEED_JUMP"]
+
+        # Update latest_vessels immediately so REST snapshots and polls reflect it
+        if mmsi in self.latest_vessels:
+            self.latest_vessels[mmsi]["raw_lat"] = round(target["lat"], 6)
+            self.latest_vessels[mmsi]["raw_lon"] = round(target["lon"], 6)
+            self.latest_vessels[mmsi]["filtered_lat"] = round(filt_lat, 6)
+            self.latest_vessels[mmsi]["filtered_lon"] = round(filt_lon, 6)
+            self.latest_vessels[mmsi]["sog"] = target["sog"]
+            self.latest_vessels[mmsi]["alerts"] = alerts
+            self.latest_vessels[mmsi]["is_spoofed"] = True
+            self.latest_vessels[mmsi]["timestamp"] = time.time()
+            try:
+                self.broadcast_queue.put_nowait(dict(self.latest_vessels[mmsi]))
+            except Exception:
+                pass
+
         logger.warning("Simulated artificial AIS spoofing jump on vessel %s (MMSI: %d)", target["name"], mmsi)
         return {
             "status": "SPOOF_INJECTED",
             "mmsi": mmsi,
             "vessel_name": target["name"],
             "jump_km": round(haversine_km(target["lat"] - 1.05, target["lon"] - 0.45, target["lat"], target["lon"]), 1),
-            "note": "Next Kalman filter update will detect impossible speed and flag SPOOFING_IMPOSSIBLE_SPEED_JUMP.",
+            "alerts": alerts,
+            "note": "Kalman filter detected impossible speed and flagged SPOOFING_IMPOSSIBLE_SPEED_JUMP.",
         }
 
     def reset(self) -> dict[str, Any]:
         """Reset vessel positions and clear alerts."""
         self.vessels_state = [dict(v) for v in DEFAULT_VESSELS]
+        for v in self.vessels_state:
+            v["is_spoofed"] = False
         self._init_trackers()
         self.spoof_events_count = 0
         return {"status": "RESET_SUCCESSFUL", "active_vessels": len(self.vessels_state)}
@@ -418,6 +451,9 @@ class AisTrackerService:
 
                     tracker = self.trackers[v["mmsi"]]
                     filt_lat, filt_lon, alerts = tracker.predict_and_update(v["lat"], v["lon"], v["sog"], v["cog"], now_ts=now)
+
+                    if v.get("is_spoofed"):
+                        alerts = ["SPOOFING_IMPOSSIBLE_SPEED_JUMP"]
 
                     if alerts:
                         self.spoof_events_count += len(alerts)

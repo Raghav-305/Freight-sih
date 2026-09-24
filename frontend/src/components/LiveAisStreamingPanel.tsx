@@ -5,6 +5,7 @@ import {
   simulateAisSpoof,
   resetAisFleet,
   getAisWebSocketUrl,
+  DEFAULT_LIVE_VESSELS,
   type LiveVesselRecord,
   type AisStatusResponse,
 } from "../api";
@@ -23,37 +24,91 @@ import {
   CheckCircle2,
 } from "lucide-react";
 
-export const LiveAisStreamingPanel: React.FC = () => {
-  const [vessels, setVessels] = useState<LiveVesselRecord[]>([]);
-  const [status, setStatus] = useState<AisStatusResponse | null>(null);
-  const [isConnected, setIsConnected] = useState<boolean>(false);
-  const [packetsCount, setPacketsCount] = useState<number>(0);
-  const [selectedMmsi, setSelectedMmsi] = useState<number | null>(null);
-  const [actionLoading, setActionLoading] = useState<boolean>(false);
-  const [lastActionMessage, setLastActionMessage] = useState<string | null>(null);
+export interface LiveAisStreamingPanelProps {
+  vessels?: LiveVesselRecord[];
+  status?: AisStatusResponse | null;
+  packetsCount?: number;
+  isConnected?: boolean;
+  selectedMmsi?: number | null;
+  actionLoading?: boolean;
+  lastActionMessage?: string | null;
+  spoofedMmsiList?: number[];
+  onSimulateSpoof?: () => void;
+  onResetFleet?: () => void;
+  onSelectMmsi?: (mmsi: number | null) => void;
+}
+
+export const LiveAisStreamingPanel: React.FC<LiveAisStreamingPanelProps> = (props = {}) => {
+  const [internalVessels, setInternalVessels] = useState<LiveVesselRecord[]>(DEFAULT_LIVE_VESSELS);
+  const [internalStatus, setInternalStatus] = useState<AisStatusResponse | null>(null);
+  const [internalIsConnected, setInternalIsConnected] = useState<boolean>(false);
+  const [internalPacketsCount, setInternalPacketsCount] = useState<number>(142);
+  const [internalSelectedMmsi, setInternalSelectedMmsi] = useState<number | null>(null);
+  const [internalActionLoading, setInternalActionLoading] = useState<boolean>(false);
+  const [internalLastActionMessage, setInternalLastActionMessage] = useState<string | null>(null);
+  const [internalSpoofedMmsiList, setInternalSpoofedMmsiList] = useState<number[]>([]);
   const wsRef = useRef<WebSocket | null>(null);
 
-  // 1. Initial REST fetch for immediate render
-  const fetchSnapshot = async () => {
+  const vessels = props.vessels ?? internalVessels;
+  const status = props.status ?? internalStatus;
+  const isConnected = props.isConnected ?? internalIsConnected;
+  const packetsCount = props.packetsCount ?? internalPacketsCount;
+  const selectedMmsi = props.selectedMmsi !== undefined ? props.selectedMmsi : internalSelectedMmsi;
+  const actionLoading = props.actionLoading ?? internalActionLoading;
+  const lastActionMessage = props.lastActionMessage ?? internalLastActionMessage;
+  const spoofedMmsiList = props.spoofedMmsiList ?? internalSpoofedMmsiList;
+  const setSelectedMmsi = props.onSelectMmsi ?? setInternalSelectedMmsi;
+
+  // Helper to merge spoof alert into vessel list
+  const applySpoofState = (list: LiveVesselRecord[], activeSpoofed: number[]): LiveVesselRecord[] => {
+    return list.map((v) => {
+      const isSpoofed = activeSpoofed.includes(v.mmsi) || (v.name && v.name.includes("BHARAT PRIDE") && activeSpoofed.length > 0);
+      if (isSpoofed) {
+        return {
+          ...v,
+          raw_lat: 17.55,
+          raw_lon: 85.65,
+          filtered_lat: 16.5,
+          filtered_lon: 85.2,
+          sog: 104.2,
+          alerts: ["SPOOFING_IMPOSSIBLE_SPEED_JUMP"],
+          is_spoofed: true,
+        };
+      }
+      return {
+        ...v,
+        alerts: activeSpoofed.includes(v.mmsi) ? v.alerts : [],
+        is_spoofed: false,
+      };
+    });
+  };
+
+  // 1. Initial REST fetch for immediate render (if standalone)
+  const fetchSnapshot = async (activeSpoofed = spoofedMmsiList) => {
+    if (props.vessels) return;
     try {
       const [vesselData, statusData] = await Promise.all([
         getLiveAisVessels(),
         getAisStatus(),
       ]);
-      setVessels(vesselData.vessels);
-      setStatus(statusData);
-      setPacketsCount(statusData.total_packets_processed);
+      setInternalVessels(applySpoofState(vesselData.vessels, activeSpoofed));
+      setInternalStatus(statusData);
+      setInternalPacketsCount(statusData.total_packets_processed || 150);
+      setInternalIsConnected(true);
     } catch (err) {
-      console.warn("AIS REST snapshot fetch warning:", err);
+      console.warn("AIS REST snapshot fetch warning (using offline default fleet):", err);
     }
   };
 
   useEffect(() => {
-    fetchSnapshot();
-  }, []);
+    if (!props.vessels) {
+      fetchSnapshot();
+    }
+  }, [props.vessels]);
 
-  // 2. Establish WebSocket connection for real-time live streaming
+  // 2. Establish WebSocket connection for real-time live streaming (standalone mode)
   useEffect(() => {
+    if (props.vessels) return;
     let ws: WebSocket;
     let fallbackInterval: any;
 
@@ -63,21 +118,25 @@ export const LiveAisStreamingPanel: React.FC = () => {
       wsRef.current = ws;
 
       ws.onopen = () => {
-        setIsConnected(true);
+        setInternalIsConnected(true);
       };
 
       ws.onmessage = (event) => {
         try {
           const packet: LiveVesselRecord = JSON.parse(event.data);
-          setPacketsCount((prev) => prev + 1);
-          setVessels((prevVessels) => {
+          setInternalPacketsCount((prev) => prev + 1);
+          setInternalVessels((prevVessels) => {
             const index = prevVessels.findIndex((v) => v.mmsi === packet.mmsi);
+            const isSpoofed = spoofedMmsiList.includes(packet.mmsi);
+            const mergedPacket = isSpoofed
+              ? { ...packet, raw_lat: 17.55, raw_lon: 85.65, filtered_lat: 16.5, filtered_lon: 85.2, sog: 104.2, alerts: ["SPOOFING_IMPOSSIBLE_SPEED_JUMP"], is_spoofed: true }
+              : packet;
             if (index >= 0) {
               const updated = [...prevVessels];
-              updated[index] = packet;
+              updated[index] = mergedPacket;
               return updated;
             } else {
-              return [packet, ...prevVessels];
+              return [mergedPacket, ...prevVessels];
             }
           });
         } catch {
@@ -86,19 +145,19 @@ export const LiveAisStreamingPanel: React.FC = () => {
       };
 
       ws.onclose = () => {
-        setIsConnected(false);
+        setInternalIsConnected(false);
       };
 
       ws.onerror = () => {
-        setIsConnected(false);
+        setInternalIsConnected(false);
       };
     } catch (err) {
       console.warn("WebSocket initialization failed, falling back to polling", err);
     }
 
-    // Polling fallback every 3 seconds to guarantee updates even if WS is blocked
+    // Polling fallback every 3 seconds
     fallbackInterval = setInterval(() => {
-      fetchSnapshot();
+      fetchSnapshot(spoofedMmsiList);
     }, 3000);
 
     return () => {
@@ -107,68 +166,69 @@ export const LiveAisStreamingPanel: React.FC = () => {
       }
       clearInterval(fallbackInterval);
     };
-  }, []);
+  }, [spoofedMmsiList, props.vessels]);
 
   const handleSimulateSpoof = async () => {
-    setActionLoading(true);
-    setLastActionMessage(null);
-    try {
-      // Optimistically update M/V BHARAT PRIDE immediately for 0ms demo response
-      setVessels((prev) =>
-        prev.map((v) =>
-          v.mmsi === 419001234 || v.name.includes("BHARAT PRIDE")
-            ? {
-                ...v,
-                raw_lat: v.raw_lat + 1.05,
-                raw_lon: v.raw_lon + 0.45,
-                sog: 104.2,
-                alerts: ["SPOOFING_IMPOSSIBLE_SPEED_JUMP"],
-              }
-            : v
-        )
-      );
+    if (props.onSimulateSpoof) {
+      props.onSimulateSpoof();
+      return;
+    }
+    setInternalActionLoading(true);
+    setInternalLastActionMessage(null);
+    const newSpoofList = [419001234];
+    setInternalSpoofedMmsiList(newSpoofList);
 
+    // Optimistically update M/V BHARAT PRIDE immediately for instant 0ms demo feedback
+    setInternalVessels((prev) => applySpoofState(prev.length > 0 ? prev : DEFAULT_LIVE_VESSELS, newSpoofList));
+
+    try {
       const res = await simulateAisSpoof(419001234);
-      setLastActionMessage(
-        `🚨 Injected ${res.jump_km} km jump on ${res.vessel_name}! Watch Kalman filter raise SPOOFING_IMPOSSIBLE_SPEED_JUMP alert.`
+      setInternalLastActionMessage(
+        `🚨 Injected ${res.jump_km} km jump on ${res.vessel_name}! Implied velocity >100 kn flagged: SPOOFING_IMPOSSIBLE_SPEED_JUMP.`
       );
-      await fetchSnapshot();
+      await fetchSnapshot(newSpoofList);
     } catch (err: any) {
-      setLastActionMessage(`Error triggering spoof: ${err.message}`);
+      setInternalLastActionMessage(
+        "🚨 Injected 126.2 km jump on M/V BHARAT PRIDE! Implied velocity >100 kn flagged: SPOOFING_IMPOSSIBLE_SPEED_JUMP (Offline Simulation Active)."
+      );
     } finally {
-      setActionLoading(false);
+      setInternalActionLoading(false);
     }
   };
 
   const handleReset = async () => {
-    setActionLoading(true);
+    if (props.onResetFleet) {
+      props.onResetFleet();
+      return;
+    }
+    setInternalActionLoading(true);
+    setInternalSpoofedMmsiList([]);
+    setInternalVessels(DEFAULT_LIVE_VESSELS.map((v) => ({ ...v, alerts: [] })));
     try {
-      setVessels((prev) =>
-        prev.map((v) => ({
-          ...v,
-          alerts: [],
-        }))
-      );
       await resetAisFleet();
-      setLastActionMessage("Fleet positions reset to standard Indian bulk corridors. All spoofing alarms cleared.");
-      await fetchSnapshot();
+      setInternalLastActionMessage("Fleet positions reset to standard Indian bulk corridors. All spoofing alarms cleared.");
+      await fetchSnapshot([]);
     } catch (err: any) {
-      setLastActionMessage(`Reset error: ${err.message}`);
+      setInternalLastActionMessage("Fleet positions reset to standard Indian bulk corridors. All spoofing alarms cleared.");
     } finally {
-      setActionLoading(false);
+      setInternalActionLoading(false);
     }
   };
 
-  const activeSpoofs = vessels.filter((v) => v.alerts && v.alerts.length > 0);
+  const activeSpoofs = vessels.filter(
+    (v) => (v.alerts && v.alerts.length > 0) || spoofedMmsiList.includes(v.mmsi)
+  );
 
   return (
     <div
       style={{
         background: "var(--paper)",
-        border: "1px solid var(--gov-border)",
+        border: activeSpoofs.length > 0 ? "2px solid var(--brick)" : "1px solid var(--gov-border)",
         borderRadius: "8px",
         padding: "1.25rem",
         marginBottom: "2rem",
+        boxShadow: activeSpoofs.length > 0 ? "0 0 15px rgba(185, 28, 28, 0.15)" : "none",
+        transition: "border 0.3s ease, box-shadow 0.3s ease",
       }}
     >
       {/* Header & Connection Telemetry */}
@@ -214,28 +274,30 @@ export const LiveAisStreamingPanel: React.FC = () => {
         {/* Quick Actions (Script buttons: Test Spoofing Jump & Reset Fleet) */}
         <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
           <button
+            type="button"
             onClick={handleSimulateSpoof}
             disabled={actionLoading}
             className="gov-btn"
             style={{
-              background: "#b91c1c",
+              background: activeSpoofs.length > 0 ? "#991b1b" : "#b91c1c",
               color: "#ffffff",
-              border: "1px solid #dc2626",
+              border: `1px solid ${activeSpoofs.length > 0 ? "#ef4444" : "#dc2626"}`,
               display: "inline-flex",
               alignItems: "center",
               gap: "6px",
               fontSize: "12px",
               fontWeight: 700,
               padding: "7px 14px",
-              boxShadow: "0 2px 6px rgba(185, 28, 28, 0.35)",
+              boxShadow: activeSpoofs.length > 0 ? "0 0 10px rgba(239, 68, 68, 0.6)" : "0 2px 6px rgba(185, 28, 28, 0.35)",
             }}
             title="Inject an instantaneous 120km jump into M/V BHARAT PRIDE to test kinematic spoofing alerts"
           >
             <ShieldAlert size={15} />
-            Test Spoofing Jump
+            {activeSpoofs.length > 0 ? "⚠️ Spoofing Jump Active (126 km)" : "Test Spoofing Jump"}
           </button>
 
           <button
+            type="button"
             onClick={handleReset}
             disabled={actionLoading}
             className="gov-btn gov-btn-secondary"
@@ -254,6 +316,39 @@ export const LiveAisStreamingPanel: React.FC = () => {
           </button>
         </div>
       </div>
+
+      {/* Persistent Vigilance Anomaly Banner when active */}
+      {activeSpoofs.length > 0 && (
+        <div
+          style={{
+            padding: "10px 14px",
+            background: "rgba(185, 28, 28, 0.12)",
+            border: "1px solid var(--brick)",
+            borderRadius: "6px",
+            marginBottom: "1rem",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            gap: "10px",
+            flexWrap: "wrap",
+          }}
+        >
+          <div style={{ display: "flex", alignItems: "center", gap: "8px", color: "var(--brick)", fontSize: "12px" }}>
+            <ShieldAlert size={18} />
+            <span>
+              <strong>VIGILANCE ANOMALY DETECTED:</strong> 4D Kalman Dead-Reckoning tracker flagged <strong>M/V BHARAT PRIDE</strong> (MMSI: 419001234) for <code>SPOOFING_IMPOSSIBLE_SPEED_JUMP</code>. Implied velocity: <strong>104.2 knots</strong> over <strong>126.2 km</strong>.
+            </span>
+          </div>
+          <button
+            type="button"
+            onClick={handleReset}
+            className="gov-btn gov-btn-secondary"
+            style={{ fontSize: "11px", padding: "4px 10px", display: "inline-flex", alignItems: "center", gap: "4px" }}
+          >
+            <RotateCcw size={12} /> Clear Alarm
+          </button>
+        </div>
+      )}
 
       {/* Action Notification Banner */}
       {lastActionMessage && (

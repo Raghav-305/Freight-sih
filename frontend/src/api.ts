@@ -121,7 +121,119 @@ export interface LiveVesselRecord {
   alerts: string[];
   kalman_variance_m?: number;
   timestamp: number;
+  is_spoofed?: boolean;
 }
+
+export const DEFAULT_LIVE_VESSELS: LiveVesselRecord[] = [
+  {
+    mmsi: 419002345,
+    name: "M/V MAHA ANAND",
+    flag: "India (IN)",
+    vessel_class: "Panamax",
+    dwt: 80500,
+    corridor: "Australia to Paradip",
+    destination: "Paradip",
+    raw_lat: 18.5,
+    raw_lon: 86.4,
+    filtered_lat: 18.5,
+    filtered_lon: 86.4,
+    sog: 12.2,
+    cog: 345.0,
+    alerts: [],
+    kalman_variance_m: 11.2,
+    timestamp: 1790281827.0,
+  },
+  {
+    mmsi: 419001234,
+    name: "M/V BHARAT PRIDE",
+    flag: "India (IN)",
+    vessel_class: "Panamax",
+    dwt: 82000,
+    corridor: "Australia to Paradip",
+    destination: "Paradip",
+    raw_lat: 16.5,
+    raw_lon: 85.2,
+    filtered_lat: 16.5,
+    filtered_lon: 85.2,
+    sog: 13.8,
+    cog: 340.0,
+    alerts: [],
+    kalman_variance_m: 12.4,
+    timestamp: 1790281827.0,
+  },
+  {
+    mmsi: 211281610,
+    name: "NORDIC VOYAGER",
+    flag: "Norway (NO)",
+    vessel_class: "Capesize",
+    dwt: 178000,
+    corridor: "Australia to Dhamra",
+    destination: "Dhamra",
+    raw_lat: 18.2,
+    raw_lon: 87.1,
+    filtered_lat: 18.2,
+    filtered_lon: 87.1,
+    sog: 12.5,
+    cog: 355.0,
+    alerts: [],
+    kalman_variance_m: 9.8,
+    timestamp: 1790281827.0,
+  },
+  {
+    mmsi: 353130000,
+    name: "PACIFIC TITAN",
+    flag: "Panama (PA)",
+    vessel_class: "Panamax",
+    dwt: 76000,
+    corridor: "Indonesia to Vizag",
+    destination: "Vizag",
+    raw_lat: 14.8,
+    raw_lon: 84.4,
+    filtered_lat: 14.8,
+    filtered_lon: 84.4,
+    sog: 11.2,
+    cog: 325.0,
+    alerts: [],
+    kalman_variance_m: 14.1,
+    timestamp: 1790281827.0,
+  },
+  {
+    mmsi: 636019821,
+    name: "ATLANTIC CARRIER",
+    flag: "Liberia (LR)",
+    vessel_class: "Supramax",
+    dwt: 58000,
+    corridor: "Mozambique to Tuticorin",
+    destination: "Tuticorin",
+    raw_lat: 7.4,
+    raw_lon: 77.8,
+    filtered_lat: 7.4,
+    filtered_lon: 77.8,
+    sog: 14.0,
+    cog: 15.0,
+    alerts: [],
+    kalman_variance_m: 10.5,
+    timestamp: 1790281827.0,
+  },
+  {
+    mmsi: 419009876,
+    name: "M/V GANGA GLORY",
+    flag: "India (IN)",
+    vessel_class: "Handysize",
+    dwt: 38000,
+    corridor: "Coastal Cabotage (Haldia to Chennai)",
+    destination: "Chennai",
+    raw_lat: 15.6,
+    raw_lon: 81.5,
+    filtered_lat: 15.6,
+    filtered_lon: 81.5,
+    sog: 10.5,
+    cog: 210.0,
+    alerts: [],
+    kalman_variance_m: 13.0,
+    timestamp: 1790281827.0,
+  },
+];
 
 export interface AisStatusResponse {
   mode: string;
@@ -144,7 +256,7 @@ export const getLiveAisVessels = (): Promise<{
 
 export const getAisStatus = (): Promise<AisStatusResponse> => req("/api/ais/status");
 
-export const simulateAisSpoof = (mmsi = 353130000): Promise<{
+export const simulateAisSpoof = (mmsi = 419001234): Promise<{
   status: string;
   mmsi: number;
   vessel_name: string;
