@@ -2,8 +2,8 @@
 
 **Project:** AI-assisted maritime freight chartering and procurement decision support  
 **Domain:** Dry-bulk coal logistics for Indian steel, power, and mining PSUs  
-**Document status:** Repository-aligned implementation guide  
-**Last reconciled:** 2026-09-09
+**Document status:** Repository-aligned implementation guide (161 / 161 tests passing)  
+**Last reconciled:** 2026-09-24
 
 This document describes the code currently in this repository. It distinguishes implemented behavior from mock data, research material, legacy demo code, and future architecture. The primary implementation is the React/Vite frontend plus FastAPI/Python backend. The top-level `public/` and `api/` surface is a separate Hatchable demonstration application.
 
@@ -679,70 +679,175 @@ Important limitations:
 
 ## 14. Architecture Diagrams
 
-### Runtime topology
-
-```mermaid
-flowchart LR
-    User[Authorized user]
-    Browser[React 19 + Vite frontend]
-    Client[main.tsx api helper or src/api.ts]
-    FastAPI[FastAPI backend/app/main.py]
-    Routers[API routers backend/app/api]
-    Services[Domain services backend/app/services]
-    Compute[ML and optimization ml/ and optimization/]
-    Files[CSV JSON GeoJSON and artifacts]
-    DB[(PostgreSQL or SQLite)]
-    Reports[PDF/XLSX reports]
-
-    User --> Browser --> Client --> FastAPI --> Routers
-    Routers --> Services
-    Routers --> Compute
-    Services --> Files
-    Compute --> Files
-    Services --> DB
-    Routers --> Reports
-    Reports --> DB
-```
-
-### Five-pillar ownership
+### 14.1 Master End-to-End System Topology
 
 ```mermaid
 flowchart TB
-    UI[React tabbed command center]
-    P1[Pillar 1 Economics and scenarios]
-    P2[Pillar 2 GIS and hazards]
-    P3[Pillar 3 Governance and audit]
-    P4[Pillar 4 Port operations]
-    P5[Pillar 5 Command center and health]
-    API[FastAPI routers]
-    DATA[Local files ML artifacts and databases]
+    subgraph S1["1. EXTERNAL DATA SOURCES & RAW INGESTION"]
+        AIS_SAT["Satellite AIS Stream\n(aisstream.io / Spire / Indian Ocean Sim)"]
+        BALTIC["Baltic Exchange\n(BDI, BPI, BSI, Capesize 5TC)"]
+        BUNKER["Bunker Energy Indices\n(Singapore VLSFO, LSMGO, Brent)"]
+        PORTS_DATA["Indian Port Authorities (16 Ports)\n(Draft, Beam, LOA, Crane TPD)"]
+        IMD_WEATHER["India Meteorological Dept (IMD)\n(Cyclone Cones, Storm Tracks)"]
+        CIL_TENDERS["Historical PSU Coal Fixtures\n(CIL, NTPC, SAIL Tenders)"]
+    end
 
-    UI --> API
-    API --> P1
-    API --> P2
-    API --> P3
-    API --> P4
-    API --> P5
-    P1 --> DATA
-    P2 --> DATA
-    P3 --> DATA
-    P4 --> DATA
-    P5 --> DATA
+    subgraph S2["2. FEATURE ENGINEERING & NORMALIZATION LAYER"]
+        FE_CLEAN["Data Cleaning & ISO 8000 Audit\n(Missing value imputation, KS Drift)"]
+        FE_LAG["Lagged & Rolling Momentum\n(BDI 7d/30d MA, Volatility, Spread)"]
+        FE_GCV["Calorific Parity Engine\n(Gross Calorific Value ₹/Gcal Parity)"]
+        FE_SPATIAL["Great Circle & Spatial Geometry\n(Nautical Miles, Chokepoints, Detours)"]
+    end
+
+    subgraph S3["3. ML, INFERENCE & COMPUTATIONAL ENGINES"]
+        ML_FORECAST["Quantile XGBoost Regressor\n(xgb_panamax_freight_v7: P10, P50, P90)"]
+        ML_SHAP["SHAP TreeExplainer\n(Log-odds Attributions & Waterfall)"]
+        LP_OPT["HiGHS Linear Programming Solver\n(SciPy linprog: Spot/COA/Period Allocation)"]
+        TCE_CII["TCE & Carbon Intensity Engine\n($/day TCE & IMO CII Carbon Rating)"]
+        PORT_PHYSICS["16-Port Dual-Engine Router\n(ML Congestion + Operational Baselines)"]
+        COLLUSION["Rare-Event Calibrated Classifier\n(Cover-Bidding & Rotational Collusion)"]
+        KALMAN_DR["4D Constant-Velocity Kalman Tracker\n(State: lat, lon, v_lat, v_lon & DR)"]
+        SPOOF_CHECK["Kinematic Spoofing Sanity Detector\n(Speed Jump >45kn / >10km Warning)"]
+        MONTE_CARLO["Monte Carlo 10,000-Run VaR\n(95% & 99% Tail Risk Exposure)"]
+        BIMCO_LEGAL["BIMCO Legal Rule Engine\n(GENCON 1994 / NYPE 2015 / 7 Riders)"]
+    end
+
+    subgraph S4["4. PERSISTENCE & CRYPTOGRAPHIC LEDGER"]
+        SQLITE_WAL["SQLite 3 (WAL Mode)\n(Audit Logs, Decisions, Events)"]
+        POSTGRES["PostgreSQL / TimescaleDB\n(Features, Time-Series Stores)"]
+        HASH_CHAIN["SHA-256 Hash Chain\n(Sequential State Transition Proofs)"]
+        MERKLE_TREE["Pairwise Merkle Tree Aggregator\n(Deterministic 32-Byte Merkle Roots)"]
+        POLYGON_DLT["Polygon Amoy Testnet (Chain 80002)\n(Calldata Public Anchor Transactions)"]
+    end
+
+    subgraph S5["5. FASTAPI BACKEND API & SERVICE LAYER"]
+        API_ROUTERS["FastAPI REST Endpoints\n(/api/forecast, /api/charter, /api/ports, etc.)"]
+        WS_AIS["WebSocket Broadcaster: /ws/ais\n(1Hz Real-Time Filtered Telemetry)"]
+        CVC_VALIDATOR["CVC & GFR Rule 144 Validator\n(Maker-Checker & Foreign Seat Blocker)"]
+        REPORT_GEN["Dossier Generator\n(ReportLab PDF + openpyxl CAG Workbooks)"]
+    end
+
+    subgraph S6["6. FRONTEND PRESENTATION & COMMAND CONSOLE"]
+        REACT_SPA["React 18 TypeScript SPA\n(GIGW High-Contrast Sovereign Theme)"]
+        P1_ECON["Pillar 1: Forecast, SHAP, FOS, LP Optimizer, Policy Parity"]
+        P2_GIS["Pillar 2: Leaflet Maritime GIS, Live AIS Kalman Stream, 6-Pillar Risk"]
+        P4_PORTS["Pillar 4: 16-Port Marine Physics & Vessel Intelligence"]
+        P3_GOV["Pillar 3: CVC Governance, ISO 8000 Quality, Model Registry, Anti-Collusion, BIMCO Studio"]
+        CMD_PALETTE["Universal Command Palette (Ctrl+K) & Bilingual i18n (EN/HI)"]
+    end
+
+    %% Ingestion to Feature Engineering
+    BALTIC --> FE_LAG
+    BUNKER --> FE_LAG
+    PORTS_DATA --> PORT_PHYSICS
+    IMD_WEATHER --> FE_SPATIAL
+    CIL_TENDERS --> FE_CLEAN
+    AIS_SAT --> KALMAN_DR
+
+    %% Feature Engineering to Engines
+    FE_CLEAN --> COLLUSION
+    FE_LAG --> ML_FORECAST
+    FE_LAG --> ML_SHAP
+    FE_GCV --> LP_OPT
+    FE_SPATIAL --> PORT_PHYSICS
+    FE_SPATIAL --> MONTE_CARLO
+
+    %% Inter-Engine Flows
+    ML_FORECAST --> LP_OPT
+    LP_OPT --> TCE_CII
+    KALMAN_DR --> SPOOF_CHECK
+
+    %% Engines to API
+    ML_FORECAST --> API_ROUTERS
+    ML_SHAP --> API_ROUTERS
+    LP_OPT --> API_ROUTERS
+    PORT_PHYSICS --> API_ROUTERS
+    COLLUSION --> API_ROUTERS
+    BIMCO_LEGAL --> CVC_VALIDATOR
+    SPOOF_CHECK --> WS_AIS
+    KALMAN_DR --> WS_AIS
+
+    %% Persistence & Anchoring
+    API_ROUTERS --> SQLITE_WAL
+    API_ROUTERS --> POSTGRES
+    SQLITE_WAL --> HASH_CHAIN
+    HASH_CHAIN --> MERKLE_TREE
+    MERKLE_TREE --> POLYGON_DLT
+
+    %% API to Frontend
+    API_ROUTERS <--> REACT_SPA
+    WS_AIS --> REACT_SPA
+    CVC_VALIDATOR --> REPORT_GEN
+    REPORT_GEN --> REACT_SPA
+
+    %% Frontend Page Subsystems
+    REACT_SPA --> P1_ECON
+    REACT_SPA --> P2_GIS
+    REACT_SPA --> P4_PORTS
+    REACT_SPA --> P3_GOV
+    REACT_SPA --> CMD_PALETTE
 ```
 
-### Governance flow
+### 14.2 Detailed End-to-End Request & Data Flow
+
+```mermaid
+sequenceDiagram
+    autonumber
+    actor Officer as PSU Chartering Officer
+    participant UI as React Frontend (GIGW UI)
+    participant API as FastAPI Backend (/api/*)
+    participant ML as ML Inference & LP Engines
+    participant Legal as BIMCO & CVC Compliance
+    participant DB as SQLite WAL / Hash Chain
+    participant DLT as Polygon Amoy Blockchain
+
+    Officer->>UI: Select Corridor (Gladstone -> Dhamra, 75k MT Panamax)
+    UI->>API: POST /api/forecast/predict (Route, Vessel, Horizon)
+    API->>ML: xgb_panamax_freight_v7.predict() + SHAP TreeExplainer
+    ML-->>API: P10, P50, P90 Quantiles ($18.20/MT) + SHAP Features
+    API-->>UI: 200 OK (Forward Curve + SHAP Waterfall)
+
+    Officer->>UI: Run Portfolio Optimizer (Volume: 480k MT, Volatility Cap: 0.5)
+    UI->>API: POST /api/charter/optimize
+    API->>ML: HiGHS Dual-Simplex LP Solver (SciPy linprog)
+    ML-->>API: Optimal Mix (40% Spot, 40% COA, 20% Period) + TCE $/day
+    API-->>UI: 200 OK (Allocation Donut + Cost Frontier)
+
+    Officer->>UI: Validate Vessel & Port Limits (Capesize at Haldia)
+    UI->>API: POST /api/ports/check-compatibility
+    API->>ML: Port Marine Physics Validator (16 Ports)
+    ML-->>API: REJECTED: Draft 17.8m > Permissible 11.5m
+    API-->>UI: 200 OK (Physics Constraint Warning Checklist)
+
+    Officer->>UI: Draft Contract & Check CVC Compliance
+    UI->>API: POST /api/contract/cvc-audit (GENCON 1994 + Foreign Seat)
+    API->>Legal: BIMCO Engine + GFR Rule 144 Validator
+    Legal-->>API: NON_COMPLIANT: London Seat Forbidden under GFR 144
+    API-->>UI: 200 OK (Auditor Alert: Enforce Indian Seat)
+
+    Officer->>UI: Correct Seat to Indian Arbitration & Submit for Sign-off
+    UI->>API: POST /api/governance/decisions/{id}/sign
+    API->>DB: Record Maker-Checker Signature & Compute SHA-256 Block
+    DB-->>API: Sequential Hash Chained (Block #124)
+    API->>DLT: Aggregate Merkle Tree & Anchor Root to Polygon Amoy
+    DLT-->>API: Tx Hash: 0x9f1a... (Chain ID 80002)
+    API-->>UI: 200 OK (CVC Compliant Dossier + QR Code + Polygon Explorer Link)
+```
+
+### 14.3 Governance State Transition Lifecycle
 
 ```mermaid
 stateDiagram-v2
-    [*] --> Draft
-    Draft --> Analysed: analyse
-    Analysed --> Submitted: submit
-    Submitted --> Approved: authorized approver
-    Submitted --> Returned: return
-    Submitted --> Rejected: reject
-    Returned --> Analysed: revise and analyse
-    Approved --> [*]
-    Rejected --> [*]
+    [*] --> DRAFT: Officer Creates Fixture
+    DRAFT --> ANALYSED: Run ML Forecast & HiGHS LP
+    ANALYSED --> SUBMITTED_FOR_REVIEW: Maker Signs Decision
+    SUBMITTED_FOR_REVIEW --> APPROVED: Checker (Director) Signs Decision
+    SUBMITTED_FOR_REVIEW --> RETURNED: Clarification Requested
+    SUBMITTED_FOR_REVIEW --> REJECTED: Vigilance / Physics Breach
+    RETURNED --> ANALYSED: Re-evaluate Parameters
+    APPROVED --> ANCHORED: SHA-256 Chained & Polygon Amoy Anchored
+    ANCHORED --> [*]
+    REJECTED --> [*]
 ```
 
 ## 15. Runbook
