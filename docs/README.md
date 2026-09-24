@@ -9,6 +9,7 @@ Use this folder for the conventional local repository docs:
 - ML model handoff instructions
 - API contracts
 - deployment checklist
+- [Live deployment (VM, models, Nginx)](../LIVE_DEPLOYMENT.md)
 - [New Features Guide (Blockchain Anchoring & Counterfactuals)](../NEW_FEATURES_README.md)
 - [Audit Anchoring Implementation Guide](AUDIT_ANCHORING.md)
 
