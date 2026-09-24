@@ -16,14 +16,14 @@
 | **1** | [Executive Hook & Problem Statement](#chapter-1-executive-hook-problem-statement--command-center) | Page 1 (Executive Overview) | High-contrast Sovereign Design, GIGW compliance, KPI telemetry | 00:00 – 01:15 |
 | **2** | [Predictive Forecasting & SHAP XAI](#chapter-2-predictive-forecasting--explainable-ai) | Pages 2 & 3 (Forecast & FOS) | `xgb_panamax_freight_v7`, SHAP TreeExplainer, Quantile bounds | 01:15 – 02:45 |
 | **3** | [Linear Optimization & Economics](#chapter-3-mathematical-portfolio-optimization--macroeconomics) | Pages 4 & 5 (Charter & Scenarios) | HiGHS LP Solver (SciPy), TCE $/day engine, IMO CII carbon | 02:45 – 04:00 |
-| **4** | [Maritime GIS & 6-Pillar Risk Engine](#chapter-4-geospatial-tracking--multi-dimensional-risk-intelligence) | Pages 6 & 7 (GIS Map & Risk) | Interactive Leaflet GIS, 6 Risk Pillars, Monte Carlo 95% VaR | 04:00 – 05:15 |
+| **4** | [Maritime GIS, Satellite AIS & Risk](#chapter-4-geospatial-tracking--multi-dimensional-risk-intelligence) | Pages 6 & 7 (GIS Map & Risk) | Leaflet GIS, 4D Kalman Satellite AIS, Spoofing Alarms, Monte Carlo VaR | 04:00 – 05:15 |
 | **5** | [All 16 Indian Ports & Vessel Vetting](#chapter-5-port-marine-engineering-physics--vessel-intelligence) | Pages 8 & 9 (Ports & Vessels) | 16 Port Marine Physics, Dual-Engine Congestion, DG Shipping Age limits | 05:15 – 06:45 |
 | **6** | [CVC Vigilance & Polygon Blockchain](#chapter-6-cvc-two-officer-governance--blockchain-merkle-anchoring) | Page 10 (CVC Governance) | Dual Maker-Checker sign-off, SHA-256 Hash Chain, Polygon Amoy DLT | 06:45 – 08:15 |
 | **7** | [ISO 8000 Data Quality & Model Drift](#chapter-7-iso-8000-data-quality--model-governance-registry) | Pages 11 & 12 (Quality & Models) | ISO 8000 6-dimension health, KS drift test, ML model registry | 08:15 – 09:30 |
 | **8** | [Layer 6 Counterfactuals & Sensitivity](#chapter-8-layer-6-counterfactual-explanations--algorithmic-sensitivity) | Page 13 (Counterfactuals L6) | Systematic Algorithmic Perturbation, LP Shadow Prices, What-If | 09:30 – 10:45 |
 | **9** | [Anti-Collusion & Bid-Rigging Engine](#chapter-9-bid-anomaly--anti-collusion-detection-anti-rigging) | Page 14 (Bid Anomaly) | Calibrated XGBoost rare-event classifier, Cover-bidding isolation | 10:45 – 12:15 |
 | **10** | [BIMCO Charterparty Studio & CVC Audit](#chapter-10-bimco-legal-charterparty-drafting--cvc-compliance-studio) | Page 15 (Charterparty Studio) | GENCON 1994, NYPE 2015, 7 Sovereign Riders, Foreign trap audit | 12:15 – 13:30 |
-| **11** | [154-Test Verification & Grand Finale](#chapter-11-full-project-test-verification--concluding-pitch) | Terminal & Command Palette | 154 Passing Pytest Tests, Keyboard shortcuts, Sovereign impact | 13:30 – 14:15 |
+| **11** | [161-Test Verification & Grand Finale](#chapter-11-full-project-test-verification--concluding-pitch) | Terminal & Command Palette | 161 Passing Pytest Tests, Keyboard shortcuts, Sovereign impact | 13:30 – 14:15 |
 
 ---
 
@@ -143,7 +143,7 @@ Duration: 02:45 – 04:00 (75 seconds)
 
 ```
 ================================================================================
-CHAPTER 4: GEOSPATIAL TRACKING & MULTI-DIMENSIONAL RISK INTELLIGENCE
+CHAPTER 4: GEOSPATIAL TRACKING, LIVE SATELLITE AIS & MULTI-DIMENSIONAL RISK
 Pages: 6. Maritime GIS (map) & 7. Risk Intelligence (risk)
 Duration: 04:00 – 05:15 (75 seconds)
 ================================================================================
@@ -153,23 +153,36 @@ Duration: 04:00 – 05:15 (75 seconds)
 1. In the sidebar under **Pillar 2: Maritime GIS & Risk**, click **Maritime GIS**.
 2. On the **Maritime GIS** page:
    - The interactive Leaflet global maritime map renders with dark-navy styling.
-   - Point cursor to the navigational tracks connecting Australia, Indonesia, and Mozambique to India's East and West coasts.
+   - Point cursor to navigational tracks connecting Australia, Indonesia, and Mozambique to India's East and West coasts.
    - Click on the **Chokepoint Toggle**: activate the **Malacca Strait** and **Bab-el-Mandeb** geopolitical risk circles.
    - Click on an active bulk carrier vessel icon (`M/V MAHA ANAND` off the Bay of Bengal): show the pop-up drawer detailing vessel IMO, flag, current speed (12.2 knots), loaded draft (14.2m), and ETA at Paradip.
-3. In the sidebar, click **Risk Intelligence**:
+3. Scroll down to the **Live Satellite AIS Streaming & Spoofing Detection Panel**:
+   - Point to the real-time telemetry KPI strip: **5 Active Trackers**, Ingestion Mode (`Realistic Indian Ocean Simulation` / `Live Stream`), Telemetry Packets Ingested, and Spoofing Alarms.
+   - In the live vessel grid, point cursor to the coordinates: compare **Raw GPS Position** vs **Kalman Filtered Position**, highlighting how the 4D constant-velocity filter filters out GPS satellite noise.
+   - **Click the Red "Test Spoofing Jump" Button**:
+     - Immediately watch *M/V BHARAT PRIDE* trigger a flashing red badge: **`SPOOFING_IMPOSSIBLE_SPEED_JUMP`**.
+     - Point to the implied non-physical speed calculation ($>100\,\text{kn}$ over $120\,\text{km}$), proving instantaneous automated sanctions evasion and transponder tampering detection.
+   - Click **"Reset Fleet"** to restore standard navigational coordinates.
+4. In the sidebar, click **Risk Intelligence**:
    - In the Corridor Risk Matrix, select `Australia to Haldia (Panamax)`.
    - Point cursor to the **6-Pillar Risk Radar**: highlight *Market Risk (65)*, *Port Congestion Risk (82)*, *Weather Risk (45)*, *Geopolitical Risk (20)*, *Vessel Supply Risk (55)*, and *Contract Risk (30)*.
    - Show the **Monte Carlo 95% Value at Risk (VaR)** card: display the potential tail exposure: `\$1.42M`.
 
 ### Spoken Narration (Left Screen / Audio Voiceover):
-> *"Under Pillar 2, we integrate real-time geospatial awareness with multi-dimensional risk intelligence. Our Maritime GIS interface tracks bulk vessel movements across major international shipping lanes, highlighting geopolitical chokepoints like the Malacca Strait and the Red Sea.*
+> *"Under Pillar 2, we combine geospatial command awareness with real-time satellite AIS ingestion and multi-dimensional risk intelligence.*
 >
-> *Clicking on any vessel reveals live AIS telemetry, speed, draft, and cargo status.*
+> *Our Maritime GIS tracks commercial bulk fleets across strategic coal corridors while actively monitoring geopolitical chokepoints like the Malacca Strait and the Red Sea.*
 >
-> *On Page 7, our Risk Intelligence engine evaluates maritime fixtures across 6 distinct pillars: Market, Port, Weather, Geopolitical, Supply, and Contractual exposure. For high-risk routes, such as Haldia during monsoon season, our Monte Carlo simulator executes 10,000 iterations to quantify the 95% Value at Risk (VaR), enabling charterers to budget contingency reserves before issuing tenders."*
+> *Notice our integrated Live AIS Streaming console below the map. Here, a 4D constant-velocity Kalman filter continuously estimates true vessel coordinates and velocity vectors, suppressing GPS satellite noise and projecting dead-reckoning tracks during signal latency.*
+>
+> *Watch what happens when we simulate transponder tampering or sanctions evasion by clicking 'Test Spoofing Jump': our kinematic validator detects an impossible speed jump exceeding 100 knots, instantly flagging the vessel in bright red as a spoofing threat before any tender award can be compromised.*
+>
+> *Moving to Page 7, our Risk Intelligence engine evaluates fixtures across 6 distinct pillars—Market, Port, Weather, Geopolitical, Supply, and Contractual exposure—running a 10,000-iteration Monte Carlo simulation to quantify 95% Value at Risk."*
 
 ### On-Screen Callout Badges:
 - `GIS: Global AIS Maritime Telemetry & Chokepoint Overlays`
+- `Kalman Filter: 4D State-Space Filtering & Dead Reckoning Tracker`
+- `Vigilance Alarm: Real-Time Kinematic Spoofing & Sanctions Evasion Detection`
 - `Risk Engine: 6 Sovereign Risk Pillars & Monte Carlo 95% VaR`
 
 ---
@@ -436,21 +449,21 @@ Duration: 13:30 – 14:15 (45 seconds)
      ```
    - Highlight the terminal output as the suite completes:
      ```
-     ====================== 154 passed, 29 warnings in 26.01s ======================
+     ====================== 161 passed, 29 warnings in 27.34s ======================
      ```
 3. Return to the browser window showing the high-contrast dashboard with the Indian emblem and platform header.
 
 ### Spoken Narration (Left Screen / Audio Voiceover):
 > *"To prove that this entire platform is a fully functional, mathematically sound reality rather than an interactive prototype, we execute our comprehensive test suite directly in the terminal.*
 >
-> *Across multi-horizon quantile forecasting, HiGHS linear programming, 16-port marine physics, CVC GFR Rule 144 legal audits, and Polygon blockchain Merkle trees—every single test passes with 100% success rate: 154 passed in 26 seconds with zero failures.*
+> *Across multi-horizon quantile forecasting, HiGHS linear programming, 16-port marine physics, live satellite AIS Kalman tracking, CVC GFR Rule 144 legal audits, and Polygon blockchain Merkle trees—every single test passes with 100% success rate: 161 passed in 27 seconds with zero failures.*
 >
-> *By uniting predictive machine learning, legal automation, anti-collusion intelligence, and cryptographic transparency, our Sovereign Freight Chartering System delivers multimillion-dollar annual savings while safeguarding national public procurement integrity.*
+> *By uniting predictive machine learning, legal automation, anti-collusion intelligence, live satellite telemetry, and cryptographic transparency, our Sovereign Freight Chartering System delivers multimillion-dollar annual savings while safeguarding national public procurement integrity.*
 >
 > *Thank you for watching our live demonstration."*
 
 ### On-Screen Callout Badges:
-- `Test Proof: 154 / 154 Pytest Tests Passing (100% Success Rate)`
+- `Test Proof: 161 / 161 Pytest Tests Passing (100% Success Rate)`
 - `National Impact: Sovereign Decision Intelligence for Indian Maritime PSUs`
 
 ---

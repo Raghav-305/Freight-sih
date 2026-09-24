@@ -240,29 +240,51 @@ This page performs energy-normalized economic parity comparisons between:
 ### Page 6: Maritime GIS & Chokepoint Intelligence (`MaritimeGisPage.tsx`)
 - **Pillar**: Pillar 2 — Maritime GIS & Risk
 - **Tab Key**: `map`
-- **Backend API**: `GET /api/map/routes`, `GET /api/map/chokepoints`, `GET /api/map/hazards`
+- **Backend API**:
+  - `GET /api/map/routes`, `GET /api/map/chokepoints`, `GET /api/map/hazards`
+  - `GET /api/ais/live-vessels` (Current snapshot of tracked commercial fleet)
+  - `GET /api/ais/status` (Ingestion loop health, packet counts, active trackers)
+  - `POST /api/ais/simulate-spoof` (Inject synthetic non-physical position jump for vetting)
+  - `POST /api/ais/reset` (Reset fleet positions to standard shipping lanes)
+  - `WebSocket: ws://127.0.0.1:8000/ws/ais` (Full-duplex real-time AIS telemetry broadcast)
 - **Model / GIS Engine**:
   - Leaflet.js / React-Leaflet interactive cartographic engine.
   - Geospatial route geometry rendering along Great Circle maritime corridors.
   - Indian Meteorological Department (IMD) cyclone track integration adapter.
   - Geospatial polygon boundary monitoring for maritime chokepoints and High Risk Areas (HRA).
+  - **4D Constant-Velocity Kalman Filter (`VesselKalmanTracker`)**: State vector $\mathbf{x} = [\text{lat}, \text{lon}, v_{\text{lat}}, v_{\text{lon}}]^T$, recursive prediction & correction, GPS noise smoothing ($\pm 11.2\,\text{m}$ variance), and Dead Reckoning during satellite latency.
+  - **Kinematic Transponder Spoofing Detector**: Flags impossible instantaneous jumps ($>45\,\text{kn}$ over $>10\,\text{km}$) characteristic of transponder manipulation and sanctions evasion (`SPOOFING_IMPOSSIBLE_SPEED_JUMP`).
+  - **Dual AIS Ingestion Service (`AisTrackerService`)**: Persistent background worker connecting to `wss://stream.aisstream.io/v0/stream` or realistic fallback simulation across critical Indian Ocean bulk shipping corridors.
 
 #### How It Works:
 Provides an interactive spatial command map visualizing bulk carrier voyages from key international coal terminals (Newcastle, Hay Point, Gladstone, Richards Bay, Tanjung Priok) to Indian ports. The engine overlays real-time and historical risk layers:
+- **Live Satellite AIS & Kalman Filtering**: Streams live positions for bulk carrier fleet (*M/V BHARAT PRIDE*, *NORDIC VOYAGER*, *PACIFIC TITAN*, *ATLANTIC CARRIER*, *M/V GANGA GLORY*). The Kalman filter estimates real-time vessel velocity vectors, smooths raw GPS satellite noise, and maintains dead-reckoning trajectory projection.
+- **Kinematic Sanctions & Spoofing Alarms**: Automatically flags abnormal coordinate shifts that violate maritime physics, immediately notifying the chartering officer of potential transponder tampering or illicit port calls.
 - **Strategic Chokepoints**: Monitors vessel flow and potential blockage points through the **Strait of Malacca, Sunda Strait, Bab-el-Mandeb, and Cape of Good Hope**.
 - **Maritime Weather Hazards**: Overlays active cyclone tracks, tropical depressions, and gale warnings across the Bay of Bengal and Arabian Sea.
 - **Geopolitical Conflict Corridors**: Highlights Maritime Security Centre / UKMTO piracy and missile risk zones (Red Sea / Gulf of Aden), automatically recalculating detour voyaging around the Cape of Good Hope (+12 to 14 days steaming).
 
 #### Step-by-Step Operating Instructions:
 1. **Select Voyage Corridor**: Choose an active voyage (e.g., *Newcastle to Visakhapatnam*).
-2. **Toggle Map Layers**:
+2. **Monitor Live Satellite AIS Stream**:
+   - Inspect the **Live Satellite AIS Streaming** panel beneath the map.
+   - Observe real-time KPI metrics: *Active Trackers*, *Ingestion Mode (Live Stream vs Simulation)*, *Telemetry Packets Ingested*, and *Spoofing Alarms*.
+   - In the live vessel grid, compare **Raw GPS Position** vs **Kalman Filtered Position** to verify sub-pixel satellite jitter suppression.
+3. **Execute Live Spoofing & Sanctions Evasion Test**:
+   - Click the red **"Test Spoofing Jump"** button to inject a synthetic $120\,\text{km}$ coordinate jump into an active bulk carrier transponder feed.
+   - Observe the immediate transition to `SPOOFING_IMPOSSIBLE_SPEED_JUMP` status badge with glowing red alert styling and implied non-physical speed calculation ($>100\,\text{kn}$).
+   - Click **"Reset Fleet"** to restore standard navigational coordinates.
+4. **Toggle Map Layers**:
    - Turn on **Chokepoints** to view transit status and maritime bottlenecks.
    - Turn on **Weather / Cyclone Hazard** to visualize IMD weather storm cones.
    - Turn on **PIRACY / Conflict Corridors** to view war risk insurance premium zones.
-3. **Inspect Route Metrics**: Hover over waypoint markers to view nautical miles (NM), estimated steaming days at 12.5 knots eco-speed, and total bunker fuel consumption.
-4. **Evaluate Alternative Routing**: Click **"Simulate Cape of Good Hope Detour"** to compare Suez/Red Sea transit cost vs extended Cape transit fuel costs.
+5. **Inspect Route Metrics**: Hover over waypoint markers to view nautical miles (NM), estimated steaming days at 12.5 knots eco-speed, and total bunker fuel consumption.
+6. **Evaluate Alternative Routing**: Click **"Simulate Cape of Good Hope Detour"** to compare Suez/Red Sea transit cost vs extended Cape transit fuel costs.
 
 #### Glossary of Terms:
+- **Kalman Filter (4D State-Space)**: A recursive mathematical estimator that minimizes mean squared error when predicting physical vessel coordinates and velocity components from noisy, sporadic satellite AIS pings.
+- **Dead Reckoning (DR)**: Kinematic extrapolation of a ship's current position using its last verified position, heading, and speed over elapsed latency time ($\Delta t$).
+- **AIS Spoofing**: Intentional broadcast of falsified vessel position, identity, or speed to disguise illegal trading, evade maritime sanctions, or enter unauthorized exclusive economic zones (EEZ).
 - **Nautical Mile (NM)**: 1,852 meters. The international unit of distance used in maritime navigation.
 - **Chokepoint**: A narrow, strategically significant maritime strait through which international trade flows (e.g., Malacca Strait handles over 60% of India's seaborne coal imports).
 - **Great Circle Distance**: The shortest distance between two points on the surface of a sphere, representing the true shortest sailing path across the ocean.

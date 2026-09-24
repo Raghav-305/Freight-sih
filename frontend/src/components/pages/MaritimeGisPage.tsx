@@ -3,8 +3,9 @@ import { PageHero } from "../ui/PageHero";
 import { HowToSteps } from "../ui/HowToSteps";
 import { ResultGuide } from "../ui/ResultGuide";
 import { MapCanvas } from "../MapCanvas";
+import { LiveAisStreamingPanel } from "../LiveAisStreamingPanel";
 import { TermTooltip } from "../ui/TermTooltip";
-import { MapPin, Navigation, Compass, AlertOctagon, ShieldCheck, Eye, Layers } from "lucide-react";
+import { MapPin, Navigation, Compass, AlertOctagon, ShieldCheck, Eye, Layers, Radio } from "lucide-react";
 
 export const MaritimeGisPage: React.FC = () => {
   return (
@@ -12,22 +13,22 @@ export const MaritimeGisPage: React.FC = () => {
       {/* 1. Page Hero */}
       <PageHero
         pillar="Operations"
-        title="Maritime Geospatial Intelligence"
-        purpose="100% offline-capable vector maritime GIS displaying verified Indian major ports, international shipping corridors, strategic maritime chokepoints, and weather warning overlays."
+        title="Maritime Geospatial Intelligence & Live Satellite AIS"
+        purpose="100% offline-capable vector maritime GIS with real-time AIS satellite streaming, constant-velocity Kalman trajectory filtering, and kinematic spoofing anomaly detection."
         questionsAnswered={[
           "Which maritime corridors (Cape of Good Hope, Malacca, Lombok) are traversed by incoming coal shipments?",
-          "Are active cyclone advisories or monsoon swells intersecting the planned voyage track?",
+          "Are incoming vessels maintaining normal kinematic transit, or exhibiting transponder spoofing jumps?",
           "What are the precise spatial coordinates and anchorage zones for East Coast discharge terminals?",
         ]}
-        truthClass="Static reference"
-        lastUpdated="2026-09-20"
+        truthClass="Live Satellite + Kalman Filter"
+        lastUpdated="2026-09-24"
       />
 
       {/* 2. Standard How-To Steps */}
       <HowToSteps
-        step1="Toggle Shipping Corridors & Chokepoints"
-        step2="Click Ports for Berth & Anchorage Specs"
-        step3="Inspect Cyclone Warning Buffers & Sea States"
+        step1="Inspect Live AIS Stream & 4D Kalman Filtered Positions"
+        step2="Test Kinematic Sanity via 'Test Spoofing Jump'"
+        step3="Toggle Shipping Corridors & Port Marine Constraints"
       />
 
       {/* 3. Layer Lineage and Truth Class Strip */}
@@ -51,11 +52,11 @@ export const MaritimeGisPage: React.FC = () => {
           <strong>GIS Data Layer Lineage:</strong>
         </div>
         <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
-          <span className="gov-tag" style={{ background: "var(--sand-100)", color: "var(--ink)" }}>
-            Ports & Corridors: <strong>Static Reference (Hydrographic Office)</strong>
+          <span className="gov-tag" style={{ background: "rgba(22, 101, 52, 0.12)", color: "var(--olive)" }}>
+            <Radio size={12} style={{ marginRight: "4px" }} /> Live AIS Telemetry: <strong>4D Kalman Stream Active</strong>
           </span>
           <span className="gov-tag" style={{ background: "var(--sand-100)", color: "var(--ink)" }}>
-            Weather & Swell: <strong>Demo Simulation / IMD Feed</strong>
+            Ports & Corridors: <strong>16 Indian Major & Bulk Terminals</strong>
           </span>
           <span className="gov-tag" style={{ background: "var(--sand-100)", color: "var(--ink)" }}>
             Offline Vector Fallback: <strong>100% Air-Gapped Ready</strong>
@@ -63,7 +64,10 @@ export const MaritimeGisPage: React.FC = () => {
         </div>
       </section>
 
-      {/* 4. Main Geospatial Map Display */}
+      {/* 4. Live AIS Satellite Stream & Kalman Trajectory Filter Panel */}
+      <LiveAisStreamingPanel />
+
+      {/* 5. Main Geospatial Map Display */}
       <section className="market-section" style={{ marginBottom: "2rem" }}>
         <div className="section-title">
           <span className="eyebrow">Pillar 2 · Vector Cartography Display</span>
@@ -118,7 +122,7 @@ export const MaritimeGisPage: React.FC = () => {
         ]}
         notAssumed={[
           "The GIS map is designed for strategic chartering decisions and is NOT an Electronic Chart Display and Information System (ECDIS) for SOLAS navigation.",
-          "Real-time vessel AIS positions are simulated for demonstration purposes; operational vessel tracking requires integration with authorized coastal radar/AIS streams.",
+          "Real-time vessel AIS streams utilize persistent WebSocket ingestion from AISStream.io coupled with constant-velocity Kalman filtering to bridge coverage blindspots and alert on kinematic spoofing jumps.",
           "Cyclone warnings represent simulated weather hazards and must be validated against official India Meteorological Department (IMD) bulletins.",
         ]}
       />

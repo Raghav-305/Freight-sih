@@ -1,3 +1,5 @@
+import asyncio
+from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -23,11 +25,25 @@ from backend.app.api.freight_database import router as freight_database_router
 from backend.app.api.counterfactual import router as counterfactual_router
 from backend.app.api.collusion import router as collusion_router
 from backend.app.api.charterparty import router as charterparty_router
+from backend.app.api.ais import router as ais_router
+from backend.app.services.ais_tracker import ais_service
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Launch persistent background AIS ingestion worker and WebSocket dispatcher
+    task_dispatch = asyncio.create_task(ais_service.dispatcher_task())
+    task_ingestion = asyncio.create_task(ais_service.run_ingestion_loop())
+    yield
+    task_dispatch.cancel()
+    task_ingestion.cancel()
+
 
 app = FastAPI(
     title="Freight Chartering Intelligence API",
     version="0.2.0",
-    description="Local FastAPI boundary for forecasting, portfolio optimization, risk, port constraints, data quality, CVC governance, bid anomaly detection, and BIMCO charterparty contract drafting.",
+    description="Local FastAPI boundary for forecasting, portfolio optimization, risk, port constraints, data quality, CVC governance, bid anomaly detection, BIMCO charterparty contract drafting, and real-time AIS satellite trajectory tracking.",
+    lifespan=lifespan,
 )
 
 app.add_middleware(
@@ -59,5 +75,6 @@ app.include_router(freight_database_router)
 app.include_router(counterfactual_router)
 app.include_router(collusion_router)
 app.include_router(charterparty_router)
+app.include_router(ais_router)
 
 

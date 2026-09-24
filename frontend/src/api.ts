@@ -103,5 +103,60 @@ export const generateCharterparty = (body: unknown) =>
 export const validateCharterparty = (body: unknown) =>
   req("/api/charterparty/validate", { method: "POST", body: JSON.stringify(body) });
 
+// ---- Real-Time Satellite AIS & Kalman Trajectory Filtering ----
+export interface LiveVesselRecord {
+  mmsi: number;
+  name: string;
+  flag: string;
+  vessel_class: string;
+  dwt: number;
+  corridor: string;
+  destination: string;
+  raw_lat: number;
+  raw_lon: number;
+  filtered_lat: number;
+  filtered_lon: number;
+  sog: number;
+  cog: number;
+  alerts: string[];
+  kalman_variance_m?: number;
+  timestamp: number;
+}
+
+export interface AisStatusResponse {
+  mode: string;
+  is_running: boolean;
+  active_vessels_count: number;
+  active_ws_clients: number;
+  total_packets_processed: number;
+  spoof_events_count: number;
+  kalman_state_dim: number;
+  kalman_filter_type: string;
+  monitored_corridors: string[];
+}
+
+export const getLiveAisVessels = (): Promise<{
+  count: number;
+  vessels: LiveVesselRecord[];
+  mode: string;
+  spoof_events_count: number;
+}> => req("/api/ais/live-vessels");
+
+export const getAisStatus = (): Promise<AisStatusResponse> => req("/api/ais/status");
+
+export const simulateAisSpoof = (mmsi = 353130000): Promise<{
+  status: string;
+  mmsi: number;
+  vessel_name: string;
+  jump_km: number;
+  note: string;
+}> => req("/api/ais/simulate-spoof", { method: "POST", body: JSON.stringify({ mmsi }) });
+
+export const resetAisFleet = (): Promise<{ status: string; active_vessels: number }> =>
+  req("/api/ais/reset", { method: "POST" });
+
+export const getAisWebSocketUrl = (): string =>
+  BASE_URL.replace(/^http/, "ws") + "/ws/ais";
+
 
 

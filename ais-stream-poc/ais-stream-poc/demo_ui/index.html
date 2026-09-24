@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Live AISStream Satellite Tracking & Kalman Filter</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+        body { margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, monospace; background: #0f172a; color: #f8fafc; }
+        #map { height: 100vh; width: 100vw; }
+        #panel {
+            position: absolute; top: 16px; left: 16px; z-index: 1000;
+            background: rgba(15, 23, 42, 0.94); border: 1px solid #334155;
+            border-radius: 8px; padding: 16px; width: 340px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+        }
+        h2 { margin: 0 0 8px 0; font-size: 16px; color: #38bdf8; }
+        p { margin: 4px 0; font-size: 13px; color: #94a3b8; }
+        #vessel-list { margin-top: 12px; max-height: 320px; overflow-y: auto; }
+        .vessel-card {
+            background: #1e293b; padding: 10px; border-radius: 6px;
+            margin-bottom: 8px; font-size: 12px; border-left: 4px solid #38bdf8;
+        }
+        .vessel-card.alert { border-left-color: #ef4444; background: #451a1a; }
+        .badge-alert { color: #f87171; font-weight: bold; margin-top: 4px; }
+    </style>
+</head>
+<body>
+    <div id="panel">
+        <h2>Live AISStream Engine</h2>
+        <p>Status: <span id="ws-status" style="color: #fbbf24;">Connecting...</span></p>
+        <p>Active Vessels: <span id="vessel-count">0</span></p>
+        <div id="vessel-list"></div>
+    </div>
+    <div id="map"></div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        const map = L.map('map').setView([50.8, 0.5], 7);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(map);
+
+        const markers = {};
+        const vesselData = {};
+        let centered = false;
+
+        const ws = new WebSocket("ws://127.0.0.1:8000/ws/ais");
+        const statusEl = document.getElementById("ws-status");
+
+        ws.onopen = () => {
+            statusEl.innerText = "Connected";
+            statusEl.style.color = "#4ade80";
+        };
+
+        ws.onclose = () => {
+            statusEl.innerText = "Disconnected";
+            statusEl.style.color = "#f87171";
+        };
+
+        ws.onmessage = (event) => {
+            const ship = JSON.parse(event.data);
+            vesselData[ship.mmsi] = ship;
+            document.getElementById("vessel-count").innerText = Object.keys(vesselData).length;
+
+            const lat = ship.filtered_lat;
+            const lon = ship.filtered_lon;
+            const hasAlert = ship.alerts && ship.alerts.length > 0;
+
+            if (!centered) {
+                map.setView([lat, lon], 8);
+                centered = true;
+            }
+
+            if (!markers[ship.mmsi]) {
+                const marker = L.circleMarker([lat, lon], {
+                    radius: 7,
+                    fillColor: hasAlert ? "#ef4444" : "#0284c7",
+                    color: "#ffffff",
+                    weight: 2,
+                    opacity: 1,
+                    fillOpacity: 0.95
+                }).addTo(map);
+
+                marker.bindPopup(`<b>${ship.name}</b><br>MMSI: ${ship.mmsi}<br>Speed: ${ship.sog} kn<br>Course: ${ship.cog}°`);
+                markers[ship.mmsi] = marker;
+            } else {
+                markers[ship.mmsi].setLatLng([lat, lon]);
+                markers[ship.mmsi].setStyle({
+                    fillColor: hasAlert ? "#ef4444" : "#0284c7",
+                    radius: hasAlert ? 11 : 7
+                });
+            }
+
+            renderPanel();
+        };
+
+        function renderPanel() {
+            const listEl = document.getElementById("vessel-list");
+            const ships = Object.values(vesselData).slice(-15).reverse(); // show top 15 most recent
+            listEl.innerHTML = ships.map(v => {
+                const hasAlert = v.alerts && v.alerts.length > 0;
+                return `
+                    <div class="vessel-card ${hasAlert ? 'alert' : ''}">
+                        <strong>${v.name}</strong> (MMSI: ${v.mmsi})<br>
+                        Pos: ${v.filtered_lat}, ${v.filtered_lon}<br>
+                        Speed: ${v.sog} kn | Course: ${v.cog}°
+                        ${hasAlert ? `<div class="badge-alert">⚠️ ${v.alerts.join(", ")}</div>` : ''}
+                    </div>
+                `;
+            }).join("");
+        }
+    </script>
+</body>
+</html>
