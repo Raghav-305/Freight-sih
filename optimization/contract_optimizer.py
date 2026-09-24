@@ -165,6 +165,12 @@ def optimize_contract(payload: dict[str, Any]) -> dict[str, Any]:
         "baseline_cost": baseline_cost,
         "expected_saving": expected_saving,
         "expected_saving_pct": expected_saving_pct,
+        # Frontend compatibility aliases
+        "baseline_cost_usd": baseline_cost,
+        "optimized_cost_usd": expected_cost,
+        "cost_reduction_usd": expected_saving,
+        "savings_usd": expected_saving,
+        "route_distance_nm": distance_nm,
         "risk": risk_level,
         "risk_score": risk_score,
         "fixing_window": fixing_advice,

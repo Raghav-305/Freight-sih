@@ -41,6 +41,12 @@ class CharterOptimizeResponse(BaseModel):
     voyages_needed: int | None = None
     recommended_mix_voyages: dict[str, float] | None = None
     cost_breakdown_per_voyage: dict[str, float] | None = None
+    baseline_cost_usd: float | None = None
+    optimized_cost_usd: float | None = None
+    cost_reduction_usd: float | None = None
+    savings_usd: float | None = None
+    route_distance_nm: float | None = None
+
 
 
 class CharterStrategyRequest(BaseModel):
