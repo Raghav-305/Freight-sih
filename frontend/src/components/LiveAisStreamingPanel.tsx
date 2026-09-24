@@ -113,9 +113,24 @@ export const LiveAisStreamingPanel: React.FC = () => {
     setActionLoading(true);
     setLastActionMessage(null);
     try {
-      const res = await simulateAisSpoof(353130000);
+      // Optimistically update M/V BHARAT PRIDE immediately for 0ms demo response
+      setVessels((prev) =>
+        prev.map((v) =>
+          v.mmsi === 419001234 || v.name.includes("BHARAT PRIDE")
+            ? {
+                ...v,
+                raw_lat: v.raw_lat + 1.05,
+                raw_lon: v.raw_lon + 0.45,
+                sog: 104.2,
+                alerts: ["SPOOFING_IMPOSSIBLE_SPEED_JUMP"],
+              }
+            : v
+        )
+      );
+
+      const res = await simulateAisSpoof(419001234);
       setLastActionMessage(
-        `🚨 Injected ${res.jump_km} km jump on ${res.vessel_name}! Watch Kalman filter raise SPOOFING alert.`
+        `🚨 Injected ${res.jump_km} km jump on ${res.vessel_name}! Watch Kalman filter raise SPOOFING_IMPOSSIBLE_SPEED_JUMP alert.`
       );
       await fetchSnapshot();
     } catch (err: any) {
@@ -128,8 +143,14 @@ export const LiveAisStreamingPanel: React.FC = () => {
   const handleReset = async () => {
     setActionLoading(true);
     try {
+      setVessels((prev) =>
+        prev.map((v) => ({
+          ...v,
+          alerts: [],
+        }))
+      );
       await resetAisFleet();
-      setLastActionMessage("Fleet positions reset to standard Indian bulk corridors.");
+      setLastActionMessage("Fleet positions reset to standard Indian bulk corridors. All spoofing alarms cleared.");
       await fetchSnapshot();
     } catch (err: any) {
       setLastActionMessage(`Reset error: ${err.message}`);
@@ -190,24 +211,27 @@ export const LiveAisStreamingPanel: React.FC = () => {
           </p>
         </div>
 
-        {/* Quick Actions */}
+        {/* Quick Actions (Script buttons: Test Spoofing Jump & Reset Fleet) */}
         <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
           <button
             onClick={handleSimulateSpoof}
             disabled={actionLoading}
             className="gov-btn"
             style={{
-              background: "#991b1b",
+              background: "#b91c1c",
               color: "#ffffff",
+              border: "1px solid #dc2626",
               display: "inline-flex",
               alignItems: "center",
               gap: "6px",
               fontSize: "12px",
-              padding: "6px 12px",
+              fontWeight: 700,
+              padding: "7px 14px",
+              boxShadow: "0 2px 6px rgba(185, 28, 28, 0.35)",
             }}
-            title="Inject an instantaneous 95km jump into PACIFIC TITAN to test kinematic spoofing alerts"
+            title="Inject an instantaneous 120km jump into M/V BHARAT PRIDE to test kinematic spoofing alerts"
           >
-            <ShieldAlert size={14} />
+            <ShieldAlert size={15} />
             Test Spoofing Jump
           </button>
 
@@ -220,8 +244,10 @@ export const LiveAisStreamingPanel: React.FC = () => {
               alignItems: "center",
               gap: "6px",
               fontSize: "12px",
-              padding: "6px 12px",
+              fontWeight: 600,
+              padding: "7px 14px",
             }}
+            title="Reset fleet positions and clear kinematic alarms"
           >
             <RotateCcw size={14} />
             Reset Fleet
@@ -309,8 +335,18 @@ export const LiveAisStreamingPanel: React.FC = () => {
               <th style={{ padding: "8px 10px" }}>Corridor & Destination</th>
               <th style={{ padding: "8px 10px" }}>Class / DWT</th>
               <th style={{ padding: "8px 10px" }}>Speed (SOG) & Course</th>
-              <th style={{ padding: "8px 10px" }}>Raw GPS Position</th>
-              <th style={{ padding: "8px 10px" }}>Kalman Filtered Position</th>
+              <th style={{ padding: "8px 10px", background: "rgba(30, 41, 59, 0.05)" }}>
+                <div>Raw GPS Position</div>
+                <div style={{ fontSize: "10px", color: "var(--ink-muted)", fontWeight: "normal" }}>
+                  Unfiltered (With Satellite Jitter)
+                </div>
+              </th>
+              <th style={{ padding: "8px 10px", background: "rgba(22, 101, 52, 0.06)" }}>
+                <div style={{ color: "var(--olive)" }}>Kalman Filtered Position</div>
+                <div style={{ fontSize: "10px", color: "var(--olive)", fontWeight: "normal" }}>
+                  4D Kinematic Vector Estimate
+                </div>
+              </th>
               <th style={{ padding: "8px 10px" }}>Integrity Status</th>
             </tr>
           </thead>
@@ -326,16 +362,17 @@ export const LiveAisStreamingPanel: React.FC = () => {
                   style={{
                     cursor: "pointer",
                     background: hasAlert
-                      ? "rgba(153, 27, 27, 0.08)"
+                      ? "rgba(185, 28, 28, 0.12)"
                       : isSelected
                       ? "rgba(124, 109, 72, 0.1)"
                       : "transparent",
+                    borderLeft: hasAlert ? "4px solid #b91c1c" : "4px solid transparent",
                     borderBottom: "1px solid var(--gov-border)",
                     transition: "background 0.15s ease",
                   }}
                 >
                   <td style={{ padding: "8px 10px" }}>
-                    <div style={{ fontWeight: 600, color: "var(--ink)" }}>{v.name}</div>
+                    <div style={{ fontWeight: 600, color: hasAlert ? "#b91c1c" : "var(--ink)" }}>{v.name}</div>
                     <div style={{ fontSize: "11px", color: "var(--ink-muted)" }}>
                       MMSI: {v.mmsi} · {v.flag}
                     </div>
@@ -363,12 +400,12 @@ export const LiveAisStreamingPanel: React.FC = () => {
                     </div>
                   </td>
 
-                  <td style={{ padding: "8px 10px", fontFamily: "monospace", fontSize: "11px" }}>
-                    {v.raw_lat.toFixed(4)}°N, {v.raw_lon.toFixed(4)}°E
+                  <td style={{ padding: "8px 10px", fontFamily: "monospace", fontSize: "11px", background: "rgba(30, 41, 59, 0.03)" }}>
+                    <strong>{v.raw_lat.toFixed(4)}°N, {v.raw_lon.toFixed(4)}°E</strong>
                   </td>
 
-                  <td style={{ padding: "8px 10px", fontFamily: "monospace", fontSize: "11px" }}>
-                    <span style={{ color: "var(--olive)", fontWeight: 600 }}>
+                  <td style={{ padding: "8px 10px", fontFamily: "monospace", fontSize: "11px", background: "rgba(22, 101, 52, 0.04)" }}>
+                    <span style={{ color: "var(--olive)", fontWeight: 700 }}>
                       {v.filtered_lat.toFixed(4)}°N, {v.filtered_lon.toFixed(4)}°E
                     </span>
                     <div style={{ fontSize: "10px", color: "var(--ink-muted)" }}>
@@ -378,21 +415,29 @@ export const LiveAisStreamingPanel: React.FC = () => {
 
                   <td style={{ padding: "8px 10px" }}>
                     {hasAlert ? (
-                      <span
-                        className="gov-tag"
-                        style={{
-                          background: "var(--brick)",
-                          color: "#ffffff",
-                          fontSize: "11px",
-                          fontWeight: "bold",
-                          display: "inline-flex",
-                          alignItems: "center",
-                          gap: "4px",
-                        }}
-                      >
-                        <AlertTriangle size={12} />
-                        {v.alerts.join(", ")}
-                      </span>
+                      <div>
+                        <span
+                          className="gov-tag"
+                          style={{
+                            background: "#b91c1c",
+                            color: "#ffffff",
+                            fontSize: "11px",
+                            fontWeight: "bold",
+                            display: "inline-flex",
+                            alignItems: "center",
+                            gap: "5px",
+                            padding: "4px 8px",
+                            borderRadius: "4px",
+                            boxShadow: "0 0 8px rgba(185, 28, 28, 0.4)",
+                          }}
+                        >
+                          <AlertTriangle size={13} />
+                          SPOOFING_IMPOSSIBLE_SPEED_JUMP
+                        </span>
+                        <div style={{ fontSize: "10px", color: "#b91c1c", fontWeight: 700, marginTop: "3px" }}>
+                          Implied Speed: &gt;100 kn over 120 km (Kinematic Violation)
+                        </div>
+                      </div>
                     ) : (
                       <span
                         className="gov-tag"
@@ -403,6 +448,7 @@ export const LiveAisStreamingPanel: React.FC = () => {
                           display: "inline-flex",
                           alignItems: "center",
                           gap: "4px",
+                          fontWeight: 600,
                         }}
                       >
                         <CheckCircle2 size={12} />

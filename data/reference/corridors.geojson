@@ -28,6 +28,34 @@
       "type": "Feature",
       "properties": {"name": "Paradip -> Ennore (coastal)", "type": "COASTAL_REFERENCE_ROUTE", "commodity": "Coal"},
       "geometry": {"type": "LineString", "coordinates": [[86.6106, 20.2649], [80.335, 13.25]]}
+    },
+    {
+      "type": "Feature",
+      "properties": {"name": "Indonesia (Samarinda/Kalimantan) -> Malacca -> Paradip/Haldia", "type": "IMPORT_REFERENCE_ROUTE", "commodity": "Thermal Coal"},
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [117.15, -0.5],
+          [105.0, 1.0],
+          [100.5, 2.8],
+          [92.0, 10.0],
+          [86.6106, 20.2649]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {"name": "Mozambique (Maputo) -> Indian Ocean -> Paradip/Tuticorin", "type": "IMPORT_REFERENCE_ROUTE", "commodity": "Coking & Thermal Coal"},
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [32.58, -25.96],
+          [45.0, -20.0],
+          [60.0, -10.0],
+          [75.0, 5.0],
+          [86.6106, 20.2649]
+        ]
+      }
     }
   ]
 }

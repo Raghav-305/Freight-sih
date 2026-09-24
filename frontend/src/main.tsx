@@ -1051,7 +1051,7 @@ function App() {
               <RiskIntelligencePage
                 inputs={riskInputs}
                 setInputs={setRiskInputs}
-                onAssessRisk={() => void assessRisk(riskInputs)}
+                onAssessRisk={(custom) => void assessRisk(custom || riskInputs)}
                 loading={riskLoading}
                 error={riskError}
                 result={riskResult}
@@ -1065,6 +1065,7 @@ function App() {
                   setRiskOverrides(updated);
                   void runRiskSimulation(updated);
                 }}
+                onNavigateTab={setActiveTab}
               />
             )}
 
@@ -1087,7 +1088,7 @@ function App() {
             {activeTab === "ports" && <PortOperationsPage />}
 
             {/* TAB 9: PILLAR 2 - MARITIME GIS */}
-            {activeTab === "map" && <MaritimeGisPage />}
+            {activeTab === "map" && <MaritimeGisPage onNavigateTab={setActiveTab} />}
 
             {/* TAB 10: DATA QUALITY (ISO 8000) */}
             {activeTab === "quality" && (

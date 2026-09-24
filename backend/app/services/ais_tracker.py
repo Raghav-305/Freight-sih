@@ -128,69 +128,100 @@ class Broadcaster:
 # Baseline Bulk Carrier Fleet for Indian Coal / Dry-Bulk Corridors
 DEFAULT_VESSELS = [
     {
+        "mmsi": 419002345,
+        "imo": "9452389",
+        "name": "M/V MAHA ANAND",
+        "flag": "India (IN)",
+        "vessel_class": "Panamax",
+        "dwt": 80500,
+        "draft": 14.2,
+        "corridor": "Australia to Paradip",
+        "lat": 18.50,
+        "lon": 86.40,
+        "sog": 12.2,
+        "cog": 345.0,
+        "destination": "Paradip",
+        "eta": "2026-09-26 14:00 UTC",
+    },
+    {
         "mmsi": 419001234,
+        "imo": "9312014",
         "name": "M/V BHARAT PRIDE",
         "flag": "India (IN)",
         "vessel_class": "Panamax",
         "dwt": 82000,
+        "draft": 14.1,
         "corridor": "Australia to Paradip",
         "lat": 16.50,
         "lon": 85.20,
         "sog": 13.8,
         "cog": 340.0,
         "destination": "Paradip",
+        "eta": "2026-09-27 06:00 UTC",
     },
     {
         "mmsi": 211281610,
+        "imo": "9604122",
         "name": "NORDIC VOYAGER",
         "flag": "Norway (NO)",
         "vessel_class": "Capesize",
         "dwt": 178000,
+        "draft": 17.5,
         "corridor": "Australia to Dhamra",
         "lat": 18.20,
         "lon": 87.10,
         "sog": 12.5,
         "cog": 355.0,
         "destination": "Dhamra",
+        "eta": "2026-09-28 18:30 UTC",
     },
     {
         "mmsi": 353130000,
+        "imo": "9518731",
         "name": "PACIFIC TITAN",
         "flag": "Panama (PA)",
         "vessel_class": "Panamax",
         "dwt": 76000,
+        "draft": 13.8,
         "corridor": "Indonesia to Vizag",
         "lat": 14.80,
         "lon": 84.40,
         "sog": 11.2,
         "cog": 325.0,
         "destination": "Vizag",
+        "eta": "2026-09-29 02:00 UTC",
     },
     {
         "mmsi": 636019821,
+        "imo": "9283190",
         "name": "ATLANTIC CARRIER",
         "flag": "Liberia (LR)",
         "vessel_class": "Supramax",
         "dwt": 58000,
+        "draft": 12.6,
         "corridor": "Mozambique to Tuticorin",
         "lat": 7.40,
         "lon": 77.80,
         "sog": 14.0,
         "cog": 15.0,
         "destination": "Tuticorin",
+        "eta": "2026-09-30 11:15 UTC",
     },
     {
         "mmsi": 419009876,
+        "imo": "9140228",
         "name": "M/V GANGA GLORY",
         "flag": "India (IN)",
         "vessel_class": "Handysize",
         "dwt": 38000,
+        "draft": 9.8,
         "corridor": "Coastal Cabotage (Haldia to Chennai)",
         "lat": 15.60,
         "lon": 81.50,
         "sog": 10.5,
         "cog": 210.0,
         "destination": "Chennai",
+        "eta": "2026-09-26 22:00 UTC",
     },
 ]
 
@@ -217,12 +248,15 @@ class AisTrackerService:
             )
             self.latest_vessels[v["mmsi"]] = {
                 "mmsi": v["mmsi"],
+                "imo": v.get("imo", "9300000"),
                 "name": v["name"],
                 "flag": v["flag"],
                 "vessel_class": v["vessel_class"],
                 "dwt": v["dwt"],
+                "draft": v.get("draft", 13.5),
                 "corridor": v["corridor"],
                 "destination": v["destination"],
+                "eta": v.get("eta", "2026-09-27 12:00 UTC"),
                 "raw_lat": v["lat"],
                 "raw_lon": v["lon"],
                 "filtered_lat": v["lat"],
@@ -234,22 +268,22 @@ class AisTrackerService:
                 "timestamp": time.time(),
             }
 
-    def trigger_spoof(self, mmsi: int = 353130000) -> dict[str, Any]:
+    def trigger_spoof(self, mmsi: int = 419001234) -> dict[str, Any]:
         """Inject an artificial teleportation/speed jump to test spoofing detection."""
         target = next((v for v in self.vessels_state if v["mmsi"] == mmsi), None)
         if not target:
             target = self.vessels_state[0]
             mmsi = target["mmsi"]
 
-        target["lat"] += 0.85  # Instantaneous ~95km jump
-        target["lon"] += 0.40
+        target["lat"] += 1.05  # Instantaneous ~120km jump (>100 kn implied velocity)
+        target["lon"] += 0.45
         self.spoof_events_count += 1
         logger.warning("Simulated artificial AIS spoofing jump on vessel %s (MMSI: %d)", target["name"], mmsi)
         return {
             "status": "SPOOF_INJECTED",
             "mmsi": mmsi,
             "vessel_name": target["name"],
-            "jump_km": round(haversine_km(target["lat"] - 0.85, target["lon"] - 0.40, target["lat"], target["lon"]), 1),
+            "jump_km": round(haversine_km(target["lat"] - 1.05, target["lon"] - 0.45, target["lat"], target["lon"]), 1),
             "note": "Next Kalman filter update will detect impossible speed and flag SPOOFING_IMPOSSIBLE_SPEED_JUMP.",
         }
 

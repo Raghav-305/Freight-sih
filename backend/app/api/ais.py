@@ -13,7 +13,7 @@ router = APIRouter(tags=["ais-streaming"])
 
 
 class SpoofSimRequest(BaseModel):
-    mmsi: int = 353130000
+    mmsi: int = 419001234
 
 
 @router.websocket("/ws/ais")
