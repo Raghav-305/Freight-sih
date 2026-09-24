@@ -1,7 +1,13 @@
 import asyncio
 from contextlib import asynccontextmanager
+from dotenv import load_dotenv
+
+# Load environment variables from .env immediately on startup
+load_dotenv()
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+
 
 from backend.app.api.audit import router as audit_router
 from backend.app.api.anchoring import router as anchoring_router  # optional, testnet anchoring
