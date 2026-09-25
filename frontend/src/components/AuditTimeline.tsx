@@ -65,8 +65,9 @@ export function AuditTimeline({ decisionId: initialId }: { decisionId?: string }
   };
 
   const handleAction = async (action: "analyse" | "submit" | "approve" | "return" | "reject", actor: string, role: string) => {
-    if (!activeId) return;
+    if (!activeId || loading) return;
     setError(null);
+    setLoading(true);
     try {
       if (action === "submit" && decision?.status === "DRAFT") {
         await decisionAction(activeId, "analyse", { actor, role, reason: "Auto-analysed" });
@@ -80,6 +81,8 @@ export function AuditTimeline({ decisionId: initialId }: { decisionId?: string }
       await refresh(activeId);
     } catch (e: any) {
       setError(e.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -179,7 +182,8 @@ export function AuditTimeline({ decisionId: initialId }: { decisionId?: string }
               <button
                 type="button"
                 onClick={() => handleAction("submit", "procurement_officer_01", "Commercial Officer")}
-                style={{ background: "#059669", color: "#fff", fontSize: "12px", padding: "6px 12px", borderRadius: "4px" }}
+                disabled={loading}
+                style={{ background: "#059669", color: "#fff", fontSize: "12px", padding: "6px 12px", borderRadius: "4px", opacity: loading ? 0.6 : 1 }}
               >
                 Sign & Prepare
               </button>
@@ -190,14 +194,16 @@ export function AuditTimeline({ decisionId: initialId }: { decisionId?: string }
                 <button
                   type="button"
                   onClick={() => handleAction("approve", "vigilance_director_09", "Vigilance Reviewer")}
-                  style={{ background: "#16a34a", color: "#fff", fontSize: "12px", padding: "6px 12px", borderRadius: "4px" }}
+                  disabled={loading}
+                  style={{ background: "#16a34a", color: "#fff", fontSize: "12px", padding: "6px 12px", borderRadius: "4px", opacity: loading ? 0.6 : 1 }}
                 >
                   ✓ Authorize Decision
                 </button>
                 <button
                   type="button"
                   onClick={() => handleAction("reject", "vigilance_director_09", "Vigilance Reviewer")}
-                  style={{ background: "#dc2626", color: "#fff", fontSize: "12px", padding: "6px 12px", borderRadius: "4px" }}
+                  disabled={loading}
+                  style={{ background: "#dc2626", color: "#fff", fontSize: "12px", padding: "6px 12px", borderRadius: "4px", opacity: loading ? 0.6 : 1 }}
                 >
                   Reject Tender
                 </button>

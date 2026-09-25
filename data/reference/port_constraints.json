@@ -37,5 +37,31 @@
     "condition_type": null,
     "source_url": "https://paradipport.gov.in/berth-specifications/",
     "verified_reference": "2026-02-23"
+  },
+  {
+    "port_id": "DHAMRA",
+    "berth_id": "DPCL_BERTH_1",
+    "berth_name": "Dhamra Coal Berth",
+    "commodity": "Thermal Coal",
+    "max_loa_m": 350,
+    "max_beam_m": 50,
+    "base_max_draft_m": 18.0,
+    "conditional_draft_m": null,
+    "condition_type": null,
+    "source_url": "https://www.adaniports.com/ports-and-terminals/dhamra-port",
+    "verified_reference": "2026-01-10"
+  },
+  {
+    "port_id": "HALDIA",
+    "berth_id": "HDC_BERTH_4",
+    "berth_name": "Haldia Dock Complex Berth 4",
+    "commodity": "Coking Coal",
+    "max_loa_m": 230,
+    "max_beam_m": 32.5,
+    "base_max_draft_m": 8.5,
+    "conditional_draft_m": null,
+    "condition_type": null,
+    "source_url": "https://haldiadock.gov.in/berth-info",
+    "verified_reference": "2026-01-15"
   }
 ]
