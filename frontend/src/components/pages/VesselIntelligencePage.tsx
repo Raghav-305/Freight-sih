@@ -85,6 +85,13 @@ export const VesselIntelligencePage: React.FC<VesselIntelligencePageProps> = ({
         ]}
       />
 
+      <div style={{ backgroundColor: "var(--paper)", borderLeft: "4px solid var(--gov-good)", padding: "12px", marginBottom: "24px", borderRadius: "0 8px 8px 0" }}>
+        <strong style={{ display: "block", color: "var(--ink)", fontSize: "14px", marginBottom: "4px" }}>Dual-Engine Architecture Active</strong>
+        <span style={{ fontSize: "12px", color: "var(--charcoal)" }}>
+          The architecture supports a dual-engine approach, combining trained ML models with operational baselines for broader port coverage and accurate candidate screening against safety and statutory criteria.
+        </span>
+      </div>
+
       {/* 2. How-To Steps */}
       <HowToSteps
         onLoadExample={handleLoadExample}
