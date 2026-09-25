@@ -48,8 +48,8 @@ export const VesselIntelligencePage: React.FC<VesselIntelligencePageProps> = ({
   const rawCandidates: any[] = result?.candidates || [];
 
   const filteredCandidates = rawCandidates.filter((v) => {
-    if (filterStatus === "eligible") return v.is_eligible;
-    if (filterStatus === "ineligible") return !v.is_eligible;
+    if (filterStatus === "eligible") return v.feasible;
+    if (filterStatus === "ineligible") return !v.feasible;
     return true;
   });
 
@@ -330,7 +330,7 @@ export const VesselIntelligencePage: React.FC<VesselIntelligencePageProps> = ({
               <tbody>
                 {sortedCandidates.map((v) => {
                   const isExpanded = expandedImo === v.imo;
-                  const isEligible = v.is_eligible;
+                  const isEligible = v.feasible;
 
                   return (
                     <React.Fragment key={v.imo}>
