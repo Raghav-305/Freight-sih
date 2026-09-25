@@ -591,11 +591,11 @@ export const ForecastPage: React.FC<ForecastPageProps> = ({
                           {item.horizon} Shock Case
                         </span>
                         <div style={{ fontSize: "1.375rem", fontWeight: 700, color: "var(--ink)", margin: "4px 0" }}>
-                          {money(item.scenario_freight)}/MT
+                          {money(item.scenario_usd_mt)}/MT
                         </div>
                         <div style={{ fontSize: "11px", fontWeight: 600, color: isUp ? "var(--brick)" : "var(--olive)", display: "flex", alignItems: "center", gap: "2px" }}>
                           {isUp ? <ArrowUpRight size={13} /> : <ArrowDownRight size={13} />}
-                          <span>{isUp ? `+${item.delta_usd_mt.toFixed(2)}` : item.delta_usd_mt.toFixed(2)}/MT ({item.pct_change > 0 ? `+${item.pct_change}%` : `${item.pct_change}%`})</span>
+                          <span>{isUp ? `+${item.delta_usd_mt.toFixed(2)}` : item.delta_usd_mt.toFixed(2)}/MT ({item.delta_pct > 0 ? `+${item.delta_pct}%` : `${item.delta_pct}%`})</span>
                         </div>
                       </div>
                     );

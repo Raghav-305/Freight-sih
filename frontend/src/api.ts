@@ -25,6 +25,9 @@ export const compareScenarios = (scenarios: unknown[]) =>
 export const sensitivityGrid = (body: unknown) =>
   req("/api/scenarios/sensitivity", { method: "POST", body: JSON.stringify(body) });
 
+export const calculateTCE = (body: unknown) =>
+  req("/api/scenarios/tce", { method: "POST", body: JSON.stringify(body) });
+
 // ---- Pillar 2: Maritime GIS ----
 export const getPorts = () => req("/api/map/ports");
 export const getCorridors = () => req("/api/map/corridors");

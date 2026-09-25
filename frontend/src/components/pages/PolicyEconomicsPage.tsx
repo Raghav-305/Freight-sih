@@ -3,6 +3,7 @@ import { PageHero } from "../ui/PageHero";
 import { HowToSteps } from "../ui/HowToSteps";
 import { ResultGuide } from "../ui/ResultGuide";
 import { ScenarioComparator } from "../ScenarioComparator";
+import { TceCalculator } from "../TceCalculator";
 import { TermTooltip } from "../ui/TermTooltip";
 import { Scale, Zap, Fuel, TrendingDown, Info, ShieldCheck } from "lucide-react";
 
@@ -44,6 +45,15 @@ export const PolicyEconomicsPage: React.FC = () => {
         <div style={{ marginTop: "1.5rem" }}>
           <ScenarioComparator />
         </div>
+      </section>
+
+      {/* TCE & CII Calculator */}
+      <section className="market-section" style={{ marginBottom: "2rem" }}>
+        <div className="section-title" style={{ marginBottom: "1rem" }}>
+          <span className="eyebrow">Voyage Economics</span>
+          <h3>TCE & Emissions Calculator</h3>
+        </div>
+        <TceCalculator />
       </section>
 
       {/* 4. Strategic Guidance Cards */}
