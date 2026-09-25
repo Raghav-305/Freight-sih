@@ -101,15 +101,17 @@ export function AnchorStatus() {
           <>
             Last anchored externally: <strong>{new Date(latest.created_at).toLocaleString()}</strong>
             {latest.status === "PENDING" ? " (pending confirmation)" : ""} —{" "}
+            {latest.status === "ANCHORED" && <strong style={{ color: "var(--gov-good)", marginLeft: "4px" }}>ANCHORED ON POLYGON AMOY</strong>}
             {latest.explorer_url ? (
-              <a href={latest.explorer_url} target="_blank" rel="noreferrer" style={{ color: "#38bdf8" }}>
-                View on-chain ↗
+              <a href={latest.explorer_url} target="_blank" rel="noreferrer" style={{ color: "#38bdf8", marginLeft: "8px" }}>
+                View On-Chain ↗
               </a>
             ) : (
               "no link"
             )}
             <div style={{ fontSize: "11px", color: "#64748b", fontFamily: "monospace", marginTop: "4px", wordBreak: "break-all" }}>
               root: {latest.merkle_root} · {latest.event_count} events
+              {latest.tx_hash && <div>transaction hash: {latest.tx_hash}</div>}
             </div>
           </>
         ) : (
@@ -131,13 +133,18 @@ export function AnchorStatus() {
       )}
 
       <div style={{ display: "flex", alignItems: "center", gap: "10px", marginTop: "12px", flexWrap: "wrap" }}>
+        {status && status.unanchored_events > 0 && (
+          <span style={{ fontSize: "12px", color: "#fcd34d", fontWeight: 700 }}>
+            {status.unanchored_events} Unanchored Decision Event{status.unanchored_events !== 1 ? "s" : ""}
+          </span>
+        )}
         <button
           type="button"
           onClick={anchorNow}
           disabled={busy || unreachable}
-          style={{ background: "#7c3aed", color: "#fff", fontSize: "12px", padding: "8px 14px" }}
+          style={{ background: "#7c3aed", color: "#fff", fontSize: "12px", padding: "8px 14px", borderRadius: "4px" }}
         >
-          {busy ? "Anchoring (up to ~40s)..." : `Anchor now${status ? ` (${status.unanchored_events} new events)` : ""}`}
+          {busy ? "Anchoring (up to ~40s)..." : "Anchor Now"}
         </button>
         {note && <span style={{ fontSize: "12px", color: note.ok ? "#34d399" : "#fca5a5" }}>{note.text}</span>}
       </div>

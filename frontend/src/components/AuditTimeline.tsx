@@ -8,6 +8,13 @@ export function AuditTimeline({ decisionId: initialId }: { decisionId?: string }
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [reason, setReason] = useState<string>("");
+  
+  const [showCreate, setShowCreate] = useState(false);
+  const [cargo, setCargo] = useState("75,000 MT Coking Coal");
+  const [route, setRoute] = useState("Gladstone to Paradip");
+  const [rate, setRate] = useState("18.20");
+  
+  const [activeOfficer, setActiveOfficer] = useState("Officer 1 / Commercial Officer");
 
   const refresh = async (id: string) => {
     setLoading(true);
@@ -29,10 +36,10 @@ export function AuditTimeline({ decisionId: initialId }: { decisionId?: string }
     setError(null);
     try {
       const created = await createDecision({
-        cargo_description: "Coking Coal 75,000 MT (Gladstone to Paradip)",
+        cargo_description: `${cargo} (${route})`,
         scenario_snapshot: {
           result: { landed_cost_per_tonne: 124.5, cost_per_gj: 4.88 },
-          assumptions: { vessel_class: "Panamax", target_port: "PARADIP" },
+          assumptions: { vessel_class: "Panamax", target_port: "PARADIP", approved_rate: rate },
         },
         eligibility_snapshot: {
           status: "ELIGIBLE_WITH_CONDITION",
@@ -48,6 +55,7 @@ export function AuditTimeline({ decisionId: initialId }: { decisionId?: string }
         created_by: "procurement_officer_01",
         created_by_role: "Procurement Lead",
       });
+      setShowCreate(false);
       await refresh((created as any).decision_id);
     } catch (e: any) {
       setError(e.message || "Failed to create decision case");
@@ -60,6 +68,9 @@ export function AuditTimeline({ decisionId: initialId }: { decisionId?: string }
     if (!activeId) return;
     setError(null);
     try {
+      if (action === "submit" && decision?.status === "DRAFT") {
+        await decisionAction(activeId, "analyse", { actor, role, reason: "Auto-analysed" });
+      }
       await decisionAction(activeId, action, {
         actor,
         role,
@@ -99,9 +110,11 @@ export function AuditTimeline({ decisionId: initialId }: { decisionId?: string }
         </div>
 
         <div style={{ display: "flex", gap: "8px" }}>
-          <button type="button" onClick={handleCreate} disabled={loading} style={{ background: "#2563eb", color: "#fff", fontSize: "12px", padding: "8px 14px" }}>
-            {loading ? "Initializing..." : "+ Create New Decision Case"}
-          </button>
+          {!showCreate && (
+            <button type="button" onClick={() => setShowCreate(true)} disabled={loading} style={{ background: "#2563eb", color: "#fff", fontSize: "12px", padding: "8px 14px" }}>
+              + Create Tender Decision Draft
+            </button>
+          )}
           {activeId && (
             <button type="button" onClick={() => refresh(activeId)} disabled={loading} style={{ background: "#334155", color: "#fff", fontSize: "12px", padding: "8px 14px" }}>
               Refresh Chain
@@ -110,6 +123,27 @@ export function AuditTimeline({ decisionId: initialId }: { decisionId?: string }
         </div>
       </div>
 
+      {showCreate && (
+        <div style={{ background: "#0f172a", border: "1px solid #1e293b", borderRadius: "8px", padding: "14px" }}>
+          <div style={{ display: "flex", gap: "12px", flexWrap: "wrap", alignItems: "flex-end" }}>
+            <label style={{ fontSize: "12px", color: "#cbd5e1" }}>
+              Cargo
+              <input type="text" value={cargo} onChange={e => setCargo(e.target.value)} style={{ display: "block", marginTop: "4px", padding: "6px", background: "#1e293b", color: "#fff", border: "1px solid #334155", borderRadius: "4px" }} />
+            </label>
+            <label style={{ fontSize: "12px", color: "#cbd5e1" }}>
+              Route
+              <input type="text" value={route} onChange={e => setRoute(e.target.value)} style={{ display: "block", marginTop: "4px", padding: "6px", background: "#1e293b", color: "#fff", border: "1px solid #334155", borderRadius: "4px" }} />
+            </label>
+            <label style={{ fontSize: "12px", color: "#cbd5e1" }}>
+              Approved Rate ($/MT)
+              <input type="text" value={rate} onChange={e => setRate(e.target.value)} style={{ display: "block", marginTop: "4px", padding: "6px", background: "#1e293b", color: "#fff", border: "1px solid #334155", borderRadius: "4px" }} />
+            </label>
+            <button type="button" onClick={handleCreate} disabled={loading} style={{ background: "#059669", color: "#fff", fontSize: "12px", padding: "8px 14px", borderRadius: "4px", height: "fit-content" }}>
+              {loading ? "Saving..." : "Save Draft"}
+            </button>
+          </div>
+        </div>
+      )}
       {error && (
         <div style={{ padding: "10px 14px", background: "#7f1d1d", color: "#fca5a5", borderRadius: "6px", fontSize: "12px", border: "1px solid #b91c1c" }}>
           <strong>Governance Rule Alert:</strong> {error}
@@ -123,24 +157,31 @@ export function AuditTimeline({ decisionId: initialId }: { decisionId?: string }
             State Machine Transitions (Current: {decision.status})
           </div>
 
-          <div style={{ display: "flex", flexWrap: "wrap", gap: "8px", alignItems: "center" }}>
-            {decision.status === "DRAFT" && (
-              <button
-                type="button"
-                onClick={() => handleAction("analyse", "procurement_officer_01", "Analyst")}
-                style={{ background: "#0284c7", color: "#fff", fontSize: "12px", padding: "6px 12px" }}
-              >
-                1. Mark Analysed
-              </button>
-            )}
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "12px", alignItems: "center" }}>
+            <select
+              value={activeOfficer}
+              onChange={(e) => setActiveOfficer(e.target.value)}
+              style={{ fontSize: "12px", padding: "6px 10px", background: "#1e293b", border: "1px solid #334155", color: "#fff", borderRadius: "4px" }}
+            >
+              <option value="Officer 1 / Commercial Officer">Officer 1 / Commercial Officer</option>
+              <option value="Officer 2 / Vigilance Reviewer">Officer 2 / Vigilance Reviewer</option>
+            </select>
 
-            {decision.status === "ANALYSED" && (
+            <input
+              type="text"
+              placeholder="Enter remarks..."
+              value={reason}
+              onChange={(e) => setReason(e.target.value)}
+              style={{ fontSize: "12px", padding: "6px 10px", width: "300px", background: "#1e293b", border: "1px solid #334155", color: "#fff", borderRadius: "4px" }}
+            />
+
+            {(decision.status === "DRAFT" || decision.status === "ANALYSED") && (
               <button
                 type="button"
-                onClick={() => handleAction("submit", "procurement_officer_01", "Procurement Lead")}
-                style={{ background: "#059669", color: "#fff", fontSize: "12px", padding: "6px 12px" }}
+                onClick={() => handleAction("submit", "procurement_officer_01", "Commercial Officer")}
+                style={{ background: "#059669", color: "#fff", fontSize: "12px", padding: "6px 12px", borderRadius: "4px" }}
               >
-                2. Submit For Review (Freeze Snapshot)
+                Sign & Prepare
               </button>
             )}
 
@@ -148,37 +189,15 @@ export function AuditTimeline({ decisionId: initialId }: { decisionId?: string }
               <>
                 <button
                   type="button"
-                  onClick={() => handleAction("approve", "vigilance_director_09", "Approving Authority")}
-                  style={{ background: "#16a34a", color: "#fff", fontSize: "12px", padding: "6px 12px" }}
+                  onClick={() => handleAction("approve", "vigilance_director_09", "Vigilance Reviewer")}
+                  style={{ background: "#16a34a", color: "#fff", fontSize: "12px", padding: "6px 12px", borderRadius: "4px" }}
                 >
-                  ✓ Approve (Authorized Director)
+                  ✓ Authorize Decision
                 </button>
                 <button
                   type="button"
-                  onClick={() => handleAction("approve", decision.created_by, "Approving Authority")}
-                  title="Tests CVC vigilance blocking: approver cannot be the same as creator"
-                  style={{ background: "#b45309", color: "#fff", fontSize: "12px", padding: "6px 12px" }}
-                >
-                  ⚠️ Test Self-Approval (Must Block 409)
-                </button>
-                <input
-                  type="text"
-                  placeholder="Reason for return/rejection..."
-                  value={reason}
-                  onChange={(e) => setReason(e.target.value)}
-                  style={{ fontSize: "12px", padding: "6px 10px", width: "220px", background: "#1e293b", border: "1px solid #334155", color: "#fff", borderRadius: "4px" }}
-                />
-                <button
-                  type="button"
-                  onClick={() => handleAction("return", "vigilance_director_09", "Reviewer")}
-                  style={{ background: "#d97706", color: "#fff", fontSize: "12px", padding: "6px 12px" }}
-                >
-                  Return for Recalculation
-                </button>
-                <button
-                  type="button"
-                  onClick={() => handleAction("reject", "vigilance_director_09", "Reviewer")}
-                  style={{ background: "#dc2626", color: "#fff", fontSize: "12px", padding: "6px 12px" }}
+                  onClick={() => handleAction("reject", "vigilance_director_09", "Vigilance Reviewer")}
+                  style={{ background: "#dc2626", color: "#fff", fontSize: "12px", padding: "6px 12px", borderRadius: "4px" }}
                 >
                   Reject Tender
                 </button>
